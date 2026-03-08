@@ -2398,10 +2398,67 @@
     .blog-nl-input:focus { border-color: var(--gold); }
     .blog-nl-input::placeholder { color: rgba(255,255,255,0.35); }
 
+    /* ── Navigation publique mobile ── */
+    .pub-nav-hamburger {
+      display: none;
+      align-items: center; justify-content: center;
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(255,255,255,0.09);
+      border: none; border-radius: 8px;
+      cursor: pointer; font-size: 20px; color: white;
+      transition: background .15s; margin-left: auto;
+    }
+    .pub-nav-hamburger:hover { background: rgba(255,255,255,0.16); }
+    .pub-nav-mobile-overlay {
+      display: none; position: fixed; inset: 0; z-index: 5000;
+      background: rgba(10,24,37,0.65);
+    }
+    .pub-nav-mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 5001;
+      background: #0a1825;
+      padding: 0 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      font-family: 'DM Sans', sans-serif;
+    }
+    .pub-nav-mobile-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 4px;
+    }
+    .pub-nav-mobile-close {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: none;
+      cursor: pointer; font-size: 17px; color: rgba(255,255,255,0.7);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .pub-nav-mobile-close:hover { background: rgba(255,255,255,0.15); }
+    .pub-nav-mobile-section-label {
+      font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.28); padding: 12px 4px 6px;
+    }
+    .pub-nav-mobile-link {
+      display: block; width: 100%; padding: 13px 4px;
+      color: rgba(255,255,255,0.75); font-size: 15px; font-weight: 500;
+      border: none; border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: none; text-align: left; cursor: pointer;
+      transition: color .15s; font-family: 'DM Sans', sans-serif;
+    }
+    .pub-nav-mobile-link:hover { color: var(--gold-bright); }
+    .pub-nav-mobile-cta {
+      margin-top: 18px; width: 100%; padding: 14px;
+      background: var(--gold-bright); color: var(--navy-darkest);
+      border: none; border-radius: 10px; font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity .2s;
+    }
+    .pub-nav-mobile-cta:hover { opacity: .88; }
+
     /* Responsive */
     @media(max-width:900px) {
+      .pub-nav-inner { padding: 12px 16px !important; }
       .pub-nav-links { display: none; }
-      .pub-nav-cta { display: none; }
+      .pub-nav-cta { display: none !important; }
       .pub-nav-hamburger { display: flex; }
       .lp-hero-inner { grid-template-columns: 1fr; }
       .lp-hero-right { display: none; }
@@ -2624,8 +2681,9 @@
     .blog-admin-pill.brouillon { background:rgba(252,186,51,0.12);color:var(--gold-bright);border:1px solid rgba(252,186,51,0.25); }
 
     @media(max-width:900px) {
+      .pub-nav-inner { padding: 12px 16px !important; }
       .pub-nav-links { display:none; }
-      .pub-nav-cta { display:none; }
+      .pub-nav-cta { display:none !important; }
       .pub-nav-hamburger { display:flex; }
       .lp-hero-inner { grid-template-columns:1fr; }
       .lp-hero-right { display:none; }
@@ -3224,61 +3282,6 @@
   .bib-card { cursor:pointer; }
   .bib-card:hover .bib-card-title { color:var(--gold-bright); transition:color .18s; }
 
-  /* ── Navigation publique mobile ── */
-  .pub-nav-hamburger {
-    display: none;
-    align-items: center; justify-content: center;
-    width: 38px; height: 38px; flex-shrink: 0;
-    background: rgba(255,255,255,0.08);
-    border: none; border-radius: 8px;
-    cursor: pointer; font-size: 20px; color: white;
-    transition: background .15s; margin-left: auto;
-  }
-  .pub-nav-hamburger:hover { background: rgba(255,255,255,0.15); }
-  .pub-nav-mobile-overlay {
-    display: none; position: fixed; inset: 0; z-index: 5000;
-    background: rgba(10,24,37,0.65);
-  }
-  .pub-nav-mobile-menu {
-    display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 5001;
-    background: #0a1825;
-    padding: 0 20px 24px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-    font-family: 'DM Sans', sans-serif;
-  }
-  .pub-nav-mobile-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
-    margin-bottom: 4px;
-  }
-  .pub-nav-mobile-close {
-    width: 34px; height: 34px; border-radius: 50%;
-    background: rgba(255,255,255,0.08); border: none;
-    cursor: pointer; font-size: 17px; color: rgba(255,255,255,0.7);
-    display: flex; align-items: center; justify-content: center;
-    transition: background .15s;
-  }
-  .pub-nav-mobile-close:hover { background: rgba(255,255,255,0.15); }
-  .pub-nav-mobile-section-label {
-    font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
-    color: rgba(255,255,255,0.28); padding: 12px 4px 6px;
-  }
-  .pub-nav-mobile-link {
-    display: block; width: 100%; padding: 13px 4px;
-    color: rgba(255,255,255,0.75); font-size: 15px; font-weight: 500;
-    border: none; border-bottom: 1px solid rgba(255,255,255,0.05);
-    background: none; text-align: left; cursor: pointer;
-    transition: color .15s; font-family: 'DM Sans', sans-serif;
-  }
-  .pub-nav-mobile-link:hover { color: var(--gold-bright); }
-  .pub-nav-mobile-cta {
-    margin-top: 18px; width: 100%; padding: 14px;
-    background: var(--gold-bright); color: var(--navy-darkest);
-    border: none; border-radius: 10px; font-size: 14px; font-weight: 700;
-    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity .2s;
-  }
-  .pub-nav-mobile-cta:hover { opacity: .88; }
   @media(max-width:820px) {
     .bib-detail-card { flex-direction:column; max-height:95vh; border-radius:20px; }
     .bib-detail-left { width:100%; height:200px; min-height:0; }
