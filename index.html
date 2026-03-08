@@ -8534,9 +8534,9 @@
             <div class="admin-stat-delta">↑ +310€ vs mois dernier</div>
           </div>
           <div class="admin-stat-card">
-            <div class="admin-stat-val"><em id="fin-stat-actifs">47</em></div>
-            <div class="admin-stat-label">Abonnements actifs</div>
-            <div class="admin-stat-delta">↑ +3 ce mois</div>
+            <div class="admin-stat-val"><em id="fin-stat-ressources">60</em><span style="font-size:16px;color:rgba(255,255,255,0.4);">€</span></div>
+            <div class="admin-stat-label">Revenus Ressources</div>
+            <div class="admin-stat-delta" id="fin-ressources-delta">4 ventes ce mois</div>
           </div>
           <div class="admin-stat-card">
             <div class="admin-stat-val"><em id="fin-stat-retard">3</em></div>
@@ -8563,7 +8563,8 @@
         <!-- Onglets -->
         <div style="display:flex;gap:4px;margin-bottom:22px;background:rgba(255,255,255,0.04);border-radius:10px;padding:4px;width:fit-content;">
           <button class="email-toolbar-btn" style="background:rgba(255,255,255,0.1);color:white;font-weight:600;" onclick="financeTab('abonnements',this)">💳 Abonnements</button>
-          <button class="email-toolbar-btn" onclick="financeTab('paiements',this)">📊 Paiements</button>
+          <button class="email-toolbar-btn" onclick="financeTab('ventes',this)">📋 Toutes les ventes</button>
+          <button class="email-toolbar-btn" onclick="financeTab('ressources',this)">🛍 Ressources</button>
           <button class="email-toolbar-btn" onclick="financeTab('offres',this)">🎯 Offres & tarifs</button>
         </div>
 
@@ -8601,13 +8602,36 @@
           </div>
         </div>
 
-        <!-- ── ONGLET PAIEMENTS ── -->
-        <div id="finance-tab-paiements" style="display:none;">
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div class="campaign-row"><div style="font-size:16px;">✅</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:white;">Sophie Andreu · Visionnaire</div><div style="font-size:11px;color:rgba(255,255,255,0.35);">1 mars 2026</div></div><div style="font-family:'Playfair Display',serif;font-size:16px;color:#6ecf9e;">+97€</div></div>
-            <div class="campaign-row"><div style="font-size:16px;">✅</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:white;">Léa Fontaine · Stratège</div><div style="font-size:11px;color:rgba(255,255,255,0.35);">5 mars 2026</div></div><div style="font-family:'Playfair Display',serif;font-size:16px;color:#6ecf9e;">+67€</div></div>
-            <div class="campaign-row" style="border-color:rgba(255,90,90,0.2);"><div style="font-size:16px;">❌</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:white;">Clara Vidal · Initiée</div><div style="font-size:11px;color:#ff7070;">Paiement échoué · 3 mars 2026</div></div><div style="font-family:'Playfair Display',serif;font-size:16px;color:#ff7070;">47€</div><button class="admin-action-btn admin-action-btn-ghost">Relancer</button></div>
-            <div class="campaign-row" style="border-color:rgba(255,90,90,0.2);"><div style="font-size:16px;">❌</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:white;">Emma Rousseau · Stratège</div><div style="font-size:11px;color:#ff7070;">Paiement échoué · 28 fév. 2026</div></div><div style="font-family:'Playfair Display',serif;font-size:16px;color:#ff7070;">67€</div><button class="admin-action-btn admin-action-btn-ghost">Relancer</button></div>
+        <!-- ── ONGLET TOUTES LES VENTES ── -->
+        <div id="finance-tab-ventes" style="display:none;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+            <div style="display:flex;gap:6px;">
+              <button class="fin-filter-btn active" onclick="finFilterAllSales('tous',this)">Toutes</button>
+              <button class="fin-filter-btn" onclick="finFilterAllSales('abonnement',this)">💳 Abonnements</button>
+              <button class="fin-filter-btn" onclick="finFilterAllSales('ressource',this)">🛍 Ressources</button>
+              <button class="fin-filter-btn" onclick="finFilterAllSales('echec',this)">❌ Échecs</button>
+            </div>
+            <div id="fin-ventes-total" style="font-size:13px;color:rgba(255,255,255,0.4);"></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;">
+            <table class="admin-table">
+              <thead><tr><th>Client / Membre</th><th>Détail</th><th>Type</th><th>Montant</th><th>Date</th></tr></thead>
+              <tbody id="fin-ventes-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── ONGLET RESSOURCES ── -->
+        <div id="finance-tab-ressources" style="display:none;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+            <div style="font-size:13px;color:rgba(255,255,255,0.45);">Ventes de ressources aux non-membres</div>
+            <div id="fin-res-total" style="font-size:13px;color:rgba(255,255,255,0.4);"></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;">
+            <table class="admin-table">
+              <thead><tr><th>Acheteur</th><th>Ressource</th><th>Montant</th><th>Date</th></tr></thead>
+              <tbody id="fin-res-body"></tbody>
+            </table>
           </div>
         </div>
 
@@ -11369,7 +11393,7 @@
   });
 
   function financeTab(tab, btn) {
-    ['abonnements','paiements','offres'].forEach(function(t) {
+    ['abonnements','ventes','ressources','offres'].forEach(function(t) {
       var el = document.getElementById('finance-tab-' + t);
       if (el) el.style.display = 'none';
     });
@@ -11379,11 +11403,117 @@
     var el = document.getElementById('finance-tab-' + tab);
     if (el) el.style.display = 'block';
     if (btn) { btn.style.background='rgba(255,255,255,0.1)'; btn.style.color='white'; btn.style.fontWeight='600'; }
+    if (tab === 'ventes')    finRenderAllSales(finVentesFilter);
+    if (tab === 'ressources') finRenderResourceSales();
   }
 
   // ── FINANCES & ABONNEMENTS ──
 
-  var finCurrentId = null;
+  var finCurrentId  = null;
+  var finVentesFilter = 'tous';
+
+  // Ventes de ressources (non-membres)
+  var finResourceSales = [
+    { id:'rs1', buyer:'Marie Dupont',    resource:'Template de contrat freelance', price:15, date:'7 mars 2026'   },
+    { id:'rs2', buyer:'Camille Noël',    resource:'Guide : Fixer son TJM',         price:12, date:'6 mars 2026'   },
+    { id:'rs3', buyer:'Julie Laurent',   resource:'Tableau de bord finances',       price:18, date:'5 mars 2026'   },
+    { id:'rs4', buyer:'Manon Richard',   resource:'Template de contrat freelance',  price:15, date:'2 mars 2026'   },
+    { id:'rs5', buyer:'Sarah Blanc',     resource:'Guide : Fixer son TJM',          price:12, date:'28 fév. 2026'  },
+  ];
+
+  // Transactions d'abonnements (pour la vue unifiée)
+  var finSubsTx = [
+    { name:'Marie Dupont (rs)',  detail:'Template contrat',  amount:15, date:'7 mars 2026',  sortKey:20260307, ok:true,  type:'ressource' },
+    { name:'Camille Noël',       detail:'Guide TJM',          amount:12, date:'6 mars 2026',  sortKey:20260306, ok:true,  type:'ressource' },
+    { name:'Léa Fontaine',       detail:'⚡ Stratège',         amount:67, date:'5 mars 2026',  sortKey:20260305, ok:true,  type:'abonnement' },
+    { name:'Julie Laurent',      detail:'Tableau finances',   amount:18, date:'5 mars 2026',  sortKey:20260305, ok:true,  type:'ressource' },
+    { name:'Clara Vidal',        detail:'🌿 Initiée',          amount:47, date:'3 mars 2026',  sortKey:20260303, ok:false, type:'abonnement' },
+    { name:'Manon Richard',      detail:'Template contrat',   amount:15, date:'2 mars 2026',  sortKey:20260302, ok:true,  type:'ressource' },
+    { name:'Sophie Andreu',      detail:'🔮 Visionnaire',      amount:97, date:'1 mars 2026',  sortKey:20260301, ok:true,  type:'abonnement' },
+    { name:'Emma Rousseau',      detail:'⚡ Stratège',          amount:67, date:'28 fév. 2026', sortKey:20260228, ok:false, type:'abonnement' },
+    { name:'Sarah Blanc',        detail:'Guide TJM',           amount:12, date:'28 fév. 2026', sortKey:20260228, ok:true,  type:'ressource' },
+  ];
+
+  // ── Toutes les ventes ──
+  function finRenderAllSales(filter) {
+    filter = filter || 'tous';
+    var tbody = document.getElementById('fin-ventes-body');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    var list = finSubsTx.filter(function(t){
+      if (filter === 'abonnement') return t.type === 'abonnement';
+      if (filter === 'ressource')  return t.type === 'ressource';
+      if (filter === 'echec')      return !t.ok;
+      return true;
+    });
+    if (!list.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:rgba(255,255,255,0.2);font-size:13px;">Aucune transaction</td></tr>';
+    } else {
+      list.forEach(function(t){
+        var tr = document.createElement('tr');
+        if (!t.ok) tr.style.background = 'rgba(255,90,90,0.04)';
+        var typePill = t.type === 'abonnement'
+          ? '<span style="font-size:11px;font-weight:700;background:rgba(252,186,51,0.12);color:#fcba33;padding:2px 9px;border-radius:12px;">💳 Abonnement</span>'
+          : '<span style="font-size:11px;font-weight:700;background:rgba(110,207,158,0.12);color:#6ecf9e;padding:2px 9px;border-radius:12px;">🛍 Ressource</span>';
+        var amtColor = t.ok ? '#6ecf9e' : '#ff7070';
+        var sign     = t.ok ? '+' : '';
+        tr.innerHTML =
+          '<td><div style="display:flex;align-items:center;gap:7px;"><span style="font-size:15px;">'+(t.ok?'✅':'❌')+'</span>'
+          +'<span style="font-size:13px;font-weight:600;color:white;">'+t.name+'</span></div></td>'
+          +'<td style="font-size:12px;color:rgba(255,255,255,0.55);">'+t.detail+'</td>'
+          +'<td>'+typePill+'</td>'
+          +'<td style="font-family:\'Playfair Display\',serif;font-size:15px;color:'+amtColor+';">'+sign+t.amount+'€</td>'
+          +'<td style="font-size:12px;color:rgba(255,255,255,0.35);">'+t.date+'</td>';
+        tbody.appendChild(tr);
+      });
+    }
+    // Total ligne
+    var total = list.filter(function(t){ return t.ok; }).reduce(function(s,t){ return s+t.amount; }, 0);
+    var totalEl = document.getElementById('fin-ventes-total');
+    if (totalEl) totalEl.textContent = list.length + ' transaction'+(list.length!==1?'s':'')+' · Total encaissé : '+total+'€';
+  }
+
+  function finFilterAllSales(filter, btn) {
+    finVentesFilter = filter;
+    document.querySelectorAll('#finance-tab-ventes .fin-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    finRenderAllSales(filter);
+  }
+
+  // ── Ressources ──
+  function finRenderResourceSales() {
+    var tbody = document.getElementById('fin-res-body');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    if (!finResourceSales.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:rgba(255,255,255,0.2);font-size:13px;">Aucune vente de ressource</td></tr>';
+    } else {
+      finResourceSales.forEach(function(s){
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td style="font-size:13px;font-weight:600;color:white;">'+s.buyer+'</td>'
+          +'<td style="font-size:12px;color:rgba(255,255,255,0.6);">'+s.resource+'</td>'
+          +'<td style="font-family:\'Playfair Display\',serif;font-size:15px;color:#6ecf9e;">+'+s.price+'€</td>'
+          +'<td style="font-size:12px;color:rgba(255,255,255,0.35);">'+s.date+'</td>';
+        tbody.appendChild(tr);
+      });
+    }
+    var total = finResourceSales.reduce(function(s,r){ return s+r.price; }, 0);
+    var marchSales = finResourceSales.filter(function(s){ return s.date.indexOf('mars') !== -1; });
+    var marchTotal = marchSales.reduce(function(s,r){ return s+r.price; }, 0);
+    var el = document.getElementById('fin-res-total');
+    if (el) el.textContent = finResourceSales.length+' vente'+(finResourceSales.length!==1?'s':'')+' · Ce mois : '+marchTotal+'€ · Total : '+total+'€';
+  }
+
+  // ── Stat card revenus ressources ──
+  function finCalcResourceRevenue() {
+    var marchSales = finResourceSales.filter(function(s){ return s.date.indexOf('mars') !== -1; });
+    var total = marchSales.reduce(function(s,r){ return s+r.price; }, 0);
+    var el    = document.getElementById('fin-stat-ressources');
+    var delta = document.getElementById('fin-ressources-delta');
+    if (el)    el.textContent    = total;
+    if (delta) delta.textContent = marchSales.length+' vente'+(marchSales.length!==1?'s':'')+' ce mois';
+  }
 
   var finSubsData = [
     { id:'fs1', name:'Sophie Andreu',  initial:'S', avatarBg:'linear-gradient(135deg,#ebc14c,#fcba33)', plan:'🔮 Visionnaire', amount:'97€/mois', amountVal:97,  echeance:'1 avr.',  status:'actif',    relances:0, relancesDates:[] },
@@ -11617,6 +11747,7 @@
     // Init tableau
     finRenderSubs('tous');
     finRefreshAlertBanner();
+    finCalcResourceRevenue();
   });
 
   // ── ACCÈS & RÔLES ──
