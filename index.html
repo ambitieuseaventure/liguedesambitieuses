@@ -7416,6 +7416,28 @@
               </div>
             </div>
 
+            <!-- Accès membres -->
+            <div style="padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:9px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <input type="checkbox" id="blog-input-members-only" onchange="blogToggleMembersOnly()" style="accent-color:#a78bfa;width:16px;height:16px;cursor:pointer;">
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:white;">🔒 Réservé aux membres</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.3);">Visible sur le blog mais verrouillé — seuls les membres sélectionnés peuvent le lire.</div>
+                </div>
+              </div>
+              <div id="blog-access-levels" style="display:none;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
+                <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Niveaux ayant accès</div>
+                <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.75);">
+                    <input type="checkbox" id="blog-access-initiee" checked style="accent-color:#6ecf9e;width:14px;height:14px;">🌿 L'Initiée</label>
+                  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.75);">
+                    <input type="checkbox" id="blog-access-stratege" checked style="accent-color:#fcba33;width:14px;height:14px;">⚡ La Stratège</label>
+                  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.75);">
+                    <input type="checkbox" id="blog-access-visionnaire" checked style="accent-color:#a78bfa;width:14px;height:14px;">🔮 La Visionnaire</label>
+                </div>
+              </div>
+            </div>
+
             <!-- Actions -->
             <div style="display:flex;gap:10px;padding-top:4px;border-top:1px solid rgba(255,255,255,0.06);">
               <button id="blog-delete-btn" onclick="blogAdminDelete()" style="display:none;padding:11px 14px;border-radius:9px;border:1px solid rgba(255,90,90,0.25);background:transparent;color:rgba(255,90,90,0.7);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(255,70,70,0.1)'" onmouseout="this.style.background='transparent'">🗑 Supprimer</button>
@@ -10232,35 +10254,35 @@
 
   var blogArticles = [
     {
-      id:'b1', status:'publie', featured:true, emoji:'💰',
+      id:'b1', status:'publie', featured:true, access:'public', emoji:'💰',
       title:'Comment fixer ses prix sans se brader (ni se survendre)',
       cat:'business', author:'Ana Martin', date:'4 mars 2026', readtime:6,
       excerpt:'Fixer son prix est l\'un des exercices les plus redoutés des entrepreneuses. Voici une méthode en 3 étapes pour trouver ton juste prix — avec confiance.',
       content:'<h2>Le syndrome du "je vais mettre moins cher pour attirer des clients"</h2><p>On y est presque toutes passées. On regarde la concurrence, on se dit qu\'on n\'a pas encore assez d\'expérience, et on baisse le prix. Résultat : on travaille plus pour gagner moins, on attire des clients qui négocient, et on s\'épuise.</p><blockquote>Ton prix n\'est pas juste un chiffre. C\'est un signal. Il dit quelque chose de ce que tu vaux, de ta positionnement, de l\'expérience que tu offres.</blockquote><h2>Méthode en 3 étapes pour trouver ton prix juste</h2><h3>1. Calcule ton prix plancher</h3><p>Commence par le bas : de combien as-tu besoin pour vivre confortablement ? Ajoute tes charges, tes impôts, ton épargne cible. Divise par le nombre d\'heures (ou de missions) réalistes. C\'est ton plancher absolu — tu ne descends jamais en dessous.</p><h3>2. Regarde le marché sans te comparer</h3><p>Oui, regarder les prix du marché est utile. Mais attention : comparer tes tarifs à ceux de quelqu\'un avec 10 ans d\'expérience de plus que toi ou un positionnement différent n\'a aucun sens. Identifie plutôt les fourchettes pour <em>ton niveau</em> et <em>ta cible</em>.</p><h3>3. Teste et assume</h3><p>Il n\'existe pas de prix parfait découvert sur un tableau Excel. Tu vas tester, observer les réactions, ajuster. Ce qui compte : assumer ton prix avec conviction. Un client sent l\'hésitation. Présente ton tarif comme une évidence.</p><h2>Le signal le plus sûr que ton prix est trop bas</h2><p>Tu acceptes toutes les missions sans trier. Tu ressens de la frustration ou du ressentiment envers tes clients. Tu n\'as pas le temps d\'améliorer ton offre. Ce sont les signaux que ton prix ne reflète pas la valeur que tu apportes.</p>'
     },
     {
-      id:'b2', status:'publie', featured:false, emoji:'🧠',
+      id:'b2', status:'publie', featured:false, access:'public', emoji:'🧠',
       title:'Les 5 croyances limitantes qui freinent les entrepreneuses (et comment les dépasser)',
       cat:'mindset', author:'Sophie Blanc', date:'25 fév. 2026', readtime:5,
       excerpt:'Notre plus grand obstacle, ce n\'est souvent pas le marché ni la concurrence — c\'est la petite voix dans notre tête. Décryptage de 5 croyances toxiques et comment s\'en libérer.',
       content:'<h2>Nos pensées construisent notre réalité business</h2><p>Le mindset n\'est pas un concept flou de développement personnel. C\'est la fondation de tout ce que tu construis. Une croyance limitante, c\'est une pensée que tu as répétée si souvent qu\'elle est devenue une "vérité" — alors qu\'elle n\'est qu\'une interprétation.</p><h2>Les 5 croyances les plus répandues</h2><h3>1. "Je ne suis pas légitime"</h3><p>Le syndrome de l\'imposteur touche 70% des professionnels à un moment de leur carrière. La vérité : personne ne se sent 100% légitime. Agis malgré le doute — la légitimité se construit en faisant.</p><h3>2. "Ce n\'est pas le bon moment"</h3><p>Il n\'existe pas de moment parfait pour lancer, augmenter ses prix ou dire non à un client toxique. Le moment parfait, c\'est maintenant, avec les ressources que tu as.</p><h3>3. "Je dois tout faire seule"</h3><p>Demander de l\'aide est une force, pas une faiblesse. Les entrepreneuses qui réussissent s\'entourent, délèguent, et s\'inspirent des autres sans complexe.</p><h3>4. "Si je réussis, les gens vont me juger"</h3><p>La peur du succès est réelle. Souvent liée à des dynamiques sociales ou familiales. Remarque cette peur, nomme-la, et choisis consciemment de ne pas la laisser décider à ta place.</p><h3>5. "Je ne suis pas une vraie cheffe d\'entreprise"</h3><p>Si tu génères un revenu avec une activité, tu es une cheffe d\'entreprise. Un statut ne définit pas ta légitimité — ton action, si.</p><blockquote>La confiance n\'est pas un prérequis. C\'est un résultat. Elle se construit action après action.</blockquote>'
     },
     {
-      id:'b3', status:'publie', featured:false, emoji:'📣',
+      id:'b3', status:'publie', featured:false, access:'public', emoji:'📣',
       title:'Créer du contenu qui attire tes clients idéaux sans passer 3h par jour sur Instagram',
       cat:'marketing', author:'Léa Fontaine', date:'18 fév. 2026', readtime:7,
       excerpt:'Le contenu ne devrait pas être une corvée. Voici un système simple pour créer régulièrement sans t\'épuiser — et attirer les bons clients.',
       content:'<h2>Le mythe du "faut poster tous les jours"</h2><p>Les algorithmes adorent la régularité, c\'est vrai. Mais entre poster tous les jours du contenu vide et poster deux fois par semaine quelque chose de vraiment utile, le choix est vite fait. La cohérence prime sur la fréquence.</p><h2>Le système des 3 piliers de contenu</h2><h3>Pilier 1 : Éduquer</h3><p>Partage ton expertise. Réponds aux questions que tes clients se posent avant même de te contacter. Ce contenu te positionne comme référence dans ton domaine.</p><h3>Pilier 2 : Inspirer</h3><p>Montre les coulisses, partage tes victoires ET tes galères. Les gens s\'attachent aux personnes, pas aux logos. L\'authenticité crée la confiance.</p><h3>Pilier 3 : Convertir</h3><p>Parle de tes offres. Pas de manière agressive — mais clairement. Les gens ne peuvent pas acheter ce qu\'ils ne savent pas que tu vends.</p><h2>La méthode du contenu recyclé</h2><p>Un article de blog devient une série de posts. Une série de posts devient un guide PDF. Un guide PDF devient une masterclass. Tu ne crées pas plus — tu formats différemment. C\'est ça, l\'efficacité.</p><blockquote>Le meilleur contenu est celui qui répond à la question que ton client idéal tape dans Google à 23h parce qu\'il n\'arrive pas à dormir.</blockquote>'
     },
     {
-      id:'b4', status:'publie', featured:false, emoji:'💸',
+      id:'b4', status:'publie', featured:false, access:'public', emoji:'💸',
       title:'Gérer sa trésorerie quand on est freelance : les bases pour ne plus avoir peur du mois de janvier',
       cat:'finance', author:'Ana Martin', date:'10 fév. 2026', readtime:8,
       excerpt:'Janvier et août sont les bêtes noires des indépendantes. Avec quelques règles simples, tu peux lisser tes revenus et dormir tranquille toute l\'année.',
       content:'<h2>Pourquoi la tréso est le nerf de la guerre</h2><p>Tu peux avoir une activité rentable sur le papier et te retrouver à découvert parce qu\'un client paie en retard. La trésorerie, c\'est le décalage entre le moment où tu travailles et le moment où tu encaisses.</p><h2>Les 3 comptes de l\'entrepreneuse sereine</h2><ul><li><strong>Compte pro opérationnel</strong> : encaissements et dépenses courantes.</li><li><strong>Compte épargne charges</strong> : 30 à 40% de chaque encaissement, intouchable jusqu\'aux échéances fiscales.</li><li><strong>Compte coussin de sécurité</strong> : l\'équivalent de 3 mois de charges fixes. Ton matelas de sécurité.</li></ul><h2>La règle des pourcentages</h2><p>À chaque encaissement : 40% charges et impôts, 10% épargne long terme, 50% disponible. Ces ratios sont indicatifs — ajuste selon ton statut et ta situation — mais avoir une règle automatique te libère la tête.</p><h3>Les périodes creuses, ça se planifie</h3><p>Janvier et août ne sont pas des surprises. Note-les dans ton agenda dès maintenant. Prépare une action commerciale spécifique en novembre et en juin pour les anticiper. Et surtout, ne dépense pas tout en décembre.</p>'
     },
     {
-      id:'b5', status:'brouillon', featured:false, emoji:'🤝',
+      id:'b5', status:'brouillon', featured:false, access:'public', emoji:'🤝',
       title:'Réseauter sans se forcer : construire un réseau authentique quand on est introvertie',
       cat:'clients', author:'Sophie Blanc', date:'—', readtime:6,
       excerpt:'Le réseau n\'est pas réservé aux extraverties qui adorent les cocktails d\'affaires. Voici comment construire des relations pro précieuses, à ton rythme.',
@@ -10282,10 +10304,12 @@
       var feat = articles.find(function(a){ return a.featured; }) || articles[0];
       if (feat) {
         var bg = blogCatColors[feat.cat] || 'rgba(20,36,53,0.15)';
+        var featLocked = Array.isArray(feat.access);
         featuredSlot.innerHTML =
           '<div class="blog-featured" style="margin-bottom:36px;" onclick="blogOpenArticle(\''+feat.id+'\')" style="cursor:pointer;">'
-          +'<div class="blog-featured-img" style="background:'+bg+';cursor:pointer;overflow:hidden;">'
+          +'<div class="blog-featured-img" style="background:'+bg+';cursor:pointer;overflow:hidden;position:relative;">'
             +'<span class="blog-feat-tag">⭐ À la une</span>'
+            +(featLocked ? '<span style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.65);backdrop-filter:blur(4px);border:1px solid rgba(167,139,250,0.4);border-radius:20px;padding:3px 9px;font-size:11px;font-weight:700;color:#c4b5fd;">🔒 Membres</span>' : '')
             +(feat.coverImg
               ? '<img src="'+feat.coverImg+'" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">'
               : '<span class="blog-feat-emoji">'+feat.emoji+'</span>')
@@ -10295,7 +10319,9 @@
             +'<h2 class="blog-feat-title">'+feat.title+'</h2>'
             +'<p class="blog-feat-excerpt">'+feat.excerpt+'</p>'
             +'<div class="blog-meta"><strong>'+feat.author+'</strong><span class="blog-dot">·</span><span>'+feat.date+'</span><span class="blog-dot">·</span><span>'+feat.readtime+' min de lecture</span></div>'
-            +'<button onclick="blogOpenArticle(\''+feat.id+'\')" style="margin-top:18px;padding:11px 24px;background:var(--navy-darkest);color:white;border:none;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:\'DM Sans\',sans-serif;align-self:flex-start;transition:opacity .2s;" onmouseover="this.style.opacity=\'.8\'" onmouseout="this.style.opacity=\'1\'">Lire l\'article →</button>'
+            +(featLocked
+              ? '<div style="margin-top:14px;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(124,100,200,0.12);border:1px solid rgba(167,139,250,0.3);border-radius:9px;font-size:13px;color:#c4b5fd;font-weight:600;">🔒 Réservé aux membres · Rejoins La Ligue pour lire</div>'
+              : '<button onclick="blogOpenArticle(\''+feat.id+'\')" style="margin-top:18px;padding:11px 24px;background:var(--navy-darkest);color:white;border:none;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:\'DM Sans\',sans-serif;align-self:flex-start;transition:opacity .2s;" onmouseover="this.style.opacity=\'.8\'" onmouseout="this.style.opacity=\'1\'">Lire l\'article →</button>')
           +'</div>'
           +'</div>';
       } else {
@@ -10319,18 +10345,24 @@
     });
     filtered.forEach(function(a) {
       var bg = blogCatColors[a.cat] || 'rgba(20,36,53,0.1)';
+      var isLocked = Array.isArray(a.access);
       var card = document.createElement('div');
-      card.className = 'blog-card';
+      card.className = 'blog-card' + (isLocked ? ' blog-card-locked' : '');
       card.onclick = function(){ blogOpenArticle(a.id); };
+      var lockBadge = isLocked ? '<div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.65);backdrop-filter:blur(4px);border:1px solid rgba(167,139,250,0.4);border-radius:20px;padding:3px 9px;font-size:11px;font-weight:700;color:#c4b5fd;display:flex;align-items:center;gap:4px;">🔒 Membres</div>' : '';
       card.innerHTML =
-        '<div class="blog-card-img" style="background:'+bg+';overflow:hidden;padding:0;">'
+        '<div class="blog-card-img" style="background:'+bg+';overflow:hidden;padding:0;position:relative;">'
         +(a.coverImg ? '<img src="'+a.coverImg+'" style="width:100%;height:100%;object-fit:cover;display:block;">' : a.emoji)
+        +lockBadge
+        +(isLocked ? '<div style="position:absolute;inset:0;background:rgba(0,0,0,0.18);"></div>' : '')
         +'</div>'
         +'<div class="blog-card-body">'
           +'<div class="blog-cat blog-meta-sm" style="margin-bottom:6px;">'+blogCatLabels[a.cat]+'</div>'
           +'<h3>'+a.title+'</h3>'
           +'<p>'+a.excerpt+'</p>'
-          +'<div class="blog-meta blog-meta-sm"><strong>'+a.author+'</strong><span class="blog-dot"> · </span>'+a.readtime+' min</div>'
+          +'<div class="blog-meta blog-meta-sm"><strong>'+a.author+'</strong><span class="blog-dot"> · </span>'+a.readtime+' min'
+          +(isLocked ? '<span style="margin-left:auto;font-size:11px;color:#a78bfa;font-weight:600;">🔒 Réservé aux membres</span>' : '')
+          +'</div>'
         +'</div>';
       grid.appendChild(card);
     });
@@ -10358,6 +10390,12 @@
   function blogOpenArticle(id) {
     var a = blogArticles.find(function(x){ return x.id === id; });
     if (!a) return;
+    if (Array.isArray(a.access)) {
+      var lvlLabels = { initiee:'🌿 L\'Initiée', stratege:'⚡ La Stratège', visionnaire:'🔮 La Visionnaire' };
+      var lvls = a.access.map(function(l){ return lvlLabels[l]||l; }).join(', ');
+      finToast('🔒 Article réservé aux membres · '+lvls, 'rgba(124,100,200,0.92)');
+      return;
+    }
     var hero = document.getElementById('blog-article-hero');
     if (a.coverImg) {
       hero.style.background = 'none';
@@ -10411,13 +10449,14 @@
         ? '<span class="blog-admin-pill publie">✓ Publié</span>'
         : '<span class="blog-admin-pill brouillon">✦ Brouillon</span>';
       var featLbl = a.featured ? '<span style="font-size:10px;margin-left:6px;color:var(--gold-bright);">⭐ À la une</span>' : '';
+      var lockLbl = Array.isArray(a.access) ? '<span style="font-size:10px;margin-left:6px;color:#c4b5fd;">🔒 Membres</span>' : '';
       var coverThumb = a.coverImg
         ? '<div class="blog-admin-emoji" style="background:none;border:none;overflow:hidden;padding:0;"><img src="'+a.coverImg+'" style="width:46px;height:46px;object-fit:cover;border-radius:10px;display:block;"></div>'
         : '<div class="blog-admin-emoji">'+a.emoji+'</div>';
       row.innerHTML =
         coverThumb
         +'<div class="blog-admin-info">'
-          +'<div class="blog-admin-title">'+a.title+featLbl+'</div>'
+          +'<div class="blog-admin-title">'+a.title+featLbl+lockLbl+'</div>'
           +'<div class="blog-admin-meta">'+blogCatLabels[a.cat]+' · '+a.author+' · '+a.date+' · '+a.readtime+' min</div>'
         +'</div>'
         +publieLbl
@@ -10508,6 +10547,11 @@
     reader.readAsDataURL(file);
   }
 
+  function blogToggleMembersOnly() {
+    var on = document.getElementById('blog-input-members-only').checked;
+    document.getElementById('blog-access-levels').style.display = on ? 'block' : 'none';
+  }
+
   // ── Modale ──
   function blogAdminOpenModal(id) {
     blogEditingId = id;
@@ -10523,6 +10567,13 @@
     var cs = document.getElementById('blog-input-cat');
     if (a) Array.from(cs.options).forEach(function(o,i){ if(o.value===a.cat) cs.selectedIndex=i; });
     else cs.selectedIndex = 0;
+    // Accès membres
+    var membersOnly = a && Array.isArray(a.access);
+    document.getElementById('blog-input-members-only').checked = membersOnly;
+    document.getElementById('blog-access-initiee').checked    = !membersOnly || (a.access && a.access.includes('initiee'));
+    document.getElementById('blog-access-stratege').checked   = !membersOnly || (a.access && a.access.includes('stratege'));
+    document.getElementById('blog-access-visionnaire').checked = !membersOnly || (a.access && a.access.includes('visionnaire'));
+    document.getElementById('blog-access-levels').style.display = membersOnly ? 'block' : 'none';
     var delBtn = document.getElementById('blog-delete-btn');
     if (delBtn) delBtn.style.display = a ? 'block' : 'none';
     document.getElementById('blog-save-btn').textContent = a ? 'Enregistrer ✦' : 'Publier ✦';
@@ -10594,6 +10645,16 @@
     var author   = document.getElementById('blog-input-author').value.trim() || 'La Rédaction';
     var rt       = parseInt(document.getElementById('blog-input-readtime').value) || Math.max(1, Math.round(content.split(' ').length / 200));
     var featured = document.getElementById('blog-input-featured').checked;
+    // Accès
+    var membersOnly = document.getElementById('blog-input-members-only').checked;
+    var access = 'public';
+    if (membersOnly) {
+      access = [];
+      if (document.getElementById('blog-access-initiee').checked)    access.push('initiee');
+      if (document.getElementById('blog-access-stratege').checked)   access.push('stratege');
+      if (document.getElementById('blog-access-visionnaire').checked) access.push('visionnaire');
+      if (access.length === 0) access = ['visionnaire'];
+    }
     var now      = new Date(); var months=['janv.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
     var dateStr  = now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
 
@@ -10602,9 +10663,9 @@
 
     if (blogEditingId) {
       var a = blogArticles.find(function(x){ return x.id===blogEditingId; });
-      if (a) { a.title=title; a.emoji=emoji; a.coverImg=coverImg; a.cat=cat; a.author=author; a.excerpt=excerpt; a.content=content; a.readtime=rt; a.featured=featured; a.status=status; if(a.date==='—') a.date=dateStr; }
+      if (a) { a.title=title; a.emoji=emoji; a.coverImg=coverImg; a.cat=cat; a.author=author; a.excerpt=excerpt; a.content=content; a.readtime=rt; a.featured=featured; a.access=access; a.status=status; if(a.date==='—') a.date=dateStr; }
     } else {
-      blogArticles.unshift({ id:'b_'+Date.now(), status:status, featured:featured, emoji:emoji, coverImg:coverImg, title:title, cat:cat, author:author, date:dateStr, readtime:rt, excerpt:excerpt, content:content });
+      blogArticles.unshift({ id:'b_'+Date.now(), status:status, featured:featured, access:access, emoji:emoji, coverImg:coverImg, title:title, cat:cat, author:author, date:dateStr, readtime:rt, excerpt:excerpt, content:content });
     }
     blogAdminCloseModal();
     blogAdminRender();
