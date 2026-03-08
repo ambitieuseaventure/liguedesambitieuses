@@ -2840,6 +2840,12 @@
     .bib-btn-telecharger { padding:9px 18px;background:linear-gradient(135deg,#4ecb87,#3aaa6e);color:white;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s; }
     .bib-btn-telecharger:hover { opacity:.85; }
     .bib-email-modal-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:10000;align-items:center;justify-content:center;padding:24px; }
+    .bib-dropzone { border:2px dashed rgba(255,255,255,0.12);border-radius:12px;transition:border-color .2s,background .2s; }
+    .bib-dropzone:hover,.bib-dropzone.bib-dz-over { border-color:rgba(252,186,51,0.4);background:rgba(252,186,51,0.03); }
+    .bib-dz-content { padding:22px 16px;text-align:center;cursor:pointer;user-select:none; }
+    .bib-dz-or { display:flex;align-items:center;gap:10px;margin:10px 0; }
+    .bib-dz-or span { font-size:11px;color:rgba(255,255,255,0.22);white-space:nowrap; }
+    .bib-dz-line { flex:1;height:1px;background:rgba(255,255,255,0.07); }
 
     .bib-usp { background:linear-gradient(135deg,var(--navy-darkest),#1a3449);padding:70px 24px; }
     .bib-usp-inner { max-width:960px;margin:0 auto; }
@@ -7988,21 +7994,43 @@
 
             <!-- Image de couverture -->
             <div>
-              <div class="form-label">Image de couverture <span style="color:rgba(255,255,255,0.3);font-size:11px;font-weight:400;">(URL — laisser vide pour utiliser l'émoji du format)</span></div>
-              <div style="display:flex;gap:10px;align-items:flex-start;">
-                <input id="bib-input-imageurl" type="url" placeholder="https://exemple.com/image.jpg"
-                  class="admin-input" style="margin-bottom:0;flex:1;"
-                  oninput="bibPreviewImage(this.value)"
-                  onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                <div id="bib-img-preview" style="width:60px;height:60px;border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;color:rgba(255,255,255,0.2);">📷</div>
+              <div class="form-label">Image de couverture <span style="color:rgba(255,255,255,0.3);font-size:11px;font-weight:400;">— laisser vide pour utiliser l'émoji du format</span></div>
+              <div id="bib-img-dropzone" class="bib-dropzone"
+                ondragover="event.preventDefault();this.classList.add('bib-dz-over')"
+                ondragleave="this.classList.remove('bib-dz-over')"
+                ondrop="event.preventDefault();this.classList.remove('bib-dz-over');bibHandleImageFile(event.dataTransfer.files[0])">
+                <input type="file" id="bib-img-file-input" accept="image/*" style="display:none;" onchange="bibHandleImageFile(this.files[0])">
+                <div id="bib-img-zone-content" class="bib-dz-content" onclick="document.getElementById('bib-img-file-input').click()">
+                  <div style="font-size:28px;margin-bottom:8px;">🖼️</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);">Cliquer ou glisser une image ici</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">JPG, PNG, WebP · max 5 Mo</div>
+                </div>
               </div>
+              <div class="bib-dz-or"><div class="bib-dz-line"></div><span>ou entrer une URL</span><div class="bib-dz-line"></div></div>
+              <input id="bib-img-url-text" type="url" placeholder="https://exemple.com/image.jpg"
+                class="admin-input" style="margin-bottom:0;"
+                oninput="bibSetImageUrl(this.value)"
+                onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
             </div>
 
-            <!-- Lien de téléchargement -->
+            <!-- Fichier à télécharger -->
             <div>
-              <div class="form-label">Lien de téléchargement <span style="color:rgba(255,255,255,0.3);font-size:11px;font-weight:400;">(Google Drive, Notion, lien direct…)</span></div>
-              <input id="bib-input-fileurl" type="url" placeholder="https://drive.google.com/…"
+              <div class="form-label">Fichier à télécharger <span style="color:rgba(255,255,255,0.3);font-size:11px;font-weight:400;">— PDF, Word, Excel, PowerPoint…</span></div>
+              <div id="bib-file-dropzone" class="bib-dropzone"
+                ondragover="event.preventDefault();this.classList.add('bib-dz-over')"
+                ondragleave="this.classList.remove('bib-dz-over')"
+                ondrop="event.preventDefault();this.classList.remove('bib-dz-over');bibHandleResourceFile(event.dataTransfer.files[0])">
+                <input type="file" id="bib-file-input" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.rar,.csv,.txt" style="display:none;" onchange="bibHandleResourceFile(this.files[0])">
+                <div id="bib-file-zone-content" class="bib-dz-content" onclick="document.getElementById('bib-file-input').click()">
+                  <div style="font-size:28px;margin-bottom:8px;">📁</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);">Cliquer ou glisser un fichier ici</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">PDF, Word, Excel, PowerPoint, ZIP · max 50 Mo</div>
+                </div>
+              </div>
+              <div class="bib-dz-or"><div class="bib-dz-line"></div><span>ou entrer un lien externe</span><div class="bib-dz-line"></div></div>
+              <input id="bib-file-url-text" type="url" placeholder="https://drive.google.com/…"
                 class="admin-input" style="margin-bottom:0;"
+                oninput="bibSetFileUrl(this.value)"
                 onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
             </div>
 
@@ -12663,7 +12691,16 @@
     var b = bibliothequeData.find(function(x){ return x.id===bibEmailTargetId; });
     bibCloseEmailModal();
     if (b && b.fileUrl) {
-      window.open(b.fileUrl, '_blank');
+      if (b.fileUrl.startsWith('data:')) {
+        var a = document.createElement('a');
+        a.href = b.fileUrl;
+        a.download = b.fileName || b.title || 'ressource';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        window.open(b.fileUrl, '_blank');
+      }
     } else {
       alert('Merci ! Ta ressource sera envoyée à '+email+'.\n\n(Intégration email à connecter — Brevo, Mailchimp…)');
     }
@@ -12709,6 +12746,12 @@
   }
 
   var bibCurrentPricing = 'payant';
+  var bibImageData = '';   // dataUrl (upload) ou URL (texte)
+  var bibFileData  = '';   // dataUrl (upload) ou URL externe
+  var bibResourceFileName = '';
+
+  var BIB_IMG_DEFAULT  = '<div style="font-size:28px;margin-bottom:8px;">🖼️</div><div style="font-size:13px;color:rgba(255,255,255,0.5);">Cliquer ou glisser une image ici</div><div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">JPG, PNG, WebP · max 5 Mo</div>';
+  var BIB_FILE_DEFAULT = '<div style="font-size:28px;margin-bottom:8px;">📁</div><div style="font-size:13px;color:rgba(255,255,255,0.5);">Cliquer ou glisser un fichier ici</div><div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">PDF, Word, Excel, PowerPoint, ZIP · max 50 Mo</div>';
 
   function bibTogglePricing(val) {
     bibCurrentPricing = val;
@@ -12726,13 +12769,69 @@
     }
   }
 
-  function bibPreviewImage(url) {
-    var preview = document.getElementById('bib-img-preview');
-    if (url && url.match(/^https?:\/\//)) {
-      preview.innerHTML = '<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentNode.innerHTML=\'📷\'">';
-    } else {
-      preview.innerHTML = '📷';
+  function bibSetImageUrl(val) {
+    bibImageData = val;
+    if (val) {
+      // URL typed → reset upload zone so there's no conflict
+      document.getElementById('bib-img-zone-content').innerHTML = BIB_IMG_DEFAULT;
+      document.getElementById('bib-img-file-input').value = '';
     }
+  }
+
+  function bibSetFileUrl(val) {
+    bibFileData = val;
+    if (val) {
+      document.getElementById('bib-file-zone-content').innerHTML = BIB_FILE_DEFAULT;
+      document.getElementById('bib-file-input').value = '';
+      bibResourceFileName = '';
+    }
+  }
+
+  function bibHandleImageFile(file) {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { alert('Veuillez sélectionner une image (JPG, PNG, WebP).'); return; }
+    if (file.size > 5 * 1024 * 1024) { alert('Image trop grande. Maximum 5 Mo.'); return; }
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      bibImageData = e.target.result;
+      document.getElementById('bib-img-url-text').value = '';
+      var kb = (file.size / 1024).toFixed(0);
+      document.getElementById('bib-img-zone-content').innerHTML =
+        '<div style="display:flex;align-items:center;gap:12px;padding:4px 0;">'
+          + '<img src="'+bibImageData+'" style="width:52px;height:52px;object-fit:cover;border-radius:8px;flex-shrink:0;">'
+          + '<div style="text-align:left;min-width:0;flex:1;">'
+            + '<div style="font-size:12px;color:white;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+file.name+'</div>'
+            + '<div style="font-size:11px;color:rgba(255,255,255,0.35);">'+kb+' Ko · Image</div>'
+          + '</div>'
+          + '<span style="font-size:11px;color:var(--gold-bright);cursor:pointer;flex-shrink:0;" onclick="document.getElementById(\'bib-img-file-input\').click()">Changer →</span>'
+        + '</div>';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function bibHandleResourceFile(file) {
+    if (!file) return;
+    if (file.size > 50 * 1024 * 1024) { alert('Fichier trop grand. Maximum 50 Mo.'); return; }
+    var sizeStr = file.size > 1024*1024 ? (file.size/1024/1024).toFixed(1)+' Mo' : (file.size/1024).toFixed(0)+' Ko';
+    bibResourceFileName = file.name;
+    var ext = file.name.split('.').pop().toUpperCase();
+    var icons = {'PDF':'📄','DOC':'📝','DOCX':'📝','XLS':'📊','XLSX':'📊','PPT':'📋','PPTX':'📋','ZIP':'🗜️','RAR':'🗜️','CSV':'📊','TXT':'📝'};
+    var icon = icons[ext] || '📁';
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      bibFileData = e.target.result;
+      document.getElementById('bib-file-url-text').value = '';
+      document.getElementById('bib-file-zone-content').innerHTML =
+        '<div style="display:flex;align-items:center;gap:12px;padding:4px 0;">'
+          + '<div style="font-size:36px;flex-shrink:0;">'+icon+'</div>'
+          + '<div style="text-align:left;min-width:0;flex:1;">'
+            + '<div style="font-size:12px;color:white;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+file.name+'</div>'
+            + '<div style="font-size:11px;color:rgba(255,255,255,0.35);">'+sizeStr+'</div>'
+          + '</div>'
+          + '<span style="font-size:11px;color:var(--gold-bright);cursor:pointer;flex-shrink:0;" onclick="document.getElementById(\'bib-file-input\').click()">Changer →</span>'
+        + '</div>';
+    };
+    reader.readAsDataURL(file);
   }
 
   function bibOpenModal(id) {
@@ -12745,12 +12844,43 @@
     document.getElementById('bib-input-price').value = b ? b.price : '';
     document.getElementById('bib-input-format').value = b ? b.format : '📋 Template';
     document.getElementById('bib-input-theme').value = b ? b.theme : '💎 Offre';
-    document.getElementById('bib-input-imageurl').value = b ? (b.imageUrl || '') : '';
-    document.getElementById('bib-input-fileurl').value = b ? (b.fileUrl || '') : '';
     document.getElementById('bib-input-status').value = b ? b.status : 'publie';
     document.getElementById('bib-input-featured').checked = b ? b.featured : false;
     bibTogglePricing(b ? (b.pricing || 'payant') : 'payant');
-    bibPreviewImage(b ? (b.imageUrl || '') : '');
+    // Reset upload zones
+    bibImageData = b ? (b.imageUrl || '') : '';
+    bibFileData  = b ? (b.fileUrl  || '') : '';
+    bibResourceFileName = b ? (b.fileName || '') : '';
+    if (bibImageData && bibImageData.startsWith('data:')) {
+      document.getElementById('bib-img-zone-content').innerHTML =
+        '<div style="display:flex;align-items:center;gap:12px;padding:4px 0;">'
+          + '<img src="'+bibImageData+'" style="width:52px;height:52px;object-fit:cover;border-radius:8px;flex-shrink:0;">'
+          + '<div style="text-align:left;flex:1;"><div style="font-size:12px;color:white;font-weight:600;">Image uploadée</div></div>'
+          + '<span style="font-size:11px;color:var(--gold-bright);cursor:pointer;flex-shrink:0;" onclick="document.getElementById(\'bib-img-file-input\').click()">Changer →</span>'
+        + '</div>';
+      document.getElementById('bib-img-url-text').value = '';
+    } else {
+      document.getElementById('bib-img-zone-content').innerHTML = BIB_IMG_DEFAULT;
+      document.getElementById('bib-img-url-text').value = bibImageData;
+    }
+    if (bibFileData && bibFileData.startsWith('data:')) {
+      var fname = bibResourceFileName || (b ? b.title : 'fichier');
+      document.getElementById('bib-file-zone-content').innerHTML =
+        '<div style="display:flex;align-items:center;gap:12px;padding:4px 0;">'
+          + '<div style="font-size:36px;flex-shrink:0;">📄</div>'
+          + '<div style="text-align:left;min-width:0;flex:1;">'
+            + '<div style="font-size:12px;color:white;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+fname+'</div>'
+            + '<div style="font-size:11px;color:rgba(255,255,255,0.35);">Fichier uploadé</div>'
+          + '</div>'
+          + '<span style="font-size:11px;color:var(--gold-bright);cursor:pointer;flex-shrink:0;" onclick="document.getElementById(\'bib-file-input\').click()">Changer →</span>'
+        + '</div>';
+      document.getElementById('bib-file-url-text').value = '';
+    } else {
+      document.getElementById('bib-file-zone-content').innerHTML = BIB_FILE_DEFAULT;
+      document.getElementById('bib-file-url-text').value = bibFileData;
+    }
+    document.getElementById('bib-img-file-input').value = '';
+    document.getElementById('bib-file-input').value = '';
     document.getElementById('bib-modal').style.display = 'flex';
   }
 
@@ -12766,17 +12896,18 @@
     var price    = pricing === 'payant' ? (parseFloat(document.getElementById('bib-input-price').value) || 0) : 0;
     var format   = document.getElementById('bib-input-format').value;
     var theme    = document.getElementById('bib-input-theme').value;
-    var imageUrl = document.getElementById('bib-input-imageurl').value.trim();
-    var fileUrl  = document.getElementById('bib-input-fileurl').value.trim();
+    var imageUrl = bibImageData || document.getElementById('bib-img-url-text').value.trim();
+    var fileUrl  = bibFileData  || document.getElementById('bib-file-url-text').value.trim();
+    var fileName = bibResourceFileName;
     var status   = document.getElementById('bib-input-status').value;
     var featured = document.getElementById('bib-input-featured').checked;
     var cover    = (bibFormatIcons[format] || '📄');
     if (!title) { alert('Merci de renseigner un titre.'); return; }
     if (bibEditingId) {
       var b = bibliothequeData.find(function(x){ return x.id===bibEditingId; });
-      if (b) { b.title=title; b.desc=desc; b.price=price; b.pricing=pricing; b.format=format; b.theme=theme; b.cover=cover; b.imageUrl=imageUrl; b.fileUrl=fileUrl; b.status=status; b.featured=featured; }
+      if (b) { b.title=title; b.desc=desc; b.price=price; b.pricing=pricing; b.format=format; b.theme=theme; b.cover=cover; b.imageUrl=imageUrl; b.fileUrl=fileUrl; b.fileName=fileName; b.status=status; b.featured=featured; }
     } else {
-      bibliothequeData.push({ id:'bib_'+Date.now(), title:title, desc:desc, price:price, pricing:pricing, format:format, theme:theme, cover:cover, imageUrl:imageUrl, fileUrl:fileUrl, status:status, featured:featured });
+      bibliothequeData.push({ id:'bib_'+Date.now(), title:title, desc:desc, price:price, pricing:pricing, format:format, theme:theme, cover:cover, imageUrl:imageUrl, fileUrl:fileUrl, fileName:fileName, status:status, featured:featured });
     }
     bibCloseModal();
     bibRenderTable();
