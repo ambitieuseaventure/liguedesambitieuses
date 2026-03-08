@@ -1691,6 +1691,24 @@
     border-color:rgba(255,255,255,0.18);
   }
 
+  /* ── Admin contact filter tabs ── */
+  .admin-tab {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:7px 16px; border-radius:20px;
+    border:1.5px solid rgba(255,255,255,0.08);
+    background:transparent; color:rgba(255,255,255,0.4);
+    font-size:12px; font-weight:500; cursor:pointer;
+    font-family:'DM Sans',sans-serif; transition:all .18s; white-space:nowrap;
+  }
+  .admin-tab:hover:not(.active) { color:rgba(255,255,255,0.7); border-color:rgba(255,255,255,0.15); background:rgba(255,255,255,0.04); }
+  .admin-tab.active {
+    background:rgba(252,186,51,0.12); color:var(--gold-bright);
+    border-color:rgba(252,186,51,0.35); font-weight:700;
+  }
+  .admin-tab .tab-dot {
+    width:7px; height:7px; border-radius:50%; flex-shrink:0;
+  }
+
   /* ── Q&R Live styles ── */
   .qr-tab {
     padding:7px 16px; border-radius:7px; border:none; background:transparent;
@@ -8545,9 +8563,9 @@
         <!-- Filtres -->
         <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
           <button class="admin-tab active" id="contact-tab-tous" onclick="contactSetFilter('tous',this)">Tous</button>
-          <button class="admin-tab" id="contact-tab-nouveau" onclick="contactSetFilter('nouveau',this)">🔵 Nouveaux</button>
-          <button class="admin-tab" id="contact-tab-lu" onclick="contactSetFilter('lu',this)">Lu</button>
-          <button class="admin-tab" id="contact-tab-repondu" onclick="contactSetFilter('repondu',this)">✅ Répondus</button>
+          <button class="admin-tab" id="contact-tab-nouveau" onclick="contactSetFilter('nouveau',this)"><span class="tab-dot" style="background:#4f9cf9;"></span>Nouveaux</button>
+          <button class="admin-tab" id="contact-tab-lu" onclick="contactSetFilter('lu',this)"><span class="tab-dot" style="background:rgba(255,255,255,0.25);"></span>Lus</button>
+          <button class="admin-tab" id="contact-tab-repondu" onclick="contactSetFilter('repondu',this)"><span class="tab-dot" style="background:#5ecb8a;"></span>Répondus</button>
         </div>
 
         <!-- Table messages -->
