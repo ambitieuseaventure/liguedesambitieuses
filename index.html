@@ -7864,7 +7864,7 @@
       <div class="admin-panel" id="admin-panel-bilans-admin">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
           <div style="font-family:'Playfair Display',serif;font-size:17px;color:white;">Bilans & <span style="color:var(--gold-bright);">Audits</span></div>
-          <div style="display:flex;gap:8px;"><select class="admin-select"><option>Tous les statuts</option><option>En attente</option><option>En cours</option><option>Envoyés</option></select></div>
+          <div style="display:flex;gap:8px;"><select id="bilan-filter" class="admin-select" onchange="bilanAdminRender()"><option value="tous">Tous les statuts</option><option value="attente">En attente</option><option value="envoye">Envoyés</option></select></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;">
           <div class="admin-stat-card"><div class="admin-stat-val"><em>3</em></div><div class="admin-stat-label">Questionnaires à analyser</div><div style="font-size:11px;color:#ff7070;margin-top:4px;">↑ Action requise</div></div>
@@ -7874,27 +7874,142 @@
         <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;">
           <table class="admin-table">
             <thead><tr><th>Membre</th><th>Type</th><th>Soumis le</th><th>Statut</th><th>Actions</th></tr></thead>
-            <tbody>
-              <tr style="background:rgba(252,186,51,0.04);">
-                <td><div class="member-cell"><div class="member-avatar" style="background:linear-gradient(135deg,#a8d4b0,#7ebf8a);">E</div><div><div style="font-size:13px;font-weight:600;color:white;">Emma Rousseau</div></div></div></td>
-                <td>📋 Bilan mensuel</td><td>6 mars</td>
-                <td><span class="admin-pill admin-pill-pending">À analyser</span></td>
-                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">Voir questionnaire</button><button class="admin-action-btn" style="background:rgba(110,207,158,0.12);color:#6ecf9e;border:none;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;">Envoyer bilan</button></div></td>
-              </tr>
-              <tr style="background:rgba(252,186,51,0.04);">
-                <td><div class="member-cell"><div class="member-avatar" style="background:linear-gradient(135deg,#d4a8c8,#c490b8);">A</div><div><div style="font-size:13px;font-weight:600;color:white;">Alice Martin</div></div></div></td>
-                <td>⚡ Audit express</td><td>5 mars</td>
-                <td><span class="admin-pill admin-pill-pending">À analyser</span></td>
-                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">Voir questionnaire</button><button class="admin-action-btn" style="background:rgba(110,207,158,0.12);color:#6ecf9e;border:none;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;">Envoyer bilan</button></div></td>
-              </tr>
-              <tr>
-                <td><div class="member-cell"><div class="member-avatar" style="background:linear-gradient(135deg,#ebc14c,#fcba33);">S</div><div><div style="font-size:13px;font-weight:600;color:white;">Sophie Andreu</div></div></div></td>
-                <td>📋 Bilan mensuel</td><td>1 mars</td>
-                <td><span class="admin-pill admin-pill-active">Envoyé ✓</span></td>
-                <td><button class="admin-action-btn admin-action-btn-ghost">Voir bilan</button></td>
-              </tr>
-            </tbody>
+            <tbody id="bilan-admin-tbody"></tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- ── BILAN REPLY MODAL ── -->
+      <div id="bilan-reply-modal" onclick="if(event.target===this)bilanCloseReply()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:9999;align-items:flex-start;justify-content:center;padding:24px 20px;overflow-y:auto;">
+        <div style="background:#111f2e;border:1px solid rgba(255,255,255,0.1);border-radius:20px;width:680px;max-width:96vw;box-shadow:0 40px 100px rgba(0,0,0,0.85);margin:auto;">
+
+          <!-- Header -->
+          <div style="padding:20px 26px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div id="ba-modal-avatar" class="member-avatar" style="width:42px;height:42px;font-size:16px;flex-shrink:0;"></div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:white;" id="ba-modal-name">—</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.35);" id="ba-modal-type-label">—</div>
+              </div>
+            </div>
+            <button onclick="bilanCloseReply()" style="width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-size:17px;line-height:1;transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='transparent'">×</button>
+          </div>
+
+          <!-- Questionnaire recap -->
+          <div style="padding:18px 26px 0;">
+            <div id="ba-modal-questionnaire" style="background:rgba(255,255,255,0.04);border-left:3px solid rgba(252,186,51,0.35);border-radius:0 10px 10px 0;padding:14px 16px;max-height:200px;overflow-y:auto;"></div>
+          </div>
+
+          <!-- Tabs -->
+          <div style="padding:18px 26px 0;">
+            <div style="display:flex;gap:4px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:4px;width:fit-content;">
+              <button class="hl-reply-tab active" id="ba-tab-ecrit"    onclick="baSwitchTab('ecrit',this)">✍️ Message écrit</button>
+              <button class="hl-reply-tab"        id="ba-tab-fichiers" onclick="baSwitchTab('fichiers',this)">📎 Documents & Vidéos</button>
+              <button class="hl-reply-tab"        id="ba-tab-vocal"    onclick="baSwitchTab('vocal',this)">🎙️ Vocal</button>
+            </div>
+          </div>
+
+          <!-- ── TAB ÉCRIT ── -->
+          <div id="ba-panel-ecrit" style="padding:18px 26px;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.35);font-weight:700;margin-bottom:10px;">Répondre par message écrit</div>
+            <div style="display:flex;gap:8px;margin-bottom:14px;">
+              <button class="hl-author-btn ba-author-btn active" data-author="Audrey" onclick="baSelectAuthor(this,'Audrey')">✦ Audrey</button>
+              <button class="hl-author-btn ba-author-btn"        data-author="Ana"    onclick="baSelectAuthor(this,'Ana')">✦ Ana</button>
+            </div>
+            <textarea id="ba-text-input" placeholder="Ton analyse, tes recommandations, tes observations personnalisées…" rows="7" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;resize:none;box-sizing:border-box;line-height:1.65;transition:border-color .2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+            <div style="display:flex;justify-content:flex-end;margin-top:12px;">
+              <button onclick="baSendText()" class="admin-btn-gold" style="font-size:13px;padding:10px 24px;">Envoyer ✦</button>
+            </div>
+          </div>
+
+          <!-- ── TAB FICHIERS ── -->
+          <div id="ba-panel-fichiers" style="display:none;padding:18px 26px;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.35);font-weight:700;margin-bottom:10px;">Envoyer des documents ou vidéos</div>
+            <div style="display:flex;gap:8px;margin-bottom:14px;">
+              <button class="hl-author-btn ba-author-btn active" data-author="Audrey" onclick="baSelectAuthor(this,'Audrey')">✦ Audrey</button>
+              <button class="hl-author-btn ba-author-btn"        data-author="Ana"    onclick="baSelectAuthor(this,'Ana')">✦ Ana</button>
+            </div>
+            <textarea id="ba-file-note" placeholder="Message accompagnant les fichiers — optionnel" rows="3" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;resize:none;box-sizing:border-box;margin-bottom:12px;transition:border-color .2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+            <div id="ba-dropzone"
+              style="border:2px dashed rgba(252,186,51,0.25);border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(252,186,51,0.03);margin-bottom:10px;"
+              ondragover="event.preventDefault();this.style.borderColor='rgba(252,186,51,0.6)';this.style.background='rgba(252,186,51,0.08)'"
+              ondragleave="this.style.borderColor='rgba(252,186,51,0.25)';this.style.background='rgba(252,186,51,0.03)'"
+              ondrop="baFileDrop(event)"
+              onclick="document.getElementById('ba-file-input').click()"
+              onmouseover="this.style.borderColor='rgba(252,186,51,0.5)';this.style.background='rgba(252,186,51,0.06)'"
+              onmouseout="this.style.borderColor='rgba(252,186,51,0.25)';this.style.background='rgba(252,186,51,0.03)'">
+              <div style="font-size:32px;margin-bottom:10px;">📎</div>
+              <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.55);">Clique ou glisse tes fichiers ici</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">PDF · Vidéo · Images · Word · Excel · max 50 Mo par fichier</div>
+              <input type="file" id="ba-file-input" multiple accept="*/*" style="display:none;" onchange="baFileAdd(event)">
+            </div>
+            <div id="ba-file-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"></div>
+            <div id="ba-send-files-btn" style="display:none;justify-content:flex-end;">
+              <button onclick="baSendFiles()" class="admin-btn-gold" style="font-size:13px;padding:10px 24px;">Envoyer les fichiers ✦</button>
+            </div>
+          </div>
+
+          <!-- ── TAB VOCAL ── -->
+          <div id="ba-panel-vocal" style="display:none;padding:18px 26px;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.35);font-weight:700;margin-bottom:10px;">Répondre par message vocal</div>
+            <div style="display:flex;gap:8px;margin-bottom:20px;">
+              <button class="hl-author-btn ba-author-btn active" data-author="Audrey" onclick="baSelectAuthor(this,'Audrey')">✦ Audrey</button>
+              <button class="hl-author-btn ba-author-btn"        data-author="Ana"    onclick="baSelectAuthor(this,'Ana')">✦ Ana</button>
+            </div>
+            <!-- Idle -->
+            <div id="ba-rec-idle" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:32px;text-align:center;">
+              <div style="font-size:44px;margin-bottom:14px;">🎙️</div>
+              <div style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.6);margin-bottom:6px;">Enregistre ton message vocal</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:24px;">Appuie sur le bouton · Max 3 minutes</div>
+              <button onclick="baStartRec()" style="width:72px;height:72px;border-radius:50%;border:none;background:linear-gradient(135deg,#ff5858,#e03030);color:white;font-size:28px;cursor:pointer;box-shadow:0 6px 24px rgba(255,70,70,0.45);transition:transform .15s;margin:0 auto;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">🎙</button>
+            </div>
+            <!-- Recording -->
+            <div id="ba-rec-recording" style="display:none;background:rgba(255,70,70,0.06);border:1px solid rgba(255,70,70,0.25);border-radius:14px;padding:26px;text-align:center;">
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px;">
+                <div style="width:9px;height:9px;border-radius:50%;background:#ff5858;animation:pulse .8s infinite;flex-shrink:0;"></div>
+                <span style="font-size:13px;font-weight:700;color:#ff9090;" id="ba-rec-status-lbl">Enregistrement en cours…</span>
+              </div>
+              <div id="ba-waveform" style="display:flex;align-items:center;justify-content:center;gap:3px;height:44px;margin-bottom:18px;">
+                <div class="hl-wave-bar"></div><div class="hl-wave-bar"></div><div class="hl-wave-bar"></div>
+                <div class="hl-wave-bar"></div><div class="hl-wave-bar"></div><div class="hl-wave-bar"></div>
+                <div class="hl-wave-bar"></div><div class="hl-wave-bar"></div><div class="hl-wave-bar"></div>
+                <div class="hl-wave-bar"></div><div class="hl-wave-bar"></div><div class="hl-wave-bar"></div>
+                <div class="hl-wave-bar"></div><div class="hl-wave-bar"></div><div class="hl-wave-bar"></div>
+                <div class="hl-wave-bar"></div><div class="hl-wave-bar"></div><div class="hl-wave-bar"></div>
+              </div>
+              <div style="font-family:'Playfair Display',serif;font-size:34px;color:white;margin-bottom:20px;letter-spacing:.04em;" id="ba-rec-timer">0:00</div>
+              <div style="display:flex;justify-content:center;gap:10px;">
+                <button id="ba-pause-btn" onclick="baPauseRec()" style="padding:9px 20px;border-radius:9px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">⏸ Pause</button>
+                <button onclick="baCancelRec()" style="padding:9px 20px;border-radius:9px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:rgba(255,255,255,0.35);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">✕ Annuler</button>
+                <button onclick="baStopRec()" style="padding:9px 22px;border-radius:9px;border:none;background:rgba(255,70,70,0.2);color:#ff9090;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(255,70,70,0.35)'" onmouseout="this.style.background='rgba(255,70,70,0.2)'">⏹ Terminer</button>
+              </div>
+            </div>
+            <!-- Preview -->
+            <div id="ba-rec-preview" style="display:none;background:rgba(110,207,158,0.05);border:1px solid rgba(110,207,158,0.2);border-radius:14px;padding:22px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#6ecf9e;flex-shrink:0;"></div>
+                <span style="font-size:12px;font-weight:600;color:#6ecf9e;">Message enregistré · <span id="ba-preview-dur">0:00</span></span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.05);border-radius:10px;padding:10px 14px;margin-bottom:16px;">
+                <button id="ba-play-btn" onclick="baTogglePlay()" style="width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.7);font-size:12px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">▶</button>
+                <div style="flex:1;height:4px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;">
+                  <div id="ba-progress-bar" style="height:100%;background:var(--gold-bright);border-radius:4px;width:0%;transition:width .08s linear;"></div>
+                </div>
+                <span style="font-size:11px;color:rgba(255,255,255,0.35);min-width:30px;text-align:right;" id="ba-elapsed-lbl">0:00</span>
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button onclick="baCancelRec()" style="flex:1;padding:10px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.45);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.25)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">🔄 Ré-enregistrer</button>
+                <button onclick="baSendVoice()" class="admin-btn-gold" style="flex:2;font-size:13px;padding:10px 20px;">Envoyer le vocal ✦</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Réponses déjà envoyées -->
+          <div id="ba-replies-section" style="display:none;padding:0 26px 26px;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:700;margin-bottom:10px;padding-top:4px;border-top:1px solid rgba(255,255,255,0.06);">Réponses déjà envoyées</div>
+            <div id="ba-replies-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+          </div>
+
         </div>
       </div>
 
@@ -11837,6 +11952,394 @@
     });
   }
 
+  // ── BILANS & AUDITS ADMIN ──
+
+  var bilanSubmissions = [
+    {
+      id:'ba1', name:'Emma Rousseau', initial:'E', avatarBg:'linear-gradient(135deg,#a8d4b0,#7ebf8a)',
+      type:'mensuel', date:'6 mars', status:'pending',
+      questionnaire:{ victoire:'J\'ai signé mon premier client à 2 500€', ca:'4 200€', blocage:'Être régulière sur la création de contenu', sentiment:'😊 6-7', focus:'LinkedIn et prospection entrante' },
+      replies:[]
+    },
+    {
+      id:'ba2', name:'Alice Martin', initial:'A', avatarBg:'linear-gradient(135deg,#d4a8c8,#c490b8)',
+      type:'audit', date:'5 mars', status:'pending',
+      questionnaire:{ auditType:'Page de vente', soumis:'Ma page de vente coaching 3 mois · monsite.fr/coaching', analyse:'Mon copywriting est-il assez percutant pour mon ICP ?' },
+      replies:[]
+    },
+    {
+      id:'ba3', name:'Sophie Andreu', initial:'S', avatarBg:'linear-gradient(135deg,#ebc14c,#fcba33)',
+      type:'mensuel', date:'1 mars', status:'sent',
+      questionnaire:{ victoire:'J\'ai augmenté mes prix de 30%', ca:'6 800€', blocage:'Délégation et organisation interne', sentiment:'🔥 8-9', focus:'Automatiser ma prospection' },
+      replies:[{ id:'br1', author:'Audrey', type:'written', date:'2 mars 2026', text:'Bravo Sophie pour ce mois exceptionnel ! Tes résultats parlent d\'eux-mêmes. Pour la délégation, je te propose de commencer par cartographier tes 5 tâches les plus chronophages et d\'identifier celles qui peuvent être externalisées.' }]
+    }
+  ];
+
+  var baCurrentId     = null;
+  var baCurrentAuthor = 'Audrey';
+  var baTempFiles     = [];
+  // Vars enregistrement vocal
+  var baMediaRecorder = null;
+  var baAudioChunks   = [];
+  var baAudioBlob     = null;
+  var baAudioEl       = null;
+  var baRecInterval   = null;
+  var baWaveInterval  = null;
+  var baPlayInterval  = null;
+  var baRecSeconds    = 0;
+  var baIsPaused      = false;
+  var baIsSimulated   = false;
+
+  // ── Rendu tableau admin ──
+  function bilanAdminRender() {
+    var filter = (document.getElementById('bilan-filter') || {}).value || 'tous';
+    var tbody = document.getElementById('bilan-admin-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    var list = bilanSubmissions.filter(function(b){
+      if (filter === 'attente') return b.status === 'pending';
+      if (filter === 'envoye')  return b.status === 'sent';
+      return true;
+    });
+    if (!list.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:rgba(255,255,255,0.2);font-size:13px;">Aucun formulaire dans cette catégorie</td></tr>';
+      return;
+    }
+    list.forEach(function(b){
+      var tr = document.createElement('tr');
+      if (b.status === 'pending') tr.style.background = 'rgba(252,186,51,0.04)';
+      var typeLbl = b.type === 'mensuel' ? '📋 Bilan mensuel' : '⚡ Audit express';
+      var statusHtml = b.status === 'sent'
+        ? '<span class="admin-pill admin-pill-active">Envoyé ✓</span>'
+        : '<span class="admin-pill admin-pill-pending">À analyser</span>';
+      var actionsHtml = b.status === 'sent'
+        ? '<button class="admin-action-btn admin-action-btn-ghost" onclick="bilanOpenReply(\''+b.id+'\')">👁 Voir & Répondre</button>'
+        : '<button class="admin-action-btn admin-action-btn-ghost" onclick="bilanOpenReply(\''+b.id+'\')">📋 Voir questionnaire</button>'
+          +'<button class="admin-action-btn" style="background:rgba(110,207,158,0.12);color:#6ecf9e;border:none;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;" onclick="bilanOpenReply(\''+b.id+'\')">✦ Envoyer bilan</button>';
+      tr.innerHTML =
+        '<td><div class="member-cell"><div class="member-avatar" style="background:'+b.avatarBg+';">'+b.initial+'</div>'
+        +'<div><div style="font-size:13px;font-weight:600;color:white;">'+b.name+'</div></div></div></td>'
+        +'<td>'+typeLbl+'</td>'
+        +'<td>'+b.date+'</td>'
+        +'<td>'+statusHtml+'</td>'
+        +'<td><div style="display:flex;gap:6px;">'+actionsHtml+'</div></td>';
+      tbody.appendChild(tr);
+    });
+    // Stats
+    var pending = bilanSubmissions.filter(function(b){ return b.status==='pending'; }).length;
+    var statEl = document.querySelector('#admin-panel-bilans-admin .admin-stat-val em');
+    if (statEl) statEl.textContent = pending;
+  }
+
+  // ── Ouvrir modale ──
+  function bilanOpenReply(id) {
+    baCurrentId     = id;
+    baCurrentAuthor = 'Audrey';
+    baTempFiles     = [];
+    var b = bilanSubmissions.find(function(x){ return x.id===id; });
+    if (!b) return;
+    document.getElementById('ba-modal-avatar').style.background = b.avatarBg;
+    document.getElementById('ba-modal-avatar').textContent      = b.initial;
+    document.getElementById('ba-modal-name').textContent        = b.name;
+    document.getElementById('ba-modal-type-label').textContent  =
+      (b.type==='mensuel' ? '📋 Bilan mensuel' : '⚡ Audit express') + ' · soumis le ' + b.date;
+    document.getElementById('ba-modal-questionnaire').innerHTML =
+      baRenderQuestionnaireHtml(b.questionnaire, b.type);
+    baRenderReplies(b);
+    document.getElementById('ba-text-input').value  = '';
+    document.getElementById('ba-file-note').value   = '';
+    baRenderFileList();
+    baSwitchTab('ecrit', document.getElementById('ba-tab-ecrit'));
+    baCancelRec();
+    document.querySelectorAll('.ba-author-btn').forEach(function(btn){
+      btn.classList.toggle('active', btn.dataset.author === 'Audrey');
+    });
+    var modal = document.getElementById('bilan-reply-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function bilanCloseReply() {
+    document.getElementById('bilan-reply-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    baCleanupRecorder();
+    baCurrentId = null;
+    baTempFiles = [];
+  }
+
+  // ── Onglets ──
+  function baSwitchTab(tab, btn) {
+    ['ecrit','fichiers','vocal'].forEach(function(t){
+      var p = document.getElementById('ba-panel-'+t);
+      var b = document.getElementById('ba-tab-'+t);
+      if (p) p.style.display = 'none';
+      if (b) b.classList.remove('active');
+    });
+    var panel = document.getElementById('ba-panel-'+tab);
+    if (panel) panel.style.display = 'block';
+    if (btn)   btn.classList.add('active');
+  }
+
+  function baSelectAuthor(btn, name) {
+    var container = btn.closest('[id^="ba-panel"]');
+    if (container) container.querySelectorAll('.ba-author-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    baCurrentAuthor = name;
+  }
+
+  // ── Envoi texte ──
+  function baSendText() {
+    var ta = document.getElementById('ba-text-input');
+    var text = ta ? ta.value.trim() : '';
+    if (!text) { if (ta) ta.focus(); return; }
+    bilanMarkReplied(baCurrentId, 'written', baCurrentAuthor, text, []);
+    bilanCloseReply();
+  }
+
+  // ── Envoi fichiers ──
+  function baSendFiles() {
+    if (!baTempFiles.length) { finToast('⚠ Ajoute au moins un fichier', 'rgba(255,160,60,0.9)'); return; }
+    var note = (document.getElementById('ba-file-note') || {}).value || '';
+    bilanMarkReplied(baCurrentId, 'fichiers', baCurrentAuthor, note.trim(), baTempFiles.slice());
+    bilanCloseReply();
+  }
+
+  function baFileDrop(e) {
+    e.preventDefault();
+    var dz = document.getElementById('ba-dropzone');
+    if (dz) { dz.style.borderColor='rgba(252,186,51,0.25)'; dz.style.background='rgba(252,186,51,0.03)'; }
+    baAddFiles(e.dataTransfer.files);
+  }
+
+  function baFileAdd(e) { baAddFiles(e.target.files); e.target.value=''; }
+
+  function baAddFiles(files) {
+    Array.from(files).forEach(function(file){
+      if (file.size > 50*1024*1024) { finToast('⚠ "'+file.name+'" trop lourd (max 50 Mo)', 'rgba(255,160,60,0.9)'); return; }
+      var reader = new FileReader();
+      reader.onload = function(ev){
+        baTempFiles.push({
+          name: file.name, size: file.size, type: file.type, dataUrl: ev.target.result,
+          isVideo: file.type.startsWith('video/'),
+          isImage: file.type.startsWith('image/'),
+          isPdf:   file.type === 'application/pdf'
+        });
+        baRenderFileList();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function baFileRemove(idx) { baTempFiles.splice(idx,1); baRenderFileList(); }
+
+  function baFormatSize(bytes) {
+    if (bytes < 1024) return bytes+' o';
+    if (bytes < 1024*1024) return Math.round(bytes/1024)+' Ko';
+    return (bytes/(1024*1024)).toFixed(1)+' Mo';
+  }
+
+  function baRenderFileList() {
+    var list = document.getElementById('ba-file-list');
+    if (!list) return;
+    list.innerHTML = '';
+    baTempFiles.forEach(function(f, idx){
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:9px;';
+      var icon = f.isPdf ? '📄' : f.isVideo ? '🎬' : f.isImage ? '🖼' : '📎';
+      var preview = f.isImage
+        ? '<img src="'+f.dataUrl+'" style="width:36px;height:36px;object-fit:cover;border-radius:6px;flex-shrink:0;">'
+        : '<div style="width:36px;height:36px;background:rgba(255,255,255,0.06);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">'+icon+'</div>';
+      row.innerHTML = preview
+        +'<div style="flex:1;min-width:0;">'
+          +'<div style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+f.name+'</div>'
+          +'<div style="font-size:11px;color:rgba(255,255,255,0.3);">'+baFormatSize(f.size)+'</div>'
+        +'</div>'
+        +'<button onclick="baFileRemove('+idx+')" style="width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);cursor:pointer;font-size:15px;line-height:1;flex-shrink:0;transition:all .2s;" onmouseover="this.style.background=\'rgba(255,70,70,0.15)\';this.style.color=\'#ff9090\'" onmouseout="this.style.background=\'transparent\';this.style.color=\'rgba(255,255,255,0.4)\'">×</button>';
+      list.appendChild(row);
+    });
+    var sendBtn = document.getElementById('ba-send-files-btn');
+    if (sendBtn) sendBtn.style.display = baTempFiles.length ? 'flex' : 'none';
+  }
+
+  // ── Marquer comme envoyé ──
+  function bilanMarkReplied(id, type, author, text, files) {
+    var b = bilanSubmissions.find(function(x){ return x.id===id; });
+    if (!b) return;
+    var now = new Date();
+    var months = ['janv.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+    var dateStr = now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+    var reply = { id:'br_'+Date.now(), author:author, type:type, date:dateStr };
+    if (type === 'written') { reply.text = text; }
+    else if (type === 'fichiers') { reply.text = text; reply.files = files; }
+    else if (type === 'vocal') { reply.duration = baRecSeconds; }
+    b.replies.push(reply);
+    b.status = 'sent';
+    bilanAdminRender();
+    finToast('✓ Bilan envoyé à '+b.name+' !', '#6ecf9e');
+  }
+
+  // ── Helpers questionnaire ──
+  function baQRow(label, val) {
+    return '<div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);">'+label+' : </span>'
+      +'<span style="font-size:12px;color:rgba(255,255,255,0.78);">'+val+'</span></div>';
+  }
+
+  function baRenderQuestionnaireHtml(q, type) {
+    var header = '<div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;">'
+      +(type==='mensuel' ? 'Questionnaire mensuel reçu' : 'Audit Express — demande reçue')+'</div>';
+    if (type === 'mensuel') return header + baQRow('🏆 Victoire du mois', q.victoire) + baQRow('💰 CA du mois', q.ca) + baQRow('🧱 Principal blocage', q.blocage) + baQRow('💭 Sentiment', q.sentiment) + baQRow('🎯 Focus demandé', q.focus);
+    return header + baQRow('📋 Type d\'audit', q.auditType) + baQRow('📎 Élément soumis', q.soumis) + baQRow('🔍 Point à analyser', q.analyse);
+  }
+
+  function baRenderReplies(b) {
+    var section = document.getElementById('ba-replies-section');
+    var list    = document.getElementById('ba-replies-list');
+    if (!section || !list) return;
+    if (!b.replies || !b.replies.length) { section.style.display='none'; return; }
+    section.style.display = 'block';
+    list.innerHTML = '';
+    b.replies.forEach(function(r){
+      var div = document.createElement('div');
+      div.style.cssText = 'background:rgba(110,207,158,0.06);border:1px solid rgba(110,207,158,0.2);border-radius:10px;padding:14px 16px;';
+      var icon = r.type==='vocal' ? '🎙️' : r.type==='fichiers' ? '📎' : '✍️';
+      var typeLabel = r.type==='vocal' ? 'message vocal' : r.type==='fichiers' ? 'document(s)' : 'message écrit';
+      var html = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">'
+        +'<span style="font-size:11px;font-weight:700;color:#6ecf9e;">'+icon+' Réponse de '+r.author+' · '+typeLabel+'</span>'
+        +'<span style="font-size:11px;color:rgba(255,255,255,0.3);">'+r.date+'</span>'
+        +'</div>';
+      if (r.text) html += '<div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;">'+r.text+'</div>';
+      if (r.files && r.files.length) r.files.forEach(function(f){
+        var ic = f.isPdf ? '📄' : f.isVideo ? '🎬' : f.isImage ? '🖼' : '📎';
+        html += '<div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.5);margin-top:6px;">'+ic+' '+f.name+' · '+baFormatSize(f.size)+'</div>';
+      });
+      if (r.type==='vocal') html += '<div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;">🎙️ Durée : '+baFmt(r.duration||0)+'</div>';
+      div.innerHTML = html;
+      list.appendChild(div);
+    });
+  }
+
+  // ── Vocal bilan ──
+  function baFmt(s){ return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
+
+  function baShowRecState(state) {
+    ['ba-rec-idle','ba-rec-recording','ba-rec-preview'].forEach(function(id){
+      var el = document.getElementById(id); if (el) el.style.display='none';
+    });
+    var t = document.getElementById('ba-rec-'+state); if (t) t.style.display='block';
+  }
+
+  function baAnimateWave(active) {
+    clearInterval(baWaveInterval);
+    var bars = document.querySelectorAll('#ba-waveform .hl-wave-bar');
+    if (!active) { bars.forEach(function(b){ b.style.height='4px'; b.style.opacity='0.3'; }); return; }
+    baWaveInterval = setInterval(function(){
+      bars.forEach(function(b){ b.style.height=(Math.floor(Math.random()*36)+4)+'px'; b.style.opacity='1'; });
+    }, 110);
+  }
+
+  function baBeginTimer() {
+    baRecSeconds=0; baIsPaused=false;
+    baShowRecState('recording'); baAnimateWave(true);
+    var timerEl = document.getElementById('ba-rec-timer');
+    if (timerEl) timerEl.textContent='0:00';
+    baRecInterval = setInterval(function(){
+      if (baIsPaused) return;
+      baRecSeconds++;
+      if (timerEl) timerEl.textContent=baFmt(baRecSeconds);
+      if (baRecSeconds >= 180) baStopRec();
+    }, 1000);
+  }
+
+  function baStartRec() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { baIsSimulated=true; baAudioBlob='simulated'; baBeginTimer(); return; }
+    navigator.mediaDevices.getUserMedia({ audio:true }).then(function(stream){
+      baIsSimulated=false; baAudioChunks=[];
+      baMediaRecorder = new MediaRecorder(stream);
+      baMediaRecorder.ondataavailable = function(e){ if(e.data&&e.data.size>0) baAudioChunks.push(e.data); };
+      baMediaRecorder.onstop = function(){
+        baAudioBlob = new Blob(baAudioChunks, { type:'audio/webm' });
+        baAudioEl = new Audio(URL.createObjectURL(baAudioBlob));
+        baAudioEl.onended = function(){ var b=document.getElementById('ba-play-btn'); if(b) b.textContent='▶'; clearInterval(baPlayInterval); };
+        stream.getTracks().forEach(function(t){ t.stop(); });
+        baShowPreviewState();
+      };
+      baMediaRecorder.start(100); baBeginTimer();
+    }).catch(function(){ baIsSimulated=true; baAudioBlob='simulated'; baBeginTimer(); });
+  }
+
+  function baPauseRec() {
+    var btn=document.getElementById('ba-pause-btn'), lbl=document.getElementById('ba-rec-status-lbl');
+    if (!baIsPaused) {
+      baIsPaused=true;
+      if (baMediaRecorder&&baMediaRecorder.state==='recording') baMediaRecorder.pause();
+      if (btn) btn.textContent='▶ Reprendre'; if (lbl) lbl.textContent='En pause…'; baAnimateWave(false);
+    } else {
+      baIsPaused=false;
+      if (baMediaRecorder&&baMediaRecorder.state==='paused') baMediaRecorder.resume();
+      if (btn) btn.textContent='⏸ Pause'; if (lbl) lbl.textContent='Enregistrement en cours…'; baAnimateWave(true);
+    }
+  }
+
+  function baStopRec() {
+    clearInterval(baRecInterval); baRecInterval=null; baAnimateWave(false);
+    if (baIsSimulated) { baShowPreviewState(); return; }
+    if (baMediaRecorder&&baMediaRecorder.state!=='inactive') baMediaRecorder.stop();
+    else baShowPreviewState();
+  }
+
+  function baCancelRec() { baCleanupRecorder(); baShowRecState('idle'); }
+
+  function baCleanupRecorder() {
+    clearInterval(baRecInterval);  baRecInterval=null;
+    clearInterval(baWaveInterval); baWaveInterval=null;
+    clearInterval(baPlayInterval); baPlayInterval=null;
+    if (baMediaRecorder&&baMediaRecorder.state!=='inactive') { try{ baMediaRecorder.stop(); }catch(e){} }
+    if (baAudioEl) { baAudioEl.pause(); baAudioEl=null; }
+    baAudioBlob=null; baAudioChunks=[]; baRecSeconds=0; baIsPaused=false; baIsSimulated=false; baMediaRecorder=null;
+  }
+
+  function baShowPreviewState() {
+    baShowRecState('preview');
+    var dur=document.getElementById('ba-preview-dur'); if(dur) dur.textContent=baFmt(baRecSeconds);
+    var el=document.getElementById('ba-elapsed-lbl');  if(el)  el.textContent='0:00';
+    var bar=document.getElementById('ba-progress-bar'); if(bar) bar.style.width='0%';
+    var btn=document.getElementById('ba-play-btn');     if(btn) btn.textContent='▶';
+  }
+
+  function baTogglePlay() {
+    var btn=document.getElementById('ba-play-btn');
+    if (baIsSimulated||!baAudioEl) {
+      if (baPlayInterval) { clearInterval(baPlayInterval); baPlayInterval=null; if(btn) btn.textContent='▶'; return; }
+      if (btn) btn.textContent='⏸';
+      var elapsed=0;
+      baPlayInterval=setInterval(function(){
+        elapsed++;
+        var pct=baRecSeconds>0?Math.min(100,elapsed/baRecSeconds*100):0;
+        var bar=document.getElementById('ba-progress-bar'), lbl=document.getElementById('ba-elapsed-lbl');
+        if(bar) bar.style.width=pct+'%'; if(lbl) lbl.textContent=baFmt(elapsed);
+        if(elapsed>=baRecSeconds){ clearInterval(baPlayInterval); baPlayInterval=null; if(btn) btn.textContent='▶'; }
+      }, 1000);
+      return;
+    }
+    if (baAudioEl.paused) {
+      baAudioEl.play(); if(btn) btn.textContent='⏸';
+      baPlayInterval=setInterval(function(){
+        if(!baAudioEl||baAudioEl.paused) return;
+        var pct=baAudioEl.duration?baAudioEl.currentTime/baAudioEl.duration*100:0;
+        var bar=document.getElementById('ba-progress-bar'), lbl=document.getElementById('ba-elapsed-lbl');
+        if(bar) bar.style.width=pct+'%'; if(lbl) lbl.textContent=baFmt(Math.floor(baAudioEl.currentTime));
+      }, 100);
+    } else {
+      baAudioEl.pause(); if(btn) btn.textContent='▶'; clearInterval(baPlayInterval); baPlayInterval=null;
+    }
+  }
+
+  function baSendVoice() {
+    if (!baAudioBlob) return;
+    bilanMarkReplied(baCurrentId, 'vocal', baCurrentAuthor, '', []);
+    bilanCloseReply();
+  }
+
   // ── HOTLINE BUSINESS ──
   var hlCurrentId     = null;
   var hlCurrentMsg    = '';
@@ -12202,6 +12705,9 @@
   }
 
   document.addEventListener('DOMContentLoaded', function(){
+    bilanAdminRender();
+    var bm = document.getElementById('bilan-reply-modal');
+    if (bm) bm.addEventListener('click', function(e){ if(e.target===bm) bilanCloseReply(); });
     var modal = document.getElementById('hotline-reply-modal');
     if (modal) modal.addEventListener('click', function(e){ if(e.target===modal) hotlineCloseReply(); });
   });
