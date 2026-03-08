@@ -3090,7 +3090,7 @@
 
     <nav class="pub-nav">
       <div class="pub-nav-inner">
-        <div class="pub-nav-logo">
+        <div class="pub-nav-logo" onclick="showPage('landing')" style="cursor:pointer">
           <img src="assets/image-1.png" alt="Logo">
           <div>
             <span class="pub-brand">Ambitieuse Aventure</span>
@@ -3101,7 +3101,7 @@
           <a href="#" onclick="document.getElementById('pourquoi').scrollIntoView({behavior:'smooth'})">Pourquoi la Ligue ?</a>
           <a href="#" onclick="document.getElementById('apropos').scrollIntoView({behavior:'smooth'})">Notre histoire</a>
           <a href="#" onclick="document.getElementById('inclus').scrollIntoView({behavior:'smooth'})">Ce qui est inclus</a>
-          <a href="#" onclick="document.getElementById('garantie').scrollIntoView({behavior:'smooth'})">Notre garantie</a>
+          <a href="#" onclick="document.getElementById('offre').scrollIntoView({behavior:'smooth'})">Tarifs</a>
           <a href="#" onclick="showPage('blog')">Blog</a>
           <a href="#" onclick="showPage('bibliotheque')">La Bibliothèque</a>
           <a href="#" onclick="showPage('contact')">Contact</a>
@@ -3481,7 +3481,7 @@
     <!-- Navbar publique -->
     <nav class="pub-nav">
       <div class="pub-nav-inner">
-        <div class="pub-nav-logo">
+        <div class="pub-nav-logo" onclick="showPage('landing')" style="cursor:pointer">
           <img src="assets/image-1.png" alt="Logo">
           <div>
             <span class="pub-brand">Ambitieuse Aventure</span>
@@ -3489,15 +3489,15 @@
           </div>
         </div>
         <div class="pub-nav-links">
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('pourquoi').scrollIntoView({behavior:'smooth'}),50)">Pourquoi la Ligue ?</a>
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('apropos').scrollIntoView({behavior:'smooth'}),50)">Notre histoire</a>
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('inclus').scrollIntoView({behavior:'smooth'}),50)">Ce qui est inclus</a>
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('garantie').scrollIntoView({behavior:'smooth'}),50)">Notre garantie</a>
+          <a href="javascript:void(0)" onclick="navigateTo('pourquoi')">Pourquoi la Ligue ?</a>
+          <a href="javascript:void(0)" onclick="navigateTo('apropos')">Notre histoire</a>
+          <a href="javascript:void(0)" onclick="navigateTo('inclus')">Ce qui est inclus</a>
+          <a href="javascript:void(0)" onclick="navigateTo('offre')">Tarifs</a>
           <a href="javascript:void(0)" onclick="showPage('blog')" style="color:var(--gold-bright);">Blog</a>
           <a href="javascript:void(0)" onclick="showPage('bibliotheque')">La Bibliothèque</a>
           <a href="javascript:void(0)" onclick="showPage('contact')">Contact</a>
         </div>
-        <button class="btn-primary pub-nav-cta" onclick="showPage('landing');setTimeout(()=>document.getElementById('offre').scrollIntoView({behavior:'smooth'}),50)">Voir les offres →</button>
+        <button class="btn-primary pub-nav-cta" onclick="navigateTo('offre')">Voir les offres →</button>
       </div>
     </nav>
 
@@ -3565,7 +3565,7 @@
     <!-- Navbar publique -->
     <nav class="pub-nav">
       <div class="pub-nav-inner">
-        <div class="pub-nav-logo">
+        <div class="pub-nav-logo" onclick="showPage('landing')" style="cursor:pointer">
           <img src="assets/image-1.png" alt="Logo">
           <div>
             <span class="pub-brand">Ambitieuse Aventure</span>
@@ -3573,15 +3573,15 @@
           </div>
         </div>
         <div class="pub-nav-links">
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('pourquoi').scrollIntoView({behavior:'smooth'}),50)">Pourquoi la Ligue ?</a>
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('apropos').scrollIntoView({behavior:'smooth'}),50)">Notre histoire</a>
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('inclus').scrollIntoView({behavior:'smooth'}),50)">Ce qui est inclus</a>
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('garantie').scrollIntoView({behavior:'smooth'}),50)">Notre garantie</a>
+          <a href="javascript:void(0)" onclick="navigateTo('pourquoi')">Pourquoi la Ligue ?</a>
+          <a href="javascript:void(0)" onclick="navigateTo('apropos')">Notre histoire</a>
+          <a href="javascript:void(0)" onclick="navigateTo('inclus')">Ce qui est inclus</a>
+          <a href="javascript:void(0)" onclick="navigateTo('offre')">Tarifs</a>
           <a href="javascript:void(0)" onclick="showPage('blog')">Blog</a>
           <a href="javascript:void(0)" onclick="showPage('bibliotheque')" style="color:var(--gold-bright);">La Bibliothèque</a>
           <a href="javascript:void(0)" onclick="showPage('contact')">Contact</a>
         </div>
-        <button class="btn-primary pub-nav-cta" onclick="showPage('landing');setTimeout(()=>document.getElementById('offre').scrollIntoView({behavior:'smooth'}),50)">Voir les offres →</button>
+        <button class="btn-primary pub-nav-cta" onclick="navigateTo('offre')">Voir les offres →</button>
       </div>
     </nav>
 
@@ -3678,7 +3678,7 @@
     <!-- Navbar publique -->
     <nav class="pub-nav">
       <div class="pub-nav-inner">
-        <div class="pub-nav-logo">
+        <div class="pub-nav-logo" onclick="showPage('landing')" style="cursor:pointer">
           <img src="assets/image-1.png" alt="Logo">
           <div>
             <span class="pub-brand">Ambitieuse Aventure</span>
@@ -3686,15 +3686,15 @@
           </div>
         </div>
         <div class="pub-nav-links">
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('pourquoi').scrollIntoView({behavior:'smooth'}),50)">Pourquoi la Ligue ?</a>
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('apropos').scrollIntoView({behavior:'smooth'}),50)">Notre histoire</a>
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('inclus').scrollIntoView({behavior:'smooth'}),50)">Ce qui est inclus</a>
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('garantie').scrollIntoView({behavior:'smooth'}),50)">Notre garantie</a>
+          <a href="javascript:void(0)" onclick="navigateTo('pourquoi')">Pourquoi la Ligue ?</a>
+          <a href="javascript:void(0)" onclick="navigateTo('apropos')">Notre histoire</a>
+          <a href="javascript:void(0)" onclick="navigateTo('inclus')">Ce qui est inclus</a>
+          <a href="javascript:void(0)" onclick="navigateTo('offre')">Tarifs</a>
           <a href="javascript:void(0)" onclick="showPage('blog')">Blog</a>
           <a href="javascript:void(0)" onclick="showPage('bibliotheque')">La Bibliothèque</a>
           <a href="javascript:void(0)" onclick="showPage('contact')" style="color:var(--gold-bright);">Contact</a>
         </div>
-        <button class="btn-primary pub-nav-cta" onclick="showPage('landing');setTimeout(()=>document.getElementById('offre').scrollIntoView({behavior:'smooth'}),50)">Voir les offres →</button>
+        <button class="btn-primary pub-nav-cta" onclick="navigateTo('offre')">Voir les offres →</button>
       </div>
     </nav>
 
@@ -9284,6 +9284,14 @@
     document.querySelectorAll('.prix-a').forEach(el => el.style.display = toggled ? '' : 'none');
     document.getElementById('toggle-label-month').classList.toggle('toggle-active', !toggled);
     document.getElementById('toggle-label-year').classList.toggle('toggle-active', toggled);
+  }
+
+  function navigateTo(sectionId) {
+    showPage('landing');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({behavior: 'smooth'});
+    }));
   }
 
   function showPage(page) {
