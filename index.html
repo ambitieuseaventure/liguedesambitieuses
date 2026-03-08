@@ -9271,6 +9271,14 @@
 
   showPage('dashboard');
 
+  function togglePrix() {
+    const toggled = document.querySelector('.prix-toggle').classList.toggle('toggled');
+    document.querySelectorAll('.prix-m').forEach(el => el.style.display = toggled ? 'none' : '');
+    document.querySelectorAll('.prix-a').forEach(el => el.style.display = toggled ? '' : 'none');
+    document.getElementById('toggle-label-month').classList.toggle('toggle-active', !toggled);
+    document.getElementById('toggle-label-year').classList.toggle('toggle-active', toggled);
+  }
+
   function showPage(page) {
     document.querySelectorAll('.page').forEach(p => {
       p.classList.remove('active');
