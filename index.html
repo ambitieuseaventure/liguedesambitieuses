@@ -2138,21 +2138,66 @@
     .lp-feat-cta:hover { border-color: var(--gold); }
 
     /* TEMOIGNAGES */
-    .lp-temoignages { background: linear-gradient(135deg, var(--navy-darkest), var(--navy)); }
-    .lp-temos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .lp-temo {
-      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px; padding: 28px;
+    /* Badge fondatrices hero */
+    .lp-founding-badge {
+      display: inline-block; font-size: 13px; color: rgba(255,255,255,0.75);
+      background: rgba(252,186,51,0.1); border: 1px solid rgba(252,186,51,0.25);
+      border-radius: 24px; padding: 8px 16px; line-height: 1.4;
     }
-    .lp-temo-featured {
-      background: rgba(252,186,51,0.1); border-color: rgba(252,186,51,0.3);
-      transform: scale(1.03);
+    .lp-founding-badge strong { color: var(--gold-bright); }
+
+    /* PARCOURS */
+    .lp-parcours { background: var(--bg); }
+    .lp-steps {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px;
     }
-    .lp-temo-stars { color: var(--gold); font-size: 16px; margin-bottom: 16px; letter-spacing: 2px; }
-    .lp-temo p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.65; margin-bottom: 20px; font-style: italic; }
-    .lp-temo-author { display: flex; align-items: center; gap: 10px; }
-    .lp-temo-author strong { display: block; font-size: 13px; color: white; }
-    .lp-temo-author span { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .lp-step {
+      background: white; border-radius: 20px; padding: 32px 28px;
+      border: 2px solid rgba(20,36,53,0.07);
+      box-shadow: 0 4px 24px rgba(20,36,53,0.06);
+      display: flex; flex-direction: column; gap: 14px;
+      position: relative;
+    }
+    .lp-step-featured {
+      border-color: var(--gold); box-shadow: 0 8px 40px rgba(252,186,51,0.15);
+    }
+    .lp-step-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--navy-darkest); color: var(--gold-bright);
+      font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      border-radius: 20px; padding: 5px 14px; width: fit-content;
+    }
+    .lp-step-featured .lp-step-badge { background: var(--gold-bright); color: var(--navy-darkest); }
+    .lp-step-icon { font-size: 32px; }
+    .lp-step h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--navy-darkest); margin: 0; }
+    .lp-step p { font-size: 14px; color: var(--text-light); line-height: 1.65; margin: 0; }
+
+    /* GARANTIE */
+    .lp-garantie { background: linear-gradient(135deg, var(--navy-darkest), var(--navy)); padding: 80px 0; }
+    .lp-garantie-inner {
+      max-width: 680px; margin: 0 auto;
+      text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px;
+    }
+    .lp-garantie-shield { font-size: 52px; }
+    .lp-garantie-tag {
+      display: inline-block; background: rgba(252,186,51,0.15); color: var(--gold-bright);
+      border: 1px solid rgba(252,186,51,0.3); border-radius: 20px;
+      padding: 5px 16px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .lp-garantie-title { font-family: 'Playfair Display', serif; font-size: 38px; color: white; margin: 0; }
+    .lp-garantie-title em { color: var(--gold-bright); font-style: italic; }
+    .lp-garantie-text { font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.75; max-width: 580px; }
+    .lp-garantie-founders { display: flex; align-items: center; gap: 20px; margin-top: 8px; }
+    .lp-garantie-founder { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .lp-garantie-founder span { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); }
+    .lp-garantie-et { font-size: 22px; color: var(--gold-bright); font-family: 'Playfair Display', serif; font-style: italic; }
+    .lp-garantie-sign { font-size: 13px; color: rgba(255,255,255,0.4); font-style: italic; margin-top: -8px; }
+    .lp-garantie-cta { margin-top: 8px; padding: 16px 36px; font-size: 16px; }
+
+    @media (max-width: 768px) {
+      .lp-steps { grid-template-columns: 1fr; }
+      .lp-garantie-title { font-size: 28px; }
+    }
 
     /* PRIX */
     .lp-offre { background: var(--bg); }
@@ -3056,7 +3101,7 @@
           <a href="#" onclick="document.getElementById('pourquoi').scrollIntoView({behavior:'smooth'})">Pourquoi la Ligue ?</a>
           <a href="#" onclick="document.getElementById('apropos').scrollIntoView({behavior:'smooth'})">Notre histoire</a>
           <a href="#" onclick="document.getElementById('inclus').scrollIntoView({behavior:'smooth'})">Ce qui est inclus</a>
-          <a href="#" onclick="document.getElementById('temoignages').scrollIntoView({behavior:'smooth'})">Témoignages</a>
+          <a href="#" onclick="document.getElementById('garantie').scrollIntoView({behavior:'smooth'})">Notre garantie</a>
           <a href="#" onclick="showPage('blog')">Blog</a>
           <a href="#" onclick="showPage('bibliotheque')">La Bibliothèque</a>
           <a href="#" onclick="showPage('contact')">Contact</a>
@@ -3076,26 +3121,19 @@
             <button class="btn-ghost-dark" onclick="document.getElementById('inclus').scrollIntoView({behavior:'smooth'})">Voir ce qui est inclus ↓</button>
           </div>
           <div class="lp-social-proof">
-            <div class="lp-avatars">
-              <div class="lp-av" style="background:linear-gradient(135deg,#fcba33,#ebc14c)">M</div>
-              <div class="lp-av" style="background:linear-gradient(135deg,#24425b,#4f85a0)">J</div>
-              <div class="lp-av" style="background:linear-gradient(135deg,#142435,#21374c)">L</div>
-              <div class="lp-av" style="background:linear-gradient(135deg,#fcba33,#f9e38d)">A</div>
-              <div class="lp-av" style="background:linear-gradient(135deg,#4f85a0,#24425b)">S</div>
-            </div>
-            <span><strong>247 ambitieuses</strong> ont d&eacute;j&agrave; rejoint la Ligue</span>
+            <span class="lp-founding-badge">✦ Fais partie des <strong>premières Ambitieuses</strong> &mdash; places fondatrices ouvertes</span>
           </div>
         </div>
         <div class="lp-hero-right">
           <div class="lp-hero-img-wrap">
             <img src="assets/image-2.png" alt="La Ligue des Ambitieuses" class="lp-hero-img">
             <div class="lp-floating-card lp-fc-top">
-              <span class="lp-fc-icon">🎉</span>
-              <div><strong>Marie-Lou vient de signer</strong><span>son 5ème client grâce à la Ligue</span></div>
+              <span class="lp-fc-icon">🎁</span>
+              <div><strong>7 jours d'essai offerts</strong><span>annule sans justification</span></div>
             </div>
             <div class="lp-floating-card lp-fc-bot">
-              <span class="lp-fc-icon">🔥</span>
-              <div><strong>+14 nouvelles membres</strong><span>ce mois-ci</span></div>
+              <span class="lp-fc-icon">📚</span>
+              <div><strong>34 ressources · 18 masterclass</strong><span>accessibles dès ton inscription</span></div>
             </div>
           </div>
         </div>
@@ -3104,12 +3142,12 @@
     </section>
 
     <section class="lp-trust">
-      <p class="lp-trust-label">Elles sont passées de l'idée au business grâce à la Ligue</p>
+      <p class="lp-trust-label">Ce qui t&rsquo;attend d&egrave;s ton acc&egrave;s</p>
       <div class="lp-trust-badges">
         <div class="lp-trust-b">📚 +34 ressources</div>
         <div class="lp-trust-b">🎬 18 masterclass</div>
-        <div class="lp-trust-b">👩‍💻 247 membres</div>
-        <div class="lp-trust-b">⭐ 4.9/5 satisfaction</div>
+        <div class="lp-trust-b">🚀 Lancement &middot; places limit&eacute;es</div>
+        <div class="lp-trust-b">🎁 7 jours offerts</div>
         <div class="lp-trust-b">🔒 Sans engagement</div>
       </div>
     </section>
@@ -3129,7 +3167,7 @@
         </div>
         <div class="lp-pain-card">
           <div class="lp-blason-wrap"><img src="assets/image-3.png" alt="Blason" class="lp-blason"></div>
-          <blockquote class="lp-pain-quote">&laquo;&thinsp;J&rsquo;avais peur de ne pas &ecirc;tre assez l&eacute;gitime pour entreprendre. La Ligue m&rsquo;a donn&eacute; la m&eacute;thode ET la confiance pour me lancer enfin.&thinsp;&raquo;<cite>&mdash; Ana&iuml;s L., coach nutrition &middot; membre depuis 6 mois</cite></blockquote>
+          <blockquote class="lp-pain-quote">&laquo;&thinsp;Pendant 2 ans, j&rsquo;ai essay&eacute; de faire comme les autres &mdash; sans r&eacute;sultat. Ce qui a tout chang&eacute;, c&rsquo;est le jour o&ugrave; j&rsquo;ai arr&ecirc;t&eacute; de copier et commenc&eacute; &agrave; construire ma propre m&eacute;thode. C&rsquo;est exactement ce qu&rsquo;on t&rsquo;apprend &agrave; faire ici.&thinsp;&raquo;<cite>&mdash; Anastasia, co-fondatrice de la Ligue</cite></blockquote>
         </div>
       </div>
     </section>
@@ -3158,7 +3196,7 @@
             <div class="lp-feat-icon" style="background:linear-gradient(135deg,rgba(252,186,51,0.15),rgba(249,227,141,0.1))">🌸</div>
             <h3>Communauté Privée</h3>
             <p>Un espace bienveillant pour ne plus jamais te sentir seule dans ton aventure.</p>
-            <ul class="lp-feat-list"><li>✓ 247 femmes entrepreneures actives</li><li>✓ Canaux thématiques dédiés</li><li>✓ Entraide quotidienne</li></ul>
+            <ul class="lp-feat-list"><li>✓ Communaut&eacute; engag&eacute;e &amp; bienveillante</li><li>✓ Canaux th&eacute;matiques d&eacute;di&eacute;s</li><li>✓ Entraide quotidienne</li></ul>
           </div>
           <div class="lp-feat">
             <div class="lp-feat-icon" style="background:linear-gradient(135deg,rgba(79,133,160,0.12),rgba(36,66,91,0.06))">📁</div>
@@ -3242,37 +3280,58 @@
       </div>
     </section>
 
-        <section class="lp-section lp-temoignages" id="temoignages">
+    <!-- ── Section : Parcours ── -->
+    <section class="lp-section lp-parcours" id="parcours">
       <div class="lp-section-inner">
         <div class="lp-section-head">
-          <div class="lp-tag-line lp-tag-light">Elles l'ont fait</div>
-          <h2 class="lp-h2 lp-h2-light">Des résultats <em>concrets</em>,<br>des vraies femmes comme toi</h2>
+          <div class="lp-tag-line">Ta transformation, &eacute;tape par &eacute;tape</div>
+          <h2 class="lp-h2">Ce que tu vas <em>accomplir</em><br>dans tes premiers mois</h2>
+          <p class="lp-h2-sub">Une m&eacute;thode structur&eacute;e, des outils concrets, une communaut&eacute; &agrave; tes c&ocirc;t&eacute;s &mdash; chaque &eacute;tape a &eacute;t&eacute; con&ccedil;ue pour te faire avancer vite.</p>
         </div>
-        <div class="lp-temos">
-          <div class="lp-temo">
-            <div class="lp-temo-stars">★★★★★</div>
-            <p>"En 3 mois dans la Ligue, j'ai signé mes 5 premiers clients et doublé mes tarifs. Je n'aurais jamais osé sans ce soutien."</p>
-            <div class="lp-temo-author">
-              <div class="lp-av" style="background:linear-gradient(135deg,#fcba33,#ebc14c);width:40px;height:40px;font-size:15px">M</div>
-              <div><strong>Marie-Lou F.</strong><span>Coach bien-être · 3 mois dans la Ligue</span></div>
+        <div class="lp-steps">
+          <div class="lp-step">
+            <div class="lp-step-badge">Semaine&nbsp;1</div>
+            <div class="lp-step-icon">🎯</div>
+            <h3>Tu clarifes ton positionnement</h3>
+            <p>Tu acc&egrave;des imm&eacute;diatement aux formations fondations. En quelques jours, tu sais exactement &agrave; qui tu t&rsquo;adresses, ce que tu vends et ce qui te rend unique.</p>
+          </div>
+          <div class="lp-step lp-step-featured">
+            <div class="lp-step-badge">Mois&nbsp;1</div>
+            <div class="lp-step-icon">🛠️</div>
+            <h3>Tu restructures ton offre</h3>
+            <p>Tu retravailles ton offre avec la m&eacute;thode d&rsquo;Anastasia et les templates pr&ecirc;ts-&agrave;-l&rsquo;emploi. Tu sors du mois avec un plan d&rsquo;action clair et une offre qui convertit.</p>
+          </div>
+          <div class="lp-step">
+            <div class="lp-step-badge">Mois&nbsp;3</div>
+            <div class="lp-step-icon">🚀</div>
+            <h3>Tu attires tes clients id&eacute;aux</h3>
+            <p>Tu appliques ta strat&eacute;gie d&rsquo;acquisition, tu cr&eacute;es du contenu avec m&eacute;thode, tu utilises la communaut&eacute; pour te faire connaître &mdash; les clients arrivent.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Section : Garantie fondatrices ── -->
+    <section class="lp-garantie" id="garantie">
+      <div class="lp-section-inner">
+        <div class="lp-garantie-inner">
+          <div class="lp-garantie-shield">🛡️</div>
+          <div class="lp-garantie-tag">Z&eacute;ro risque</div>
+          <h2 class="lp-garantie-title">La Garantie <em>Ambitieuse</em></h2>
+          <p class="lp-garantie-text">On y croit &agrave; 100&nbsp;% &mdash; alors on prend le risque &agrave; ta place. Tu essaies la Ligue pendant <strong>7 jours</strong>, tu acc&egrave;des &agrave; tout le contenu, tu participes &agrave; la communaut&eacute;. Si tu ne vois pas la valeur, tu annules en un clic. Pas de formulaire. Pas de justification. Pas un euro d&eacute;bit&eacute;.</p>
+          <div class="lp-garantie-founders">
+            <div class="lp-garantie-founder">
+              <div class="lp-av" style="background:linear-gradient(135deg,#fcba33,#ebc14c);width:48px;height:48px;font-size:18px;font-weight:700;">A</div>
+              <span>Audrey</span>
+            </div>
+            <div class="lp-garantie-et">&amp;</div>
+            <div class="lp-garantie-founder">
+              <div class="lp-av" style="background:linear-gradient(135deg,#24425b,#4f85a0);width:48px;height:48px;font-size:18px;font-weight:700;">A</div>
+              <span>Anastasia</span>
             </div>
           </div>
-          <div class="lp-temo lp-temo-featured">
-            <div class="lp-temo-stars">★★★★★</div>
-            <p>"La Ligue c'est comme avoir une équipe entière derrière soi. Les formations sont ultra concrètes, la communauté est incroyable et les ressources m'ont fait gagner des semaines de travail."</p>
-            <div class="lp-temo-author">
-              <div class="lp-av" style="background:linear-gradient(135deg,#24425b,#4f85a0);width:40px;height:40px;font-size:15px">A</div>
-              <div><strong>Anaïs L.</strong><span>Coach nutrition · 6 mois dans la Ligue</span></div>
-            </div>
-          </div>
-          <div class="lp-temo">
-            <div class="lp-temo-stars">★★★★★</div>
-            <p>&laquo;&thinsp;En 6 semaines dans la Ligue, j&rsquo;ai enfin compris pourquoi je n&rsquo;avais pas de clients. J&rsquo;ai retravaill&eacute; mon offre et sign&eacute; 3 nouveaux contrats le mois suivant.&thinsp;&raquo;</p>
-            <div class="lp-temo-author">
-              <div class="lp-av" style="background:linear-gradient(135deg,#142435,#21374c);width:40px;height:40px;font-size:14px">J</div>
-              <div><strong>Juliette M.</strong><span>Créatrice de bijoux · 1 mois dans la Ligue</span></div>
-            </div>
-          </div>
+          <p class="lp-garantie-sign">Co-fondatrices de la Ligue des Ambitieuses &mdash; on s&rsquo;engage personnellement.</p>
+          <button class="btn-primary lp-garantie-cta" onclick="document.getElementById('offre').scrollIntoView({behavior:'smooth'})">Je teste sans risque &rarr;</button>
         </div>
       </div>
     </section>
@@ -3393,7 +3452,7 @@
       <div class="lp-final-inner">
         <img src="assets/image-1.png" alt="Logo" style="width:56px;margin-bottom:18px;opacity:0.9">
         <h2>Ton aventure entrepreneuriale<br>commence <em>maintenant.</em></h2>
-        <p>Rejoins 247 femmes entrepreneures accompagn&eacute;es par Audrey &amp; Anastasia. Arr&ecirc;te d&rsquo;attendre le bon moment &mdash; il n&rsquo;existera jamais tout seul.</p>
+        <p>Sois parmi les premi&egrave;res &agrave; rejoindre la r&eacute;volution. Audrey &amp; Anastasia t&rsquo;accueillent personnellement. Arr&ecirc;te d&rsquo;attendre le bon moment &mdash; il n&rsquo;existera jamais tout seul.</p>
         <button class="btn-primary lp-final-btn" onclick="showPage('dashboard')">Rejoindre la Ligue des Ambitieuses →</button>
         <p class="lp-final-note">47€/mois · Sans engagement · Résiliation libre</p>
       </div>
@@ -3433,7 +3492,7 @@
           <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('pourquoi').scrollIntoView({behavior:'smooth'}),50)">Pourquoi la Ligue ?</a>
           <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('apropos').scrollIntoView({behavior:'smooth'}),50)">Notre histoire</a>
           <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('inclus').scrollIntoView({behavior:'smooth'}),50)">Ce qui est inclus</a>
-          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('temoignages').scrollIntoView({behavior:'smooth'}),50)">Témoignages</a>
+          <a href="javascript:void(0)" onclick="showPage('landing');setTimeout(()=>document.getElementById('garantie').scrollIntoView({behavior:'smooth'}),50)">Notre garantie</a>
           <a href="javascript:void(0)" onclick="showPage('blog')">Blog</a>
           <a href="javascript:void(0)" onclick="showPage('bibliotheque')">La Bibliothèque</a>
         </div>
