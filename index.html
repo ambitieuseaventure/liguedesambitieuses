@@ -8934,16 +8934,13 @@
 
     const topbar = document.getElementById('topbar');
     const sidebar = document.getElementById('sidebar');
-    const main = document.querySelector('.main');
     if (page === 'landing' || page === 'blog' || page === 'bibliotheque') {
       topbar.style.display = 'none';
       sidebar.style.display = 'none';
-      if (main) main.style.marginLeft = '0';
       if (page === 'bibliotheque') { bibRenderPublic(); }
     } else {
       topbar.style.display = 'flex';
       sidebar.style.display = 'flex';
-      if (main) main.style.marginLeft = '';
     }
     if (window.innerWidth <= 900) sidebar.classList.remove('open');
   }
