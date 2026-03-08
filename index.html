@@ -6844,21 +6844,48 @@
 
           <div style="padding:22px 26px;display:flex;flex-direction:column;gap:18px;">
 
-            <!-- Titre + Emoji -->
-            <div style="display:grid;grid-template-columns:1fr 80px;gap:12px;align-items:end;">
-              <div>
-                <div class="form-label">Titre de l'article <span style="color:#ff9090;">*</span></div>
-                <input id="blog-input-title" type="text" placeholder="Ex : Comment fixer ses prix sans se brader" maxlength="100"
-                  class="admin-input" style="margin-bottom:0;"
+            <!-- Titre -->
+            <div>
+              <div class="form-label">Titre de l'article <span style="color:#ff9090;">*</span></div>
+              <input id="blog-input-title" type="text" placeholder="Ex : Comment fixer ses prix sans se brader" maxlength="100"
+                class="admin-input" style="margin-bottom:0;"
+                oninput="blogModalPreviewUpdate()"
+                onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+            </div>
+
+            <!-- Couverture : Emoji ou Image -->
+            <div>
+              <div class="form-label">Couverture</div>
+              <div style="display:flex;gap:4px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:9px;padding:3px;margin-bottom:10px;width:fit-content;">
+                <button id="blog-cover-tab-emoji" onclick="blogCoverMode('emoji')" style="padding:5px 16px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;background:rgba(255,255,255,0.12);color:white;transition:all .2s;">😀 Emoji</button>
+                <button id="blog-cover-tab-image" onclick="blogCoverMode('image')" style="padding:5px 16px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;background:transparent;color:rgba(255,255,255,0.4);transition:all .2s;">🖼 Image</button>
+              </div>
+              <!-- Mode Emoji -->
+              <div id="blog-cover-emoji-wrap">
+                <input id="blog-input-emoji" type="text" maxlength="4" placeholder="💡"
+                  class="admin-input" style="margin-bottom:0;text-align:center;font-size:22px;max-width:80px;"
                   oninput="blogModalPreviewUpdate()"
                   onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
               </div>
-              <div>
-                <div class="form-label">Emoji</div>
-                <input id="blog-input-emoji" type="text" maxlength="4" placeholder="💡"
-                  class="admin-input" style="margin-bottom:0;text-align:center;font-size:22px;"
-                  oninput="blogModalPreviewUpdate()"
-                  onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+              <!-- Mode Image -->
+              <div id="blog-cover-image-wrap" style="display:none;">
+                <div id="blog-cover-dropzone"
+                  style="border:2px dashed rgba(252,186,51,0.25);border-radius:10px;padding:18px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(252,186,51,0.03);"
+                  ondragover="event.preventDefault();this.style.borderColor='rgba(252,186,51,0.6)';this.style.background='rgba(252,186,51,0.08)'"
+                  ondragleave="this.style.borderColor='rgba(252,186,51,0.25)';this.style.background='rgba(252,186,51,0.03)'"
+                  ondrop="blogCoverDrop(event)"
+                  onclick="document.getElementById('blog-cover-file-input').click()"
+                  onmouseover="this.style.borderColor='rgba(252,186,51,0.5)';this.style.background='rgba(252,186,51,0.07)'"
+                  onmouseout="this.style.borderColor='rgba(252,186,51,0.25)';this.style.background='rgba(252,186,51,0.03)'">
+                  <div style="font-size:24px;margin-bottom:6px;">🖼</div>
+                  <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.55);">Clique ou glisse une image ici</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:3px;">JPG, PNG, WebP · max 2 MB</div>
+                  <input type="file" id="blog-cover-file-input" accept="image/*" style="display:none;" onchange="blogCoverFileSelect(event)">
+                </div>
+                <div id="blog-cover-preview-wrap" style="display:none;position:relative;border-radius:10px;overflow:hidden;">
+                  <img id="blog-cover-preview-img" style="width:100%;height:140px;object-fit:cover;display:block;">
+                  <button onclick="blogCoverRemoveImage()" style="position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;border:none;background:rgba(0,0,0,0.65);color:white;cursor:pointer;font-size:16px;line-height:1;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">×</button>
+                </div>
               </div>
             </div>
 
@@ -9542,9 +9569,11 @@
         var bg = blogCatColors[feat.cat] || 'rgba(20,36,53,0.15)';
         featuredSlot.innerHTML =
           '<div class="blog-featured" style="margin-bottom:36px;" onclick="blogOpenArticle(\''+feat.id+'\')" style="cursor:pointer;">'
-          +'<div class="blog-featured-img" style="background:'+bg+';cursor:pointer;">'
+          +'<div class="blog-featured-img" style="background:'+bg+';cursor:pointer;overflow:hidden;">'
             +'<span class="blog-feat-tag">⭐ À la une</span>'
-            +'<span class="blog-feat-emoji">'+feat.emoji+'</span>'
+            +(feat.coverImg
+              ? '<img src="'+feat.coverImg+'" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">'
+              : '<span class="blog-feat-emoji">'+feat.emoji+'</span>')
           +'</div>'
           +'<div class="blog-featured-body">'
             +'<div class="blog-cat">'+blogCatLabels[feat.cat]+'</div>'
@@ -9579,7 +9608,9 @@
       card.className = 'blog-card';
       card.onclick = function(){ blogOpenArticle(a.id); };
       card.innerHTML =
-        '<div class="blog-card-img" style="background:'+bg+';">'+a.emoji+'</div>'
+        '<div class="blog-card-img" style="background:'+bg+';overflow:hidden;padding:0;">'
+        +(a.coverImg ? '<img src="'+a.coverImg+'" style="width:100%;height:100%;object-fit:cover;display:block;">' : a.emoji)
+        +'</div>'
         +'<div class="blog-card-body">'
           +'<div class="blog-cat blog-meta-sm" style="margin-bottom:6px;">'+blogCatLabels[a.cat]+'</div>'
           +'<h3>'+a.title+'</h3>'
@@ -9612,8 +9643,14 @@
   function blogOpenArticle(id) {
     var a = blogArticles.find(function(x){ return x.id === id; });
     if (!a) return;
-    document.getElementById('blog-article-hero').style.background = blogCatColors[a.cat] || 'linear-gradient(135deg,var(--navy-darkest),var(--navy))';
-    document.getElementById('blog-article-hero').textContent = a.emoji;
+    var hero = document.getElementById('blog-article-hero');
+    if (a.coverImg) {
+      hero.style.background = 'none';
+      hero.innerHTML = '<img src="'+a.coverImg+'" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;">';
+    } else {
+      hero.style.background = blogCatColors[a.cat] || 'linear-gradient(135deg,var(--navy-darkest),var(--navy))';
+      hero.textContent = a.emoji;
+    }
     document.getElementById('blog-article-cat').textContent = blogCatLabels[a.cat] || '';
     document.getElementById('blog-article-title').textContent = a.title;
     document.getElementById('blog-article-author').textContent = a.author;
@@ -9659,8 +9696,11 @@
         ? '<span class="blog-admin-pill publie">✓ Publié</span>'
         : '<span class="blog-admin-pill brouillon">✦ Brouillon</span>';
       var featLbl = a.featured ? '<span style="font-size:10px;margin-left:6px;color:var(--gold-bright);">⭐ À la une</span>' : '';
+      var coverThumb = a.coverImg
+        ? '<div class="blog-admin-emoji" style="background:none;border:none;overflow:hidden;padding:0;"><img src="'+a.coverImg+'" style="width:46px;height:46px;object-fit:cover;border-radius:10px;display:block;"></div>'
+        : '<div class="blog-admin-emoji">'+a.emoji+'</div>';
       row.innerHTML =
-        '<div class="blog-admin-emoji">'+a.emoji+'</div>'
+        coverThumb
         +'<div class="blog-admin-info">'
           +'<div class="blog-admin-title">'+a.title+featLbl+'</div>'
           +'<div class="blog-admin-meta">'+blogCatLabels[a.cat]+' · '+a.author+' · '+a.date+' · '+a.readtime+' min</div>'
@@ -9697,6 +9737,62 @@
     finToast('✓ Article publié dans Le Carnet', '#6ecf9e');
   }
 
+  // ── Couverture (emoji / image) ──
+  var blogCoverCurrentImage = null;
+
+  function blogCoverMode(mode) {
+    var isImage = mode === 'image';
+    document.getElementById('blog-cover-emoji-wrap').style.display  = isImage ? 'none' : '';
+    document.getElementById('blog-cover-image-wrap').style.display  = isImage ? '' : 'none';
+    var tabE = document.getElementById('blog-cover-tab-emoji');
+    var tabI = document.getElementById('blog-cover-tab-image');
+    tabE.style.background  = isImage ? 'transparent' : 'rgba(255,255,255,0.12)';
+    tabE.style.color       = isImage ? 'rgba(255,255,255,0.4)' : 'white';
+    tabE.style.fontWeight  = isImage ? '500' : '700';
+    tabI.style.background  = isImage ? 'rgba(255,255,255,0.12)' : 'transparent';
+    tabI.style.color       = isImage ? 'white' : 'rgba(255,255,255,0.4)';
+    tabI.style.fontWeight  = isImage ? '700' : '500';
+    if (!isImage) { blogCoverCurrentImage = null; blogModalPreviewUpdate(); }
+  }
+
+  function blogCoverSetImage(dataUrl) {
+    blogCoverCurrentImage = dataUrl;
+    document.getElementById('blog-cover-dropzone').style.display    = 'none';
+    var wrap = document.getElementById('blog-cover-preview-wrap');
+    wrap.style.display = 'block';
+    document.getElementById('blog-cover-preview-img').src = dataUrl;
+    blogModalPreviewUpdate();
+  }
+
+  function blogCoverRemoveImage() {
+    blogCoverCurrentImage = null;
+    document.getElementById('blog-cover-dropzone').style.display    = '';
+    document.getElementById('blog-cover-preview-wrap').style.display = 'none';
+    document.getElementById('blog-cover-file-input').value = '';
+    blogModalPreviewUpdate();
+  }
+
+  function blogCoverFileSelect(event) {
+    var file = event.target.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { finToast('⚠ Image trop lourde (max 2 MB)', 'rgba(255,160,60,0.9)'); return; }
+    var reader = new FileReader();
+    reader.onload = function(e) { blogCoverSetImage(e.target.result); };
+    reader.readAsDataURL(file);
+  }
+
+  function blogCoverDrop(event) {
+    event.preventDefault();
+    document.getElementById('blog-cover-dropzone').style.borderColor = 'rgba(252,186,51,0.25)';
+    document.getElementById('blog-cover-dropzone').style.background  = 'rgba(252,186,51,0.03)';
+    var file = event.dataTransfer.files[0];
+    if (!file || !file.type.startsWith('image/')) { finToast('⚠ Fichier non supporté', 'rgba(255,160,60,0.9)'); return; }
+    if (file.size > 2 * 1024 * 1024) { finToast('⚠ Image trop lourde (max 2 MB)', 'rgba(255,160,60,0.9)'); return; }
+    var reader = new FileReader();
+    reader.onload = function(e) { blogCoverSetImage(e.target.result); };
+    reader.readAsDataURL(file);
+  }
+
   // ── Modale ──
   function blogAdminOpenModal(id) {
     blogEditingId = id;
@@ -9715,6 +9811,15 @@
     var delBtn = document.getElementById('blog-delete-btn');
     if (delBtn) delBtn.style.display = a ? 'block' : 'none';
     document.getElementById('blog-save-btn').textContent = a ? 'Enregistrer ✦' : 'Publier ✦';
+    // Couverture : restaure le mode emoji ou image
+    blogCoverCurrentImage = (a && a.coverImg) ? a.coverImg : null;
+    if (blogCoverCurrentImage) {
+      blogCoverMode('image');
+      blogCoverSetImage(blogCoverCurrentImage);
+    } else {
+      blogCoverMode('emoji');
+      blogCoverRemoveImage();
+    }
     blogModalPreviewUpdate();
     document.getElementById('blog-modal').style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -9727,9 +9832,16 @@
   }
 
   function blogModalPreviewUpdate() {
-    var emoji = document.getElementById('blog-input-emoji').value || '✍️';
     var ep = document.getElementById('blog-modal-emoji-preview');
-    if (ep) ep.textContent = emoji;
+    if (!ep) return;
+    if (blogCoverCurrentImage) {
+      ep.style.background = 'none';
+      ep.innerHTML = '<img src="'+blogCoverCurrentImage+'" style="width:42px;height:42px;object-fit:cover;border-radius:10px;display:block;">';
+    } else {
+      ep.innerHTML = '';
+      ep.style.background = '';
+      ep.textContent = document.getElementById('blog-input-emoji').value || '✍️';
+    }
   }
 
   // Barre d'outils contenu
@@ -9760,23 +9872,24 @@
     if (!excerpt) { var j=document.getElementById('blog-input-excerpt'); j.style.borderColor='rgba(255,90,90,0.5)'; j.focus(); return; }
     if (!content && status==='publie') { var k=document.getElementById('blog-input-content'); k.style.borderColor='rgba(255,90,90,0.5)'; k.focus(); finToast('⚠ Ajoute du contenu avant de publier', 'rgba(255,160,60,0.9)'); return; }
 
-    var emoji   = document.getElementById('blog-input-emoji').value.trim() || '✍️';
-    var cs      = document.getElementById('blog-input-cat');
-    var cat     = cs ? cs.value : 'business';
-    var author  = document.getElementById('blog-input-author').value.trim() || 'La Rédaction';
-    var rt      = parseInt(document.getElementById('blog-input-readtime').value) || Math.max(1, Math.round(content.split(' ').length / 200));
-    var featured= document.getElementById('blog-input-featured').checked;
-    var now     = new Date(); var months=['janv.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
-    var dateStr = now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+    var emoji    = document.getElementById('blog-input-emoji').value.trim() || '✍️';
+    var coverImg = blogCoverCurrentImage || null;
+    var cs       = document.getElementById('blog-input-cat');
+    var cat      = cs ? cs.value : 'business';
+    var author   = document.getElementById('blog-input-author').value.trim() || 'La Rédaction';
+    var rt       = parseInt(document.getElementById('blog-input-readtime').value) || Math.max(1, Math.round(content.split(' ').length / 200));
+    var featured = document.getElementById('blog-input-featured').checked;
+    var now      = new Date(); var months=['janv.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+    var dateStr  = now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
 
     // Si featured, retire le featured des autres
     if (featured) blogArticles.forEach(function(a){ a.featured=false; });
 
     if (blogEditingId) {
       var a = blogArticles.find(function(x){ return x.id===blogEditingId; });
-      if (a) { a.title=title; a.emoji=emoji; a.cat=cat; a.author=author; a.excerpt=excerpt; a.content=content; a.readtime=rt; a.featured=featured; a.status=status; if(a.date==='—') a.date=dateStr; }
+      if (a) { a.title=title; a.emoji=emoji; a.coverImg=coverImg; a.cat=cat; a.author=author; a.excerpt=excerpt; a.content=content; a.readtime=rt; a.featured=featured; a.status=status; if(a.date==='—') a.date=dateStr; }
     } else {
-      blogArticles.unshift({ id:'b_'+Date.now(), status:status, featured:featured, emoji:emoji, title:title, cat:cat, author:author, date:dateStr, readtime:rt, excerpt:excerpt, content:content });
+      blogArticles.unshift({ id:'b_'+Date.now(), status:status, featured:featured, emoji:emoji, coverImg:coverImg, title:title, cat:cat, author:author, date:dateStr, readtime:rt, excerpt:excerpt, content:content });
     }
     blogAdminCloseModal();
     blogAdminRender();
