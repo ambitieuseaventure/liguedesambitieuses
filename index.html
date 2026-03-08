@@ -3046,6 +3046,185 @@
       .bib-grid { grid-template-columns:1fr; }
     }
 
+  /* ── Bibliothèque : modal de détail ressource ── */
+  .bib-detail-overlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(10,24,37,0.88); backdrop-filter:blur(8px);
+    z-index:10100; align-items:center; justify-content:center; padding:20px;
+  }
+  .bib-detail-card {
+    background:white; border-radius:24px;
+    width:860px; max-width:96vw; max-height:90vh;
+    display:flex; overflow:hidden;
+    box-shadow:0 60px 120px rgba(0,0,0,0.4);
+    position:relative;
+  }
+  .bib-detail-left {
+    width:340px; flex-shrink:0;
+    background:#f4f6f9;
+    display:flex; flex-direction:column;
+  }
+  .bib-carousel {
+    flex:1; position:relative; overflow:hidden; min-height:280px;
+  }
+  .bib-carousel-track { position:absolute; inset:0; }
+  .bib-carousel-slide {
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .32s cubic-bezier(.4,0,.2,1);
+  }
+  .bib-carousel-img { width:100%; height:100%; object-fit:cover; }
+  .bib-carousel-nav {
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 10px; pointer-events:none;
+  }
+  .bib-carousel-btn {
+    width:34px; height:34px; border-radius:50%;
+    background:white; border:none; cursor:pointer;
+    box-shadow:0 2px 12px rgba(0,0,0,0.18);
+    font-size:17px; display:flex; align-items:center; justify-content:center;
+    pointer-events:all; transition:box-shadow .15s; color:var(--navy-darkest);
+  }
+  .bib-carousel-btn:hover { box-shadow:0 4px 20px rgba(0,0,0,0.28); }
+  .bib-carousel-dots {
+    position:absolute; bottom:12px; left:0; right:0;
+    display:flex; justify-content:center; gap:6px;
+  }
+  .bib-carousel-dot {
+    width:6px; height:6px; border-radius:50%;
+    background:rgba(20,36,53,0.2); cursor:pointer; transition:all .2s;
+  }
+  .bib-carousel-dot.active { background:var(--gold-bright); width:18px; border-radius:3px; }
+  .bib-detail-right {
+    flex:1; padding:32px 30px 28px; overflow-y:auto;
+    display:flex; flex-direction:column; min-width:0;
+  }
+  .bib-detail-close {
+    position:absolute; top:14px; right:14px;
+    width:32px; height:32px; border-radius:50%;
+    background:rgba(20,36,53,0.08); border:none; cursor:pointer;
+    font-size:16px; display:flex; align-items:center; justify-content:center;
+    transition:background .15s; color:var(--text-light); z-index:2;
+  }
+  .bib-detail-close:hover { background:rgba(20,36,53,0.16); }
+  .bib-detail-format { font-size:12px; color:var(--text-light); margin-bottom:8px; }
+  .bib-detail-title { font-family:'Playfair Display',serif; font-size:21px; color:var(--navy-darkest); line-height:1.3; margin-bottom:12px; }
+  .bib-detail-meta { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .bib-detail-tag { font-size:11px; padding:4px 12px; border-radius:20px; background:rgba(20,36,53,0.05); border:1px solid rgba(20,36,53,0.1); color:var(--text-light); }
+  .bib-detail-desc { font-size:13.5px; color:var(--text-light); line-height:1.75; flex:1; margin-bottom:20px; }
+  .bib-detail-price { font-family:'Playfair Display',serif; font-size:32px; color:var(--navy-darkest); font-weight:700; margin-bottom:18px; }
+  .bib-detail-price span { font-size:13px; font-family:'DM Sans',sans-serif; color:var(--text-light); font-weight:400; margin-left:4px; }
+  .bib-detail-actions { display:flex; flex-direction:column; gap:10px; margin-bottom:14px; }
+  .bib-btn-cart {
+    padding:13px 20px; border-radius:12px;
+    background:var(--navy-darkest); color:white;
+    border:none; font-size:14px; font-weight:700;
+    cursor:pointer; font-family:'DM Sans',sans-serif;
+    transition:all .2s; text-align:center;
+  }
+  .bib-btn-cart:hover { background:var(--navy); transform:translateY(-1px); }
+  .bib-btn-cart-secondary {
+    padding:11px 20px; border-radius:12px;
+    background:transparent; color:var(--navy-darkest);
+    border:1.5px solid rgba(20,36,53,0.18);
+    font-size:13px; font-weight:600;
+    cursor:pointer; font-family:'DM Sans',sans-serif;
+    transition:all .2s; text-align:center;
+  }
+  .bib-btn-cart-secondary:hover { border-color:var(--gold-bright); color:var(--gold-bright); }
+  .bib-member-note-detail {
+    font-size:12px; color:var(--text-light); text-align:center;
+    padding-top:12px; border-top:1px solid rgba(20,36,53,0.07);
+  }
+
+  /* ── Bibliothèque : panier ── */
+  .bib-cart-overlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(10,24,37,0.5); z-index:10200;
+  }
+  .bib-cart-overlay.open { display:block; }
+  .bib-cart-drawer {
+    position:fixed; top:0; right:0; bottom:0;
+    width:380px; max-width:95vw;
+    background:white; z-index:10201;
+    display:flex; flex-direction:column;
+    box-shadow:-20px 0 60px rgba(0,0,0,0.15);
+    transform:translateX(100%);
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .bib-cart-drawer.open { transform:translateX(0); }
+  .bib-cart-header {
+    padding:20px 24px 16px;
+    border-bottom:1px solid rgba(20,36,53,0.08);
+    display:flex; align-items:center; gap:12px; flex-shrink:0;
+  }
+  .bib-cart-header-title { font-family:'Playfair Display',serif; font-size:18px; color:var(--navy-darkest); flex:1; }
+  .bib-cart-close-btn {
+    width:32px; height:32px; border-radius:50%;
+    background:rgba(20,36,53,0.06); border:none; cursor:pointer;
+    font-size:16px; display:flex; align-items:center; justify-content:center;
+    color:var(--text-light); transition:background .15s;
+  }
+  .bib-cart-close-btn:hover { background:rgba(20,36,53,0.12); }
+  .bib-cart-body { flex:1; overflow-y:auto; padding:16px 24px; }
+  .bib-cart-empty { text-align:center; padding:48px 0; color:var(--text-light); }
+  .bib-cart-empty-icon { font-size:40px; margin-bottom:12px; }
+  .bib-cart-item {
+    display:flex; gap:14px; align-items:flex-start;
+    padding:14px 0; border-bottom:1px solid rgba(20,36,53,0.06);
+  }
+  .bib-cart-item-icon {
+    width:48px; height:48px; border-radius:10px;
+    background:rgba(252,186,51,0.08); border:1px solid rgba(252,186,51,0.2);
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px; flex-shrink:0; overflow:hidden;
+  }
+  .bib-cart-item-icon img { width:100%; height:100%; object-fit:cover; }
+  .bib-cart-item-info { flex:1; min-width:0; }
+  .bib-cart-item-title { font-size:13px; font-weight:600; color:var(--navy-darkest); line-height:1.3; margin-bottom:3px; }
+  .bib-cart-item-format { font-size:11px; color:var(--text-light); }
+  .bib-cart-item-right { display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+  .bib-cart-item-price { font-size:14px; font-weight:700; color:var(--navy-darkest); white-space:nowrap; }
+  .bib-cart-remove { background:none; border:none; cursor:pointer; color:rgba(20,36,53,0.25); font-size:20px; line-height:1; padding:0; transition:color .15s; }
+  .bib-cart-remove:hover { color:#ff6b6b; }
+  .bib-cart-footer { padding:18px 24px; border-top:1px solid rgba(20,36,53,0.08); flex-shrink:0; }
+  .bib-cart-total { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .bib-cart-total-label { font-size:13px; color:var(--text-light); }
+  .bib-cart-total-price { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--navy-darkest); }
+  .bib-btn-checkout {
+    width:100%; padding:14px; border-radius:12px;
+    background:var(--gold-bright); color:var(--navy-darkest);
+    border:none; font-size:14px; font-weight:700;
+    cursor:pointer; font-family:'DM Sans',sans-serif; transition:opacity .2s;
+  }
+  .bib-btn-checkout:hover { opacity:.88; }
+  /* Bouton panier dans le catalogue */
+  .bib-cart-btn {
+    padding:9px 16px 9px 12px;
+    background:var(--navy-darkest); color:white;
+    border:none; border-radius:10px;
+    font-size:13px; font-weight:600; cursor:pointer;
+    font-family:'DM Sans',sans-serif;
+    display:flex; align-items:center; gap:8px;
+    transition:all .2s; flex-shrink:0; white-space:nowrap;
+  }
+  .bib-cart-btn:hover { background:var(--navy); }
+  .bib-cart-badge {
+    background:var(--gold-bright); color:var(--navy-darkest);
+    font-size:10px; font-weight:800;
+    width:18px; height:18px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .2s;
+  }
+  .bib-card { cursor:pointer; }
+  .bib-card:hover .bib-card-title { color:var(--gold-bright); transition:color .18s; }
+  @media(max-width:820px) {
+    .bib-detail-card { flex-direction:column; max-height:95vh; border-radius:20px; }
+    .bib-detail-left { width:100%; height:200px; min-height:0; }
+    .bib-carousel { min-height:0; height:100%; }
+  }
+
   </style>
 </head>
 <body>
@@ -3670,8 +3849,14 @@
             <div class="bib-catalog-title">Le <em>catalogue</em></div>
             <div style="font-size:13px;color:var(--text-light);margin-top:4px;" id="bib-count">— ressources disponibles</div>
           </div>
-          <div class="bib-search-wrap">
-            <input type="search" id="bib-search-input" class="bib-search" placeholder="Rechercher une ressource…" oninput="bibRenderPublic()">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="bib-search-wrap">
+              <input type="search" id="bib-search-input" class="bib-search" placeholder="Rechercher une ressource…" oninput="bibRenderPublic()">
+            </div>
+            <button class="bib-cart-btn" onclick="bibOpenCart()">
+              🛒 Panier
+              <span class="bib-cart-badge" id="bib-cart-badge">0</span>
+            </button>
           </div>
         </div>
 
@@ -8586,6 +8771,51 @@
             style="width:100%;padding:13px;background:var(--gold-bright);color:var(--navy-darkest);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:10px;transition:opacity .2s;"
             onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Accéder à ma ressource →</button>
           <button onclick="bibCloseEmailModal()" style="background:none;border:none;color:var(--text-light);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">Annuler</button>
+        </div>
+      </div>
+
+      <!-- ── BIB : Modal détail ressource ── -->
+      <div id="bib-detail-overlay" class="bib-detail-overlay" onclick="if(event.target===this)bibCloseDetail()">
+        <div class="bib-detail-card">
+          <button class="bib-detail-close" onclick="bibCloseDetail()">✕</button>
+          <!-- Gauche : carrousel -->
+          <div class="bib-detail-left">
+            <div class="bib-carousel" id="bib-detail-carousel">
+              <div class="bib-carousel-track" id="bib-carousel-track"></div>
+              <div class="bib-carousel-nav">
+                <button class="bib-carousel-btn" id="bib-carousel-prev" onclick="bibCarouselPrev()">‹</button>
+                <button class="bib-carousel-btn" id="bib-carousel-next" onclick="bibCarouselNext()">›</button>
+              </div>
+              <div class="bib-carousel-dots" id="bib-carousel-dots"></div>
+            </div>
+          </div>
+          <!-- Droite : infos -->
+          <div class="bib-detail-right">
+            <div class="bib-detail-format" id="bib-detail-format"></div>
+            <div class="bib-detail-title" id="bib-detail-title"></div>
+            <div class="bib-detail-meta" id="bib-detail-meta"></div>
+            <div class="bib-detail-desc" id="bib-detail-desc"></div>
+            <div class="bib-detail-price" id="bib-detail-price"></div>
+            <div class="bib-detail-actions" id="bib-detail-actions"></div>
+            <div class="bib-member-note-detail">✦ Membre de la Ligue ? Toutes les ressources sont incluses dans ton abonnement.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── BIB : Panier ── -->
+      <div class="bib-cart-overlay" id="bib-cart-overlay" onclick="bibCloseCart()"></div>
+      <div class="bib-cart-drawer" id="bib-cart-drawer">
+        <div class="bib-cart-header">
+          <div class="bib-cart-header-title">Mon <em style="color:var(--gold-bright);font-style:normal;">panier</em></div>
+          <button class="bib-cart-close-btn" onclick="bibCloseCart()">✕</button>
+        </div>
+        <div class="bib-cart-body" id="bib-cart-body"></div>
+        <div class="bib-cart-footer" id="bib-cart-footer" style="display:none;">
+          <div class="bib-cart-total">
+            <span class="bib-cart-total-label">Total</span>
+            <span class="bib-cart-total-price" id="bib-cart-total-price">0€</span>
+          </div>
+          <button class="bib-btn-checkout" onclick="bibCartCheckout()">Commander →</button>
         </div>
       </div>
 
@@ -13747,11 +13977,11 @@
   };
 
   var bibliothequeData = [
-    { id:'bib1', title:'Template de proposition commerciale', format:'📋 Template', theme:'💎 Offre', desc:'Un document clé-en-main pour présenter ton offre de façon professionnelle et convaincante.', price:19, pricing:'payant', cover:'📋', imageUrl:'', fileUrl:'', status:'publie', featured:true },
-    { id:'bib2', title:'Guide complet : Lancer son activité en 30 jours', format:'📖 Guide PDF', theme:'🎯 Clients', desc:'Toutes les étapes pour passer de l\'idée au premier client payant, sans se perdre en route.', price:27, pricing:'payant', cover:'📖', imageUrl:'', fileUrl:'', status:'publie', featured:false },
-    { id:'bib3', title:'Tableau de bord business (Excel)', format:'📊 Tableau', theme:'💰 Finance', desc:'Suivi de tes revenus, objectifs et indicateurs-clés. Mis à jour en temps réel, prêt à l\'emploi.', price:15, pricing:'payant', cover:'📊', imageUrl:'', fileUrl:'', status:'publie', featured:false },
-    { id:'bib4', title:'Kit Marketing Réseaux Sociaux', format:'🗂 Kit complet', theme:'🌐 Réseaux sociaux', desc:'Calendrier éditorial, templates de posts, guide de légendes et plus encore pour te démarquer.', price:35, pricing:'payant', cover:'🗂', imageUrl:'', fileUrl:'', status:'publie', featured:true },
-    { id:'bib5', title:'Workbook : Trouver ses clients idéaux', format:'📝 Workbook', theme:'🎯 Clients', desc:'Exercices pratiques pour définir précisément ton persona et adapter ton message à ta cible.', price:22, pricing:'payant', cover:'📝', imageUrl:'', fileUrl:'', status:'brouillon', featured:false },
+    { id:'bib1', title:'Template de proposition commerciale', format:'📋 Template', theme:'💎 Offre', desc:'Un document clé-en-main pour présenter ton offre de façon professionnelle et convaincante.', price:19, pricing:'payant', cover:'📋', imageUrl:'', fileUrl:'', status:'publie', featured:true, previewImages:[] },
+    { id:'bib2', title:'Guide complet : Lancer son activité en 30 jours', format:'📖 Guide PDF', theme:'🎯 Clients', desc:'Toutes les étapes pour passer de l\'idée au premier client payant, sans se perdre en route.', price:27, pricing:'payant', cover:'📖', imageUrl:'', fileUrl:'', status:'publie', featured:false, previewImages:[] },
+    { id:'bib3', title:'Tableau de bord business (Excel)', format:'📊 Tableau', theme:'💰 Finance', desc:'Suivi de tes revenus, objectifs et indicateurs-clés. Mis à jour en temps réel, prêt à l\'emploi.', price:15, pricing:'payant', cover:'📊', imageUrl:'', fileUrl:'', status:'publie', featured:false, previewImages:[] },
+    { id:'bib4', title:'Kit Marketing Réseaux Sociaux', format:'🗂 Kit complet', theme:'🌐 Réseaux sociaux', desc:'Calendrier éditorial, templates de posts, guide de légendes et plus encore pour te démarquer.', price:35, pricing:'payant', cover:'🗂', imageUrl:'', fileUrl:'', status:'publie', featured:true, previewImages:[] },
+    { id:'bib5', title:'Workbook : Trouver ses clients idéaux', format:'📝 Workbook', theme:'🎯 Clients', desc:'Exercices pratiques pour définir précisément ton persona et adapter ton message à ta cible.', price:22, pricing:'payant', cover:'📝', imageUrl:'', fileUrl:'', status:'brouillon', featured:false, previewImages:[] },
   ];
 
   var bibEditingId = null;
@@ -13782,10 +14012,11 @@
         ? '<span class="bib-badge-gratuit">Gratuit</span>'
         : '<div class="bib-card-price">'+b.price+'€</div>';
       var btnHtml = isGratuit
-        ? '<button class="bib-btn-telecharger" onclick="bibTelechargement(\''+b.id+'\')">Télécharger →</button>'
-        : '<button class="bib-btn-acheter" onclick="bibAcheter(\''+b.id+'\')">Acheter →</button>';
+        ? '<button class="bib-btn-telecharger" onclick="event.stopPropagation();bibTelechargement(\''+b.id+'\')">Télécharger →</button>'
+        : '<button class="bib-btn-acheter" onclick="event.stopPropagation();bibAddToCart(\''+b.id+'\',event)">🛒 Ajouter</button>';
       var card = document.createElement('div');
       card.className = 'bib-card';
+      card.onclick = function(){ bibOpenDetail(b.id); };
       card.innerHTML =
         '<div class="bib-card-cover" style="'+(b.imageUrl?'padding:0;':'')+'">'
           + (b.featured ? '<div class="bib-featured-badge">⭐ Coup de cœur</div>' : '')
@@ -13827,6 +14058,182 @@
     if (!b) return;
     alert('Achat de "'+b.title+'" ('+b.price+'€)\n\nFonctionnalité de paiement à connecter (Stripe, PayPlug…)');
   }
+
+  // ──────────────────────────────────────────────
+  //  BIBLIOTHÈQUE — Panier
+  // ──────────────────────────────────────────────
+  var bibCart = [];
+
+  function bibUpdateCartBadge() {
+    var badge = document.getElementById('bib-cart-badge');
+    if (badge) {
+      badge.textContent = bibCart.length;
+      badge.style.transform = bibCart.length > 0 ? 'scale(1.2)' : 'scale(1)';
+      setTimeout(function(){ if(badge) badge.style.transform='scale(1)'; }, 200);
+    }
+  }
+
+  function bibAddToCart(id, e) {
+    if (e) e.stopPropagation();
+    var b = bibliothequeData.find(function(x){ return x.id===id; });
+    if (!b) return;
+    if (bibCart.find(function(x){ return x.id===id; })) {
+      bibShowCartToast('Déjà dans ton panier !', '✓');
+      return;
+    }
+    bibCart.push({ id:b.id, title:b.title, price:b.price, cover:b.cover, imageUrl:b.imageUrl, format:b.format });
+    bibUpdateCartBadge();
+    bibShowCartToast('"'+b.title+'" ajouté au panier', '🛒');
+    bibRenderCart();
+  }
+
+  function bibRemoveFromCart(id) {
+    bibCart = bibCart.filter(function(x){ return x.id!==id; });
+    bibUpdateCartBadge();
+    bibRenderCart();
+  }
+
+  function bibRenderCart() {
+    var body = document.getElementById('bib-cart-body');
+    var footer = document.getElementById('bib-cart-footer');
+    if (!body) return;
+    if (bibCart.length === 0) {
+      body.innerHTML = '<div class="bib-cart-empty"><div class="bib-cart-empty-icon">🛒</div><div style="font-size:14px;font-weight:600;color:var(--navy-darkest);margin-bottom:6px;">Ton panier est vide</div><div style="font-size:13px;">Explore la bibliothèque et ajoute des ressources</div></div>';
+      if (footer) footer.style.display = 'none';
+      return;
+    }
+    var total = bibCart.reduce(function(s, x){ return s + x.price; }, 0);
+    body.innerHTML = bibCart.map(function(item) {
+      var iconHtml = item.imageUrl
+        ? '<img src="'+item.imageUrl+'" alt="">'
+        : item.cover;
+      return '<div class="bib-cart-item">'
+        +'<div class="bib-cart-item-icon">'+iconHtml+'</div>'
+        +'<div class="bib-cart-item-info">'
+          +'<div class="bib-cart-item-title">'+item.title+'</div>'
+          +'<div class="bib-cart-item-format">'+item.format+'</div>'
+        +'</div>'
+        +'<div class="bib-cart-item-right">'
+          +'<div class="bib-cart-item-price">'+item.price+'€</div>'
+          +'<button class="bib-cart-remove" onclick="bibRemoveFromCart(\''+item.id+'\')" title="Retirer">×</button>'
+        +'</div>'
+      +'</div>';
+    }).join('');
+    var totalEl = document.getElementById('bib-cart-total-price');
+    if (totalEl) totalEl.textContent = total+'€';
+    if (footer) footer.style.display = 'block';
+  }
+
+  function bibOpenCart() {
+    bibRenderCart();
+    document.getElementById('bib-cart-drawer').classList.add('open');
+    document.getElementById('bib-cart-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function bibCloseCart() {
+    document.getElementById('bib-cart-drawer').classList.remove('open');
+    document.getElementById('bib-cart-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function bibCartCheckout() {
+    if (bibCart.length === 0) return;
+    var total = bibCart.reduce(function(s, x){ return s + x.price; }, 0);
+    alert('Commande de '+bibCart.length+' ressource(s) — Total : '+total+'€\n\nConnexion paiement (Stripe, PayPlug…) à intégrer.');
+  }
+
+  function bibShowCartToast(msg, icon) {
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--navy-darkest);color:white;padding:11px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:20000;box-shadow:0 8px 32px rgba(0,0,0,0.25);display:flex;align-items:center;gap:10px;white-space:nowrap;opacity:1;transition:opacity .3s;';
+    t.innerHTML = '<span style="font-size:18px;">'+icon+'</span><span>'+msg+'</span>';
+    document.body.appendChild(t);
+    setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ if(t.parentNode) t.remove(); }, 300); }, 2400);
+  }
+
+  // ──────────────────────────────────────────────
+  //  BIBLIOTHÈQUE — Modal détail + Carrousel
+  // ──────────────────────────────────────────────
+  var bibDetailSlides = [];
+  var bibDetailCurrentSlide = 0;
+
+  function bibOpenDetail(id) {
+    var b = bibliothequeData.find(function(x){ return x.id===id; });
+    if (!b) return;
+    // Construction des slides : couverture + aperçus
+    bibDetailSlides = [];
+    if (b.imageUrl) {
+      bibDetailSlides.push({ type:'image', src:b.imageUrl });
+    } else {
+      bibDetailSlides.push({ type:'emoji', src:b.cover });
+    }
+    if (b.previewImages && b.previewImages.length) {
+      b.previewImages.forEach(function(img){ bibDetailSlides.push({ type:'image', src:img }); });
+    }
+    bibDetailCurrentSlide = 0;
+    bibRenderCarousel();
+    // Infos
+    document.getElementById('bib-detail-format').textContent = b.format;
+    document.getElementById('bib-detail-title').textContent = b.title;
+    document.getElementById('bib-detail-desc').textContent = b.desc;
+    document.getElementById('bib-detail-meta').innerHTML =
+      '<span class="bib-detail-tag">'+b.theme+'</span>'
+      +(b.featured ? '<span class="bib-detail-tag">⭐ Coup de cœur</span>' : '');
+    var isGratuit = b.pricing === 'gratuit';
+    document.getElementById('bib-detail-price').innerHTML = isGratuit
+      ? '<span style="color:#4caf50;font-size:22px;">Gratuit</span>'
+      : b.price+'€<span>TTC</span>';
+    document.getElementById('bib-detail-actions').innerHTML = isGratuit
+      ? '<button class="bib-btn-cart" onclick="bibTelechargement(\''+b.id+'\')">📥 Télécharger gratuitement</button>'
+      : '<button class="bib-btn-cart" onclick="bibAddToCart(\''+b.id+'\',event)">🛒 Ajouter au panier</button>'
+        +'<button class="bib-btn-cart-secondary" onclick="bibAcheter(\''+b.id+'\')">Acheter maintenant →</button>';
+    var overlay = document.getElementById('bib-detail-overlay');
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function bibCloseDetail() {
+    document.getElementById('bib-detail-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function bibRenderCarousel() {
+    var track = document.getElementById('bib-carousel-track');
+    var dotsEl = document.getElementById('bib-carousel-dots');
+    if (!track) return;
+    var multi = bibDetailSlides.length > 1;
+    track.innerHTML = '';
+    bibDetailSlides.forEach(function(slide, i) {
+      var el = document.createElement('div');
+      el.className = 'bib-carousel-slide';
+      el.style.transform = 'translateX('+((i - bibDetailCurrentSlide)*100)+'%)';
+      if (slide.type === 'image') {
+        el.innerHTML = '<img class="bib-carousel-img" src="'+slide.src+'" alt="" onerror="this.parentNode.innerHTML=\'<span style=font-size:64px>📄</span>\'">';
+      } else {
+        el.innerHTML = '<span style="font-size:72px;line-height:1;">'+slide.src+'</span>';
+      }
+      track.appendChild(el);
+    });
+    // Dots
+    if (dotsEl) {
+      dotsEl.style.display = multi ? 'flex' : 'none';
+      dotsEl.innerHTML = bibDetailSlides.map(function(s, i){
+        return '<div class="bib-carousel-dot'+(i===bibDetailCurrentSlide?' active':'')+'" onclick="bibCarouselGoTo('+i+')"></div>';
+      }).join('');
+    }
+    // Boutons de navigation
+    var prev = document.getElementById('bib-carousel-prev');
+    var next = document.getElementById('bib-carousel-next');
+    if (prev) prev.style.display = multi ? 'flex' : 'none';
+    if (next) next.style.display = multi ? 'flex' : 'none';
+  }
+
+  function bibCarouselGoTo(idx) {
+    bibDetailCurrentSlide = Math.max(0, Math.min(idx, bibDetailSlides.length - 1));
+    bibRenderCarousel();
+  }
+  function bibCarouselPrev() { bibCarouselGoTo(bibDetailCurrentSlide - 1); }
+  function bibCarouselNext() { bibCarouselGoTo(bibDetailCurrentSlide + 1); }
 
   var bibEmailTargetId = null;
 
@@ -14079,7 +14486,7 @@
       var b = bibliothequeData.find(function(x){ return x.id===bibEditingId; });
       if (b) { b.title=title; b.desc=desc; b.price=price; b.pricing=pricing; b.format=format; b.theme=theme; b.cover=cover; b.imageUrl=imageUrl; b.fileUrl=fileUrl; b.fileName=fileName; b.status=status; b.featured=featured; }
     } else {
-      bibliothequeData.push({ id:'bib_'+Date.now(), title:title, desc:desc, price:price, pricing:pricing, format:format, theme:theme, cover:cover, imageUrl:imageUrl, fileUrl:fileUrl, fileName:fileName, status:status, featured:featured });
+      bibliothequeData.push({ id:'bib_'+Date.now(), title:title, desc:desc, price:price, pricing:pricing, format:format, theme:theme, cover:cover, imageUrl:imageUrl, fileUrl:fileUrl, fileName:fileName, status:status, featured:featured, previewImages:[] });
     }
     bibCloseModal();
     bibRenderTable();
