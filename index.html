@@ -7064,7 +7064,7 @@
                 <td style="color:var(--gold-bright);font-weight:700;">1 240</td>
                 <td>Oct. 2023</td>
                 <td><span class="admin-pill admin-pill-active">Active</span></td>
-                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button><button class="admin-action-btn admin-action-btn-ghost">Profil</button></div></td>
+                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button><button class="admin-action-btn admin-action-btn-ghost" onclick="openMemberFiche('sophie')">👤 Fiche</button></div></td>
               </tr>
               <tr>
                 <td><div class="member-cell"><div class="member-avatar" style="background:linear-gradient(135deg,#b0c4d8,#8aafc4);">L</div><div><div style="font-size:13px;font-weight:600;color:white;">Léa Fontaine</div><div style="font-size:11px;color:rgba(255,255,255,0.35);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4f232a2e0f232e2326283a2a612c20">[email&#160;protected]</a></div></div></div></td>
@@ -7072,7 +7072,7 @@
                 <td style="color:var(--gold-bright);font-weight:700;">980</td>
                 <td>Jan. 2024</td>
                 <td><span class="admin-pill admin-pill-active">Active</span></td>
-                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button><button class="admin-action-btn admin-action-btn-ghost">Profil</button></div></td>
+                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button><button class="admin-action-btn admin-action-btn-ghost" onclick="openMemberFiche('lea')">👤 Fiche</button></div></td>
               </tr>
               <tr>
                 <td><div class="member-cell"><div class="member-avatar" style="background:linear-gradient(135deg,#c8a87a,#b8956a);">C</div><div><div style="font-size:13px;font-weight:600;color:white;">Clara Vidal</div><div style="font-size:11px;color:rgba(255,255,255,0.35);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d7b4bbb6a5b697bbb6bbbeb0a2b2f9b4b8">[email&#160;protected]</a></div></div></div></td>
@@ -7080,7 +7080,7 @@
                 <td style="color:var(--gold-bright);font-weight:700;">870</td>
                 <td>Fév. 2024</td>
                 <td><span class="admin-pill admin-pill-active">Active</span></td>
-                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button><button class="admin-action-btn admin-action-btn-ghost">Profil</button></div></td>
+                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button><button class="admin-action-btn admin-action-btn-ghost" onclick="openMemberFiche('clara')">👤 Fiche</button></div></td>
               </tr>
               <tr>
                 <td><div class="member-cell"><div class="member-avatar" style="background:linear-gradient(135deg,#a8d4b0,#7ebf8a);">E</div><div><div style="font-size:13px;font-weight:600;color:white;">Emma Rousseau</div><div style="font-size:11px;color:rgba(255,255,255,0.35);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3b6bebeb293bfb2bfbab4a6b6fdb0bc">[email&#160;protected]</a></div></div></div></td>
@@ -7088,7 +7088,7 @@
                 <td style="color:var(--gold-bright);font-weight:700;">430</td>
                 <td>Mars 2026</td>
                 <td><span class="admin-pill admin-pill-active">Active</span></td>
-                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button><button class="admin-action-btn admin-action-btn-ghost">Profil</button></div></td>
+                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button><button class="admin-action-btn admin-action-btn-ghost" onclick="openMemberFiche('emma')">👤 Fiche</button></div></td>
               </tr>
               <tr>
                 <td><div class="member-cell"><div class="member-avatar" style="background:linear-gradient(135deg,#d4a8c8,#c490b8);">A</div><div><div style="font-size:13px;font-weight:600;color:white;">Alice Martin</div><div style="font-size:11px;color:rgba(255,255,255,0.35);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a7c6cbcec4c2e7cbc6cbcec0d2c289c4c8">[email&#160;protected]</a></div></div></div></td>
@@ -7096,7 +7096,7 @@
                 <td style="color:var(--gold-bright);font-weight:700;">120</td>
                 <td>Mars 2026</td>
                 <td><span class="admin-pill admin-pill-active">Active</span></td>
-                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button><button class="admin-action-btn admin-action-btn-ghost">Profil</button></div></td>
+                <td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button><button class="admin-action-btn admin-action-btn-ghost" onclick="openMemberFiche('alice')">👤 Fiche</button></div></td>
               </tr>
             </tbody>
           </table>
@@ -12526,9 +12526,8 @@
   ];
 
   var teamData = [
-    { id:'t1', name:'Ana',                 email:'ana@laligue.co',     initial:'A', avatarBg:'linear-gradient(135deg,#fcba33,#ebc14c)', roleId:'r1', locked:true  },
-    { id:'t2', name:'Audrey',              email:'audrey@laligue.co',  initial:'U', avatarBg:'linear-gradient(135deg,#8aafc4,#6a9ab4)', roleId:'r1', locked:true  },
-    { id:'t3', name:'Marie (assistante)',  email:'marie@laligue.co',   initial:'M', avatarBg:'linear-gradient(135deg,#a8d4b0,#7ebf8a)', roleId:'r2', locked:false },
+    { id:'t1', name:'Ana',    email:'ana@laligue.co',    initial:'A', avatarBg:'linear-gradient(135deg,#fcba33,#ebc14c)', roleId:'r1', locked:true },
+    { id:'t2', name:'Audrey', email:'audrey@laligue.co', initial:'U', avatarBg:'linear-gradient(135deg,#8aafc4,#6a9ab4)', roleId:'r1', locked:true },
   ];
 
   var roleEditingId  = null;  // null = création, string = édition
@@ -15720,4 +15719,512 @@
       </div>
 
       <!-- Footer modale avec navigation -->
+
+  <!-- ══════════════════════════════════════════════════════════
+       MODALE FICHE MEMBRE DÉTAILLÉE
+  ══════════════════════════════════════════════════════════ -->
+  <div id="member-fiche-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:9999;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;" onclick="if(event.target===this)closeMemberFiche()">
+    <div style="background:#162638;border:1px solid rgba(255,255,255,0.09);border-radius:20px;width:780px;max-width:96vw;box-shadow:0 40px 100px rgba(0,0,0,0.8);margin:auto;overflow:hidden;">
+
+      <!-- ── HEADER ── -->
+      <div id="mf-header" style="padding:26px 28px 22px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:flex-start;gap:18px;background:rgba(255,255,255,0.015);">
+        <div id="mf-avatar" style="width:62px;height:62px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:white;font-family:'Playfair Display',serif;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <div id="mf-name" style="font-family:'Playfair Display',serif;font-size:20px;color:white;font-weight:700;"></div>
+            <span id="mf-rang-badge" style="padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;"></span>
+            <span class="admin-pill admin-pill-active" style="font-size:11px;">Active</span>
+          </div>
+          <div id="mf-meta" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:5px;"></div>
+          <div style="display:flex;gap:20px;margin-top:12px;flex-wrap:wrap;">
+            <div style="text-align:center;">
+              <div id="mf-pts" style="font-size:18px;font-weight:700;color:var(--gold-bright);"></div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.08em;">Points</div>
+            </div>
+            <div style="text-align:center;">
+              <div id="mf-rdv-count" style="font-size:18px;font-weight:700;color:#6ecf9e;"></div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.08em;">RDV réalisés</div>
+            </div>
+            <div style="text-align:center;">
+              <div id="mf-bilan-count" style="font-size:18px;font-weight:700;color:#a78bfa;"></div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.08em;">Bilans soumis</div>
+            </div>
+            <div style="text-align:center;">
+              <div id="mf-formation-pct" style="font-size:18px;font-weight:700;color:#8ab4f8;"></div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.08em;">Formations</div>
+            </div>
+          </div>
+        </div>
+        <button onclick="closeMemberFiche()" style="width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.12);background:transparent;color:rgba(255,255,255,0.4);cursor:pointer;font-size:20px;line-height:1;flex-shrink:0;transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='transparent'">×</button>
+      </div>
+
+      <!-- ── ONGLETS ── -->
+      <div style="display:flex;gap:2px;padding:14px 28px 0;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.01);">
+        <button class="mf-tab-btn mf-tab-active" onclick="mfTab('activite',this)" style="padding:8px 16px;border:none;border-bottom:2px solid var(--gold-bright);background:transparent;color:white;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;">📊 Activité</button>
+        <button class="mf-tab-btn" onclick="mfTab('rdv',this)" style="padding:8px 16px;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.45);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;">📅 Rendez-vous</button>
+        <button class="mf-tab-btn" onclick="mfTab('bilans',this)" style="padding:8px 16px;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.45);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;">📋 Bilans & Audits</button>
+        <button class="mf-tab-btn" onclick="mfTab('ia',this)" style="padding:8px 16px;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.45);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:all .2s;"><span style="background:linear-gradient(135deg,#fcba33,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;">✦ IA</span> Préparer le RDV</button>
+      </div>
+
+      <!-- ── CONTENU ONGLETS ── -->
+      <div style="padding:22px 28px;max-height:60vh;overflow-y:auto;">
+
+        <!-- Activité -->
+        <div id="mf-tab-activite">
+          <div id="mf-activite-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+
+        <!-- Rendez-vous -->
+        <div id="mf-tab-rdv" style="display:none;">
+          <div id="mf-rdv-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+
+        <!-- Bilans & Audits -->
+        <div id="mf-tab-bilans" style="display:none;">
+          <div id="mf-bilans-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+
+        <!-- IA -->
+        <div id="mf-tab-ia" style="display:none;">
+          <div style="background:rgba(252,186,51,0.04);border:1px solid rgba(252,186,51,0.15);border-radius:14px;padding:20px 22px;margin-bottom:18px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,rgba(252,186,51,0.2),rgba(252,186,51,0.08));border:1px solid rgba(252,186,51,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;">✦</div>
+              <div>
+                <div style="font-size:13px;font-weight:700;color:white;">Préparation IA du prochain rendez-vous</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.4);">Analyse l'historique complet de la membre pour vous préparer un briefing personnalisé</div>
+              </div>
+            </div>
+            <button id="mf-ia-btn" onclick="mfGenerateIA()" style="width:100%;padding:11px;border-radius:10px;border:1px solid rgba(252,186,51,0.35);background:rgba(252,186,51,0.08);color:var(--gold-bright);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(252,186,51,0.15)'" onmouseout="this.style.background='rgba(252,186,51,0.08)'">✦ Générer la préparation de rendez-vous</button>
+          </div>
+
+          <!-- Loader -->
+          <div id="mf-ia-loader" style="display:none;text-align:center;padding:32px 0;">
+            <div style="display:inline-flex;flex-direction:column;align-items:center;gap:14px;">
+              <div class="mf-ia-spinner"></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.45);" id="mf-ia-loader-txt">Analyse de l'historique en cours…</div>
+            </div>
+          </div>
+
+          <!-- Résultat IA -->
+          <div id="mf-ia-result" style="display:none;"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .mf-ia-spinner {
+      width: 36px; height: 36px;
+      border: 3px solid rgba(252,186,51,0.15);
+      border-top-color: var(--gold-bright);
+      border-radius: 50%;
+      animation: mf-spin 0.8s linear infinite;
+    }
+    @keyframes mf-spin { to { transform: rotate(360deg); } }
+    .mf-ia-block { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:16px 18px; margin-bottom:12px; }
+    .mf-ia-block-title { font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,0.35); font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:7px; }
+    .mf-ia-bullet { display:flex; align-items:flex-start; gap:8px; margin-bottom:7px; font-size:13px; color:rgba(255,255,255,0.75); line-height:1.5; }
+    .mf-ia-bullet-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:6px; }
+  </style>
+
+  <script>
+  // ── Données membres pour la fiche ──
+  var membersDB = {
+    sophie: {
+      id:'sophie', name:'Sophie Andreu', initial:'S',
+      avatarBg:'linear-gradient(135deg,#ebc14c,#fcba33)',
+      rang:'🔮 Visionnaire', rangBg:'rgba(167,139,250,0.15)', rangColor:'#a78bfa', rangBorder:'rgba(167,139,250,0.3)',
+      email:'sophie@laligue.co', profession:'Consultante stratégie digitale', ville:'Paris',
+      inscription:'Oct. 2023', points:1240,
+      bio:'Spécialiste en transformation digitale pour PME. 8 ans d\'expérience, fondatrice de son agence.',
+      formations:'4/5 complétées (80%)',
+      activite: [
+        { type:'communaute', icon:'💬', action:'a publié un post', detail:'"Mon premier client signé ! 🎉"', date:'Aujourd\'hui, 09h45' },
+        { type:'formation', icon:'📚', action:'a commencé le module', detail:'"Acquisition clients — Module 1"', date:'Hier, 10h00' },
+        { type:'hotline', icon:'🔥', action:'a soumis une demande Hotline', detail:'Sujet : Structurer une offre haute valeur', date:'Il y a 3 jours' },
+        { type:'masterclass', icon:'🎬', action:'a regardé', detail:'"Les 5 erreurs du freelance débutant"', date:'Il y a 8 jours' },
+        { type:'coaching', icon:'🎯', action:'a eu sa séance coaching', detail:'Coaching 1-1 · Ana · CR envoyé', date:'14 fév. 2026' },
+        { type:'bilan', icon:'📋', action:'a soumis son bilan mensuel', detail:'Fév. 2026 · CA déclaré : 8 200€', date:'25 fév. 2026' },
+      ],
+      rdv: [
+        { coach:'Ana', date:'11 mars 2026 — 10h00', type:'Coaching 1-1', statut:'À venir', note:'Objectif : développer le portefeuille clients B2B', statutColor:'#fcba33' },
+        { coach:'Ana', date:'14 fév. 2026 — 10h00', type:'Coaching 1-1', statut:'Réalisé', note:'Travail sur le pricing de l\'offre flagship. Prochaine étape : page de vente.', cr:'Page de vente à refaire, nouvelle offre à 1 500€/mois validée.', statutColor:'#6ecf9e' },
+        { coach:'Audrey', date:'10 jan. 2026 — 14h00', type:'Session Q&R', statut:'Réalisé', note:'Questions sur la prospection LinkedIn.', cr:'Stratégie de contenu définie. Tunnel de conversion à mettre en place.', statutColor:'#6ecf9e' },
+        { coach:'Ana', date:'12 déc. 2025 — 10h00', type:'Coaching 1-1', statut:'Réalisé', note:'Bilan de fin d\'année, cap 2026.', cr:'Objectif CA 2026 fixé à 96 000€. Recrutement d\'une assistante envisagé.', statutColor:'#6ecf9e' },
+      ],
+      bilans: [
+        { mois:'Mars 2026', type:'Bilan mensuel', ca:'9 100€', statut:'En attente de retour', icon:'📊', color:'rgba(252,186,51,0.15)', borderColor:'rgba(252,186,51,0.3)', points:['Lancement offre "Audit Flash" à 350€ : 6 ventes', 'Nouveau client récurrent signé', 'Participation au réseau BNI lancée'] },
+        { mois:'Fév. 2026', type:'Bilan mensuel', ca:'8 200€', statut:'Retour envoyé', icon:'📊', color:'rgba(110,207,158,0.08)', borderColor:'rgba(110,207,158,0.2)', points:['CA en hausse de 12% vs jan.', 'Refonte page de vente réalisée', 'Nouveau partenariat agence web signé'] },
+        { mois:'Jan. 2026', type:'Bilan mensuel', ca:'7 300€', statut:'Retour envoyé', icon:'📊', color:'rgba(110,207,158,0.08)', borderColor:'rgba(110,207,158,0.2)', points:['Bon démarrage d\'année', 'Objectif mensuel atteint à 91%', 'Deux prospects chauds en cours'] },
+        { mois:'Nov. 2025', type:'Audit Express', ca:'—', statut:'Retour envoyé', icon:'🔍', color:'rgba(139,180,248,0.08)', borderColor:'rgba(139,180,248,0.2)', points:['Audit page Instagram : 12 recommandations', 'Cohérence de l\'offre renforcée', 'Refonte bio et mise en avant USP'] },
+      ],
+      iaSummary: {
+        prenom: 'Sophie',
+        anciennete: '17 mois',
+        rang: 'Visionnaire',
+        dernier_rdv: '14 fév. 2026',
+        prochain_rdv: '11 mars 2026',
+        ca_moyen: '~8 200€/mois',
+        tendance: 'hausse constante (+12% sur 3 mois)',
+        points_forts: ['Progression régulière du CA mois après mois', 'Très active sur la communauté et les formations', 'Proactive sur les demandes Hotline — preuve d\'implication', 'Lancement d\'une nouvelle offre "Audit Flash" à succès'],
+        axes: ['Page de vente en cours de refonte — à valider au prochain RDV', 'Portefeuille clients B2B encore peu développé (objectif du coaching)', 'Objectif CA 2026 fixé à 96K€ : suivi à faire (pace actuel : ~98K€ annualisé ✓)'],
+        questions: ['Comment se passe la prospection B2B depuis le coaching de février ?', 'La refonte de ta page de vente est-elle finalisée ? Premières conversions ?', 'Es-tu satisfaite du pricing de ton offre flagship à 1 500€/mois ?', 'As-tu avancé sur le recrutement d\'une assistante évoqué en décembre ?', 'Quel est ton principal blocage ce mois-ci ?'],
+        alerte: 'Sophie atteint son rythme de croisière. Envisager une montée en gamme de l\'accompagnement ou un suivi renforcé sur les objectifs 2026.'
+      }
+    },
+    lea: {
+      id:'lea', name:'Léa Fontaine', initial:'L',
+      avatarBg:'linear-gradient(135deg,#b0c4d8,#8aafc4)',
+      rang:'⚡ Stratège', rangBg:'rgba(139,180,248,0.12)', rangColor:'#8ab4f8', rangBorder:'rgba(139,180,248,0.3)',
+      email:'lea@laligue.co', profession:'Coach bien-être & nutrition', ville:'Lyon',
+      inscription:'Jan. 2024', points:980,
+      bio:'Accompagne les femmes entrepreneurs vers plus d\'énergie et de sérénité dans leur quotidien professionnel.',
+      formations:'3/5 complétées (60%)',
+      activite: [
+        { type:'formation', icon:'📚', action:'a terminé le module', detail:'"Offre & Pricing — Module 3"', date:'Aujourd\'hui, 08h15' },
+        { type:'connexion', icon:'🔵', action:'s\'est connectée', detail:'', date:'Aujourd\'hui, 08h10' },
+        { type:'masterclass', icon:'🎬', action:'a assisté à', detail:'"Session Q&R Live — Réseaux sociaux"', date:'Il y a 3 jours' },
+        { type:'formation', icon:'📚', action:'a commencé le module', detail:'"Acquisition clients — Module 1"', date:'Hier, 10h00' },
+        { type:'abonnement', icon:'⭐', action:'s\'est abonnée', detail:'Formule Initiée — Bienvenue dans la Ligue !', date:'Il y a 8 jours' },
+      ],
+      rdv: [
+        { coach:'Ana', date:'18 mars 2026 — 14h00', type:'Coaching 1-1', statut:'À venir', note:'Premier coaching — tour d\'horizon de l\'activité', statutColor:'#fcba33' },
+        { coach:'Audrey', date:'5 mars 2026 — 11h00', type:'Session Q&R', statut:'Réalisé', note:'Questions sur la création de contenu.', cr:'Plan éditorial LinkedIn défini sur 1 mois. 3 formats de posts à tester.', statutColor:'#6ecf9e' },
+      ],
+      bilans: [
+        { mois:'Mars 2026', type:'Bilan mensuel', ca:'2 400€', statut:'Soumis', icon:'📊', color:'rgba(252,186,51,0.15)', borderColor:'rgba(252,186,51,0.3)', points:['3 nouveaux clients accompagnement', 'Lancement d\'un atelier collectif', 'CA en nette progression vs fév.'] },
+        { mois:'Fév. 2026', type:'Bilan mensuel', ca:'1 800€', statut:'Retour envoyé', icon:'📊', color:'rgba(110,207,158,0.08)', borderColor:'rgba(110,207,158,0.2)', points:['Démarrage progressif', 'Offre principale définie', 'Site web mis à jour'] },
+      ],
+      iaSummary: {
+        prenom: 'Léa',
+        anciennete: '14 mois',
+        rang: 'Stratège',
+        dernier_rdv: '5 mars 2026 (Q&R)',
+        prochain_rdv: '18 mars 2026',
+        ca_moyen: '~2 100€/mois',
+        tendance: 'progression solide (+33% en 2 mois)',
+        points_forts: ['Engagement fort dans les formations et masterclass', 'CA en croissance régulière', 'Active dans la communauté', 'Premier coaching prévu — bonne disponibilité'],
+        axes: ['CA encore faible vs son potentiel (coaching bien-être = marché porteur)', 'Offre en cours de structuration — à consolider', 'Pas encore d\'audit soumis — intérêt à lui proposer un Audit Instagram'],
+        questions: ['Comment se portent tes premières ventes depuis le début d\'année ?', 'Ton offre d\'accompagnement est-elle bien définie aujourd\'hui ?', 'As-tu mis en place le plan éditorial LinkedIn défini lors de la Q&R ?', 'Quels sont tes objectifs CA pour les 3 prochains mois ?', 'Y a-t-il des freins psychologiques ou pratiques que tu ressens en ce moment ?'],
+        alerte: 'Premier coaching 1-1 — préparer un tour d\'horizon complet. Léa est dans une phase de démarrage : l\'enjeu est de l\'aider à structurer son offre et accélérer l\'acquisition client.'
+      }
+    },
+    clara: {
+      id:'clara', name:'Clara Vidal', initial:'C',
+      avatarBg:'linear-gradient(135deg,#c8a87a,#b8956a)',
+      rang:'⚡ Stratège', rangBg:'rgba(139,180,248,0.12)', rangColor:'#8ab4f8', rangBorder:'rgba(139,180,248,0.3)',
+      email:'clara@laligue.co', profession:'Graphiste & directrice artistique', ville:'Bordeaux',
+      inscription:'Fév. 2024', points:870,
+      bio:'Crée des identités visuelles qui racontent une histoire. Spécialisée dans les marques féminines et créatives.',
+      formations:'2/5 complétées (40%)',
+      activite: [
+        { type:'ressource', icon:'📥', action:'a téléchargé', detail:'"Kit Marketing Réseaux Sociaux"', date:'Il y a 5 jours' },
+        { type:'connexion', icon:'🔵', action:'s\'est connectée', detail:'', date:'Il y a 6 jours' },
+        { type:'coaching', icon:'🎯', action:'a eu sa séance coaching', detail:'Coaching 1-1 · Audrey · CR envoyé', date:'Il y a 5 jours' },
+        { type:'bilan', icon:'📋', action:'a soumis son bilan mensuel', detail:'Fév. 2026 · CA déclaré : 4 500€', date:'25 fév. 2026' },
+      ],
+      rdv: [
+        { coach:'Audrey', date:'5 mars 2026 — 10h00', type:'Coaching 1-1', statut:'Réalisé', note:'Développement d\'une offre "Branding complet" haute valeur.', cr:'Offre positionnée à 3 000€. Landing page à créer. Cible : créatrices de mode et cosmétique.', statutColor:'#6ecf9e' },
+        { coach:'Ana', date:'10 jan. 2026 — 11h00', type:'Coaching 1-1', statut:'Réalisé', note:'Stratégie tarifaire et positionnement premium.', cr:'Abandon du tarif horaire. Passage en forfaits packagés. Décision courageuse validée.', statutColor:'#6ecf9e' },
+      ],
+      bilans: [
+        { mois:'Mars 2026', type:'Bilan mensuel', ca:'5 200€', statut:'Soumis', icon:'📊', color:'rgba(252,186,51,0.15)', borderColor:'rgba(252,186,51,0.3)', points:['Première vente "Branding complet" à 3 000€', 'Projet en cours pour une marque cosmétique', 'CA record ce mois'] },
+        { mois:'Fév. 2026', type:'Bilan mensuel', ca:'4 500€', statut:'Retour envoyé', icon:'📊', color:'rgba(110,207,158,0.08)', borderColor:'rgba(110,207,158,0.2)', points:['Bonne dynamique', 'Refonte du portfolio', 'Deux devis acceptés sur trois envoyés'] },
+        { mois:'Déc. 2025', type:'Audit Express', ca:'—', statut:'Retour envoyé', icon:'🔍', color:'rgba(139,180,248,0.08)', borderColor:'rgba(139,180,248,0.2)', points:['Audit offre & pricing : 9 recommandations', 'Repositionnement vers le premium validé', 'Tarifs à réviser à la hausse'] },
+      ],
+      iaSummary: {
+        prenom: 'Clara',
+        anciennete: '13 mois',
+        rang: 'Stratège',
+        dernier_rdv: '5 mars 2026',
+        prochain_rdv: 'À programmer',
+        ca_moyen: '~4 750€/mois',
+        tendance: 'forte accélération (+73% en 2 mois)',
+        points_forts: ['Passage au premium réussi : offre "Branding complet" vendue dès le 1er mois', 'CA en forte hausse grâce à la restructuration tarifaire', 'Excellente exécution des recommandations coaching'],
+        axes: ['Formations peu suivies (40%) — l\'encourager sur ce point', 'Pipeline clients à alimenter : pour l\'instant dépendante de 2-3 clients actifs', 'Prochaine étape : délégation pour gagner en capacité'],
+        questions: ['Comment s\'est passée la 1ère vente de ton offre "Branding complet" ?', 'As-tu d\'autres prospects en cours pour des projets premium ?', 'Te sens-tu à l\'aise avec ton nouveau positionnement tarifaire ?', 'As-tu pensé à mettre en place un système de recommandation client ?', 'Quelle est ta prochaine grande étape dans les 3 prochains mois ?'],
+        alerte: 'Clara est en pleine accélération. C\'est le bon moment pour sécuriser son pipeline et éviter un creux d\'activité post-lancement. Aborder la question de la visibilité et des leads entrants.'
+      }
+    },
+    emma: {
+      id:'emma', name:'Emma Rousseau', initial:'E',
+      avatarBg:'linear-gradient(135deg,#a8d4b0,#7ebf8a)',
+      rang:'⚡ Stratège', rangBg:'rgba(139,180,248,0.12)', rangColor:'#8ab4f8', rangBorder:'rgba(139,180,248,0.3)',
+      email:'emma@laligue.co', profession:'Formatrice en communication', ville:'Nantes',
+      inscription:'Mars 2026', points:430,
+      bio:'Aide les entrepreneurs à communiquer avec impact et authenticité. Formatrice certifiée.',
+      formations:'1/5 complétée (20%)',
+      activite: [
+        { type:'connexion', icon:'🔵', action:'s\'est connectée', detail:'', date:'Aujourd\'hui, 07h52' },
+        { type:'bilan', icon:'📋', action:'a soumis son bilan mensuel', detail:'Mars 2026 · CA déclaré : 3 800€', date:'Aujourd\'hui, 06h00' },
+        { type:'formation', icon:'📚', action:'a terminé la formation', detail:'"Acquisition clients — Complet"', date:'Il y a 5 jours' },
+        { type:'connexion', icon:'🔵', action:'s\'est connectée', detail:'', date:'Il y a 6 jours' },
+        { type:'communaute', icon:'💬', action:'a commenté', detail:'Post de Léa Fontaine · 3 likes', date:'Il y a 8 jours' },
+      ],
+      rdv: [
+        { coach:'Ana', date:'20 mars 2026 — 15h00', type:'Coaching 1-1', statut:'À venir', note:'Bilan du 1er mois dans la Ligue', statutColor:'#fcba33' },
+      ],
+      bilans: [
+        { mois:'Mars 2026', type:'Bilan mensuel', ca:'3 800€', statut:'Soumis', icon:'📊', color:'rgba(252,186,51,0.15)', borderColor:'rgba(252,186,51,0.3)', points:['Bon démarrage', '4 formations vendues ce mois', 'Partenariat avec un organisme de formation en discussion'] },
+      ],
+      iaSummary: {
+        prenom: 'Emma',
+        anciennete: '1 semaine',
+        rang: 'Stratège',
+        dernier_rdv: 'Aucun encore',
+        prochain_rdv: '20 mars 2026',
+        ca_moyen: '3 800€ (1er mois)',
+        tendance: 'démarrage',
+        points_forts: ['Très active dès l\'inscription : connexions quotidiennes, bilan soumis rapidement', 'Formation "Acquisition clients" terminée en 1 semaine — signe de motivation', 'CA de départ solide pour une nouvelle membre'],
+        axes: ['Encore très peu de recul (1 semaine) — premier coaching structurant', '4 autres formations disponibles à explorer', 'Aucun RDV réalisé à ce jour — ce sera le premier'],
+        questions: ['Qu\'est-ce qui t\'a amenée à rejoindre la Ligue des Ambitieuses ?', 'Où en es-tu dans ton activité de formatrice en communication ?', 'Quels sont tes 3 objectifs principaux pour les 3 prochains mois ?', 'As-tu des blocages ou points de friction dans ton activité en ce moment ?', 'Qu\'espères-tu retirer de cet accompagnement ?'],
+        alerte: 'Premier RDV avec Emma : coaching de découverte et d\'orientation. Prendre le temps de comprendre son contexte complet avant de définir un plan d\'action.'
+      }
+    },
+    alice: {
+      id:'alice', name:'Alice Martin', initial:'A',
+      avatarBg:'linear-gradient(135deg,#d4a8c8,#c490b8)',
+      rang:'🌿 Initiée', rangBg:'rgba(110,207,158,0.12)', rangColor:'#6ecf9e', rangBorder:'rgba(110,207,158,0.3)',
+      email:'alice@laligue.co', profession:'Consultante RH indépendante', ville:'Paris',
+      inscription:'Mars 2026', points:120,
+      bio:'Accompagne les TPE et startups dans la structuration de leurs ressources humaines.',
+      formations:'0/5 complétée (0%)',
+      activite: [
+        { type:'connexion', icon:'🔵', action:'s\'est connectée', detail:'', date:'Il y a 2 jours' },
+        { type:'abonnement', icon:'⭐', action:'s\'est inscrite', detail:'Formule Initiée — Bienvenue dans la Ligue !', date:'Il y a 5 jours' },
+      ],
+      rdv: [],
+      bilans: [],
+      iaSummary: {
+        prenom: 'Alice',
+        anciennete: '5 jours',
+        rang: 'Initiée',
+        dernier_rdv: 'Aucun encore',
+        prochain_rdv: 'À programmer',
+        ca_moyen: 'Données insuffisantes',
+        tendance: 'démarrage',
+        points_forts: ['Nouvelle membre — potentiel à découvrir', 'Domaine RH : expertise rare dans la communauté', 'Inscrite sur Initiée — à accompagner vers Stratège'],
+        axes: ['Aucune activité de formation encore — à encourager', 'Aucun bilan ni audit soumis', 'Engagement dans la communauté à initier'],
+        questions: ['Bienvenue dans la Ligue ! Comment s\'est passée ton intégration ces premiers jours ?', 'Raconte-moi ton activité de consultante RH : depuis quand, quels clients ?', 'Quels sont tes objectifs en rejoignant la communauté ?', 'Y a-t-il une ressource ou une formation qui t\'attire en particulier ?', 'Qu\'est-ce qui te manque aujourd\'hui pour passer à la vitesse supérieure ?'],
+        alerte: 'Alice vient tout juste de s\'inscrire. Pas encore de données d\'activité. Ce premier contact est crucial pour l\'engager et lui montrer la valeur de la communauté.'
+      }
+    }
+  };
+
+  var mfCurrentMember = null;
+
+  function openMemberFiche(memberId) {
+    var m = membersDB[memberId];
+    if (!m) return;
+    mfCurrentMember = m;
+
+    // Header
+    document.getElementById('mf-avatar').style.background = m.avatarBg;
+    document.getElementById('mf-avatar').textContent = m.initial;
+    document.getElementById('mf-name').textContent = m.name;
+    var rb = document.getElementById('mf-rang-badge');
+    rb.textContent = m.rang;
+    rb.style.background = m.rangBg; rb.style.color = m.rangColor; rb.style.border = '1px solid ' + m.rangBorder;
+    document.getElementById('mf-meta').textContent = m.email + '  ·  ' + m.profession + '  ·  ' + m.ville + '  ·  Inscrite ' + m.inscription;
+    document.getElementById('mf-pts').textContent = m.points;
+    document.getElementById('mf-rdv-count').textContent = m.rdv.filter(function(r){return r.statut==='Réalisé';}).length;
+    document.getElementById('mf-bilan-count').textContent = m.bilans.length;
+    document.getElementById('mf-formation-pct').textContent = m.formations;
+
+    // Onglet par défaut
+    mfTab('activite', document.querySelector('.mf-tab-btn'));
+
+    // Reset IA
+    document.getElementById('mf-ia-result').style.display = 'none';
+    document.getElementById('mf-ia-result').innerHTML = '';
+    document.getElementById('mf-ia-loader').style.display = 'none';
+    document.getElementById('mf-ia-btn').style.display = 'block';
+
+    var modal = document.getElementById('member-fiche-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMemberFiche() {
+    document.getElementById('member-fiche-modal').style.display = 'none';
+    document.body.style.overflow = '';
+    mfCurrentMember = null;
+  }
+
+  function mfTab(tab, btn) {
+    var tabs = ['activite','rdv','bilans','ia'];
+    tabs.forEach(function(t) {
+      var el = document.getElementById('mf-tab-' + t);
+      if (el) el.style.display = 'none';
+    });
+    document.querySelectorAll('.mf-tab-btn').forEach(function(b) {
+      b.style.borderBottomColor = 'transparent';
+      b.style.color = 'rgba(255,255,255,0.45)';
+    });
+    var target = document.getElementById('mf-tab-' + tab);
+    if (target) target.style.display = 'block';
+    if (btn) { btn.style.borderBottomColor = 'var(--gold-bright)'; btn.style.color = 'white'; }
+
+    var m = mfCurrentMember;
+    if (!m) return;
+
+    if (tab === 'activite') mfRenderActivite(m);
+    if (tab === 'rdv')      mfRenderRdv(m);
+    if (tab === 'bilans')   mfRenderBilans(m);
+  }
+
+  var typeColors = {
+    formation: '#8ab4f8', coaching: '#6ecf9e', bilan: '#a78bfa',
+    masterclass: '#f9a8d4', communaute: '#fcd34d', hotline: '#fb923c',
+    ressource: '#34d399', connexion: 'rgba(255,255,255,0.2)', abonnement: '#fcba33'
+  };
+
+  function mfRenderActivite(m) {
+    var list = document.getElementById('mf-activite-list');
+    if (!list) return;
+    if (!m.activite.length) { list.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.3);padding:32px 0;font-size:13px;">Aucune activité enregistrée.</div>'; return; }
+    list.innerHTML = m.activite.map(function(a) {
+      var c = typeColors[a.type] || 'rgba(255,255,255,0.3)';
+      return '<div style="display:flex;align-items:flex-start;gap:12px;padding:11px 14px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">'
+        + '<div style="width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">'+a.icon+'</div>'
+        + '<div style="flex:1;min-width:0;">'
+        +   '<div style="font-size:12px;color:rgba(255,255,255,0.75);">'
+        +     '<span style="color:white;font-weight:600;">'+m.name+'</span> '+a.action
+        +     (a.detail ? ' <span style="color:rgba(255,255,255,0.5);">'+a.detail+'</span>' : '')
+        +   '</div>'
+        +   '<div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:3px;">'+a.date+'</div>'
+        + '</div>'
+        + '<span style="padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:'+c+'22;color:'+c+';border:1px solid '+c+'44;white-space:nowrap;flex-shrink:0;">'+a.type+'</span>'
+        + '</div>';
+    }).join('');
+  }
+
+  function mfRenderRdv(m) {
+    var list = document.getElementById('mf-rdv-list');
+    if (!list) return;
+    if (!m.rdv.length) { list.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.3);padding:32px 0;font-size:13px;">Aucun rendez-vous enregistré.</div>'; return; }
+    list.innerHTML = m.rdv.map(function(r) {
+      var isNext = r.statut === 'À venir';
+      return '<div style="background:rgba(255,255,255,0.025);border:1px solid '+(isNext?'rgba(252,186,51,0.25)':'rgba(255,255,255,0.07)')+';border-radius:12px;padding:16px 18px;">'
+        + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">'
+        +   '<div style="font-size:20px;">📅</div>'
+        +   '<div style="flex:1;">'
+        +     '<div style="font-size:13px;font-weight:600;color:white;">'+r.type+' · '+r.coach+'</div>'
+        +     '<div style="font-size:11px;color:rgba(255,255,255,0.4);">'+r.date+'</div>'
+        +   '</div>'
+        +   '<span style="padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600;background:'+r.statutColor+'22;color:'+r.statutColor+';border:1px solid '+r.statutColor+'44;">'+r.statut+'</span>'
+        + '</div>'
+        + (r.note ? '<div style="font-size:12px;color:rgba(255,255,255,0.5);padding:8px 10px;background:rgba(255,255,255,0.03);border-radius:7px;margin-bottom:'+(r.cr?'8px':'0')+';">📝 '+r.note+'</div>' : '')
+        + (r.cr   ? '<div style="font-size:12px;color:rgba(110,207,158,0.85);padding:8px 10px;background:rgba(110,207,158,0.06);border-radius:7px;border-left:2px solid rgba(110,207,158,0.4);">✅ Compte-rendu : '+r.cr+'</div>' : '')
+        + '</div>';
+    }).join('');
+  }
+
+  function mfRenderBilans(m) {
+    var list = document.getElementById('mf-bilans-list');
+    if (!list) return;
+    if (!m.bilans.length) { list.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.3);padding:32px 0;font-size:13px;">Aucun bilan soumis.</div>'; return; }
+    list.innerHTML = m.bilans.map(function(b) {
+      return '<div style="background:'+b.color+';border:1px solid '+b.borderColor+';border-radius:12px;padding:16px 18px;">'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">'
+        +   '<div style="display:flex;align-items:center;gap:8px;">'
+        +     '<span style="font-size:18px;">'+b.icon+'</span>'
+        +     '<div>'
+        +       '<div style="font-size:13px;font-weight:600;color:white;">'+b.mois+' — '+b.type+'</div>'
+        +       (b.ca !== '—' ? '<div style="font-size:11px;color:rgba(255,255,255,0.5);">CA déclaré : <strong style="color:var(--gold-bright);">'+b.ca+'</strong></div>' : '')
+        +     '</div>'
+        +   '</div>'
+        +   '<span style="padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.1);">'+b.statut+'</span>'
+        + '</div>'
+        + '<ul style="margin:0;padding:0 0 0 14px;">'
+        + b.points.map(function(p){ return '<li style="font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;">'+p+'</li>'; }).join('')
+        + '</ul>'
+        + '</div>';
+    }).join('');
+  }
+
+  function mfGenerateIA() {
+    var m = mfCurrentMember;
+    if (!m || !m.iaSummary) return;
+    document.getElementById('mf-ia-btn').style.display = 'none';
+    document.getElementById('mf-ia-loader').style.display = 'block';
+    document.getElementById('mf-ia-result').style.display = 'none';
+
+    var steps = ['Analyse de l\'historique en cours…','Lecture des bilans et audits…','Synthèse des rendez-vous précédents…','Génération du briefing personnalisé…'];
+    var i = 0;
+    var stepInterval = setInterval(function() {
+      i++;
+      if (i < steps.length) {
+        document.getElementById('mf-ia-loader-txt').textContent = steps[i];
+      }
+    }, 700);
+
+    setTimeout(function() {
+      clearInterval(stepInterval);
+      document.getElementById('mf-ia-loader').style.display = 'none';
+      mfRenderIA(m.iaSummary);
+    }, 3000);
+  }
+
+  function mfRenderIA(s) {
+    var result = document.getElementById('mf-ia-result');
+    result.style.display = 'block';
+    result.innerHTML =
+      // Alerte
+      '<div style="background:rgba(252,186,51,0.07);border:1px solid rgba(252,186,51,0.22);border-radius:12px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;">'
+      + '<span style="font-size:18px;flex-shrink:0;">✦</span>'
+      + '<div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(252,186,51,0.6);font-weight:700;margin-bottom:5px;">Synthèse IA</div>'
+      + '<div style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.6;">'+s.alerte+'</div></div>'
+      + '</div>'
+
+      // Stats contextuelles
+      + '<div class="mf-ia-block">'
+      + '<div class="mf-ia-block-title"><span>📊</span> Contexte de la membre</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'
+      + mfStatRow('Ancienneté', s.anciennete)
+      + mfStatRow('Rang actuel', s.rang)
+      + mfStatRow('Dernier RDV', s.dernier_rdv)
+      + mfStatRow('Prochain RDV', s.prochain_rdv)
+      + mfStatRow('CA moyen', s.ca_moyen)
+      + mfStatRow('Tendance', s.tendance)
+      + '</div></div>'
+
+      // Points forts
+      + '<div class="mf-ia-block">'
+      + '<div class="mf-ia-block-title"><span style="color:#6ecf9e;">✓</span> Points forts & avancées</div>'
+      + s.points_forts.map(function(p){ return '<div class="mf-ia-bullet"><div class="mf-ia-bullet-dot" style="background:#6ecf9e;"></div><div>'+p+'</div></div>'; }).join('')
+      + '</div>'
+
+      // Axes d'amélioration
+      + '<div class="mf-ia-block">'
+      + '<div class="mf-ia-block-title"><span style="color:#fb923c;">→</span> Axes de travail & vigilances</div>'
+      + s.axes.map(function(p){ return '<div class="mf-ia-bullet"><div class="mf-ia-bullet-dot" style="background:#fb923c;"></div><div>'+p+'</div></div>'; }).join('')
+      + '</div>'
+
+      // Questions suggérées
+      + '<div class="mf-ia-block">'
+      + '<div class="mf-ia-block-title"><span style="color:#8ab4f8;">💬</span> Questions suggérées pour le RDV</div>'
+      + s.questions.map(function(q, idx){ return '<div class="mf-ia-bullet"><div style="width:18px;height:18px;border-radius:50%;background:rgba(139,180,248,0.15);border:1px solid rgba(139,180,248,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#8ab4f8;flex-shrink:0;margin-top:1px;">'+(idx+1)+'</div><div style="color:rgba(255,255,255,0.8);">'+q+'</div></div>'; }).join('')
+      + '</div>'
+
+      // Régénérer
+      + '<div style="text-align:center;margin-top:6px;">'
+      + '<button onclick="mfRegenIA()" style="padding:8px 18px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.35);font-size:11px;cursor:pointer;font-family:\'DM Sans\',sans-serif;transition:all .2s;" onmouseover="this.style.color=\'rgba(255,255,255,0.6)\'" onmouseout="this.style.color=\'rgba(255,255,255,0.35)\'">↺ Régénérer</button>'
+      + '</div>';
+  }
+
+  function mfStatRow(label, val) {
+    return '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:8px 12px;">'
+      + '<div style="font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:3px;">'+label+'</div>'
+      + '<div style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);">'+val+'</div>'
+      + '</div>';
+  }
+
+  function mfRegenIA() {
+    document.getElementById('mf-ia-result').style.display = 'none';
+    document.getElementById('mf-ia-result').innerHTML = '';
+    document.getElementById('mf-ia-btn').style.display = 'block';
+  }
+  </script>
     
