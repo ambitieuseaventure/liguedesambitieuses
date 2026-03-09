@@ -893,8 +893,12 @@
   /* ── COMMUNITY ── */
   .community-layout { display:grid; grid-template-columns:1fr 300px; gap:26px; }
 
-  /* Page warm background */
-  #page-community { background:#E8D9BF; }
+  /* Page background — same as dashboard */
+  #page-community { background:var(--bg); }
+
+  /* Two-column posts grid */
+  #communityFeed { display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
+  #communityFeed .post-card-v2 { margin-bottom:0; }
 
   /* Ambient top bar */
   .community-ambient-bar {
@@ -2436,6 +2440,7 @@
     .messages-layout { grid-template-columns:1fr; height:auto; }
     .conversations-list { height:280px; }
     .community-layout { grid-template-columns:1fr; }
+    #communityFeed { grid-template-columns:1fr; }
     .topbar { padding:10px 16px; }
     .topbar-title { font-size:16px; }
 
