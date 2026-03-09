@@ -1329,6 +1329,8 @@
     transition:all 0.2s; font-family:'DM Sans',sans-serif;
   }
   .dl-btn:hover { background:var(--navy-dark); }
+  .dl-btn-done { background:rgba(20,36,53,0.08) !important; color:var(--text-light) !important; cursor:default; }
+  .dl-btn-done:hover { background:rgba(20,36,53,0.08) !important; transform:none !important; }
 
   /* ── HOTLINE VOCAL ── */
   @keyframes hlPulse {
@@ -5078,8 +5080,13 @@
         <div class="section-sub">34 ressources disponibles pour accélérer ton aventure</div>
       </div>
 
+      <div class="palmares-tabs" style="margin-bottom:18px;">
+        <button class="palmares-tab active" id="res-tab-toutes" onclick="switchResourceTab('toutes', this)">Toutes les ressources</button>
+        <button class="palmares-tab" id="res-tab-mes" onclick="switchResourceTab('mes', this)">Mes ressources</button>
+      </div>
+
       <!-- Filtres compacts -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:22px;background:var(--bg);border-radius:12px;padding:8px 14px;flex-wrap:wrap;">
+      <div id="resources-filters" style="display:flex;align-items:center;gap:10px;margin-bottom:22px;background:var(--bg);border-radius:12px;padding:8px 14px;flex-wrap:wrap;">
 
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-light);font-weight:700;white-space:nowrap;">Format</span>
@@ -5128,7 +5135,7 @@
 
       <div class="resources-grid" id="resources-grid">
 
-        <div class="resource-card" data-format="template" data-theme="offre" data-niveau="debutant">
+        <div class="resource-card" data-format="template" data-theme="offre" data-niveau="debutant" data-telecharge="oui">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(252,186,51,0.12),rgba(235,193,76,0.06))">📋<div class="resource-type">Template</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5137,7 +5144,7 @@
             </div>
             <h4>Business Plan Simplifié</h4>
             <p>Modèle complet pour structurer ton projet en moins de 2h.</p>
-            <div class="resource-meta"><span class="resource-size">PDF · 2.4 Mo</span><button class="dl-btn">⬇ Télécharger</button></div>
+            <div class="resource-meta"><span class="resource-size">PDF · 2.4 Mo</span><button class="dl-btn dl-btn-done">✓ Téléchargé</button></div>
           </div>
         </div>
 
@@ -5180,7 +5187,7 @@
           </div>
         </div>
 
-        <div class="resource-card" data-format="template" data-theme="marketing" data-niveau="debutant">
+        <div class="resource-card" data-format="template" data-theme="marketing" data-niveau="debutant" data-telecharge="oui">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(79,133,160,0.1),rgba(235,193,76,0.08))">📱<div class="resource-type">Template</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5189,7 +5196,7 @@
             </div>
             <h4>50 accroches Instagram</h4>
             <p>Phrases d'amorce testées pour tes publications sur les réseaux sociaux.</p>
-            <div class="resource-meta"><span class="resource-size">PDF · 1.2 Mo</span><button class="dl-btn">⬇ Télécharger</button></div>
+            <div class="resource-meta"><span class="resource-size">PDF · 1.2 Mo</span><button class="dl-btn dl-btn-done">✓ Téléchargé</button></div>
           </div>
         </div>
 
@@ -5236,9 +5243,9 @@
 
       <!-- Message zéro résultat -->
       <div id="resources-empty" style="display:none;text-align:center;padding:60px 20px;">
-        <div style="font-size:40px;margin-bottom:12px;">🔍</div>
-        <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dark);margin-bottom:8px;">Aucune ressource pour ces filtres</div>
-        <div style="font-size:14px;color:var(--text-light);">Essaie une autre combinaison de filtres</div>
+        <div style="font-size:40px;margin-bottom:12px;" id="resources-empty-icon">🔍</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dark);margin-bottom:8px;" id="resources-empty-title">Aucune ressource pour ces filtres</div>
+        <div style="font-size:14px;color:var(--text-light);" id="resources-empty-sub">Essaie une autre combinaison de filtres</div>
       </div>
 
     </div>
@@ -15122,6 +15129,23 @@
 
   // ── FILTRES RESSOURCES ──
   var activeResourceFilters = { format: 'tous', theme: 'tous', niveau: 'tous' };
+  var activeResourceTab = 'toutes';
+
+  function switchResourceTab(tab, btn) {
+    activeResourceTab = tab;
+    var tabs = document.querySelectorAll('#page-resources .palmares-tab');
+    tabs.forEach(function(t) { t.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    // Réinitialiser les filtres au changement d'onglet
+    activeResourceFilters = { format: 'tous', theme: 'tous', niveau: 'tous' };
+    ['res-filter-format','res-filter-theme','res-filter-niveau'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.selectedIndex = 0;
+    });
+    var reset = document.getElementById('resources-reset-btn');
+    if (reset) reset.style.display = 'none';
+    _applyResourceFilters();
+  }
 
   function filterResources(type, value, btn) {
     // legacy - kept for compatibility
@@ -15154,18 +15178,38 @@
     var cards = document.querySelectorAll('#resources-grid .resource-card');
     var visible = 0;
     cards.forEach(function(card) {
+      var telecharge = card.dataset.telecharge === 'oui';
+      var matchTab = (activeResourceTab === 'toutes' && !telecharge) || (activeResourceTab === 'mes' && telecharge);
       var matchFormat = activeResourceFilters.format === 'tous' || card.dataset.format === activeResourceFilters.format;
       var matchTheme  = activeResourceFilters.theme  === 'tous' || card.dataset.theme  === activeResourceFilters.theme;
       var matchNiveau = activeResourceFilters.niveau === 'tous' || card.dataset.niveau === activeResourceFilters.niveau;
-      if (matchFormat && matchTheme && matchNiveau) { card.style.display = 'block'; visible++; }
+      if (matchTab && matchFormat && matchTheme && matchNiveau) { card.style.display = 'block'; visible++; }
       else { card.style.display = 'none'; }
     });
     var countEl = document.getElementById('resources-count');
     var emptyEl = document.getElementById('resources-empty');
-    if (visible === 0) { countEl.style.display = 'none'; emptyEl.style.display = 'block'; }
-    else {
+    if (visible === 0) {
+      countEl.style.display = 'none';
+      emptyEl.style.display = 'block';
+      var iconEl = document.getElementById('resources-empty-icon');
+      var titleEl = document.getElementById('resources-empty-title');
+      var subEl = document.getElementById('resources-empty-sub');
+      if (activeResourceTab === 'mes') {
+        if (iconEl) iconEl.textContent = '📂';
+        if (titleEl) titleEl.textContent = 'Aucune ressource téléchargée';
+        if (subEl) subEl.textContent = 'Télécharge des ressources depuis l\'onglet "Toutes les ressources"';
+      } else {
+        if (iconEl) iconEl.textContent = '🔍';
+        if (titleEl) titleEl.textContent = 'Aucune ressource pour ces filtres';
+        if (subEl) subEl.textContent = 'Essaie une autre combinaison de filtres';
+      }
+    } else {
       countEl.style.display = 'block'; emptyEl.style.display = 'none';
-      countEl.textContent = visible + ' ressource' + (visible > 1 ? 's' : '') + ' disponible' + (visible > 1 ? 's' : '');
+      if (activeResourceTab === 'mes') {
+        countEl.textContent = visible + ' ressource' + (visible > 1 ? 's' : '') + ' téléchargée' + (visible > 1 ? 's' : '');
+      } else {
+        countEl.textContent = visible + ' ressource' + (visible > 1 ? 's' : '') + ' disponible' + (visible > 1 ? 's' : '');
+      }
     }
   }
 
@@ -15273,6 +15317,9 @@
     // Assure l'ordre voulu dans l'onglet "Toutes les formations" dès le premier affichage.
     var defaultTabBtn = document.getElementById('classroom-tab-toutes');
     if (defaultTabBtn) switchClassroomTab('toutes', defaultTabBtn);
+
+    // Initialise l'onglet ressources : masque les ressources déjà téléchargées dans "Toutes".
+    _applyResourceFilters();
   });
 
   // ══════════════════════════════════════
