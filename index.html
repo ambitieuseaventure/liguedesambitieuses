@@ -10645,10 +10645,12 @@
     if (page === 'landing' || page === 'blog' || page === 'bibliotheque' || page === 'contact') {
       topbar.style.display = 'none';
       sidebar.style.display = 'none';
+      document.body.classList.remove('member-page');
       if (page === 'bibliotheque') { bibRenderPublic(); }
     } else {
       topbar.style.display = 'flex';
       sidebar.style.display = 'flex';
+      document.body.classList.add('member-page');
     }
     if (window.innerWidth <= 900) sidebar.classList.remove('open');
   }
@@ -10683,6 +10685,7 @@
   // ── ADMIN ──
   function enterAdmin() {
     document.body.classList.add('admin-mode');
+    document.body.classList.remove('member-page');
     // Hide all member pages
     document.querySelectorAll('.page').forEach(p => { p.style.display='none'; p.classList.remove('active'); });
   }
@@ -17422,6 +17425,67 @@
     justify-content: center;
     border: 2px solid #1a1825;
   }
+
+  /* ── WIDGET FLOTTANT MEMBRE ── */
+  #member-widget { display: none; }
+  body.member-page #member-widget {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  body.admin-mode #member-widget { display: none !important; }
+  #member-widget-panel {
+    width: 360px;
+    background: #1a1825;
+    border: 1px solid rgba(255,215,160,0.15);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    transform-origin: bottom right;
+    animation: panelIn .25s cubic-bezier(.34,1.56,.64,1) both;
+    display: none;
+  }
+  #member-widget-panel.open { display: flex; flex-direction: column; }
+  #member-widget-fab {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f5c97a 0%, #e8a05e 100%);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(232,160,94,0.45), 0 2px 6px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  #member-widget-fab:hover { transform: scale(1.1); }
+  #member-fab-badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    background: #e8736a;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #1a1825;
+  }
 </style>
 
 <div id="admin-widget">
@@ -17581,4 +17645,165 @@
     // activeTab === 'messages' ? window.location.hash = '#messagerie' : window.location.hash = '#communaute';
   }
 </script>
-<!-- ═══ FIN DU WIDGET ═══ -->
+<!-- ═══ FIN DU WIDGET ADMIN ═══ -->
+
+<!-- ═══ WIDGET FLOTTANT MEMBRE ═══ -->
+<div id="member-widget">
+  <div id="member-widget-panel">
+    <div class="widget-header">
+      <div class="widget-tab active" onclick="switchMemberTab('messages', this)">
+        ✉️ Messagerie privée <span class="badge" id="member-badge-msg">3</span>
+      </div>
+      <div class="widget-tab" onclick="switchMemberTab('community', this)">
+        🌸 Communauté <span class="badge" id="member-badge-comm">5</span>
+      </div>
+      <span class="widget-close" onclick="toggleMemberWidget()">✕</span>
+    </div>
+    <div class="widget-body">
+      <div class="tab-content active" id="member-tab-messages">
+        <div class="conv-list">
+          <div class="conv-item unread" onclick="openMemberConv('Admin', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#ebc14c,#fcba33)">A<span class="online-dot"></span></div>
+            <div class="conv-info">
+              <div class="conv-name">Ambitieuse Aventure</div>
+              <div class="conv-preview">Bienvenue dans la Ligue ! 🌸 Comment vas-tu ?</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">10h</span><span class="conv-unread-dot"></span></div>
+          </div>
+          <div class="conv-item unread" onclick="openMemberConv('Sophie', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#c4937a,#e0a87a)">S</div>
+            <div class="conv-info">
+              <div class="conv-name">Sophie Andreu</div>
+              <div class="conv-preview">Tu as vu la session Q&R de demain ? 👀</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">9h</span><span class="conv-unread-dot"></span></div>
+          </div>
+          <div class="conv-item unread" onclick="openMemberConv('Léa', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#7a9cc4,#9ab4e0)">L</div>
+            <div class="conv-info">
+              <div class="conv-name">Léa Fontaine</div>
+              <div class="conv-preview">On se retrouve au meet-up ce jeudi ? ✨</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">Hier</span><span class="conv-unread-dot"></span></div>
+          </div>
+          <div class="conv-item" onclick="openMemberConv('Emma', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#9a8bc4,#c4a0d4)">E</div>
+            <div class="conv-info">
+              <div class="conv-name">Emma Rousseau</div>
+              <div class="conv-preview">Merci pour tes conseils sur la prospection !</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">Lun</span><span class="conv-unread-dot"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content" id="member-tab-community">
+        <div class="feed-list">
+          <div class="feed-item new-post">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#c4937a,#e0a87a)">M</div>
+              <span class="feed-author">Marie-Lou Fontaine</span>
+              <span class="feed-type-tag tag-post">Nouveau post</span>
+              <span class="feed-time">2h</span>
+            </div>
+            <div class="feed-text">🎉 J'ai signé mon 5ème client ce matin grâce aux techniques du module "Trouver ses premiers clients" !</div>
+            <div class="feed-channel"># 🎉 Victoires du jour · 24 ❤️ · 8 💬</div>
+          </div>
+          <div class="feed-item new-comment">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#7a9cc4,#9ab4e0)">J</div>
+              <span class="feed-author">Juliette M.</span>
+              <span class="feed-type-tag tag-comment">Commentaire</span>
+              <span class="feed-time">3h</span>
+            </div>
+            <div class="feed-text">Est-ce que quelqu'un a de l'expérience avec les foires artisanales pour démarrer en 2025 ?</div>
+            <div class="feed-channel"># 🤝 Entraide & feedback · 15 💬</div>
+          </div>
+          <div class="feed-item new-reaction">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#9a8bc4,#c4a0d4)">L</div>
+              <span class="feed-author">Léa Renard</span>
+              <span class="feed-type-tag tag-reaction">Populaire 🔥</span>
+              <span class="feed-time">Hier</span>
+            </div>
+            <div class="feed-text">💡 La méthode des "petites victoires" chaque vendredi a tout changé dans ma relation à l'entrepreneuriat !</div>
+            <div class="feed-channel"># 🎯 Objectifs & vision · 47 ❤️ · 22 💬</div>
+          </div>
+          <div class="feed-item new-post">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#8bc4b0,#a0d4c0)">C</div>
+              <span class="feed-author">Clara Vidal</span>
+              <span class="feed-type-tag tag-post">Nouveau post</span>
+              <span class="feed-time">Hier</span>
+            </div>
+            <div class="feed-text">Quelqu'un a déjà utilisé Notion pour gérer ses clients ? Je cherche un template sympa 🙏</div>
+            <div class="feed-channel"># ⚙️ Outils & astuces · 9 💬</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="quick-reply" id="member-quick-reply-bar">
+      <input type="text" placeholder="Répondre rapidement…" id="member-quick-input" />
+      <button onclick="sendMemberQuickReply()">➤</button>
+    </div>
+    <div class="widget-footer">
+      <a href="#" id="member-footer-link" onclick="goToMemberFull()">Voir toute la messagerie →</a>
+    </div>
+  </div>
+  <button id="member-widget-fab" onclick="toggleMemberWidget()">
+    💬
+    <span id="member-fab-badge">8</span>
+  </button>
+</div>
+
+<script>
+  let memberWidgetOpen = false;
+  let memberActiveTab  = 'messages';
+
+  function toggleMemberWidget() {
+    memberWidgetOpen = !memberWidgetOpen;
+    const panel = document.getElementById('member-widget-panel');
+    const fab   = document.getElementById('member-widget-fab');
+    if (memberWidgetOpen) {
+      panel.classList.add('open');
+      panel.style.animation = 'none';
+      void panel.offsetWidth;
+      panel.style.animation = '';
+      fab.innerHTML = '✕<span id="member-fab-badge" style="display:none"></span>';
+    } else {
+      panel.classList.remove('open');
+      fab.innerHTML = '💬<span id="member-fab-badge">8</span>';
+    }
+  }
+
+  function switchMemberTab(tab, el) {
+    memberActiveTab = tab;
+    document.querySelectorAll('#member-widget .widget-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('#member-widget .tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('member-tab-' + tab).classList.add('active');
+    document.getElementById('member-quick-reply-bar').style.display = tab === 'messages' ? 'flex' : 'none';
+    document.getElementById('member-footer-link').textContent = tab === 'messages'
+      ? 'Voir toute la messagerie →'
+      : 'Accéder à la communauté →';
+  }
+
+  function openMemberConv(name, el) {
+    el.classList.remove('unread');
+    document.getElementById('member-quick-input').placeholder = 'Répondre à ' + name + '…';
+  }
+
+  function sendMemberQuickReply() {
+    const input = document.getElementById('member-quick-input');
+    if (!input.value.trim()) return;
+    input.value = '';
+    const old = input.placeholder;
+    input.placeholder = 'Message envoyé ✓';
+    setTimeout(() => input.placeholder = old, 2000);
+  }
+
+  function goToMemberFull() {
+    if (memberActiveTab === 'messages') showPage('messages');
+    else showPage('community');
+  }
+</script>
+<!-- ═══ FIN DU WIDGET MEMBRE ═══ -->
