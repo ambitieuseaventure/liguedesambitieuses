@@ -1069,6 +1069,213 @@
   .cozy-see-more a { font-size:12px; color:var(--gold-bright); text-decoration:none; transition:opacity 0.2s; }
   .cozy-see-more a:hover { opacity:0.7; }
 
+  /* ══ COMMUNITY v2 — Redesign ══ */
+  .channel-tabs-bar {
+    display:flex; gap:6px; overflow-x:auto; margin-bottom:22px;
+    padding-bottom:4px; scrollbar-width:none;
+  }
+  .channel-tabs-bar::-webkit-scrollbar { display:none; }
+  .channel-tab {
+    display:flex; align-items:center; gap:6px; padding:8px 16px;
+    border-radius:24px; font-size:13px; font-weight:500; color:var(--text-mid);
+    cursor:pointer; white-space:nowrap; border:1.5px solid rgba(200,155,90,0.18);
+    background:white; transition:all 0.2s; user-select:none;
+  }
+  .channel-tab:hover { border-color:rgba(235,193,76,0.4); color:var(--navy); }
+  .channel-tab.active {
+    background:linear-gradient(135deg,#f59e3f,#ebc14c);
+    border-color:transparent; color:white; font-weight:700;
+    box-shadow:0 4px 14px rgba(245,158,11,0.28);
+  }
+  .channel-count {
+    background:rgba(0,0,0,0.13); color:inherit; border-radius:10px;
+    padding:1px 7px; font-size:11px; font-weight:700;
+  }
+  .channel-tab.active .channel-count { background:rgba(255,255,255,0.25); }
+
+  .feed-filter-row {
+    display:flex; align-items:center; gap:6px; margin-bottom:18px; flex-wrap:wrap;
+  }
+  .feed-filter {
+    padding:5px 14px; border-radius:20px; border:1.5px solid rgba(200,155,90,0.18);
+    background:transparent; font-size:12.5px; font-weight:500; color:var(--text-mid);
+    cursor:pointer; transition:all 0.2s; font-family:'DM Sans',sans-serif;
+  }
+  .feed-filter:hover { border-color:rgba(235,193,76,0.4); color:var(--navy); }
+  .feed-filter.active {
+    background:var(--navy-darkest); border-color:var(--navy-darkest);
+    color:white; font-weight:600;
+  }
+
+  /* Post card v2 */
+  .post-card-v2 {
+    background:white; border:1.5px solid rgba(200,155,90,0.12);
+    border-radius:20px; margin-bottom:16px; transition:box-shadow 0.25s,border-color 0.25s;
+    box-shadow:0 2px 16px rgba(160,100,40,0.05); overflow:hidden; position:relative;
+  }
+  .post-card-v2::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    border-radius:20px 20px 0 0; opacity:0; transition:opacity 0.25s;
+    background:linear-gradient(90deg,var(--gold),var(--gold-bright),rgba(235,193,76,0.3));
+  }
+  .post-card-v2:hover { box-shadow:0 8px 32px rgba(160,100,40,0.1); border-color:rgba(235,193,76,0.28); }
+  .post-card-v2:hover::before { opacity:1; }
+  .post-card-body { padding:22px 24px 16px; }
+  .post-card-tag-row { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+  .post-channel-badge {
+    font-size:11px; color:var(--text-light); background:rgba(244,240,234,0.9);
+    padding:3px 10px; border-radius:8px; font-weight:500; margin-left:auto;
+  }
+  .post-text { font-size:14px; color:var(--text-mid); line-height:1.75; margin-bottom:10px; }
+  .post-see-more {
+    font-size:12.5px; color:var(--steel); cursor:pointer; font-weight:600;
+    margin-bottom:12px; display:inline-block; transition:color 0.2s;
+  }
+  .post-see-more:hover { color:var(--navy); }
+
+  /* Attachments */
+  .post-attachments { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .post-attach-img {
+    width:120px; height:90px; object-fit:cover; border-radius:10px;
+    border:1px solid rgba(200,155,90,0.15); cursor:pointer; transition:opacity 0.2s;
+  }
+  .post-attach-img:hover { opacity:0.85; }
+  .post-attach-file {
+    display:flex; align-items:center; gap:8px; padding:8px 14px;
+    background:rgba(244,240,234,0.7); border-radius:10px;
+    border:1px solid rgba(200,155,90,0.18); font-size:12.5px;
+    color:var(--text-mid); font-weight:500;
+  }
+
+  /* Thread preview */
+  .post-thread-preview {
+    background:linear-gradient(135deg,rgba(253,249,244,0.9),rgba(254,246,234,0.7));
+    border-top:1px solid rgba(200,155,90,0.1); padding:14px 24px;
+  }
+  .thread-preview-item { display:flex; gap:10px; align-items:flex-start; margin-bottom:9px; }
+  .thread-preview-item:last-of-type { margin-bottom:0; }
+  .thread-preview-bubble {
+    flex:1; background:white; border-radius:12px; padding:9px 13px;
+    border:1px solid rgba(200,155,90,0.1); min-width:0;
+  }
+  .thread-preview-author { font-size:12px; font-weight:700; color:var(--navy); margin-bottom:3px; }
+  .thread-preview-text { font-size:12.5px; color:var(--text-mid); line-height:1.5; }
+  .thread-more-btn {
+    font-size:12px; color:var(--steel); cursor:pointer; font-weight:600;
+    margin-top:8px; display:inline-block; transition:color 0.2s;
+  }
+  .thread-more-btn:hover { color:var(--navy); }
+
+  /* Actions bar */
+  .post-actions-bar {
+    display:flex; align-items:center; gap:2px; padding:10px 16px 14px;
+    border-top:1px solid rgba(200,155,90,0.08);
+  }
+  .pa-btn {
+    display:flex; align-items:center; gap:5px; padding:6px 12px;
+    border-radius:20px; border:none; background:transparent; color:var(--text-light);
+    font-size:13px; cursor:pointer; transition:all 0.2s;
+    font-family:'DM Sans',sans-serif; font-weight:500;
+  }
+  .pa-btn:hover { background:rgba(244,240,234,0.85); color:var(--navy); }
+  .pa-btn.liked { color:#e11d48; font-weight:700; }
+  .pa-btn.saved { color:#f59e0b; font-weight:700; }
+  .pa-btn-save { margin-left:auto; }
+  @keyframes heart-pulse {
+    0% { transform:scale(1); } 40% { transform:scale(1.38); }
+    70% { transform:scale(0.88); } 100% { transform:scale(1); }
+  }
+  .pa-btn.like-anim { animation:heart-pulse 0.42s ease; }
+
+  /* Expanded replies */
+  .post-replies-section {
+    border-top:1px solid rgba(200,155,90,0.1);
+    background:rgba(253,249,244,0.65); padding:16px 24px;
+  }
+  .reply-item { display:flex; gap:10px; margin-bottom:13px; }
+  .reply-item:last-of-type { margin-bottom:0; }
+  .reply-bubble {
+    flex:1; background:white; border-radius:14px; padding:11px 14px;
+    border:1px solid rgba(200,155,90,0.1); box-shadow:0 1px 6px rgba(160,100,40,0.04);
+  }
+  .reply-author-row { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+  .reply-author-name { font-size:12.5px; font-weight:700; color:var(--navy); }
+  .reply-time { font-size:11px; color:var(--text-light); margin-left:auto; }
+  .reply-text { font-size:13px; color:var(--text-mid); line-height:1.6; margin-bottom:6px; }
+  .reply-like-btn {
+    background:none; border:none; font-size:12px; color:var(--text-light);
+    cursor:pointer; padding:2px 0; transition:color 0.2s;
+    font-family:'DM Sans',sans-serif; font-weight:500;
+  }
+  .reply-like-btn:hover, .reply-like-btn.rliked { color:#e11d48; font-weight:600; }
+
+  /* Inline reply composer */
+  .inline-reply-composer {
+    display:flex; gap:10px; align-items:flex-start; margin-top:14px;
+    padding-top:14px; border-top:1px dashed rgba(200,155,90,0.18);
+  }
+  .inline-reply-input {
+    flex:1; background:white; border:1.5px solid rgba(200,155,90,0.22);
+    border-radius:12px; padding:9px 13px; font-size:13px;
+    font-family:'DM Sans',sans-serif; color:var(--text-dark);
+    resize:none; min-height:38px; outline:none; transition:border-color 0.2s;
+  }
+  .inline-reply-input:focus { border-color:rgba(235,193,76,0.5); }
+  .inline-reply-send {
+    padding:8px 16px; border-radius:10px; background:var(--navy-darkest);
+    color:white; border:none; font-size:12.5px; font-weight:600;
+    cursor:pointer; font-family:'DM Sans',sans-serif; transition:opacity 0.2s; white-space:nowrap;
+  }
+  .inline-reply-send:hover { opacity:0.82; }
+
+  /* Composer enhancements */
+  .composer-attachments { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+  .composer-attachment { position:relative; border-radius:12px; overflow:hidden; border:1.5px solid rgba(235,193,76,0.25); }
+  .composer-attachment img { width:90px; height:70px; object-fit:cover; display:block; }
+  .composer-attach-file-preview {
+    display:flex; align-items:center; gap:8px; padding:8px 12px;
+    background:rgba(244,240,234,0.85); font-size:12px; color:var(--text-mid);
+  }
+  .composer-attach-remove {
+    position:absolute; top:4px; right:4px; width:20px; height:20px;
+    border-radius:50%; background:rgba(20,36,53,0.72); color:white;
+    border:none; cursor:pointer; font-size:11px; display:flex;
+    align-items:center; justify-content:center; line-height:1;
+  }
+  .composer-channel-row { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .composer-channel-select {
+    font-size:12.5px; font-family:'DM Sans',sans-serif; font-weight:600;
+    color:var(--navy); background:rgba(255,255,255,0.85);
+    border:1.5px solid rgba(200,155,90,0.22); border-radius:10px;
+    padding:5px 28px 5px 10px; cursor:pointer; outline:none; appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234f85a0'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 8px center; background-color:rgba(255,255,255,0.85);
+  }
+
+  /* Trending sidebar */
+  .trending-item {
+    display:flex; align-items:flex-start; gap:10px; padding:9px 0;
+    border-bottom:1px solid rgba(200,155,90,0.09); cursor:pointer; transition:opacity 0.18s;
+  }
+  .trending-item:last-child { border-bottom:none; }
+  .trending-item:hover { opacity:0.75; }
+  .trending-rank { font-size:14px; font-weight:800; color:rgba(200,155,90,0.45); width:18px; flex-shrink:0; }
+  .trending-info { flex:1; min-width:0; }
+  .trending-text {
+    font-size:12.5px; color:var(--text-dark); font-weight:500; line-height:1.4;
+    overflow:hidden; white-space:nowrap; text-overflow:ellipsis; margin-bottom:3px;
+  }
+  .trending-meta { font-size:11px; color:var(--text-light); }
+
+  /* Community empty state */
+  .community-empty { text-align:center; padding:52px 20px; color:var(--text-light); }
+  .community-empty .empty-emoji { font-size:40px; margin-bottom:14px; }
+  .community-empty h3 { font-size:16px; color:var(--text-mid); margin-bottom:8px; font-weight:600; }
+
+  /* Live dot */
+  .community-vibe-live { display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:#16a34a; }
+  .vibe-dot { width:7px; height:7px; border-radius:50%; background:#16a34a; animation:pulse-online 2s infinite; }
+
   /* ── RESOURCES ── */
   .resources-filters { display:flex; gap:8px; margin-bottom:26px; flex-wrap:wrap; }
   .filter-btn {
@@ -4743,95 +4950,71 @@
       <div class="community-ambient-bar">
         <span>☕</span>
         <span><strong>247 ambitieuses</strong> actives aujourd'hui</span>
+        <span class="community-vibe-live"><span class="vibe-dot"></span> En direct</span>
         <span class="community-vibe">Ambiance chaleureuse &amp; inspirée ✨</span>
       </div>
 
-      <div class="section-header">
-        <div class="section-title">Le <em>Salon</em> des Ambitieuses</div>
-        <div class="section-sub">Partagez, inspirez, célébrez — ensemble 🌸</div>
+      <!-- Channel tabs -->
+      <div class="channel-tabs-bar" id="channelTabsBar">
+        <div class="channel-tab active" data-channel="tous" onclick="communityFilterChannel(this,'tous')">✦ Tous les salons <span class="channel-count" id="cnt-tous">6</span></div>
+        <div class="channel-tab" data-channel="objectifs" onclick="communityFilterChannel(this,'objectifs')">🎯 Objectifs <span class="channel-count" id="cnt-objectifs">1</span></div>
+        <div class="channel-tab" data-channel="finance" onclick="communityFilterChannel(this,'finance')">💰 Finance <span class="channel-count" id="cnt-finance">1</span></div>
+        <div class="channel-tab" data-channel="marketing" onclick="communityFilterChannel(this,'marketing')">🌐 Marketing <span class="channel-count" id="cnt-marketing">1</span></div>
+        <div class="channel-tab" data-channel="victoires" onclick="communityFilterChannel(this,'victoires')">🎉 Victoires <span class="channel-count" id="cnt-victoires">2</span></div>
+        <div class="channel-tab" data-channel="entraide" onclick="communityFilterChannel(this,'entraide')">🤝 Entraide <span class="channel-count" id="cnt-entraide">1</span></div>
       </div>
 
       <div class="community-layout">
         <!-- Fil principal -->
-        <div>
+        <div class="community-main-feed">
+
           <!-- Composer -->
-          <div class="post-composer">
+          <div class="post-composer" id="communityComposer">
             <div class="composer-label">✍️ Qu'est-ce qui se passe dans ton aventure ?</div>
             <div class="composer-top">
-              <div class="user-avatar" style="width:42px;height:42px;font-size:15px">SA</div>
-              <textarea class="composer-input" placeholder="Partage ta victoire, ta question, ta pépite du jour…"></textarea>
+              <div class="user-avatar" style="width:42px;height:42px;font-size:15px;flex-shrink:0">SA</div>
+              <textarea class="composer-input" id="composerText" placeholder="Partage ta victoire, ta question, ta pépite du jour…" oninput="composerAutoResize(this)"></textarea>
             </div>
+            <div id="composerAttachments" class="composer-attachments" style="display:none"></div>
             <div class="composer-tags">
-              <span class="composer-tag-btn active">🎉 Victoire</span>
-              <span class="composer-tag-btn">❓ Question</span>
-              <span class="composer-tag-btn">💡 Astuce</span>
+              <span class="composer-tag-btn active" data-tag="victoire" onclick="composerSelectTag(this)">🎉 Victoire</span>
+              <span class="composer-tag-btn" data-tag="question" onclick="composerSelectTag(this)">❓ Question</span>
+              <span class="composer-tag-btn" data-tag="astuce" onclick="composerSelectTag(this)">💡 Astuce</span>
+              <span class="composer-tag-btn" data-tag="discussion" onclick="composerSelectTag(this)">💬 Discussion</span>
+            </div>
+            <div class="composer-channel-row">
+              <span style="font-size:12px;color:var(--text-light);font-weight:600">Salon :</span>
+              <select class="composer-channel-select" id="composerChannel">
+                <option value="objectifs">🎯 Objectifs &amp; vision</option>
+                <option value="finance">💰 Finance &amp; revenus</option>
+                <option value="marketing">🌐 Marketing &amp; réseaux</option>
+                <option value="victoires">🎉 Victoires du jour</option>
+                <option value="entraide">🤝 Entraide &amp; feedback</option>
+              </select>
             </div>
             <div class="composer-actions">
               <div class="composer-tools">
-                <button class="tool-btn" title="Photo">📷</button>
-                <button class="tool-btn" title="Fichier">📎</button>
-                <button class="tool-btn" title="Lien">🔗</button>
+                <button class="tool-btn" title="Ajouter une photo" onclick="composerOpenFile('image/*')">📷</button>
+                <button class="tool-btn" title="Ajouter un fichier" onclick="composerOpenFile('.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip')">📎</button>
+                <input type="file" id="composerFileInput" style="display:none" onchange="composerHandleFile(this)">
               </div>
-              <button class="btn-primary" style="padding:8px 20px;font-size:13px">Publier ✦</button>
+              <button class="btn-primary" style="padding:8px 22px;font-size:13px" onclick="communitySubmitPost()">Publier ✦</button>
             </div>
           </div>
 
-          <!-- Post 1 — Victoire -->
-          <div class="post-card">
-            <div class="post-header">
-              <div class="activity-avatar" style="background:linear-gradient(135deg,#fcba33,#f59e3f);width:44px;height:44px;font-size:16px">M</div>
-              <div class="post-author">
-                <strong>Marie-Lou Fontaine</strong>
-                <span>Coach bien-être · Membre depuis 3 mois</span>
-              </div>
-              <div class="post-time">Il y a 2h</div>
-            </div>
-            <div class="post-tag post-tag-victoire">🎉 Victoire</div>
-            <div class="post-body">J'ai signé mon 5ème client ce matin grâce aux techniques du module "Trouver ses premiers clients" ! Je n'aurais jamais cru que ça irait si vite. Merci à cette communauté pour tout le soutien ✨</div>
-            <div class="post-actions">
-              <button class="post-action">❤️ 24</button>
-              <button class="post-action">💬 8 réponses</button>
-              <button class="post-action">🔖 Sauvegarder</button>
-            </div>
+          <!-- Filter row -->
+          <div class="feed-filter-row">
+            <button class="feed-filter active" data-filter="recent" onclick="communitySetFilter(this,'recent')">🕐 Récents</button>
+            <button class="feed-filter" data-filter="trending" onclick="communitySetFilter(this,'trending')">🔥 Tendance</button>
+            <button class="feed-filter" data-filter="victoire" onclick="communitySetFilter(this,'victoire')">🎉 Victoires</button>
+            <button class="feed-filter" data-filter="question" onclick="communitySetFilter(this,'question')">❓ Questions</button>
+            <button class="feed-filter" data-filter="astuce" onclick="communitySetFilter(this,'astuce')">💡 Astuces</button>
+            <span id="community-post-count" style="margin-left:auto;font-size:12px;color:var(--text-light)"></span>
           </div>
 
-          <!-- Post 2 — Question -->
-          <div class="post-card">
-            <div class="post-header">
-              <div class="activity-avatar" style="background:linear-gradient(135deg,#e8a4c0,#d4849b);width:44px;height:44px;font-size:16px">J</div>
-              <div class="post-author">
-                <strong>Juliette M.</strong>
-                <span>Créatrice de bijoux · Membre depuis 1 mois</span>
-              </div>
-              <div class="post-time">Il y a 5h</div>
-            </div>
-            <div class="post-tag post-tag-question">❓ Question</div>
-            <div class="post-body">Est-ce que quelqu'un a de l'expérience avec les foires artisanales pour démarrer ? Je me demande si c'est encore rentable en 2025 ou si je dois miser sur le 100% digital. Des retours ?</div>
-            <div class="post-actions">
-              <button class="post-action">❤️ 11</button>
-              <button class="post-action">💬 15 réponses</button>
-              <button class="post-action">🔖 Sauvegarder</button>
-            </div>
-          </div>
+          <!-- Posts feed -->
+          <div id="communityFeed"></div>
 
-          <!-- Post 3 — Astuce -->
-          <div class="post-card">
-            <div class="post-header">
-              <div class="activity-avatar" style="background:linear-gradient(135deg,#7bad8a,#5a9470);width:44px;height:44px;font-size:14px">L</div>
-              <div class="post-author">
-                <strong>Léa Renard</strong>
-                <span>Consultante RH · Membre depuis 6 mois</span>
-              </div>
-              <div class="post-time">Hier</div>
-            </div>
-            <div class="post-tag post-tag-astuce">💡 Astuce</div>
-            <div class="post-body">Petit tip qui a tout changé pour moi : j'ai commencé à utiliser la méthode des "petites victoires" chaque vendredi. En quelques semaines, ça transforme complètement ta relation à l'entrepreneuriat !</div>
-            <div class="post-actions">
-              <button class="post-action">❤️ 47</button>
-              <button class="post-action">💬 22 réponses</button>
-              <button class="post-action">🔖 Sauvegarder</button>
-            </div>
-          </div>
         </div>
 
         <!-- Sidebar -->
@@ -4855,19 +5038,18 @@
               <div><div class="member-name">Pauline D.</div><div class="member-role">Photographe</div></div>
               <div class="online-dot"></div>
             </div>
+            <div class="member-item">
+              <div class="activity-avatar" style="background:linear-gradient(135deg,#a78bfa,#7c3aed);width:34px;height:34px;font-size:12px">S</div>
+              <div><div class="member-name">Sophie R.</div><div class="member-role">Coach financier</div></div>
+              <div class="online-dot"></div>
+            </div>
             <div class="cozy-see-more"><a href="#">Voir les 247 membres →</a></div>
           </div>
 
-          <!-- Nos salons -->
+          <!-- Trending -->
           <div class="card">
-            <div class="card-title">🏡 Nos Salons</div>
-            <div style="display:flex;flex-direction:column;gap:4px">
-              <div class="community-channel">🎯 Objectifs &amp; vision</div>
-              <div class="community-channel">💰 Finance &amp; revenus</div>
-              <div class="community-channel active">🌐 Marketing &amp; réseaux</div>
-              <div class="community-channel">🎉 Victoires du jour</div>
-              <div class="community-channel">🤝 Entraide &amp; feedback</div>
-            </div>
+            <div class="card-title">🔥 En tendance</div>
+            <div id="community-trending"></div>
           </div>
 
           <!-- Citation du jour -->
@@ -4879,6 +5061,7 @@
 
         </div>
       </div>
+
     </div>
   </div>
 
@@ -14435,21 +14618,364 @@
     adminRenderPosts();
   });
 
-  // ── COMMUNITY — tag selector ──
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('#page-community .composer-tag-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('#page-community .composer-tag-btn').forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-      });
+  // ══════════════════════════════════════════════════════
+  // COMMUNITY v2 — Données & fonctions
+  // ══════════════════════════════════════════════════════
+
+  var communityState = { channel: 'tous', filter: 'recent', attachments: [] };
+
+  var communityPosts = [
+    {
+      id: 1, author: 'Marie-Lou Fontaine', role: 'Coach bien-être', since: '3 mois',
+      initials: 'ML', grad: '#fcba33,#f59e3f', time: 'Il y a 2h', ts: Date.now() - 7200000,
+      tag: 'victoire', channel: 'victoires', likes: 24, liked: false, saved: false, expanded: false,
+      text: "J'ai signé mon 5ème client ce matin grâce aux techniques du module \"Trouver ses premiers clients\" ! Je n'aurais jamais cru que ça irait si vite. Merci à cette communauté pour tout le soutien ✨",
+      attachments: [],
+      replies: [
+        { id: 1, author: 'Clara B.', initials: 'C', grad: '#ebc14c,#fcba33', time: 'Il y a 1h', text: "Bravo Marie-Lou ! Tu nous donnes tellement d'espoir ✨ C'est exactement ce genre de partage qui motive.", likes: 7, liked: false },
+        { id: 2, author: 'Anaïs L.', initials: 'A', grad: '#e8a4c0,#d4849b', time: 'Il y a 45min', text: "5 clients c'est énorme ! Tu peux nous partager quels aspects du module t'ont le plus aidé ?", likes: 3, liked: false }
+      ]
+    },
+    {
+      id: 2, author: 'Juliette M.', role: 'Créatrice de bijoux', since: '1 mois',
+      initials: 'J', grad: '#e8a4c0,#d4849b', time: 'Il y a 5h', ts: Date.now() - 18000000,
+      tag: 'question', channel: 'marketing', likes: 11, liked: false, saved: false, expanded: false,
+      text: "Est-ce que quelqu'un a de l'expérience avec les foires artisanales pour démarrer ? Je me demande si c'est encore rentable en 2025 ou si je dois miser sur le 100% digital. Des retours ?",
+      attachments: [],
+      replies: [
+        { id: 1, author: 'Sophie R.', initials: 'SR', grad: '#7bad8a,#5a9470', time: 'Il y a 4h', text: "J'ai fait ma première foire l'an dernier — super pour le bouche à oreille local ! Je te conseille de combiner les deux.", likes: 8, liked: false },
+        { id: 2, author: 'Léa Renard', initials: 'L', grad: '#7bad8a,#5a9470', time: 'Il y a 3h', text: "Les foires artisanales restent excellentes pour le bijou ! Les clients aiment toucher, voir en vrai. L'Instagram complète très bien après.", likes: 5, liked: false },
+        { id: 3, author: 'Camille F.', initials: 'CF', grad: '#a78bfa,#7c3aed', time: 'Il y a 2h', text: "Exactement ce que dit Léa ! + n'oublie pas de récupérer les emails sur place pour ton CRM 💡", likes: 4, liked: false }
+      ]
+    },
+    {
+      id: 3, author: 'Léa Renard', role: 'Consultante RH', since: '6 mois',
+      initials: 'L', grad: '#7bad8a,#5a9470', time: 'Hier', ts: Date.now() - 86400000,
+      tag: 'astuce', channel: 'objectifs', likes: 47, liked: false, saved: false, expanded: false,
+      text: "Petit tip qui a tout changé pour moi : j'ai commencé à utiliser la méthode des \"petites victoires\" chaque vendredi. Je note 3 petits succès de la semaine, même minuscules. En quelques semaines, ça transforme complètement ta relation à l'entrepreneuriat ! 🌱",
+      attachments: [],
+      replies: [
+        { id: 1, author: 'Marie-Lou F.', initials: 'ML', grad: '#fcba33,#f59e3f', time: 'Il y a 22h', text: "Je fais ça aussi depuis le module mindset ! Vraiment transformateur.", likes: 12, liked: false },
+        { id: 2, author: 'Juliette M.', initials: 'J', grad: '#e8a4c0,#d4849b', time: 'Il y a 20h', text: "Merci Léa ! Je commence dès ce vendredi 🙏", likes: 6, liked: false }
+      ]
+    },
+    {
+      id: 4, author: 'Sophie Rousseau', role: 'Coach financier', since: '8 mois',
+      initials: 'SR', grad: '#a78bfa,#7c3aed', time: 'Il y a 1 jour', ts: Date.now() - 90000000,
+      tag: 'astuce', channel: 'finance', likes: 63, liked: false, saved: false, expanded: false,
+      text: "3 erreurs que j'ai faites en début d'activité et que vous devez éviter :\n\n1️⃣ Ne pas se payer dès le début (même 50€/mois)\n2️⃣ Mélanger compte perso et pro\n3️⃣ Ne pas prévoir la TVA et les charges sociales\n\nLe guide financier de la formation m'a sauvé la mise ! 💸",
+      attachments: [],
+      replies: [
+        { id: 1, author: 'Anaïs L.', initials: 'A', grad: '#e8a4c0,#d4849b', time: 'Il y a 22h', text: "Le point 3 m'a coûté très cher à comprendre... Merci pour ce rappel !", likes: 9, liked: false },
+        { id: 2, author: 'Clara B.', initials: 'C', grad: '#ebc14c,#fcba33', time: 'Il y a 20h', text: "J'ajouterais aussi : ne pas facturer trop bas par peur de perdre des clients 🙈", likes: 14, liked: false }
+      ]
+    },
+    {
+      id: 5, author: 'Amina Diallo', role: 'Entrepreneuse e-commerce', since: '4 mois',
+      initials: 'AD', grad: '#f97316,#ea580c', time: 'Il y a 2 jours', ts: Date.now() - 172800000,
+      tag: 'victoire', channel: 'victoires', likes: 89, liked: false, saved: false, expanded: false,
+      text: "Mon premier 10K€ en un mois 🎉🎉🎉 Il y a 4 mois je n'avais aucun client, je doutais de moi tous les jours. Aujourd'hui je dois refuser des missions ! Je n'aurais jamais osé croire ça possible sans la Ligue. MERCI à toutes 💛",
+      attachments: [],
+      replies: [
+        { id: 1, author: 'Léa Renard', initials: 'L', grad: '#7bad8a,#5a9470', time: 'Il y a 2j', text: "😭😭😭 FÉLICITATIONS !!! Tu mérites tellement ça !", likes: 18, liked: false },
+        { id: 2, author: 'Marie-Lou F.', initials: 'ML', grad: '#fcba33,#f59e3f', time: 'Il y a 2j', text: "Je pleure tellement je suis contente pour toi ! Tu es une inspiration 💛", likes: 22, liked: false },
+        { id: 3, author: 'Sophie R.', initials: 'SR', grad: '#a78bfa,#7c3aed', time: 'Il y a 2j', text: "Preuve que le travail et la bonne méthode paient ! Bravo !!!", likes: 15, liked: false }
+      ]
+    },
+    {
+      id: 6, author: 'Camille Ferrand', role: 'Web designer', since: '2 mois',
+      initials: 'CF', grad: '#06b6d4,#0891b2', time: 'Il y a 3 jours', ts: Date.now() - 259200000,
+      tag: 'question', channel: 'entraide', likes: 31, liked: false, saved: false, expanded: false,
+      text: "J'ai besoin de votre avis ! Je propose actuellement mes services à 350€/jour mais je me sens souvent à court d'argent. Est-ce normal pour une web designer avec 3 ans d'expérience ? Comment vous avez fixé vos tarifs ?",
+      attachments: [],
+      replies: [
+        { id: 1, author: 'Sophie R.', initials: 'SR', grad: '#a78bfa,#7c3aed', time: 'Il y a 3j', text: "350€/j c'est clairement sous-évalué pour 3 ans d'expérience. Le marché est à 500-700€/j. Commence par une augmentation progressive de 20% par client.", likes: 24, liked: false }
+      ]
+    }
+  ];
+
+  function communityRender() {
+    var feed = document.getElementById('communityFeed');
+    if (!feed) return;
+    var posts = communityPosts.filter(function(p) {
+      if (communityState.channel !== 'tous' && p.channel !== communityState.channel) return false;
+      if (communityState.filter === 'victoire' && p.tag !== 'victoire') return false;
+      if (communityState.filter === 'question' && p.tag !== 'question') return false;
+      if (communityState.filter === 'astuce' && p.tag !== 'astuce') return false;
+      return true;
     });
-    document.querySelectorAll('#page-community .community-channel').forEach(function(ch) {
-      ch.addEventListener('click', function() {
-        document.querySelectorAll('#page-community .community-channel').forEach(function(c) { c.classList.remove('active'); });
-        ch.classList.add('active');
-      });
+    if (communityState.filter === 'trending') {
+      posts = posts.slice().sort(function(a, b) { return (b.likes + b.replies.length * 3) - (a.likes + a.replies.length * 3); });
+    } else {
+      posts = posts.slice().sort(function(a, b) { return b.ts - a.ts; });
+    }
+    var countEl = document.getElementById('community-post-count');
+    if (countEl) countEl.textContent = posts.length + ' publication' + (posts.length !== 1 ? 's' : '');
+    if (posts.length === 0) {
+      feed.innerHTML = '<div class="community-empty"><div class="empty-emoji">🌸</div><h3>Aucune publication ici</h3><p>Sois la première à partager quelque chose dans ce salon !</p></div>';
+    } else {
+      feed.innerHTML = posts.map(communityRenderPost).join('');
+    }
+    communityRenderTrending();
+    communityUpdateCounts();
+  }
+
+  function communityUpdateCounts() {
+    var channels = ['objectifs','finance','marketing','victoires','entraide'];
+    channels.forEach(function(ch) {
+      var el = document.getElementById('cnt-' + ch);
+      if (el) el.textContent = communityPosts.filter(function(p){ return p.channel === ch; }).length;
     });
-  });
+    var el = document.getElementById('cnt-tous');
+    if (el) el.textContent = communityPosts.length;
+  }
+
+  function communityRenderPost(p) {
+    var tagMap = { victoire: ['post-tag-victoire','🎉 Victoire'], question: ['post-tag-question','❓ Question'], astuce: ['post-tag-astuce','💡 Astuce'], discussion: ['','💬 Discussion'] };
+    var tagInfo = tagMap[p.tag] || tagMap['discussion'];
+    var chMap = { objectifs:'🎯 Objectifs', finance:'💰 Finance', marketing:'🌐 Marketing', victoires:'🎉 Victoires', entraide:'🤝 Entraide' };
+    var longText = p.text.length > 220;
+    var displayText = (longText && !p.expanded) ? p.text.slice(0, 220).replace(/\n/g,'<br>') + '…' : p.text.replace(/\n/g,'<br>');
+
+    var attachHtml = '';
+    if (p.attachments && p.attachments.length > 0) {
+      attachHtml = '<div class="post-attachments">';
+      p.attachments.forEach(function(a) {
+        if (a.type === 'image') attachHtml += '<img class="post-attach-img" src="' + a.url + '" alt="' + a.name + '" onclick="window.open(this.src)">';
+        else attachHtml += '<div class="post-attach-file">📎 ' + a.name + '</div>';
+      });
+      attachHtml += '</div>';
+    }
+
+    var threadHtml = '';
+    if (!p.expanded && p.replies.length > 0) {
+      threadHtml = '<div class="post-thread-preview">';
+      p.replies.slice(0, 2).forEach(function(r) {
+        threadHtml += '<div class="thread-preview-item">' +
+          '<div class="user-avatar" style="width:28px;height:28px;font-size:10px;flex-shrink:0;background:linear-gradient(135deg,' + r.grad + ')">' + r.initials + '</div>' +
+          '<div class="thread-preview-bubble"><div class="thread-preview-author">' + r.author + '</div><div class="thread-preview-text">' + r.text + '</div></div></div>';
+      });
+      var extra = p.replies.length - 2;
+      if (extra > 0) threadHtml += '<span class="thread-more-btn" onclick="communityExpandPost(' + p.id + ')">+ ' + extra + ' autre' + (extra > 1 ? 's' : '') + ' réponse' + (extra > 1 ? 's' : '') + ' →</span>';
+      threadHtml += '</div>';
+    }
+
+    var repliesHtml = '';
+    if (p.expanded) {
+      repliesHtml = '<div class="post-replies-section" id="replies-' + p.id + '">';
+      p.replies.forEach(function(r) {
+        repliesHtml += '<div class="reply-item">' +
+          '<div class="user-avatar" style="width:32px;height:32px;font-size:11px;flex-shrink:0;background:linear-gradient(135deg,' + r.grad + ')">' + r.initials + '</div>' +
+          '<div class="reply-bubble">' +
+            '<div class="reply-author-row"><span class="reply-author-name">' + r.author + '</span><span class="reply-time">' + r.time + '</span></div>' +
+            '<div class="reply-text">' + r.text + '</div>' +
+            '<button class="reply-like-btn' + (r.liked ? ' rliked' : '') + '" onclick="communityLikeReply(' + p.id + ',' + r.id + ')">' + (r.liked ? '❤️' : '🤍') + ' ' + r.likes + '</button>' +
+          '</div></div>';
+      });
+      repliesHtml += '<div class="inline-reply-composer">' +
+        '<div class="user-avatar" style="width:32px;height:32px;font-size:11px;flex-shrink:0">SA</div>' +
+        '<textarea class="inline-reply-input" id="inlineReply-' + p.id + '" placeholder="Répondre à cette conversation…" rows="1" onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();communitySubmitInlineReply(' + p.id + ')}"></textarea>' +
+        '<button class="inline-reply-send" onclick="communitySubmitInlineReply(' + p.id + ')">Envoyer ↵</button>' +
+      '</div></div>';
+    }
+
+    return '<div class="post-card-v2" id="post-' + p.id + '">' +
+      '<div class="post-card-body">' +
+        '<div class="post-header">' +
+          '<div class="user-avatar" style="width:44px;height:44px;font-size:15px;flex-shrink:0;background:linear-gradient(135deg,' + p.grad + ')">' + p.initials + '</div>' +
+          '<div class="post-author"><strong>' + p.author + '</strong><span>' + p.role + ' · Membre depuis ' + p.since + '</span></div>' +
+          '<div class="post-time">' + p.time + '</div>' +
+        '</div>' +
+        '<div class="post-card-tag-row"><span class="post-tag ' + tagInfo[0] + '">' + tagInfo[1] + '</span><span class="post-channel-badge">' + (chMap[p.channel] || '') + '</span></div>' +
+        '<div class="post-text">' + displayText + '</div>' +
+        (longText && !p.expanded ? '<span class="post-see-more" onclick="communityToggleExpand(' + p.id + ')">Voir plus →</span>' : '') +
+        attachHtml +
+      '</div>' +
+      threadHtml +
+      repliesHtml +
+      '<div class="post-actions-bar">' +
+        '<button class="pa-btn' + (p.liked ? ' liked' : '') + '" id="likeBtn-' + p.id + '" onclick="communityLike(' + p.id + ')">' + (p.liked ? '❤️' : '🤍') + ' <span id="likeCount-' + p.id + '">' + p.likes + '</span></button>' +
+        '<button class="pa-btn" onclick="communityExpandPost(' + p.id + ')">💬 ' + p.replies.length + ' réponse' + (p.replies.length !== 1 ? 's' : '') + '</button>' +
+        '<button class="pa-btn pa-btn-save' + (p.saved ? ' saved' : '') + '" onclick="communityToggleSave(' + p.id + ')">' + (p.saved ? '🔖 Sauvegardé' : '🏷️ Sauvegarder') + '</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function communityLike(postId) {
+    var p = communityPosts.find(function(x){ return x.id === postId; });
+    if (!p) return;
+    p.liked = !p.liked;
+    p.likes += p.liked ? 1 : -1;
+    var btn = document.getElementById('likeBtn-' + postId);
+    if (btn) {
+      btn.classList.toggle('liked', p.liked);
+      btn.innerHTML = (p.liked ? '❤️' : '🤍') + ' <span>' + p.likes + '</span>';
+      btn.classList.add('like-anim');
+      setTimeout(function(){ btn.classList.remove('like-anim'); }, 450);
+    }
+  }
+
+  function communityLikeReply(postId, replyId) {
+    var p = communityPosts.find(function(x){ return x.id === postId; });
+    if (!p) return;
+    var r = p.replies.find(function(x){ return x.id === replyId; });
+    if (!r) return;
+    r.liked = !r.liked;
+    r.likes += r.liked ? 1 : -1;
+    communityRender();
+  }
+
+  function communityExpandPost(postId) {
+    var p = communityPosts.find(function(x){ return x.id === postId; });
+    if (!p) return;
+    p.expanded = true;
+    communityRender();
+    setTimeout(function(){
+      var el = document.getElementById('replies-' + postId);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 60);
+  }
+
+  function communityToggleExpand(postId) {
+    var p = communityPosts.find(function(x){ return x.id === postId; });
+    if (!p) return;
+    p.expanded = !p.expanded;
+    communityRender();
+  }
+
+  function communityToggleSave(postId) {
+    var p = communityPosts.find(function(x){ return x.id === postId; });
+    if (!p) return;
+    p.saved = !p.saved;
+    communityRender();
+  }
+
+  function communityFilterChannel(el, channel) {
+    document.querySelectorAll('.channel-tab').forEach(function(t){ t.classList.remove('active'); });
+    el.classList.add('active');
+    communityState.channel = channel;
+    communityRender();
+  }
+
+  function communitySetFilter(el, filter) {
+    document.querySelectorAll('.feed-filter').forEach(function(f){ f.classList.remove('active'); });
+    el.classList.add('active');
+    communityState.filter = filter;
+    communityRender();
+  }
+
+  function communitySubmitInlineReply(postId) {
+    var input = document.getElementById('inlineReply-' + postId);
+    if (!input || !input.value.trim()) return;
+    var p = communityPosts.find(function(x){ return x.id === postId; });
+    if (!p) return;
+    var newId = p.replies.length > 0 ? Math.max.apply(null, p.replies.map(function(r){ return r.id; })) + 1 : 1;
+    p.replies.push({ id: newId, author: 'Sarah A.', initials: 'SA', grad: '#24425b,#142435', time: 'À l\'instant', text: input.value.trim(), likes: 0, liked: false });
+    p.expanded = true;
+    communityRender();
+  }
+
+  function communitySubmitPost() {
+    var textEl = document.getElementById('composerText');
+    if (!textEl || !textEl.value.trim()) { if (textEl) textEl.focus(); return; }
+    var tagEl = document.querySelector('#communityComposer .composer-tag-btn.active');
+    var channelEl = document.getElementById('composerChannel');
+    var newId = communityPosts.length > 0 ? Math.max.apply(null, communityPosts.map(function(p){ return p.id; })) + 1 : 1;
+    communityPosts.unshift({
+      id: newId, author: 'Sarah A.', role: 'Ambitieuse', since: '1 mois',
+      initials: 'SA', grad: '#24425b,#142435', time: 'À l\'instant', ts: Date.now(),
+      tag: tagEl ? tagEl.dataset.tag : 'discussion',
+      channel: channelEl ? channelEl.value : 'objectifs',
+      text: textEl.value.trim(),
+      attachments: communityState.attachments.slice(),
+      likes: 0, liked: false, saved: false, expanded: false, replies: []
+    });
+    textEl.value = '';
+    textEl.style.height = '';
+    communityState.attachments = [];
+    var az = document.getElementById('composerAttachments');
+    if (az) { az.innerHTML = ''; az.style.display = 'none'; }
+    communityState.filter = 'recent';
+    document.querySelectorAll('.feed-filter').forEach(function(f){ f.classList.toggle('active', f.dataset.filter === 'recent'); });
+    communityRender();
+    var btn = document.querySelector('#communityComposer .btn-primary');
+    if (btn) {
+      var orig = btn.textContent; btn.textContent = '✓ Publié !'; btn.style.background = '#16a34a';
+      setTimeout(function(){ btn.textContent = orig; btn.style.background = ''; }, 2200);
+    }
+  }
+
+  function composerSelectTag(el) {
+    document.querySelectorAll('#communityComposer .composer-tag-btn').forEach(function(b){ b.classList.remove('active'); });
+    el.classList.add('active');
+  }
+
+  function composerOpenFile(accept) {
+    var input = document.getElementById('composerFileInput');
+    if (input) { input.accept = accept; input.click(); }
+  }
+
+  function composerHandleFile(input) {
+    var file = input.files[0];
+    if (!file) return;
+    var isImage = file.type.startsWith('image/');
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      communityState.attachments.push({ type: isImage ? 'image' : 'file', url: e.target.result, name: file.name });
+      composerRenderAttachments();
+    };
+    reader.readAsDataURL(file);
+    input.value = '';
+  }
+
+  function composerRenderAttachments() {
+    var zone = document.getElementById('composerAttachments');
+    if (!zone) return;
+    if (!communityState.attachments.length) { zone.style.display = 'none'; zone.innerHTML = ''; return; }
+    zone.style.display = 'flex';
+    zone.innerHTML = communityState.attachments.map(function(a, i) {
+      if (a.type === 'image') return '<div class="composer-attachment"><img src="' + a.url + '" style="width:90px;height:70px;object-fit:cover;display:block;border-radius:10px"><button class="composer-attach-remove" onclick="composerRemoveAttachment(' + i + ')">✕</button></div>';
+      return '<div class="composer-attachment"><div class="composer-attach-file-preview">📎 ' + a.name + '</div><button class="composer-attach-remove" onclick="composerRemoveAttachment(' + i + ')">✕</button></div>';
+    }).join('');
+  }
+
+  function composerRemoveAttachment(idx) {
+    communityState.attachments.splice(idx, 1);
+    composerRenderAttachments();
+  }
+
+  function composerAutoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.max(80, el.scrollHeight) + 'px';
+  }
+
+  function communityRenderTrending() {
+    var el = document.getElementById('community-trending');
+    if (!el) return;
+    var sorted = communityPosts.slice().sort(function(a, b) {
+      return (b.likes + b.replies.length * 3) - (a.likes + a.replies.length * 3);
+    }).slice(0, 4);
+    el.innerHTML = sorted.map(function(p, i) {
+      return '<div class="trending-item" onclick="communityScrollToPost(' + p.id + ')">' +
+        '<div class="trending-rank">' + (i + 1) + '</div>' +
+        '<div class="trending-info"><div class="trending-text">' + p.text.slice(0, 55) + (p.text.length > 55 ? '…' : '') + '</div>' +
+        '<div class="trending-meta">❤️ ' + p.likes + ' · 💬 ' + p.replies.length + ' · ' + p.time + '</div></div></div>';
+    }).join('');
+  }
+
+  function communityScrollToPost(postId) {
+    communityState.channel = 'tous';
+    communityState.filter = 'recent';
+    document.querySelectorAll('.channel-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.channel === 'tous'); });
+    document.querySelectorAll('.feed-filter').forEach(function(f){ f.classList.toggle('active', f.dataset.filter === 'recent'); });
+    communityRender();
+    setTimeout(function(){
+      var el = document.getElementById('post-' + postId);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 80);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() { communityRender(); });
 
   // Bouton accès admin (dans sidebar membre)
   // On injecte un lien discret en bas de la sidebar footer
