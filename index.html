@@ -15239,7 +15239,20 @@
       var matchStatut = activeFilters.statut === 'toutes' || statut === activeFilters.statut;
       var matchNiveau = activeFilters.niveau === 'tous'   || niveau === activeFilters.niveau;
       var matchTheme  = activeFilters.theme  === 'tous'   || theme  === activeFilters.theme;
-      if (matchStatut && matchNiveau && matchTheme) { card.style.display = 'block'; visible++; }
+      if (matchStatut && matchNiveau && matchTheme) {
+        card.style.display = 'block';
+        // Dans l'onglet "Toutes les formations", on met les formations en cours en bas
+        // pour laisser les nouvelles (non commencées) plus visibles en premier.
+        if (activeFilters.statut === 'toutes') {
+          if (statut === 'non-commencee') card.style.order = '0';
+          else if (statut === 'terminee') card.style.order = '1';
+          else if (statut === 'en-cours') card.style.order = '2';
+          else card.style.order = '1';
+        } else {
+          card.style.order = '0';
+        }
+        visible++;
+      }
       else { card.style.display = 'none'; }
     });
     var countEl = document.getElementById('courses-count');
@@ -15251,6 +15264,13 @@
     }
   }
 
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Assure l'ordre voulu dans l'onglet "Toutes les formations" dès le premier affichage.
+    var defaultTabBtn = document.getElementById('classroom-tab-toutes');
+    if (defaultTabBtn) switchClassroomTab('toutes', defaultTabBtn);
+  });
 
   // ══════════════════════════════════════
   // AGENDA
