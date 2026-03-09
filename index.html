@@ -6654,24 +6654,8 @@
 
           <!-- Tâches à faire -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;">
-            <div style="font-family:'Playfair Display',serif;font-size:15px;color:white;margin-bottom:16px;">À faire <span style="font-size:12px;font-family:'DM Sans',sans-serif;color:rgba(255,255,255,0.3);font-style:normal;">(3 en attente)</span></div>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(252,186,51,0.08);border:1px solid rgba(252,186,51,0.2);border-radius:10px;">
-                <span style="font-size:16px;">👥</span>
-                <div style="flex:1;"><div style="font-size:13px;color:rgba(255,255,255,0.8);">3 nouvelles membres ont rejoint la Ligue</div></div>
-                <button class="admin-action-btn admin-action-btn-ghost" onclick="adminPage('membres',document.querySelector('.admin-nav-item:nth-child(3)'))">Voir →</button>
-              </div>
-              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(79,133,160,0.08);border:1px solid rgba(79,133,160,0.15);border-radius:10px;">
-                <span style="font-size:16px;">📅</span>
-                <div style="flex:1;"><div style="font-size:13px;color:rgba(255,255,255,0.8);">Prochain événement — programmer le rappel</div></div>
-                <button class="admin-action-btn admin-action-btn-ghost">Faire →</button>
-              </div>
-              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;">
-                <span style="font-size:16px;">🎬</span>
-                <div style="flex:1;"><div style="font-size:13px;color:rgba(255,255,255,0.8);">Masterclass "Vendre sans forcer" — à publier</div></div>
-                <button class="admin-action-btn admin-action-btn-ghost" onclick="adminPage('masterclass',null)">Publier →</button>
-              </div>
-            </div>
+            <div style="font-family:'Playfair Display',serif;font-size:15px;color:white;margin-bottom:16px;">À faire <span id="admin-todos-count" style="font-size:12px;font-family:'DM Sans',sans-serif;color:rgba(255,255,255,0.3);font-style:normal;">(3 en attente)</span></div>
+            <div id="admin-todos-list" style="display:flex;flex-direction:column;gap:10px;"></div>
           </div>
         </div>
 
@@ -12665,7 +12649,130 @@
     if (ra) ra.addEventListener('click', function(e){ if(e.target===ra) roleCloseAssign(); });
     roleRenderMembers();
     roleRenderCards();
+    renderAdminTodos();
+    // Fermer les menus d'attribution au clic extérieur
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('[id^="todo-assign-wrap-"]')) {
+        window._adminTodos.forEach(function(t) {
+          var m = document.getElementById('todo-assign-menu-' + t.id);
+          if (m) m.style.display = 'none';
+        });
+      }
+    });
   });
+
+  // ── TÂCHES À FAIRE ──
+  window._adminTodos = [
+    { id:'td1', icon:'👥', text:'3 nouvelles membres ont rejoint la Ligue',     color:'gold',    actionLabel:'Voir →',    actionFn:"adminPage('membres',document.querySelector('.admin-nav-item:nth-child(3)'))", assignedTo:null, done:false },
+    { id:'td2', icon:'📅', text:'Prochain événement — programmer le rappel',    color:'blue',    actionLabel:'Faire →',   actionFn:null,                                                                           assignedTo:null, done:false },
+    { id:'td3', icon:'🎬', text:'Masterclass "Vendre sans forcer" — à publier', color:'default', actionLabel:'Publier →', actionFn:"adminPage('masterclass',null)",                                               assignedTo:null, done:false },
+  ];
+
+  function renderAdminTodos() {
+    var list    = document.getElementById('admin-todos-list');
+    var countEl = document.getElementById('admin-todos-count');
+    if (!list) return;
+    var pending = window._adminTodos.filter(function(t){ return !t.done; }).length;
+    if (countEl) countEl.textContent = '(' + pending + ' en attente)';
+    list.innerHTML = '';
+    window._adminTodos.forEach(function(task) {
+      var bg, border;
+      if      (task.color === 'gold') { bg='rgba(252,186,51,0.08)';  border='rgba(252,186,51,0.2)';  }
+      else if (task.color === 'blue') { bg='rgba(79,133,160,0.08)';  border='rgba(79,133,160,0.15)'; }
+      else                            { bg='rgba(255,255,255,0.04)'; border='rgba(255,255,255,0.07)';}
+
+      var member = task.assignedTo ? teamData.find(function(m){ return m.id === task.assignedTo; }) : null;
+
+      // Bouton d'attribution
+      var assignBtn;
+      if (member) {
+        assignBtn = '<button onclick="todoToggleAssignMenu(\''+task.id+'\')" title="Réattribuer" style="display:flex;align-items:center;gap:6px;padding:3px 8px 3px 4px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);cursor:pointer;color:rgba(255,255,255,0.75);font-size:11px;font-family:\'DM Sans\',sans-serif;flex-shrink:0;transition:all .2s;" onmouseover="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.12)\'">'
+          + '<div style="width:20px;height:20px;border-radius:50%;background:'+member.avatarBg+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;">' + member.initial + '</div>'
+          + member.name.split(' ')[0]
+          + '</button>';
+      } else {
+        assignBtn = '<button onclick="todoToggleAssignMenu(\''+task.id+'\')" style="display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;border:1px dashed rgba(255,255,255,0.15);background:transparent;cursor:pointer;color:rgba(255,255,255,0.35);font-size:11px;font-family:\'DM Sans\',sans-serif;white-space:nowrap;flex-shrink:0;transition:all .2s;" onmouseover="this.style.borderColor=\'rgba(252,186,51,0.5)\';this.style.color=\'rgba(252,186,51,0.7)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.15)\';this.style.color=\'rgba(255,255,255,0.35)\'">'
+          + '+ Assigner'
+          + '</button>';
+      }
+
+      // Menu déroulant membres
+      var memberItems = teamData.map(function(m) {
+        var sel = task.assignedTo === m.id;
+        return '<button onclick="todoAssign(\''+task.id+'\',\''+(sel ? '' : m.id)+'\')" style="display:flex;align-items:center;gap:8px;width:100%;padding:7px 8px;border-radius:7px;border:none;background:'+(sel ? 'rgba(252,186,51,0.1)' : 'transparent')+';cursor:pointer;text-align:left;transition:background .15s;" onmouseover="this.style.background=\'rgba(255,255,255,0.07)\'" onmouseout="this.style.background=\''+(sel ? 'rgba(252,186,51,0.1)' : 'transparent')+'\'">'
+          + '<div style="width:24px;height:24px;border-radius:50%;background:'+m.avatarBg+';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0;">' + m.initial + '</div>'
+          + '<div style="flex:1;font-size:12px;color:white;font-family:\'DM Sans\',sans-serif;font-weight:'+(sel?'700':'400')+';">' + m.name + '</div>'
+          + (sel ? '<span style="font-size:12px;color:var(--gold-bright);">✓</span>' : '')
+          + '</button>';
+      }).join('');
+      var removeBtn = task.assignedTo
+        ? '<div style="height:1px;background:rgba(255,255,255,0.06);margin:4px 0;"></div>'
+          + '<button onclick="todoAssign(\''+task.id+'\',\'\')" style="display:flex;align-items:center;gap:6px;width:100%;padding:6px 8px;border-radius:7px;border:none;background:transparent;cursor:pointer;color:rgba(255,100,100,0.6);font-size:11px;font-family:\'DM Sans\',sans-serif;" onmouseover="this.style.background=\'rgba(255,50,50,0.08)\'" onmouseout="this.style.background=\'transparent\'">× Retirer l\'attribution</button>'
+        : '';
+      var assignMenu = '<div id="todo-assign-menu-'+task.id+'" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:#162638;border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:6px;z-index:200;min-width:170px;box-shadow:0 12px 40px rgba(0,0,0,0.6);">'
+        + '<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.3);padding:4px 8px 8px;font-weight:700;">Attribuer à</div>'
+        + memberItems
+        + removeBtn
+        + '</div>';
+
+      // Bouton action
+      var actionBtn = task.actionLabel
+        ? '<button class="admin-action-btn admin-action-btn-ghost" onclick="todoDoAction(\''+task.id+'\')">' + task.actionLabel + '</button>'
+        : '';
+
+      // Bouton "terminé"
+      var doneColor = task.done ? '#6ecf9e' : 'rgba(255,255,255,0.2)';
+      var doneBorder = task.done ? 'rgba(110,207,158,0.5)' : 'rgba(255,255,255,0.12)';
+      var doneBg = task.done ? 'rgba(110,207,158,0.12)' : 'transparent';
+      var doneBtn = '<button onclick="todoDone(\''+task.id+'\')" title="'+(task.done ? 'Marquer non terminé' : 'Marquer terminé')+'" style="width:24px;height:24px;border-radius:50%;border:1px solid '+doneBorder+';background:'+doneBg+';color:'+doneColor+';cursor:pointer;font-size:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.borderColor=\'rgba(110,207,158,0.5)\';this.style.color=\'#6ecf9e\'" onmouseout="this.style.borderColor=\''+doneBorder+'\';this.style.color=\''+doneColor+'\'">✓</button>';
+
+      var item = document.createElement('div');
+      item.style.cssText = 'display:flex;align-items:center;gap:10px;padding:12px 14px;background:'+bg+';border:1px solid '+border+';border-radius:10px;' + (task.done ? 'opacity:0.45;' : '');
+      item.innerHTML =
+        '<span style="font-size:16px;">' + task.icon + '</span>'
+        + '<div style="flex:1;"><div style="font-size:13px;color:rgba(255,255,255,0.8);">' + (task.done ? '<s>' : '') + task.text + (task.done ? '</s>' : '') + '</div></div>'
+        + '<div style="position:relative;" id="todo-assign-wrap-'+task.id+'">' + assignBtn + assignMenu + '</div>'
+        + actionBtn
+        + doneBtn;
+      list.appendChild(item);
+    });
+  }
+
+  function todoToggleAssignMenu(taskId) {
+    window._adminTodos.forEach(function(t) {
+      if (t.id !== taskId) {
+        var m = document.getElementById('todo-assign-menu-' + t.id);
+        if (m) m.style.display = 'none';
+      }
+    });
+    var menu = document.getElementById('todo-assign-menu-' + taskId);
+    if (!menu) return;
+    menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+  }
+
+  function todoAssign(taskId, memberId) {
+    var task = window._adminTodos.find(function(t){ return t.id === taskId; });
+    if (!task) return;
+    task.assignedTo = memberId || null;
+    renderAdminTodos();
+    var member = memberId ? teamData.find(function(m){ return m.id === memberId; }) : null;
+    if (member) finToast('✓ Tâche attribuée à ' + member.name, '#6ecf9e');
+    else        finToast('Attribution retirée', 'rgba(255,255,255,0.4)');
+  }
+
+  function todoDoAction(taskId) {
+    var task = window._adminTodos.find(function(t){ return t.id === taskId; });
+    if (!task || !task.actionFn) return;
+    // eslint-disable-next-line no-eval
+    (new Function(task.actionFn))();
+  }
+
+  function todoDone(taskId) {
+    var task = window._adminTodos.find(function(t){ return t.id === taskId; });
+    if (!task) return;
+    task.done = !task.done;
+    renderAdminTodos();
+  }
 
   function adminSearchMembers(val) {
     var rows = document.querySelectorAll('#admin-membres-table tbody tr');
