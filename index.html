@@ -4070,6 +4070,69 @@
       <div class="bib-footer-copy">© 2025 Ambitieuse Aventure — La Ligue des Ambitieuses</div>
     </footer>
 
+    <!-- ── MODALE EMAIL TÉLÉCHARGEMENT GRATUIT ── -->
+    <div id="bib-email-modal" class="bib-email-modal-overlay" onclick="if(event.target===this)bibCloseEmailModal()">
+      <div style="background:white;border-radius:20px;width:460px;max-width:96vw;padding:36px 32px;text-align:center;box-shadow:0 40px 100px rgba(0,0,0,0.3);">
+        <div id="bib-email-modal-icon" style="font-size:42px;margin-bottom:14px;line-height:1;">📥</div>
+        <div style="font-family:'Playfair Display',serif;font-size:21px;color:var(--navy-darkest);margin-bottom:6px;">Téléchargement gratuit</div>
+        <div id="bib-email-modal-title" style="font-size:14px;color:var(--text-light);font-weight:600;margin-bottom:10px;"></div>
+        <div style="font-size:13px;color:var(--text-light);margin-bottom:22px;line-height:1.6;">Renseigne ton adresse e-mail pour accéder à ta ressource gratuite. Promis, pas de spam !</div>
+        <input id="bib-email-input" type="email" placeholder="ton@email.fr"
+          style="width:100%;padding:12px 16px;border:1.5px solid rgba(20,36,53,0.15);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;margin-bottom:12px;transition:border-color .2s;color:var(--navy-darkest);"
+          onfocus="this.style.borderColor='var(--gold-bright)'" onblur="this.style.borderColor='rgba(20,36,53,0.15)'"
+          onkeydown="if(event.key==='Enter')bibSubmitEmail()">
+        <button onclick="bibSubmitEmail()"
+          style="width:100%;padding:13px;background:var(--gold-bright);color:var(--navy-darkest);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:10px;transition:opacity .2s;"
+          onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Accéder à ma ressource →</button>
+        <button onclick="bibCloseEmailModal()" style="background:none;border:none;color:var(--text-light);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">Annuler</button>
+      </div>
+    </div>
+
+    <!-- ── BIB : Modal détail ressource ── -->
+    <div id="bib-detail-overlay" class="bib-detail-overlay" onclick="if(event.target===this)bibCloseDetail()">
+      <div class="bib-detail-card">
+        <button class="bib-detail-close" onclick="bibCloseDetail()">✕</button>
+        <!-- Gauche : carrousel -->
+        <div class="bib-detail-left">
+          <div class="bib-carousel" id="bib-detail-carousel">
+            <div class="bib-carousel-track" id="bib-carousel-track"></div>
+            <div class="bib-carousel-nav">
+              <button class="bib-carousel-btn" id="bib-carousel-prev" onclick="bibCarouselPrev()">‹</button>
+              <button class="bib-carousel-btn" id="bib-carousel-next" onclick="bibCarouselNext()">›</button>
+            </div>
+            <div class="bib-carousel-dots" id="bib-carousel-dots"></div>
+          </div>
+        </div>
+        <!-- Droite : infos -->
+        <div class="bib-detail-right">
+          <div class="bib-detail-format" id="bib-detail-format"></div>
+          <div class="bib-detail-title" id="bib-detail-title"></div>
+          <div class="bib-detail-meta" id="bib-detail-meta"></div>
+          <div class="bib-detail-desc" id="bib-detail-desc"></div>
+          <div class="bib-detail-price" id="bib-detail-price"></div>
+          <div class="bib-detail-actions" id="bib-detail-actions"></div>
+          <div class="bib-member-note-detail">✦ Membre de la Ligue ? Toutes les ressources sont incluses dans ton abonnement.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BIB : Panier ── -->
+    <div class="bib-cart-overlay" id="bib-cart-overlay" onclick="bibCloseCart()"></div>
+    <div class="bib-cart-drawer" id="bib-cart-drawer">
+      <div class="bib-cart-header">
+        <div class="bib-cart-header-title">Mon <em style="color:var(--gold-bright);font-style:normal;">panier</em></div>
+        <button class="bib-cart-close-btn" onclick="bibCloseCart()">✕</button>
+      </div>
+      <div class="bib-cart-body" id="bib-cart-body"></div>
+      <div class="bib-cart-footer" id="bib-cart-footer" style="display:none;">
+        <div class="bib-cart-total">
+          <span class="bib-cart-total-label">Total</span>
+          <span class="bib-cart-total-price" id="bib-cart-total-price">0€</span>
+        </div>
+        <button class="bib-btn-checkout" onclick="bibCartCheckout()">Commander →</button>
+      </div>
+    </div>
+
   </div>
 
   <!-- ── PAGE CONTACT ── -->
@@ -8934,69 +8997,6 @@
         </div>
       </div>
 
-      <!-- ── MODALE EMAIL TÉLÉCHARGEMENT GRATUIT ── -->
-      <div id="bib-email-modal" class="bib-email-modal-overlay" onclick="if(event.target===this)bibCloseEmailModal()">
-        <div style="background:white;border-radius:20px;width:460px;max-width:96vw;padding:36px 32px;text-align:center;box-shadow:0 40px 100px rgba(0,0,0,0.3);">
-          <div id="bib-email-modal-icon" style="font-size:42px;margin-bottom:14px;line-height:1;">📥</div>
-          <div style="font-family:'Playfair Display',serif;font-size:21px;color:var(--navy-darkest);margin-bottom:6px;">Téléchargement gratuit</div>
-          <div id="bib-email-modal-title" style="font-size:14px;color:var(--text-light);font-weight:600;margin-bottom:10px;"></div>
-          <div style="font-size:13px;color:var(--text-light);margin-bottom:22px;line-height:1.6;">Renseigne ton adresse e-mail pour accéder à ta ressource gratuite. Promis, pas de spam !</div>
-          <input id="bib-email-input" type="email" placeholder="ton@email.fr"
-            style="width:100%;padding:12px 16px;border:1.5px solid rgba(20,36,53,0.15);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;margin-bottom:12px;transition:border-color .2s;color:var(--navy-darkest);"
-            onfocus="this.style.borderColor='var(--gold-bright)'" onblur="this.style.borderColor='rgba(20,36,53,0.15)'"
-            onkeydown="if(event.key==='Enter')bibSubmitEmail()">
-          <button onclick="bibSubmitEmail()"
-            style="width:100%;padding:13px;background:var(--gold-bright);color:var(--navy-darkest);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:10px;transition:opacity .2s;"
-            onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Accéder à ma ressource →</button>
-          <button onclick="bibCloseEmailModal()" style="background:none;border:none;color:var(--text-light);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">Annuler</button>
-        </div>
-      </div>
-
-      <!-- ── BIB : Modal détail ressource ── -->
-      <div id="bib-detail-overlay" class="bib-detail-overlay" onclick="if(event.target===this)bibCloseDetail()">
-        <div class="bib-detail-card">
-          <button class="bib-detail-close" onclick="bibCloseDetail()">✕</button>
-          <!-- Gauche : carrousel -->
-          <div class="bib-detail-left">
-            <div class="bib-carousel" id="bib-detail-carousel">
-              <div class="bib-carousel-track" id="bib-carousel-track"></div>
-              <div class="bib-carousel-nav">
-                <button class="bib-carousel-btn" id="bib-carousel-prev" onclick="bibCarouselPrev()">‹</button>
-                <button class="bib-carousel-btn" id="bib-carousel-next" onclick="bibCarouselNext()">›</button>
-              </div>
-              <div class="bib-carousel-dots" id="bib-carousel-dots"></div>
-            </div>
-          </div>
-          <!-- Droite : infos -->
-          <div class="bib-detail-right">
-            <div class="bib-detail-format" id="bib-detail-format"></div>
-            <div class="bib-detail-title" id="bib-detail-title"></div>
-            <div class="bib-detail-meta" id="bib-detail-meta"></div>
-            <div class="bib-detail-desc" id="bib-detail-desc"></div>
-            <div class="bib-detail-price" id="bib-detail-price"></div>
-            <div class="bib-detail-actions" id="bib-detail-actions"></div>
-            <div class="bib-member-note-detail">✦ Membre de la Ligue ? Toutes les ressources sont incluses dans ton abonnement.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── BIB : Panier ── -->
-      <div class="bib-cart-overlay" id="bib-cart-overlay" onclick="bibCloseCart()"></div>
-      <div class="bib-cart-drawer" id="bib-cart-drawer">
-        <div class="bib-cart-header">
-          <div class="bib-cart-header-title">Mon <em style="color:var(--gold-bright);font-style:normal;">panier</em></div>
-          <button class="bib-cart-close-btn" onclick="bibCloseCart()">✕</button>
-        </div>
-        <div class="bib-cart-body" id="bib-cart-body"></div>
-        <div class="bib-cart-footer" id="bib-cart-footer" style="display:none;">
-          <div class="bib-cart-total">
-            <span class="bib-cart-total-label">Total</span>
-            <span class="bib-cart-total-price" id="bib-cart-total-price">0€</span>
-          </div>
-          <button class="bib-btn-checkout" onclick="bibCartCheckout()">Commander →</button>
-        </div>
-      </div>
-
       <!-- ── FINANCES ADMIN ── -->
       <div class="admin-panel" id="admin-panel-finances">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px;">
@@ -10030,6 +10030,10 @@
   }
 
   function showPage(page) {
+    // Fermer les modales de la bibliothèque pour libérer le scroll
+    if (typeof bibCloseDetail === 'function') bibCloseDetail();
+    if (typeof bibCloseCart === 'function') bibCloseCart();
+    if (typeof bibCloseEmailModal === 'function') bibCloseEmailModal();
     document.querySelectorAll('.page').forEach(p => {
       p.classList.remove('active');
       p.style.display = 'none';
