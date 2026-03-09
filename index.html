@@ -6494,10 +6494,6 @@
           <div class="admin-nav-item" onclick="adminPage('membres',this)">
             <span class="nav-icon">👥</span> Gérer les membres
           </div>
-          <div class="admin-nav-item" onclick="adminPage('invitations',this)">
-            <span class="nav-icon">📩</span> Invitations
-            <span class="admin-badge-count">5</span>
-          </div>
         </div>
 
         <div class="admin-nav-group">
@@ -9353,7 +9349,6 @@
           <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;" id="role-members-list">
             <!-- généré par JS -->
           </div>
-          <button class="admin-btn-gold" onclick="roleOpenInvite()">+ Inviter un membre d'équipe</button>
         </div>
 
         <!-- ── ONGLET RÔLES ── -->
@@ -9511,25 +9506,6 @@
 
       </div>
 
-      <!-- Invitations -->
-      <div class="admin-panel" id="admin-panel-invitations">
-        <div style="margin-bottom:22px;font-family:'Playfair Display',serif;font-size:17px;color:white;">Invitations <span style="color:var(--gold-bright);">en attente</span></div>
-        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;margin-bottom:20px;">
-          <table class="admin-table">
-            <thead><tr><th>Email</th><th>Envoyée le</th><th>Statut</th><th>Actions</th></tr></thead>
-            <tbody>
-              <tr><td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cda0acbfa4a8e3a98da8a0aca4a1e3aea2a0">[email&#160;protected]</a></td><td>5 mars 2026</td><td><span class="admin-pill admin-pill-pending">En attente</span></td><td><button class="admin-action-btn admin-action-btn-ghost">Renvoyer</button></td></tr>
-              <tr><td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2b5b4a5e4742454e05596b4e464a424705484446">[email&#160;protected]</a></td><td>4 mars 2026</td><td><span class="admin-pill admin-pill-pending">En attente</span></td><td><button class="admin-action-btn admin-action-btn-ghost">Renvoyer</button></td></tr>
-              <tr><td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771d021b1e12591a37121a161e1b5914181a">[email&#160;protected]</a></td><td>1 mars 2026</td><td><span class="admin-pill" style="background:rgba(110,207,158,0.15);color:#6ecf9e;">Acceptée</span></td><td><span style="font-size:12px;color:rgba(255,255,255,0.3);">–</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div style="font-family:'Playfair Display',serif;font-size:15px;color:white;margin-bottom:12px;">Inviter une nouvelle membre</div>
-        <div style="display:flex;gap:10px;align-items:flex-end;">
-          <div style="flex:1;"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;">Email</div><input class="admin-input" style="margin-bottom:0;" type="email" placeholder="prenom@email.com"></div>
-          <button class="admin-btn-gold">Envoyer l'invitation ✦</button>
-        </div>
-      </div>
 
     </div><!-- fin admin-main -->
   </div><!-- fin admin-shell -->
@@ -10141,7 +10117,6 @@
     dashboard:   'Tableau de <span>bord</span>',
     activite:    'Activité <span>live</span>',
     membres:     'Gestion des <span>membres</span>',
-    invitations: 'Invitations <span>en attente</span>',
     formations:  'Gérer les <span>formations</span>',
     masterclass: 'Gérer les <span>masterclass</span>',
     ressources:  'Gérer les <span>ressources</span>',
@@ -12638,9 +12613,6 @@
     finToast('✓ ' + m.name + ' → ' + (newRole ? newRole.emoji + ' ' + newRole.name : '—'), '#6ecf9e');
   }
 
-  function roleOpenInvite() {
-    finToast('📩 Fonctionnalité d\'invitation à venir…', 'rgba(252,186,51,0.6)');
-  }
 
   // Fermer modales sur backdrop
   document.addEventListener('DOMContentLoaded', function(){
