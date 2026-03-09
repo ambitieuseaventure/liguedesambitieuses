@@ -5344,13 +5344,13 @@
     <div class="page-content">
       <div class="section-header">
         <div class="section-title">Mon carnet <em>d'apprentissage</em></div>
-        <div class="section-sub">Retrouve et ajuste tous tes pense-bêtes personnels, ressource par ressource.</div>
+        <div class="section-sub">Retrouve et ajuste tous tes pense-bêtes personnels, sur tes ressources et tes formations.</div>
       </div>
       <div class="notebook-list" id="notebook-list"></div>
       <div id="notebook-empty" style="display:none;text-align:center;padding:56px 20px;background:white;border:1px solid rgba(20,36,53,0.08);border-radius:12px;">
         <div style="font-size:38px;margin-bottom:10px;">📝</div>
         <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text-dark);margin-bottom:8px;">Ton carnet est vide pour le moment</div>
-        <div style="font-size:14px;color:var(--text-light);">Rends-toi dans l'onglet « Mes ressources » pour enregistrer tes premiers pense-bêtes.</div>
+        <div style="font-size:14px;color:var(--text-light);">Rends-toi dans l'onglet « Mes ressources » ou dans tes formations en cours/terminées pour enregistrer tes premiers pense-bêtes.</div>
       </div>
     </div>
   </div>
@@ -5430,6 +5430,14 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:68%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px">Continuer · 68%</button>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-lancer-offre">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-lancer-offre" data-note-field="retains" data-resource-id="course-lancer-offre" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-lancer-offre">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-lancer-offre" data-note-field="apply" data-resource-id="course-lancer-offre" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-lancer-offre','Formation · Lancer son offre de A à Z')">Enregistrer</button><span class="notes-status" id="note-status-course-lancer-offre">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
 
@@ -5446,6 +5454,14 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:42%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px">Continuer · 42%</button>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-premiers-clients">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-premiers-clients" data-note-field="retains" data-resource-id="course-premiers-clients" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-premiers-clients">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-premiers-clients" data-note-field="apply" data-resource-id="course-premiers-clients" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-premiers-clients','Formation · Trouver ses premiers clients')">Enregistrer</button><span class="notes-status" id="note-status-course-premiers-clients">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
 
@@ -5462,6 +5478,14 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:15%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px">Continuer · 15%</button>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-instagram">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-instagram" data-note-field="retains" data-resource-id="course-instagram" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-instagram">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-instagram" data-note-field="apply" data-resource-id="course-instagram" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-instagram','Formation · Stratégie Instagram pour son business')">Enregistrer</button><span class="notes-status" id="note-status-course-instagram">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
 
@@ -5478,6 +5502,14 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:90%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px;background:var(--steel)">Presque terminé · 90%</button>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-compta">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-compta" data-note-field="retains" data-resource-id="course-compta" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-compta">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-compta" data-note-field="apply" data-resource-id="course-compta" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-compta','Formation · Les bases de la comptabilité')">Enregistrer</button><span class="notes-status" id="note-status-course-compta">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
 
@@ -5526,6 +5558,14 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:100%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px;background:var(--navy-darkest)">Revoir la formation ✓</button>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-positionnement">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-positionnement" data-note-field="retains" data-resource-id="course-positionnement" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-positionnement">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-positionnement" data-note-field="apply" data-resource-id="course-positionnement" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-positionnement','Formation · Positionnement clair & différenciant')">Enregistrer</button><span class="notes-status" id="note-status-course-positionnement">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
       </div>
