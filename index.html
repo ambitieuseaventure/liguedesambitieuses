@@ -1329,6 +1329,8 @@
     transition:all 0.2s; font-family:'DM Sans',sans-serif;
   }
   .dl-btn:hover { background:var(--navy-dark); }
+  .dl-btn-done { background:rgba(20,36,53,0.08) !important; color:var(--text-light) !important; cursor:default; }
+  .dl-btn-done:hover { background:rgba(20,36,53,0.08) !important; transform:none !important; }
 
   /* ── HOTLINE VOCAL ── */
   @keyframes hlPulse {
@@ -5078,8 +5080,13 @@
         <div class="section-sub">34 ressources disponibles pour accélérer ton aventure</div>
       </div>
 
+      <div class="palmares-tabs" style="margin-bottom:18px;">
+        <button class="palmares-tab active" id="res-tab-toutes" onclick="switchResourceTab('toutes', this)">Toutes les ressources</button>
+        <button class="palmares-tab" id="res-tab-mes" onclick="switchResourceTab('mes', this)">Mes ressources</button>
+      </div>
+
       <!-- Filtres compacts -->
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:22px;background:var(--bg);border-radius:12px;padding:8px 14px;flex-wrap:wrap;">
+      <div id="resources-filters" style="display:flex;align-items:center;gap:10px;margin-bottom:22px;background:var(--bg);border-radius:12px;padding:8px 14px;flex-wrap:wrap;">
 
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-light);font-weight:700;white-space:nowrap;">Format</span>
@@ -5128,7 +5135,7 @@
 
       <div class="resources-grid" id="resources-grid">
 
-        <div class="resource-card" data-format="template" data-theme="offre" data-niveau="debutant">
+        <div class="resource-card" data-format="template" data-theme="offre" data-niveau="debutant" data-telecharge="oui">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(252,186,51,0.12),rgba(235,193,76,0.06))">📋<div class="resource-type">Template</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5137,7 +5144,7 @@
             </div>
             <h4>Business Plan Simplifié</h4>
             <p>Modèle complet pour structurer ton projet en moins de 2h.</p>
-            <div class="resource-meta"><span class="resource-size">PDF · 2.4 Mo</span><button class="dl-btn">⬇ Télécharger</button></div>
+            <div class="resource-meta"><span class="resource-size">PDF · 2.4 Mo</span><button class="dl-btn dl-btn-done">✓ Téléchargé</button></div>
           </div>
         </div>
 
@@ -5180,7 +5187,7 @@
           </div>
         </div>
 
-        <div class="resource-card" data-format="template" data-theme="marketing" data-niveau="debutant">
+        <div class="resource-card" data-format="template" data-theme="marketing" data-niveau="debutant" data-telecharge="oui">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(79,133,160,0.1),rgba(235,193,76,0.08))">📱<div class="resource-type">Template</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5189,7 +5196,7 @@
             </div>
             <h4>50 accroches Instagram</h4>
             <p>Phrases d'amorce testées pour tes publications sur les réseaux sociaux.</p>
-            <div class="resource-meta"><span class="resource-size">PDF · 1.2 Mo</span><button class="dl-btn">⬇ Télécharger</button></div>
+            <div class="resource-meta"><span class="resource-size">PDF · 1.2 Mo</span><button class="dl-btn dl-btn-done">✓ Téléchargé</button></div>
           </div>
         </div>
 
@@ -5236,9 +5243,9 @@
 
       <!-- Message zéro résultat -->
       <div id="resources-empty" style="display:none;text-align:center;padding:60px 20px;">
-        <div style="font-size:40px;margin-bottom:12px;">🔍</div>
-        <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dark);margin-bottom:8px;">Aucune ressource pour ces filtres</div>
-        <div style="font-size:14px;color:var(--text-light);">Essaie une autre combinaison de filtres</div>
+        <div style="font-size:40px;margin-bottom:12px;" id="resources-empty-icon">🔍</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dark);margin-bottom:8px;" id="resources-empty-title">Aucune ressource pour ces filtres</div>
+        <div style="font-size:14px;color:var(--text-light);" id="resources-empty-sub">Essaie une autre combinaison de filtres</div>
       </div>
 
     </div>
@@ -10645,10 +10652,12 @@
     if (page === 'landing' || page === 'blog' || page === 'bibliotheque' || page === 'contact') {
       topbar.style.display = 'none';
       sidebar.style.display = 'none';
+      document.body.classList.remove('member-page');
       if (page === 'bibliotheque') { bibRenderPublic(); }
     } else {
       topbar.style.display = 'flex';
       sidebar.style.display = 'flex';
+      document.body.classList.add('member-page');
     }
     if (window.innerWidth <= 900) sidebar.classList.remove('open');
   }
@@ -10683,6 +10692,7 @@
   // ── ADMIN ──
   function enterAdmin() {
     document.body.classList.add('admin-mode');
+    document.body.classList.remove('member-page');
     // Hide all member pages
     document.querySelectorAll('.page').forEach(p => { p.style.display='none'; p.classList.remove('active'); });
   }
@@ -15119,6 +15129,23 @@
 
   // ── FILTRES RESSOURCES ──
   var activeResourceFilters = { format: 'tous', theme: 'tous', niveau: 'tous' };
+  var activeResourceTab = 'toutes';
+
+  function switchResourceTab(tab, btn) {
+    activeResourceTab = tab;
+    var tabs = document.querySelectorAll('#page-resources .palmares-tab');
+    tabs.forEach(function(t) { t.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    // Réinitialiser les filtres au changement d'onglet
+    activeResourceFilters = { format: 'tous', theme: 'tous', niveau: 'tous' };
+    ['res-filter-format','res-filter-theme','res-filter-niveau'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.selectedIndex = 0;
+    });
+    var reset = document.getElementById('resources-reset-btn');
+    if (reset) reset.style.display = 'none';
+    _applyResourceFilters();
+  }
 
   function filterResources(type, value, btn) {
     // legacy - kept for compatibility
@@ -15151,18 +15178,38 @@
     var cards = document.querySelectorAll('#resources-grid .resource-card');
     var visible = 0;
     cards.forEach(function(card) {
+      var telecharge = card.dataset.telecharge === 'oui';
+      var matchTab = (activeResourceTab === 'toutes' && !telecharge) || (activeResourceTab === 'mes' && telecharge);
       var matchFormat = activeResourceFilters.format === 'tous' || card.dataset.format === activeResourceFilters.format;
       var matchTheme  = activeResourceFilters.theme  === 'tous' || card.dataset.theme  === activeResourceFilters.theme;
       var matchNiveau = activeResourceFilters.niveau === 'tous' || card.dataset.niveau === activeResourceFilters.niveau;
-      if (matchFormat && matchTheme && matchNiveau) { card.style.display = 'block'; visible++; }
+      if (matchTab && matchFormat && matchTheme && matchNiveau) { card.style.display = 'block'; visible++; }
       else { card.style.display = 'none'; }
     });
     var countEl = document.getElementById('resources-count');
     var emptyEl = document.getElementById('resources-empty');
-    if (visible === 0) { countEl.style.display = 'none'; emptyEl.style.display = 'block'; }
-    else {
+    if (visible === 0) {
+      countEl.style.display = 'none';
+      emptyEl.style.display = 'block';
+      var iconEl = document.getElementById('resources-empty-icon');
+      var titleEl = document.getElementById('resources-empty-title');
+      var subEl = document.getElementById('resources-empty-sub');
+      if (activeResourceTab === 'mes') {
+        if (iconEl) iconEl.textContent = '📂';
+        if (titleEl) titleEl.textContent = 'Aucune ressource téléchargée';
+        if (subEl) subEl.textContent = 'Télécharge des ressources depuis l\'onglet "Toutes les ressources"';
+      } else {
+        if (iconEl) iconEl.textContent = '🔍';
+        if (titleEl) titleEl.textContent = 'Aucune ressource pour ces filtres';
+        if (subEl) subEl.textContent = 'Essaie une autre combinaison de filtres';
+      }
+    } else {
       countEl.style.display = 'block'; emptyEl.style.display = 'none';
-      countEl.textContent = visible + ' ressource' + (visible > 1 ? 's' : '') + ' disponible' + (visible > 1 ? 's' : '');
+      if (activeResourceTab === 'mes') {
+        countEl.textContent = visible + ' ressource' + (visible > 1 ? 's' : '') + ' téléchargée' + (visible > 1 ? 's' : '');
+      } else {
+        countEl.textContent = visible + ' ressource' + (visible > 1 ? 's' : '') + ' disponible' + (visible > 1 ? 's' : '');
+      }
     }
   }
 
@@ -15270,6 +15317,9 @@
     // Assure l'ordre voulu dans l'onglet "Toutes les formations" dès le premier affichage.
     var defaultTabBtn = document.getElementById('classroom-tab-toutes');
     if (defaultTabBtn) switchClassroomTab('toutes', defaultTabBtn);
+
+    // Initialise l'onglet ressources : masque les ressources déjà téléchargées dans "Toutes".
+    _applyResourceFilters();
   });
 
   // ══════════════════════════════════════
@@ -17422,6 +17472,67 @@
     justify-content: center;
     border: 2px solid #1a1825;
   }
+
+  /* ── WIDGET FLOTTANT MEMBRE ── */
+  #member-widget { display: none; }
+  body.member-page #member-widget {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  body.admin-mode #member-widget { display: none !important; }
+  #member-widget-panel {
+    width: 360px;
+    background: #1a1825;
+    border: 1px solid rgba(255,215,160,0.15);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    transform-origin: bottom right;
+    animation: panelIn .25s cubic-bezier(.34,1.56,.64,1) both;
+    display: none;
+  }
+  #member-widget-panel.open { display: flex; flex-direction: column; }
+  #member-widget-fab {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f5c97a 0%, #e8a05e 100%);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(232,160,94,0.45), 0 2px 6px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  #member-widget-fab:hover { transform: scale(1.1); }
+  #member-fab-badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    background: #e8736a;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #1a1825;
+  }
 </style>
 
 <div id="admin-widget">
@@ -17581,4 +17692,165 @@
     // activeTab === 'messages' ? window.location.hash = '#messagerie' : window.location.hash = '#communaute';
   }
 </script>
-<!-- ═══ FIN DU WIDGET ═══ -->
+<!-- ═══ FIN DU WIDGET ADMIN ═══ -->
+
+<!-- ═══ WIDGET FLOTTANT MEMBRE ═══ -->
+<div id="member-widget">
+  <div id="member-widget-panel">
+    <div class="widget-header">
+      <div class="widget-tab active" onclick="switchMemberTab('messages', this)">
+        ✉️ Messagerie privée <span class="badge" id="member-badge-msg">3</span>
+      </div>
+      <div class="widget-tab" onclick="switchMemberTab('community', this)">
+        🌸 Communauté <span class="badge" id="member-badge-comm">5</span>
+      </div>
+      <span class="widget-close" onclick="toggleMemberWidget()">✕</span>
+    </div>
+    <div class="widget-body">
+      <div class="tab-content active" id="member-tab-messages">
+        <div class="conv-list">
+          <div class="conv-item unread" onclick="openMemberConv('Admin', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#ebc14c,#fcba33)">A<span class="online-dot"></span></div>
+            <div class="conv-info">
+              <div class="conv-name">Ambitieuse Aventure</div>
+              <div class="conv-preview">Bienvenue dans la Ligue ! 🌸 Comment vas-tu ?</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">10h</span><span class="conv-unread-dot"></span></div>
+          </div>
+          <div class="conv-item unread" onclick="openMemberConv('Sophie', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#c4937a,#e0a87a)">S</div>
+            <div class="conv-info">
+              <div class="conv-name">Sophie Andreu</div>
+              <div class="conv-preview">Tu as vu la session Q&R de demain ? 👀</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">9h</span><span class="conv-unread-dot"></span></div>
+          </div>
+          <div class="conv-item unread" onclick="openMemberConv('Léa', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#7a9cc4,#9ab4e0)">L</div>
+            <div class="conv-info">
+              <div class="conv-name">Léa Fontaine</div>
+              <div class="conv-preview">On se retrouve au meet-up ce jeudi ? ✨</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">Hier</span><span class="conv-unread-dot"></span></div>
+          </div>
+          <div class="conv-item" onclick="openMemberConv('Emma', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#9a8bc4,#c4a0d4)">E</div>
+            <div class="conv-info">
+              <div class="conv-name">Emma Rousseau</div>
+              <div class="conv-preview">Merci pour tes conseils sur la prospection !</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">Lun</span><span class="conv-unread-dot"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content" id="member-tab-community">
+        <div class="feed-list">
+          <div class="feed-item new-post">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#c4937a,#e0a87a)">M</div>
+              <span class="feed-author">Marie-Lou Fontaine</span>
+              <span class="feed-type-tag tag-post">Nouveau post</span>
+              <span class="feed-time">2h</span>
+            </div>
+            <div class="feed-text">🎉 J'ai signé mon 5ème client ce matin grâce aux techniques du module "Trouver ses premiers clients" !</div>
+            <div class="feed-channel"># 🎉 Victoires du jour · 24 ❤️ · 8 💬</div>
+          </div>
+          <div class="feed-item new-comment">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#7a9cc4,#9ab4e0)">J</div>
+              <span class="feed-author">Juliette M.</span>
+              <span class="feed-type-tag tag-comment">Commentaire</span>
+              <span class="feed-time">3h</span>
+            </div>
+            <div class="feed-text">Est-ce que quelqu'un a de l'expérience avec les foires artisanales pour démarrer en 2025 ?</div>
+            <div class="feed-channel"># 🤝 Entraide & feedback · 15 💬</div>
+          </div>
+          <div class="feed-item new-reaction">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#9a8bc4,#c4a0d4)">L</div>
+              <span class="feed-author">Léa Renard</span>
+              <span class="feed-type-tag tag-reaction">Populaire 🔥</span>
+              <span class="feed-time">Hier</span>
+            </div>
+            <div class="feed-text">💡 La méthode des "petites victoires" chaque vendredi a tout changé dans ma relation à l'entrepreneuriat !</div>
+            <div class="feed-channel"># 🎯 Objectifs & vision · 47 ❤️ · 22 💬</div>
+          </div>
+          <div class="feed-item new-post">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#8bc4b0,#a0d4c0)">C</div>
+              <span class="feed-author">Clara Vidal</span>
+              <span class="feed-type-tag tag-post">Nouveau post</span>
+              <span class="feed-time">Hier</span>
+            </div>
+            <div class="feed-text">Quelqu'un a déjà utilisé Notion pour gérer ses clients ? Je cherche un template sympa 🙏</div>
+            <div class="feed-channel"># ⚙️ Outils & astuces · 9 💬</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="quick-reply" id="member-quick-reply-bar">
+      <input type="text" placeholder="Répondre rapidement…" id="member-quick-input" />
+      <button onclick="sendMemberQuickReply()">➤</button>
+    </div>
+    <div class="widget-footer">
+      <a href="#" id="member-footer-link" onclick="goToMemberFull()">Voir toute la messagerie →</a>
+    </div>
+  </div>
+  <button id="member-widget-fab" onclick="toggleMemberWidget()">
+    💬
+    <span id="member-fab-badge">8</span>
+  </button>
+</div>
+
+<script>
+  let memberWidgetOpen = false;
+  let memberActiveTab  = 'messages';
+
+  function toggleMemberWidget() {
+    memberWidgetOpen = !memberWidgetOpen;
+    const panel = document.getElementById('member-widget-panel');
+    const fab   = document.getElementById('member-widget-fab');
+    if (memberWidgetOpen) {
+      panel.classList.add('open');
+      panel.style.animation = 'none';
+      void panel.offsetWidth;
+      panel.style.animation = '';
+      fab.innerHTML = '✕<span id="member-fab-badge" style="display:none"></span>';
+    } else {
+      panel.classList.remove('open');
+      fab.innerHTML = '💬<span id="member-fab-badge">8</span>';
+    }
+  }
+
+  function switchMemberTab(tab, el) {
+    memberActiveTab = tab;
+    document.querySelectorAll('#member-widget .widget-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('#member-widget .tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('member-tab-' + tab).classList.add('active');
+    document.getElementById('member-quick-reply-bar').style.display = tab === 'messages' ? 'flex' : 'none';
+    document.getElementById('member-footer-link').textContent = tab === 'messages'
+      ? 'Voir toute la messagerie →'
+      : 'Accéder à la communauté →';
+  }
+
+  function openMemberConv(name, el) {
+    el.classList.remove('unread');
+    document.getElementById('member-quick-input').placeholder = 'Répondre à ' + name + '…';
+  }
+
+  function sendMemberQuickReply() {
+    const input = document.getElementById('member-quick-input');
+    if (!input.value.trim()) return;
+    input.value = '';
+    const old = input.placeholder;
+    input.placeholder = 'Message envoyé ✓';
+    setTimeout(() => input.placeholder = old, 2000);
+  }
+
+  function goToMemberFull() {
+    if (memberActiveTab === 'messages') showPage('messages');
+    else showPage('community');
+  }
+</script>
+<!-- ═══ FIN DU WIDGET MEMBRE ═══ -->
