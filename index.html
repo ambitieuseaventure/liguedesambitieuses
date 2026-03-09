@@ -7394,10 +7394,27 @@
               </div>
             </div>
 
+            <!-- Section programmation (masquée par défaut) -->
+            <div id="form-schedule-section" style="display:none;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.25);border-radius:10px;padding:14px 16px;">
+              <div style="font-size:11px;font-weight:700;color:rgba(180,140,255,0.85);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">🗓 Mise en ligne programmée</div>
+              <div style="display:flex;gap:12px;align-items:flex-end;">
+                <div style="flex:1;">
+                  <div class="form-label">Date</div>
+                  <input id="form-input-scheduled-date" type="date" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(139,92,246,0.3);border-radius:8px;padding:9px 12px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;color-scheme:dark;box-sizing:border-box;">
+                </div>
+                <div>
+                  <div class="form-label">Heure</div>
+                  <input id="form-input-scheduled-time" type="time" style="width:110px;background:rgba(255,255,255,0.06);border:1px solid rgba(139,92,246,0.3);border-radius:8px;padding:9px 12px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;color-scheme:dark;">
+                </div>
+                <button onclick="formSave('programme')" style="padding:10px 18px;border-radius:9px;background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.4);color:rgba(180,140,255,0.95);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;flex-shrink:0;" onmouseover="this.style.background='rgba(139,92,246,0.32)'" onmouseout="this.style.background='rgba(139,92,246,0.2)'">Valider ✦</button>
+              </div>
+            </div>
+
             <!-- Actions -->
             <div style="display:flex;gap:10px;padding-top:4px;border-top:1px solid rgba(255,255,255,0.06);">
               <button onclick="formCloseModal()" style="flex:1;padding:11px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.25)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">Annuler</button>
-              <button onclick="formSave('brouillon')" style="flex:1;padding:11px;border-radius:9px;border:1px solid rgba(252,186,51,0.25);background:rgba(252,186,51,0.07);color:var(--gold-bright);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(252,186,51,0.14)'" onmouseout="this.style.background='rgba(252,186,51,0.07)'">Enregistrer en brouillon</button>
+              <button onclick="formSave('brouillon')" style="flex:1;padding:11px;border-radius:9px;border:1px solid rgba(252,186,51,0.25);background:rgba(252,186,51,0.07);color:var(--gold-bright);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(252,186,51,0.14)'" onmouseout="this.style.background='rgba(252,186,51,0.07)'">Brouillon</button>
+              <button onclick="formToggleSchedule()" id="form-schedule-btn" style="flex:1;padding:11px;border-radius:9px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.07);color:rgba(180,140,255,0.9);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(139,92,246,0.15)'" onmouseout="this.style.background='rgba(139,92,246,0.07)'">🗓 Programmer</button>
               <button onclick="formSave('publie')" class="admin-btn-gold" style="flex:2;font-size:13px;padding:11px 20px;" id="form-save-btn">Publier la formation ✦</button>
             </div>
 
@@ -7560,10 +7577,27 @@
               </div>
             </div>
 
+            <!-- Section programmation (masquée par défaut) -->
+            <div id="mc-schedule-section" style="display:none;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.25);border-radius:10px;padding:14px 16px;">
+              <div style="font-size:11px;font-weight:700;color:rgba(180,140,255,0.85);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">🗓 Mise en ligne programmée</div>
+              <div style="display:flex;gap:12px;align-items:flex-end;">
+                <div style="flex:1;">
+                  <div class="form-label">Date</div>
+                  <input id="mc-input-scheduled-date" type="date" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(139,92,246,0.3);border-radius:8px;padding:9px 12px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;color-scheme:dark;box-sizing:border-box;">
+                </div>
+                <div>
+                  <div class="form-label">Heure</div>
+                  <input id="mc-input-scheduled-time" type="time" style="width:110px;background:rgba(255,255,255,0.06);border:1px solid rgba(139,92,246,0.3);border-radius:8px;padding:9px 12px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;color-scheme:dark;">
+                </div>
+                <button onclick="mcSave('programme')" style="padding:10px 18px;border-radius:9px;background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.4);color:rgba(180,140,255,0.95);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;flex-shrink:0;" onmouseover="this.style.background='rgba(139,92,246,0.32)'" onmouseout="this.style.background='rgba(139,92,246,0.2)'">Valider ✦</button>
+              </div>
+            </div>
+
             <!-- Actions -->
             <div style="display:flex;gap:10px;padding-top:4px;border-top:1px solid rgba(255,255,255,0.06);">
               <button onclick="mcCloseModal()" style="flex:1;padding:11px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.25)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">Annuler</button>
-              <button onclick="mcSave('brouillon')" style="flex:1;padding:11px;border-radius:9px;border:1px solid rgba(252,186,51,0.25);background:rgba(252,186,51,0.07);color:var(--gold-bright);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(252,186,51,0.14)'" onmouseout="this.style.background='rgba(252,186,51,0.07)'">Enregistrer en brouillon</button>
+              <button onclick="mcSave('brouillon')" style="flex:1;padding:11px;border-radius:9px;border:1px solid rgba(252,186,51,0.25);background:rgba(252,186,51,0.07);color:var(--gold-bright);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(252,186,51,0.14)'" onmouseout="this.style.background='rgba(252,186,51,0.07)'">Brouillon</button>
+              <button onclick="mcToggleSchedule()" id="mc-schedule-btn" style="flex:1;padding:11px;border-radius:9px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.07);color:rgba(180,140,255,0.9);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(139,92,246,0.15)'" onmouseout="this.style.background='rgba(139,92,246,0.07)'">🗓 Programmer</button>
               <button onclick="mcSave('publie')" class="admin-btn-gold" style="flex:2;font-size:13px;padding:11px 20px;" id="mc-save-btn">Publier la masterclass ✦</button>
             </div>
 
@@ -10715,25 +10749,32 @@
     grid.innerHTML = '';
     formationsData.forEach(function(f) {
       var isDraft = f.status === 'brouillon';
+      var isProg  = f.status === 'programme';
       var grad    = formThemeGradients[f.theme] || formThemeGradients['💎 Offre & pricing'];
       var dur     = f.hours + 'h' + (f.mins > 0 ? String(f.mins).padStart(2,'0') : '');
       var card    = document.createElement('div');
       card.className = 'admin-content-card';
       if (isDraft) card.style.cssText = 'border-color:rgba(252,186,51,0.3);background:rgba(252,186,51,0.03);';
+      else if (isProg) card.style.cssText = 'border-color:rgba(139,92,246,0.35);background:rgba(139,92,246,0.04);';
+      var metaColor = isDraft ? 'color:var(--gold-bright);' : (isProg ? 'color:rgba(180,140,255,0.9);' : '');
+      var metaText  = isDraft ? '✦ Brouillon · prête à publier'
+                    : isProg  ? '🗓 Programmée · ' + schedFormatDate(f.scheduledFor)
+                    : f.theme+' · '+f.level+' · '+dur;
       card.innerHTML =
         '<div class="admin-content-thumb" style="background:'+grad+';">'+f.cover+'</div>'
         +'<div class="admin-content-body">'
           +'<div class="admin-content-title">'+f.title+'</div>'
-          +'<div class="admin-content-meta" style="'+(isDraft?'color:var(--gold-bright);':'')+'">'+
-            (isDraft ? '✦ Brouillon · prête à publier' : f.theme+' · '+f.level+' · '+dur)
-          +'</div>'
+          +'<div class="admin-content-meta" style="'+metaColor+'">'+metaText+'</div>'
           +(f.modules.length ? '<div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">'+f.modules.length+' module'+(f.modules.length>1?'s':'')+'</div>' : '')
         +'</div>'
         +'<div class="admin-content-footer">'
           +'<button class="admin-action-btn admin-action-btn-ghost" onclick="formOpenModal(\''+f.id+'\')">✏️ Modifier</button>'
           +(isDraft
             ? '<button class="admin-action-btn" style="background:rgba(110,207,158,0.12);color:#6ecf9e;border:none;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;" onclick="formPublish(\''+f.id+'\')">✓ Publier</button>'
-            : '<button class="admin-action-btn admin-action-btn-ghost">📊 Stats</button><button class="admin-action-btn admin-action-btn-danger" style="margin-left:auto;" onclick="formUnpublish(\''+f.id+'\')">Dépublier</button>')
+            : isProg
+              ? '<button class="admin-action-btn" style="background:rgba(110,207,158,0.12);color:#6ecf9e;border:none;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;" onclick="formPublish(\''+f.id+'\')">✓ Publier maintenant</button>'
+                +'<button class="admin-action-btn admin-action-btn-danger" style="margin-left:auto;" onclick="formUnpublish(\''+f.id+'\')">Déprogrammer</button>'
+              : '<button class="admin-action-btn admin-action-btn-ghost">📊 Stats</button><button class="admin-action-btn admin-action-btn-danger" style="margin-left:auto;" onclick="formUnpublish(\''+f.id+'\')">Dépublier</button>')
         +'</div>';
       grid.appendChild(card);
     });
@@ -10741,10 +10782,13 @@
   }
 
   function formUpdateCountLabel() {
-    var pub = formationsData.filter(function(f){ return f.status==='publie'; }).length;
-    var dft = formationsData.filter(function(f){ return f.status==='brouillon'; }).length;
-    var el = document.getElementById('form-count-label');
-    if (el) el.textContent = pub+' publiée'+(pub>1?'s':'') + (dft?' · '+dft+' brouillon'+(dft>1?'s':''):'');
+    var pub  = formationsData.filter(function(f){ return f.status==='publie'; }).length;
+    var dft  = formationsData.filter(function(f){ return f.status==='brouillon'; }).length;
+    var prog = formationsData.filter(function(f){ return f.status==='programme'; }).length;
+    var el   = document.getElementById('form-count-label');
+    if (el) el.textContent = pub+' publiée'+(pub>1?'s':'')
+      + (dft  ? ' · '+dft+' brouillon'+(dft>1?'s':'') : '')
+      + (prog ? ' · '+prog+' programmée'+(prog>1?'s':'') : '');
   }
 
   function formPublish(id) {
@@ -10805,6 +10849,27 @@
     // Bouton save
     document.getElementById('form-save-btn').textContent = isEdit ? 'Enregistrer les modifications ✦' : 'Publier la formation ✦';
 
+    // Réinitialiser la section programmation
+    var schedSec = document.getElementById('form-schedule-section');
+    var schedBtn = document.getElementById('form-schedule-btn');
+    if (schedSec) schedSec.style.display = 'none';
+    if (schedBtn) { schedBtn.textContent='🗓 Programmer'; schedBtn.style.borderColor='rgba(139,92,246,0.3)'; schedBtn.style.background='rgba(139,92,246,0.07)'; schedBtn.style.color='rgba(180,140,255,0.9)'; }
+    // Si la formation est déjà programmée, afficher la section avec les valeurs
+    if (f && f.status === 'programme' && f.scheduledFor) {
+      var parts = f.scheduledFor.split('T');
+      var dInp = document.getElementById('form-input-scheduled-date');
+      var tInp = document.getElementById('form-input-scheduled-time');
+      if (dInp) dInp.value = parts[0];
+      if (tInp) tInp.value = parts[1] ? parts[1].substring(0,5) : '09:00';
+      if (schedSec) schedSec.style.display = 'block';
+      if (schedBtn) { schedBtn.textContent='✕ Annuler'; schedBtn.style.borderColor='rgba(255,90,90,0.25)'; schedBtn.style.background='rgba(255,90,90,0.07)'; schedBtn.style.color='rgba(255,140,140,0.9)'; }
+    } else {
+      var dInp2 = document.getElementById('form-input-scheduled-date');
+      var tInp2 = document.getElementById('form-input-scheduled-time');
+      if (dInp2) dInp2.value = '';
+      if (tInp2) tInp2.value = '';
+    }
+
     formUpdatePreview();
     document.getElementById('form-modal').style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -10819,6 +10884,26 @@
     }
     formEditingId = null;
     formDraftId   = null;
+  }
+
+  function formToggleSchedule() {
+    var sec = document.getElementById('form-schedule-section');
+    var btn = document.getElementById('form-schedule-btn');
+    var isOpen = sec && sec.style.display !== 'none';
+    if (isOpen) {
+      if (sec) sec.style.display = 'none';
+      if (btn) { btn.textContent='🗓 Programmer'; btn.style.borderColor='rgba(139,92,246,0.3)'; btn.style.background='rgba(139,92,246,0.07)'; btn.style.color='rgba(180,140,255,0.9)'; }
+    } else {
+      if (sec) sec.style.display = 'block';
+      var dInp = document.getElementById('form-input-scheduled-date');
+      var tInp = document.getElementById('form-input-scheduled-time');
+      if (dInp && !dInp.value) {
+        var tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1);
+        dInp.value = tomorrow.toISOString().split('T')[0];
+      }
+      if (tInp && !tInp.value) tInp.value = '09:00';
+      if (btn) { btn.textContent='✕ Annuler'; btn.style.borderColor='rgba(255,90,90,0.25)'; btn.style.background='rgba(255,90,90,0.07)'; btn.style.color='rgba(255,140,140,0.9)'; }
+    }
   }
 
   // ── Cover picker ──
@@ -10841,7 +10926,7 @@
     // Sinon on crée un brouillon temporaire si ce n'est pas déjà fait
     if (!formDraftId) {
       formDraftId = 'fdraft_' + Date.now();
-      formationsData.push({ id:formDraftId, title:'', theme:'💎 Offre & pricing', level:'Débutant', hours:0, mins:0, desc:'', cover:'📚', status:'brouillon', modules:[] });
+      formationsData.push({ id:formDraftId, title:'', theme:'💎 Offre & pricing', level:'Débutant', hours:0, mins:0, desc:'', cover:'📚', status:'brouillon', scheduledFor:null, modules:[] });
     }
     return formDraftId;
   }
@@ -10934,6 +11019,16 @@
       inp.focus();
       return;
     }
+
+    var scheduledFor = null;
+    if (status === 'programme') {
+      var dateVal = document.getElementById('form-input-scheduled-date').value;
+      var timeVal = document.getElementById('form-input-scheduled-time').value || '09:00';
+      if (!dateVal) { finToast('⚠ Choisis une date de mise en ligne', 'rgba(255,160,60,0.9)'); return; }
+      scheduledFor = dateVal + 'T' + timeVal + ':00';
+      if (new Date(scheduledFor) <= new Date()) { finToast('⚠ La date doit être dans le futur', 'rgba(255,160,60,0.9)'); return; }
+    }
+
     var theme    = document.getElementById('form-input-theme').value;
     var level    = document.getElementById('form-input-level');
     var levelVal = level ? level.options[level.selectedIndex].value : 'Débutant';
@@ -10943,23 +11038,53 @@
 
     var targetId = formEditingId || formDraftId;
     if (targetId) {
-      // Met à jour la formation existante (ou le brouillon temporaire)
       var f = formationsData.find(function(x){ return x.id === targetId; });
       if (f) {
         f.title  = title; f.theme = theme; f.level = levelVal;
         f.hours  = hours; f.mins  = mins;  f.desc  = desc;
-        f.cover  = formSelectedCover; f.status = status;
-        // modules déjà à jour via modlSave
+        f.cover  = formSelectedCover; f.status = status; f.scheduledFor = scheduledFor;
       }
     } else {
-      // Aucun brouillon — création pure sans modules
-      formationsData.push({ id:'f_'+Date.now(), title:title, theme:theme, level:levelVal, hours:hours, mins:mins, desc:desc, cover:formSelectedCover, status:status, modules:[] });
+      formationsData.push({ id:'f_'+Date.now(), title:title, theme:theme, level:levelVal, hours:hours, mins:mins, desc:desc, cover:formSelectedCover, status:status, scheduledFor:scheduledFor, modules:[] });
     }
 
     formCloseModal();
     formRenderGrid();
-    finToast(status==='publie' ? '✓ Formation publiée avec succès !' : '✓ Brouillon enregistré', status==='publie' ? '#6ecf9e' : 'rgba(252,186,51,0.8)');
+    if (status === 'programme') {
+      var d = new Date(scheduledFor);
+      finToast('🗓 Formation programmée pour le '+d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'}), 'rgba(139,92,246,0.9)');
+    } else {
+      finToast(status==='publie' ? '✓ Formation publiée avec succès !' : '✓ Brouillon enregistré', status==='publie' ? '#6ecf9e' : 'rgba(252,186,51,0.8)');
+    }
   }
+
+  // ── Utilitaire : formate une date ISO en texte lisible ──
+  function schedFormatDate(isoStr) {
+    if (!isoStr) return '—';
+    try {
+      var d = new Date(isoStr);
+      return d.toLocaleDateString('fr-FR', { day:'numeric', month:'long' }) + ' à ' + d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+    } catch(e) { return isoStr; }
+  }
+
+  // ── Vérification automatique de publication programmée (toutes les minutes) ──
+  setInterval(function() {
+    var now = new Date();
+    var formChanged = false;
+    formationsData.forEach(function(f) {
+      if (f.status === 'programme' && f.scheduledFor && new Date(f.scheduledFor) <= now) {
+        f.status = 'publie'; f.scheduledFor = null; formChanged = true;
+      }
+    });
+    if (formChanged) { formRenderGrid(); finToast('✓ Formation(s) publiée(s) automatiquement', '#6ecf9e'); }
+    var mcChanged = false;
+    masterclassData.forEach(function(mc) {
+      if (mc.status === 'programme' && mc.scheduledFor && new Date(mc.scheduledFor) <= now) {
+        mc.status = 'publie'; mc.scheduledFor = null; mcChanged = true;
+      }
+    });
+    if (mcChanged) { mcRenderGrid(); finToast('✓ Masterclass(es) publiée(s) automatiquement', '#6ecf9e'); }
+  }, 60000);
 
   // Init + fermeture backdrop
   document.addEventListener('DOMContentLoaded', function(){
@@ -11731,12 +11856,18 @@
     grid.innerHTML = '';
     masterclassData.forEach(function(mc) {
       var isDraft = mc.status === 'brouillon';
+      var isProg  = mc.status === 'programme';
       var grad    = mcThemeGradients[mc.theme] || mcThemeGradients['🧠 Mindset'];
       var emoji   = mcThemeEmoji[mc.theme] || '🎬';
       var dur     = mc.mins ? mc.mins + ' min' : '—';
       var card    = document.createElement('div');
       card.className = 'admin-content-card';
       if (isDraft) card.style.cssText = 'border-color:rgba(252,186,51,0.3);background:rgba(252,186,51,0.03);';
+      else if (isProg) card.style.cssText = 'border-color:rgba(139,92,246,0.35);background:rgba(139,92,246,0.04);';
+      var metaColor = isDraft ? 'color:var(--gold-bright);' : (isProg ? 'color:rgba(180,140,255,0.9);' : '');
+      var metaText  = isDraft ? '✦ Brouillon · à publier'
+                    : isProg  ? '🗓 Programmée · ' + schedFormatDate(mc.scheduledFor)
+                    : mc.speaker+' · '+dur+' · '+mc.theme;
       // Thumb : miniature YouTube si dispo, sinon gradient + emoji
       var thumbInner = mc.youtubeId
         ? '<img src="https://img.youtube.com/vi/'+mc.youtubeId+'/mqdefault.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" onerror="this.style.display=\'none\'">'
@@ -11746,16 +11877,17 @@
         '<div class="admin-content-thumb" style="background:'+grad+';position:relative;overflow:hidden;">'+thumbInner+'</div>'
         +'<div class="admin-content-body">'
           +'<div class="admin-content-title">'+mc.title+'</div>'
-          +'<div class="admin-content-meta" style="'+(isDraft?'color:var(--gold-bright);':'')+'">'+
-            (isDraft ? '✦ Brouillon · à publier' : mc.speaker+' · '+dur+' · '+mc.theme)
-          +'</div>'
+          +'<div class="admin-content-meta" style="'+metaColor+'">'+metaText+'</div>'
         +'</div>'
         +'<div class="admin-content-footer">'
           +'<button class="admin-action-btn admin-action-btn-ghost" onclick="mcOpenModal(\''+mc.id+'\')">✏️ Modifier</button>'
           +(isDraft
             ? '<button class="admin-action-btn" style="background:rgba(110,207,158,0.12);color:#6ecf9e;border:none;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;" onclick="mcPublish(\''+mc.id+'\')">✓ Publier</button>'
-            : '<button class="admin-action-btn admin-action-btn-ghost">📊 Stats</button>'
-              +'<button class="admin-action-btn admin-action-btn-danger" style="margin-left:auto;" onclick="mcUnpublish(\''+mc.id+'\')">Dépublier</button>'
+            : isProg
+              ? '<button class="admin-action-btn" style="background:rgba(110,207,158,0.12);color:#6ecf9e;border:none;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;" onclick="mcPublish(\''+mc.id+'\')">✓ Publier maintenant</button>'
+                +'<button class="admin-action-btn admin-action-btn-danger" style="margin-left:auto;" onclick="mcUnpublish(\''+mc.id+'\')">Déprogrammer</button>'
+              : '<button class="admin-action-btn admin-action-btn-ghost">📊 Stats</button>'
+                +'<button class="admin-action-btn admin-action-btn-danger" style="margin-left:auto;" onclick="mcUnpublish(\''+mc.id+'\')">Dépublier</button>'
           )
         +'</div>';
       grid.appendChild(card);
@@ -11764,10 +11896,13 @@
   }
 
   function mcUpdateCountLabel() {
-    var pub = masterclassData.filter(function(m){ return m.status==='publie'; }).length;
-    var dft = masterclassData.filter(function(m){ return m.status==='brouillon'; }).length;
-    var el = document.getElementById('mc-count-label');
-    if (el) el.textContent = pub+' publiée'+(pub>1?'s':'')+(dft?' · '+dft+' brouillon'+(dft>1?'s':''):'');
+    var pub  = masterclassData.filter(function(m){ return m.status==='publie'; }).length;
+    var dft  = masterclassData.filter(function(m){ return m.status==='brouillon'; }).length;
+    var prog = masterclassData.filter(function(m){ return m.status==='programme'; }).length;
+    var el   = document.getElementById('mc-count-label');
+    if (el) el.textContent = pub+' publiée'+(pub>1?'s':'')
+      + (dft  ? ' · '+dft+' brouillon'+(dft>1?'s':'') : '')
+      + (prog ? ' · '+prog+' programmée'+(prog>1?'s':'') : '');
   }
 
   function mcPublish(id) {
@@ -11812,6 +11947,27 @@
     }
 
     document.getElementById('mc-save-btn').textContent = isEdit ? 'Enregistrer les modifications ✦' : 'Publier la masterclass ✦';
+
+    // Réinitialiser la section programmation
+    var mcSchedSec = document.getElementById('mc-schedule-section');
+    var mcSchedBtn = document.getElementById('mc-schedule-btn');
+    if (mcSchedSec) mcSchedSec.style.display = 'none';
+    if (mcSchedBtn) { mcSchedBtn.textContent='🗓 Programmer'; mcSchedBtn.style.borderColor='rgba(139,92,246,0.3)'; mcSchedBtn.style.background='rgba(139,92,246,0.07)'; mcSchedBtn.style.color='rgba(180,140,255,0.9)'; }
+    if (mc && mc.status === 'programme' && mc.scheduledFor) {
+      var mcParts = mc.scheduledFor.split('T');
+      var mcDInp  = document.getElementById('mc-input-scheduled-date');
+      var mcTInp  = document.getElementById('mc-input-scheduled-time');
+      if (mcDInp) mcDInp.value = mcParts[0];
+      if (mcTInp) mcTInp.value = mcParts[1] ? mcParts[1].substring(0,5) : '09:00';
+      if (mcSchedSec) mcSchedSec.style.display = 'block';
+      if (mcSchedBtn) { mcSchedBtn.textContent='✕ Annuler'; mcSchedBtn.style.borderColor='rgba(255,90,90,0.25)'; mcSchedBtn.style.background='rgba(255,90,90,0.07)'; mcSchedBtn.style.color='rgba(255,140,140,0.9)'; }
+    } else {
+      var mcDInp2 = document.getElementById('mc-input-scheduled-date');
+      var mcTInp2 = document.getElementById('mc-input-scheduled-time');
+      if (mcDInp2) mcDInp2.value = '';
+      if (mcTInp2) mcTInp2.value = '';
+    }
+
     mcUpdatePreview();
     document.getElementById('mc-modal').style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -11821,6 +11977,26 @@
     document.getElementById('mc-modal').style.display = 'none';
     document.body.style.overflow = '';
     mcEditingId = null; mcCurrentYtId = '';
+  }
+
+  function mcToggleSchedule() {
+    var sec = document.getElementById('mc-schedule-section');
+    var btn = document.getElementById('mc-schedule-btn');
+    var isOpen = sec && sec.style.display !== 'none';
+    if (isOpen) {
+      if (sec) sec.style.display = 'none';
+      if (btn) { btn.textContent='🗓 Programmer'; btn.style.borderColor='rgba(139,92,246,0.3)'; btn.style.background='rgba(139,92,246,0.07)'; btn.style.color='rgba(180,140,255,0.9)'; }
+    } else {
+      if (sec) sec.style.display = 'block';
+      var dInp = document.getElementById('mc-input-scheduled-date');
+      var tInp = document.getElementById('mc-input-scheduled-time');
+      if (dInp && !dInp.value) {
+        var tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1);
+        dInp.value = tomorrow.toISOString().split('T')[0];
+      }
+      if (tInp && !tInp.value) tInp.value = '09:00';
+      if (btn) { btn.textContent='✕ Annuler'; btn.style.borderColor='rgba(255,90,90,0.25)'; btn.style.background='rgba(255,90,90,0.07)'; btn.style.color='rgba(255,140,140,0.9)'; }
+    }
   }
 
   // ── Parser le code embarqué YouTube ──
@@ -11914,11 +12090,21 @@
       inp.style.borderColor = 'rgba(255,90,90,0.5)'; inp.focus(); return;
     }
     var embedCode = document.getElementById('mc-input-embed').value.trim();
-    if (!embedCode && status === 'publie') {
+    if (!embedCode && (status === 'publie' || status === 'programme')) {
       var emb = document.getElementById('mc-input-embed');
       emb.style.borderColor = 'rgba(255,90,90,0.5)'; emb.focus();
-      finToast('⚠ Colle le code embarqué YouTube pour publier', 'rgba(255,160,60,0.9)'); return;
+      finToast('⚠ Colle le code embarqué YouTube pour publier ou programmer', 'rgba(255,160,60,0.9)'); return;
     }
+
+    var scheduledFor = null;
+    if (status === 'programme') {
+      var mcDateVal = document.getElementById('mc-input-scheduled-date').value;
+      var mcTimeVal = document.getElementById('mc-input-scheduled-time').value || '09:00';
+      if (!mcDateVal) { finToast('⚠ Choisis une date de mise en ligne', 'rgba(255,160,60,0.9)'); return; }
+      scheduledFor = mcDateVal + 'T' + mcTimeVal + ':00';
+      if (new Date(scheduledFor) <= new Date()) { finToast('⚠ La date doit être dans le futur', 'rgba(255,160,60,0.9)'); return; }
+    }
+
     var ts      = document.getElementById('mc-input-theme');
     var theme   = ts ? ts.value : '🧠 Mindset';
     var speaker = document.getElementById('mc-input-speaker').value.trim();
@@ -11927,13 +12113,18 @@
 
     if (mcEditingId) {
       var mc = masterclassData.find(function(x){ return x.id===mcEditingId; });
-      if (mc) { mc.title=title; mc.speaker=speaker; mc.theme=theme; mc.mins=mins; mc.desc=desc; mc.embedCode=embedCode; mc.youtubeId=mcCurrentYtId; mc.status=status; }
+      if (mc) { mc.title=title; mc.speaker=speaker; mc.theme=theme; mc.mins=mins; mc.desc=desc; mc.embedCode=embedCode; mc.youtubeId=mcCurrentYtId; mc.status=status; mc.scheduledFor=scheduledFor; }
     } else {
-      masterclassData.push({ id:'mc_'+Date.now(), title:title, speaker:speaker, theme:theme, mins:mins, desc:desc, embedCode:embedCode, youtubeId:mcCurrentYtId, status:status });
+      masterclassData.push({ id:'mc_'+Date.now(), title:title, speaker:speaker, theme:theme, mins:mins, desc:desc, embedCode:embedCode, youtubeId:mcCurrentYtId, status:status, scheduledFor:scheduledFor });
     }
     mcCloseModal();
     mcRenderGrid();
-    finToast(status==='publie' ? '✓ Masterclass publiée !' : '✓ Brouillon enregistré', status==='publie' ? '#6ecf9e' : 'rgba(252,186,51,0.8)');
+    if (status === 'programme') {
+      var d = new Date(scheduledFor);
+      finToast('🗓 Masterclass programmée pour le '+d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'}), 'rgba(139,92,246,0.9)');
+    } else {
+      finToast(status==='publie' ? '✓ Masterclass publiée !' : '✓ Brouillon enregistré', status==='publie' ? '#6ecf9e' : 'rgba(252,186,51,0.8)');
+    }
   }
 
   // Init
