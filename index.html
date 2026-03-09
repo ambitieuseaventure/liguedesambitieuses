@@ -1332,6 +1332,75 @@
   .dl-btn-done { background:rgba(20,36,53,0.08) !important; color:var(--text-light) !important; cursor:default; }
   .dl-btn-done:hover { background:rgba(20,36,53,0.08) !important; transform:none !important; }
 
+  .notes-card {
+    margin-top:14px;
+    background:linear-gradient(180deg, rgba(252,186,51,0.1), rgba(229,216,189,0.28));
+    border:1px solid rgba(235,193,76,0.45);
+    border-radius:10px;
+    padding:12px;
+  }
+  .notes-card-title {
+    font-family:'Playfair Display',serif;
+    font-size:15px;
+    color:var(--navy-darkest);
+    margin-bottom:10px;
+  }
+  .notes-field-label {
+    display:block;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--text-mid);
+    font-weight:700;
+    margin-bottom:5px;
+  }
+  .notes-field {
+    width:100%;
+    resize:vertical;
+    min-height:74px;
+    border:1px solid rgba(20,36,53,0.15);
+    background:white;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:10px;
+    font-family:'DM Sans',sans-serif;
+    font-size:13px;
+    color:var(--text-dark);
+    line-height:1.5;
+  }
+  .notes-field:focus {
+    outline:none;
+    border-color:var(--gold-bright);
+    box-shadow:0 0 0 3px rgba(252,186,51,0.16);
+  }
+  .notes-status {
+    font-size:11px;
+    color:var(--text-light);
+    margin-left:8px;
+  }
+
+  .notebook-list { display:flex; flex-direction:column; gap:14px; }
+  .notebook-item {
+    background:white;
+    border:1px solid rgba(20,36,53,0.09);
+    border-radius:12px;
+    padding:16px;
+    box-shadow:0 2px 10px rgba(20,36,53,0.05);
+  }
+  .notebook-header {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .notebook-title {
+    font-size:16px;
+    font-weight:700;
+    color:var(--text-dark);
+  }
+  .notebook-date { font-size:12px; color:var(--text-light); }
+
   /* ── HOTLINE VOCAL ── */
   @keyframes hlPulse {
     0%, 100% { opacity: 1; transform: scale(1); }
@@ -3804,6 +3873,9 @@
     <a class="nav-item" onclick="showPage('resources')">
       <span class="nav-icon">📁</span> Ressources
     </a>
+    <a class="nav-item" onclick="showPage('notebook')">
+      <span class="nav-icon">📓</span> Mon carnet d'apprentissage
+    </a>
 
     <div class="nav-section-label">Stratège & +</div>
     <a class="nav-item" onclick="showPage('qr')">
@@ -5135,7 +5207,7 @@
 
       <div class="resources-grid" id="resources-grid">
 
-        <div class="resource-card" data-format="template" data-theme="offre" data-niveau="debutant" data-telecharge="oui">
+        <div class="resource-card" data-format="template" data-theme="offre" data-niveau="debutant" data-telecharge="oui" data-resource-id="res-business-plan">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(252,186,51,0.12),rgba(235,193,76,0.06))">📋<div class="resource-type">Template</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5144,7 +5216,15 @@
             </div>
             <h4>Business Plan Simplifié</h4>
             <p>Modèle complet pour structurer ton projet en moins de 2h.</p>
-            <div class="resource-meta"><span class="resource-size">PDF · 2.4 Mo</span><button class="dl-btn dl-btn-done">✓ Téléchargé</button></div>
+                        <div class="resource-meta"><span class="resource-size">PDF · 2.4 Mo</span><button class="dl-btn dl-btn-done">✓ Téléchargé</button></div>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-res-business-plan">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-res-business-plan" data-note-field="retains" data-resource-id="res-business-plan" placeholder="Les idées importantes à retenir de cette ressource..."></textarea>
+              <label class="notes-field-label" for="apply-res-business-plan">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-res-business-plan" data-note-field="apply" data-resource-id="res-business-plan" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('res-business-plan','Business Plan Simplifié')">Enregistrer</button><span class="notes-status" id="note-status-res-business-plan">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
 
@@ -5187,7 +5267,7 @@
           </div>
         </div>
 
-        <div class="resource-card" data-format="template" data-theme="marketing" data-niveau="debutant" data-telecharge="oui">
+        <div class="resource-card" data-format="template" data-theme="marketing" data-niveau="debutant" data-telecharge="oui" data-resource-id="res-accroches-instagram">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(79,133,160,0.1),rgba(235,193,76,0.08))">📱<div class="resource-type">Template</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5196,7 +5276,15 @@
             </div>
             <h4>50 accroches Instagram</h4>
             <p>Phrases d'amorce testées pour tes publications sur les réseaux sociaux.</p>
-            <div class="resource-meta"><span class="resource-size">PDF · 1.2 Mo</span><button class="dl-btn dl-btn-done">✓ Téléchargé</button></div>
+                        <div class="resource-meta"><span class="resource-size">PDF · 1.2 Mo</span><button class="dl-btn dl-btn-done">✓ Téléchargé</button></div>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-res-accroches-instagram">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-res-accroches-instagram" data-note-field="retains" data-resource-id="res-accroches-instagram" placeholder="Les idées importantes à retenir de cette ressource..."></textarea>
+              <label class="notes-field-label" for="apply-res-accroches-instagram">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-res-accroches-instagram" data-note-field="apply" data-resource-id="res-accroches-instagram" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('res-accroches-instagram','50 accroches Instagram')">Enregistrer</button><span class="notes-status" id="note-status-res-accroches-instagram">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
 
@@ -5250,6 +5338,23 @@
 
     </div>
   </div>
+
+  <!-- ── NOTEBOOK ── -->
+  <div class="page" id="page-notebook">
+    <div class="page-content">
+      <div class="section-header">
+        <div class="section-title">Mon carnet <em>d'apprentissage</em></div>
+        <div class="section-sub">Retrouve et ajuste tous tes pense-bêtes personnels, ressource par ressource.</div>
+      </div>
+      <div class="notebook-list" id="notebook-list"></div>
+      <div id="notebook-empty" style="display:none;text-align:center;padding:56px 20px;background:white;border:1px solid rgba(20,36,53,0.08);border-radius:12px;">
+        <div style="font-size:38px;margin-bottom:10px;">📝</div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text-dark);margin-bottom:8px;">Ton carnet est vide pour le moment</div>
+        <div style="font-size:14px;color:var(--text-light);">Rends-toi dans l'onglet « Mes ressources » pour enregistrer tes premiers pense-bêtes.</div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- ── CLASSROOM ── -->
   <div class="page" id="page-classroom">
@@ -10619,7 +10724,7 @@
     const map = {
       landing:'landing', dashboard:'dashboard', community:'community',
       classroom:'classroom', masterclass:'masterclass',
-      resources:'resources', messages:'messages',
+      resources:'resources', notebook:'notebook', messages:'messages',
       annuaire:'annuaire', evenements:'evenements', qr:'qr',
       bilan:'bilan', buddy:'buddy', coaching:'coaching',
       hotline:'hotline', plan:'plan', mindset:'mindset',
@@ -10632,6 +10737,7 @@
       classroom: 'Formations',
       masterclass: 'Masterclass',
       resources: 'Ressources',
+      notebook: "Mon carnet d'apprentissage",
       messages: 'Messagerie',
       annuaire: 'Annuaire',
       evenements: 'Événements',
@@ -14651,6 +14757,126 @@
   }
 
   // Init posts on DOMContentLoaded
+
+  var currentUserId = 'user-sophie-a';
+
+  function getResourceNotesStore() {
+    var raw = localStorage.getItem('resource_notes_db');
+    if (!raw) return {};
+    try { return JSON.parse(raw) || {}; } catch(e) { return {}; }
+  }
+
+  function setResourceNotesStore(store) {
+    localStorage.setItem('resource_notes_db', JSON.stringify(store || {}));
+  }
+
+  function formatNoteDate(iso) {
+    if (!iso) return '-';
+    var d = new Date(iso);
+    return d.toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'numeric' }) + ' · ' + d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  function saveResourceNote(resourceId, resourceTitle) {
+    var retainEl = document.querySelector('[data-note-field="retains"][data-resource-id="' + resourceId + '"]');
+    var applyEl = document.querySelector('[data-note-field="apply"][data-resource-id="' + resourceId + '"]');
+    if (!retainEl || !applyEl) return;
+    var store = getResourceNotesStore();
+    var key = currentUserId + '::' + resourceId;
+    store[key] = {
+      userId: currentUserId,
+      resourceId: resourceId,
+      resourceTitle: resourceTitle,
+      retains: retainEl.value.trim(),
+      apply: applyEl.value.trim(),
+      updatedAt: new Date().toISOString()
+    };
+    setResourceNotesStore(store);
+    var status = document.getElementById('note-status-' + resourceId);
+    if (status) status.textContent = 'Enregistré le ' + formatNoteDate(store[key].updatedAt);
+    renderNotebookPage();
+  }
+
+  function preloadResourceNotes() {
+    var store = getResourceNotesStore();
+    Object.keys(store).forEach(function(key) {
+      var note = store[key];
+      if (!note || note.userId !== currentUserId) return;
+      var retainEl = document.querySelector('[data-note-field="retains"][data-resource-id="' + note.resourceId + '"]');
+      var applyEl = document.querySelector('[data-note-field="apply"][data-resource-id="' + note.resourceId + '"]');
+      if (retainEl) retainEl.value = note.retains || '';
+      if (applyEl) applyEl.value = note.apply || '';
+      var status = document.getElementById('note-status-' + note.resourceId);
+      if (status) status.textContent = 'Enregistré le ' + formatNoteDate(note.updatedAt);
+    });
+  }
+
+  function renderNotebookPage() {
+    var list = document.getElementById('notebook-list');
+    var empty = document.getElementById('notebook-empty');
+    if (!list || !empty) return;
+    var store = getResourceNotesStore();
+    var notes = Object.values(store).filter(function(note) {
+      return note && note.userId === currentUserId && (note.retains || note.apply);
+    }).sort(function(a, b) {
+      return new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0);
+    });
+
+    list.innerHTML = '';
+    if (!notes.length) {
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    notes.forEach(function(note) {
+      var item = document.createElement('div');
+      item.className = 'notebook-item';
+      item.innerHTML = ''
+        + '<div class="notebook-header"><div class="notebook-title">' + (note.resourceTitle || 'Ressource') + '</div><div class="notebook-date">Modifié le ' + formatNoteDate(note.updatedAt) + '</div></div>'
+        + '<label class="notes-field-label" for="notebook-retain-' + note.resourceId + '">Ce que je retiens</label>'
+        + '<textarea class="notes-field" id="notebook-retain-' + note.resourceId + '">' + (note.retains || '') + '</textarea>'
+        + '<label class="notes-field-label" for="notebook-apply-' + note.resourceId + '">Comment je vais l\'appliquer</label>'
+        + '<textarea class="notes-field" id="notebook-apply-' + note.resourceId + '">' + (note.apply || '') + '</textarea>'
+        + '<div style="display:flex;align-items:center;"><button class="dl-btn notebook-save-btn" data-resource-id="' + note.resourceId + '" data-resource-title="' + (note.resourceTitle || '') + '">Enregistrer</button><span class="notes-status" id="notebook-status-' + note.resourceId + '"></span></div>';
+      list.appendChild(item);
+    });
+
+    list.querySelectorAll('.notebook-save-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        saveNotebookNote(btn.dataset.resourceId, btn.dataset.resourceTitle || 'Ressource');
+      });
+    });
+  }
+
+  function saveNotebookNote(resourceId, resourceTitle) {
+    var retainEl = document.getElementById('notebook-retain-' + resourceId);
+    var applyEl = document.getElementById('notebook-apply-' + resourceId);
+    if (!retainEl || !applyEl) return;
+    var store = getResourceNotesStore();
+    var key = currentUserId + '::' + resourceId;
+    store[key] = {
+      userId: currentUserId,
+      resourceId: resourceId,
+      resourceTitle: resourceTitle,
+      retains: retainEl.value.trim(),
+      apply: applyEl.value.trim(),
+      updatedAt: new Date().toISOString()
+    };
+    setResourceNotesStore(store);
+
+    var status = document.getElementById('notebook-status-' + resourceId);
+    if (status) status.textContent = 'Enregistré';
+
+    var resRetain = document.querySelector('[data-note-field="retains"][data-resource-id="' + resourceId + '"]');
+    var resApply = document.querySelector('[data-note-field="apply"][data-resource-id="' + resourceId + '"]');
+    if (resRetain) resRetain.value = store[key].retains;
+    if (resApply) resApply.value = store[key].apply;
+    var resStatus = document.getElementById('note-status-' + resourceId);
+    if (resStatus) resStatus.textContent = 'Enregistré le ' + formatNoteDate(store[key].updatedAt);
+
+    renderNotebookPage();
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     adminRenderPosts();
   });
@@ -15320,6 +15546,8 @@
 
     // Initialise l'onglet ressources : masque les ressources déjà téléchargées dans "Toutes".
     _applyResourceFilters();
+    preloadResourceNotes();
+    renderNotebookPage();
   });
 
   // ══════════════════════════════════════
