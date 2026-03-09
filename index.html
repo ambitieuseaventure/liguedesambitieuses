@@ -1816,6 +1816,90 @@
     50% { opacity:.5; transform:scale(1.3); }
   }
 
+  /* ── ACTIVITÉ LIVE — panel admin ── */
+  .act-filters-wrap {
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:14px; padding:16px 18px;
+    margin-bottom:20px; display:flex; flex-direction:column; gap:12px;
+  }
+  .act-filter-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .act-filter-label {
+    font-size:10px; letter-spacing:.15em; text-transform:uppercase;
+    color:rgba(255,255,255,0.3); font-weight:600; width:68px; flex-shrink:0;
+  }
+  .act-pills { display:flex; gap:6px; flex-wrap:wrap; }
+  .act-pill {
+    padding:5px 13px; border-radius:20px; font-size:12px; font-weight:500;
+    background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.5);
+    border:1px solid rgba(255,255,255,0.08); cursor:pointer; transition:all .15s;
+    font-family:'DM Sans',sans-serif;
+  }
+  .act-pill:hover { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.8); }
+  .act-pill.active { background:rgba(252,186,51,0.15); color:var(--gold-bright); border-color:rgba(252,186,51,0.3); }
+  .act-search {
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+    border-radius:8px; padding:6px 12px; font-size:12px; color:white;
+    font-family:'DM Sans',sans-serif; outline:none; width:220px;
+  }
+  .act-search::placeholder { color:rgba(255,255,255,0.3); }
+  .act-search:focus { border-color:rgba(252,186,51,0.4); }
+  .act-feed-section { margin-bottom:8px; }
+  .act-day-label {
+    font-size:10px; letter-spacing:.18em; text-transform:uppercase;
+    color:rgba(255,255,255,0.25); font-weight:600; padding:14px 0 8px;
+    border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:4px;
+  }
+  .act-card {
+    display:flex; align-items:flex-start; gap:14px;
+    padding:13px 14px; border-radius:10px;
+    transition:background .15s; cursor:default;
+  }
+  .act-card:hover { background:rgba(255,255,255,0.03); }
+  .act-avatar {
+    width:36px; height:36px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-size:14px; font-weight:700;
+    color:var(--navy-darkest);
+  }
+  .act-type-badge {
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px;
+    margin-bottom:3px; letter-spacing:.05em;
+  }
+  .act-desc { font-size:13px; color:rgba(255,255,255,0.75); line-height:1.5; }
+  .act-desc strong { color:white; }
+  .act-time { font-size:11px; color:rgba(255,255,255,0.3); margin-top:3px; }
+  .act-empty {
+    text-align:center; padding:48px 0;
+    color:rgba(255,255,255,0.25); font-size:13px;
+  }
+  /* Bilan section */
+  .act-bilan-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:24px;
+  }
+  .act-bilan-card {
+    background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07);
+    border-radius:14px; padding:18px 20px;
+  }
+  .act-bilan-title {
+    font-size:11px; letter-spacing:.15em; text-transform:uppercase;
+    color:rgba(255,255,255,0.3); font-weight:600; margin-bottom:16px;
+  }
+  .act-rank-item { display:flex; align-items:center; gap:10px; margin-bottom:11px; }
+  .act-rank-num { font-size:11px; color:rgba(255,255,255,0.25); width:16px; flex-shrink:0; text-align:center; }
+  .act-rank-name { font-size:13px; color:rgba(255,255,255,0.75); flex:1; }
+  .act-rank-bar-wrap { width:80px; height:5px; background:rgba(255,255,255,0.07); border-radius:3px; overflow:hidden; }
+  .act-rank-bar { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--gold),var(--gold-bright)); }
+  .act-rank-count { font-size:11px; color:var(--gold-bright); font-weight:700; width:24px; text-align:right; flex-shrink:0; }
+  .act-type-row { display:flex; align-items:center; gap:10px; margin-bottom:9px; }
+  .act-type-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .act-type-label { font-size:12px; color:rgba(255,255,255,0.6); flex:1; }
+  .act-type-bar-wrap { width:100px; height:5px; background:rgba(255,255,255,0.07); border-radius:3px; overflow:hidden; }
+  .act-type-bar { height:100%; border-radius:3px; }
+  .act-type-count { font-size:11px; color:rgba(255,255,255,0.45); width:24px; text-align:right; flex-shrink:0; }
+  @media(max-width:900px) { .act-bilan-grid { grid-template-columns:1fr; } .act-filter-label { width:auto; } }
+
   /* ── MESSAGES ── */
   .messages-layout {
     display:grid; grid-template-columns:290px 1fr;
@@ -9359,16 +9443,60 @@
         </div>
       </div>
 
-      <!-- Activité live -->
+      <!-- ── ACTIVITÉ LIVE ── -->
       <div class="admin-panel" id="admin-panel-activite">
-        <div style="margin-bottom:22px;font-family:'Playfair Display',serif;font-size:17px;color:white;">Activité <span style="color:var(--gold-bright);">live</span></div>
-        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;"><div style="width:8px;height:8px;border-radius:50%;background:#6ecf9e;animation:pulse 1.5s infinite;"></div><span style="font-size:12px;color:rgba(255,255,255,0.5);">En direct · mis à jour il y a 30s</span></div>
-          <div class="activity-feed-item"><div class="activity-dot" style="background:#6ecf9e;"></div><div><div style="font-size:13px;color:rgba(255,255,255,0.75);">Léa Fontaine a terminé <strong style="color:white;">Offre & Pricing</strong></div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">il y a 2 min</div></div></div>
-          <div class="activity-feed-item"><div class="activity-dot" style="background:var(--gold-bright);"></div><div><div style="font-size:13px;color:rgba(255,255,255,0.75);"><strong style="color:white;">Emma Rousseau</strong> s'est connectée</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">il y a 8 min</div></div></div>
-          <div class="activity-feed-item"><div class="activity-dot" style="background:#8ab4f8;"></div><div><div style="font-size:13px;color:rgba(255,255,255,0.75);"><strong style="color:white;">Sophie Andreu</strong> a posté dans la communauté</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">il y a 15 min</div></div></div>
-          <div class="activity-feed-item" style="border:none;"><div class="activity-dot" style="background:rgba(110,207,158,0.7);"></div><div><div style="font-size:13px;color:rgba(255,255,255,0.75);">3 nouvelles membres ont rejoint la Ligue aujourd'hui</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">Aujourd'hui</div></div></div>
+
+        <!-- En-tête + indicateur live -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+          <div style="font-family:'Playfair Display',serif;font-size:17px;color:white;">Activité <span style="color:var(--gold-bright);">live</span></div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="width:7px;height:7px;border-radius:50%;background:#6ecf9e;animation:pulse 1.5s infinite;"></div>
+            <span style="font-size:11px;color:rgba(255,255,255,0.4);">Données en temps réel</span>
+            <button onclick="activiteInit()" style="padding:5px 12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.5);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↻ Actualiser</button>
+          </div>
         </div>
+
+        <!-- Stats -->
+        <div class="admin-stats-row" id="act-stats-row" style="margin-bottom:20px;"></div>
+
+        <!-- Filtres -->
+        <div class="act-filters-wrap">
+          <div class="act-filter-row">
+            <span class="act-filter-label">Type</span>
+            <div class="act-pills" id="act-type-pills">
+              <button class="act-pill active" onclick="activiteSetType('tous',this)">Tout</button>
+              <button class="act-pill" onclick="activiteSetType('connexion',this)">🔑 Connexions</button>
+              <button class="act-pill" onclick="activiteSetType('formation',this)">🎓 Formations</button>
+              <button class="act-pill" onclick="activiteSetType('masterclass',this)">🎬 Masterclass</button>
+              <button class="act-pill" onclick="activiteSetType('ressource',this)">📚 Ressources</button>
+              <button class="act-pill" onclick="activiteSetType('communaute',this)">💬 Communauté</button>
+              <button class="act-pill" onclick="activiteSetType('bilan',this)">📊 Bilans</button>
+              <button class="act-pill" onclick="activiteSetType('hotline',this)">🔥 Hotline</button>
+              <button class="act-pill" onclick="activiteSetType('coaching',this)">🎯 Coaching</button>
+              <button class="act-pill" onclick="activiteSetType('abonnement',this)">💳 Abonnements</button>
+            </div>
+          </div>
+          <div class="act-filter-row">
+            <span class="act-filter-label">Période</span>
+            <div class="act-pills" id="act-period-pills">
+              <button class="act-pill" onclick="activiteSetPeriod('jour',this)">Aujourd'hui</button>
+              <button class="act-pill active" onclick="activiteSetPeriod('semaine',this)">Cette semaine</button>
+              <button class="act-pill" onclick="activiteSetPeriod('mois',this)">Ce mois</button>
+              <button class="act-pill" onclick="activiteSetPeriod('tout',this)">Tout</button>
+            </div>
+          </div>
+          <div class="act-filter-row">
+            <span class="act-filter-label">Membre</span>
+            <input type="search" id="act-member-search" class="act-search" placeholder="Filtrer par membre…" oninput="activiteSetMember(this.value)">
+          </div>
+        </div>
+
+        <!-- Feed principal -->
+        <div id="act-feed"></div>
+
+        <!-- Bilan -->
+        <div class="act-bilan-grid" id="act-bilan-grid"></div>
+
       </div>
 
       <!-- Invitations -->
@@ -10040,6 +10168,7 @@
     if (t) t.innerHTML = adminTitles[key] || key;
     if (key === 'communaute') { setTimeout(adminRenderPosts, 50); }
     if (key === 'bibliotheque') { setTimeout(bibRenderTable, 50); }
+    if (key === 'activite') { setTimeout(activiteInit, 50); }
     /* Fermer la sidebar sur mobile après navigation */
     if (window.innerWidth <= 900) adminToggleSidebar(true);
   }
@@ -14621,6 +14750,224 @@
     bibRenderTable();
     bibRenderPublic();
   });
+
+  // ══════════════════════════════════════════════════════
+  //  ACTIVITÉ LIVE — données et fonctions
+  // ══════════════════════════════════════════════════════
+
+  var actTypeConfig = {
+    connexion:   { icon:'🔑', color:'#fcd34d', bg:'rgba(252,211,77,0.12)',   label:'Connexion'   },
+    formation:   { icon:'🎓', color:'#6ecf9e', bg:'rgba(110,207,158,0.12)', label:'Formation'   },
+    masterclass: { icon:'🎬', color:'#f9a8d4', bg:'rgba(249,168,212,0.12)', label:'Masterclass' },
+    ressource:   { icon:'📚', color:'#fb923c', bg:'rgba(251,146,60,0.12)',  label:'Ressource'   },
+    communaute:  { icon:'💬', color:'#8ab4f8', bg:'rgba(138,180,248,0.12)', label:'Communauté'  },
+    bilan:       { icon:'📊', color:'#a78bfa', bg:'rgba(167,139,250,0.12)', label:'Bilan'       },
+    hotline:     { icon:'🔥', color:'#f87171', bg:'rgba(248,113,113,0.12)', label:'Hotline'     },
+    coaching:    { icon:'🎯', color:'#34d399', bg:'rgba(52,211,153,0.12)',  label:'Coaching'    },
+    abonnement:  { icon:'💳', color:'#fbbf24', bg:'rgba(251,191,36,0.12)',  label:'Abonnement'  },
+  };
+
+  var _now = Date.now();
+  var _d = 24*3600*1000;
+  var activiteLog = [
+    /* ── Aujourd'hui ── */
+    { id:'a01', member:'Léa Fontaine',    initial:'L', bg:'linear-gradient(135deg,#6ecf9e,#3db77a)', type:'formation',   action:'a terminé le module',     detail:'"Offre & Pricing — Module 3"',          ts: new Date(_now - 2*60*1000) },
+    { id:'a02', member:'Emma Rousseau',   initial:'E', bg:'linear-gradient(135deg,#a78bfa,#7c3aed)', type:'connexion',   action:'s\'est connectée',         detail:'',                                      ts: new Date(_now - 8*60*1000) },
+    { id:'a03', member:'Sophie Andreu',   initial:'S', bg:'linear-gradient(135deg,#8ab4f8,#3b82f6)', type:'communaute',  action:'a publié un post',         detail:'"Mon premier client signé ! 🎉"',       ts: new Date(_now - 15*60*1000) },
+    { id:'a04', member:'Marie Dupont',    initial:'M', bg:'linear-gradient(135deg,#fb923c,#ea580c)', type:'ressource',   action:'a téléchargé',             detail:'"Template de proposition commerciale"', ts: new Date(_now - 28*60*1000) },
+    { id:'a05', member:'Camille Noël',    initial:'C', bg:'linear-gradient(135deg,#f9a8d4,#ec4899)', type:'hotline',     action:'a soumis une demande',     detail:'Sujet : Trouver des clients B2B',       ts: new Date(_now - 42*60*1000) },
+    { id:'a06', member:'Julie Laurent',   initial:'J', bg:'linear-gradient(135deg,#34d399,#059669)', type:'coaching',    action:'a réservé une séance',     detail:'Coaching 1-1 · Ana — 11 mars 10h',     ts: new Date(_now - 58*60*1000) },
+    { id:'a07', member:'Manon Richard',   initial:'M', bg:'linear-gradient(135deg,#fcd34d,#f59e0b)', type:'connexion',   action:'s\'est connectée',         detail:'',                                      ts: new Date(_now - 1.5*3600*1000) },
+    { id:'a08', member:'Emma Rousseau',   initial:'E', bg:'linear-gradient(135deg,#a78bfa,#7c3aed)', type:'bilan',       action:'a soumis son bilan mensuel', detail:'Mars 2026 · CA déclaré : 3 800€',     ts: new Date(_now - 2*3600*1000) },
+    { id:'a09', member:'Léa Fontaine',    initial:'L', bg:'linear-gradient(135deg,#6ecf9e,#3db77a)', type:'connexion',   action:'s\'est connectée',         detail:'',                                      ts: new Date(_now - 3*3600*1000) },
+    { id:'a10', member:'Sarah Blanc',     initial:'S', bg:'linear-gradient(135deg,#fb923c,#f43f5e)', type:'masterclass', action:'a regardé',                detail:'"Pitcher son offre en 60 secondes"',    ts: new Date(_now - 4*3600*1000) },
+    /* ── Hier ── */
+    { id:'a11', member:'Sophie Andreu',   initial:'S', bg:'linear-gradient(135deg,#8ab4f8,#3b82f6)', type:'formation',   action:'a commencé le module',     detail:'"Acquisition clients — Module 1"',      ts: new Date(_now - 1*_d - 1*3600*1000) },
+    { id:'a12', member:'Camille Noël',    initial:'C', bg:'linear-gradient(135deg,#f9a8d4,#ec4899)', type:'connexion',   action:'s\'est connectée',         detail:'',                                      ts: new Date(_now - 1*_d - 2*3600*1000) },
+    { id:'a13', member:'Marie Dupont',    initial:'M', bg:'linear-gradient(135deg,#fb923c,#ea580c)', type:'communaute',  action:'a commenté',               detail:'Post de Léa Fontaine · 3 likes',        ts: new Date(_now - 1*_d - 3*3600*1000) },
+    { id:'a14', member:'Julie Laurent',   initial:'J', bg:'linear-gradient(135deg,#34d399,#059669)', type:'ressource',   action:'a acheté',                 detail:'"Guide : Lancer son activité en 30j"',  ts: new Date(_now - 1*_d - 4*3600*1000) },
+    { id:'a15', member:'Manon Richard',   initial:'M', bg:'linear-gradient(135deg,#fcd34d,#f59e0b)', type:'formation',   action:'a terminé le module',      detail:'"Mindset Entrepreneur — Module 2"',     ts: new Date(_now - 1*_d - 5*3600*1000) },
+    { id:'a16', member:'Emma Rousseau',   initial:'E', bg:'linear-gradient(135deg,#a78bfa,#7c3aed)', type:'connexion',   action:'s\'est connectée',         detail:'',                                      ts: new Date(_now - 1*_d - 6*3600*1000) },
+    { id:'a17', member:'Sarah Blanc',     initial:'S', bg:'linear-gradient(135deg,#fb923c,#f43f5e)', type:'abonnement',  action:'a renouvelé son abonnement','detail':'Formule Stratège — Prélèvement automatique', ts: new Date(_now - 1*_d - 8*3600*1000) },
+    /* ── Il y a 3 jours ── */
+    { id:'a18', member:'Léa Fontaine',    initial:'L', bg:'linear-gradient(135deg,#6ecf9e,#3db77a)', type:'masterclass', action:'a assisté à',              detail:'"Session Q&R Live — Réseaux sociaux"',  ts: new Date(_now - 3*_d) },
+    { id:'a19', member:'Sophie Andreu',   initial:'S', bg:'linear-gradient(135deg,#8ab4f8,#3b82f6)', type:'hotline',     action:'a soumis une demande',     detail:'Sujet : Structurer une offre haute valeur', ts: new Date(_now - 3*_d - 2*3600*1000) },
+    { id:'a20', member:'Camille Noël',    initial:'C', bg:'linear-gradient(135deg,#f9a8d4,#ec4899)', type:'bilan',       action:'a soumis son bilan mensuel', detail:'Mars 2026 · CA déclaré : 2 100€',     ts: new Date(_now - 3*_d - 3*3600*1000) },
+    { id:'a21', member:'Marie Dupont',    initial:'M', bg:'linear-gradient(135deg,#fb923c,#ea580c)', type:'connexion',   action:'s\'est connectée',         detail:'',                                      ts: new Date(_now - 3*_d - 5*3600*1000) },
+    /* ── Il y a 5 jours ── */
+    { id:'a22', member:'Julie Laurent',   initial:'J', bg:'linear-gradient(135deg,#34d399,#059669)', type:'communaute',  action:'a publié un post',         detail:'"Astuce de la semaine : le suivi client"', ts: new Date(_now - 5*_d) },
+    { id:'a23', member:'Manon Richard',   initial:'M', bg:'linear-gradient(135deg,#fcd34d,#f59e0b)', type:'coaching',    action:'a eu sa séance',           detail:'Coaching 1-1 · Audrey · Compte-rendu envoyé', ts: new Date(_now - 5*_d - 1*3600*1000) },
+    { id:'a24', member:'Sarah Blanc',     initial:'S', bg:'linear-gradient(135deg,#fb923c,#f43f5e)', type:'ressource',   action:'a téléchargé',             detail:'"Kit Marketing Réseaux Sociaux"',        ts: new Date(_now - 5*_d - 3*3600*1000) },
+    { id:'a25', member:'Emma Rousseau',   initial:'E', bg:'linear-gradient(135deg,#a78bfa,#7c3aed)', type:'formation',   action:'a terminé la formation',   detail:'"Acquisition clients — Complet"',        ts: new Date(_now - 5*_d - 4*3600*1000) },
+    /* ── Il y a 8 jours ── */
+    { id:'a26', member:'Léa Fontaine',    initial:'L', bg:'linear-gradient(135deg,#6ecf9e,#3db77a)', type:'abonnement',  action:'s\'est abonnée',           detail:'Formule Initiée — Bienvenue dans la Ligue !', ts: new Date(_now - 8*_d) },
+    { id:'a27', member:'Sophie Andreu',   initial:'S', bg:'linear-gradient(135deg,#8ab4f8,#3b82f6)', type:'masterclass', action:'a regardé',                detail:'"Les 5 erreurs du freelance débutant"',  ts: new Date(_now - 8*_d - 2*3600*1000) },
+    { id:'a28', member:'Camille Noël',    initial:'C', bg:'linear-gradient(135deg,#f9a8d4,#ec4899)', type:'connexion',   action:'s\'est connectée',         detail:'',                                      ts: new Date(_now - 8*_d - 5*3600*1000) },
+    /* ── Il y a 12 jours ── */
+    { id:'a29', member:'Marie Dupont',    initial:'M', bg:'linear-gradient(135deg,#fb923c,#ea580c)', type:'bilan',       action:'a soumis un audit',        detail:'Audit page de vente · Format Instagram', ts: new Date(_now - 12*_d) },
+    { id:'a30', member:'Manon Richard',   initial:'M', bg:'linear-gradient(135deg,#fcd34d,#f59e0b)', type:'abonnement',  action:'a mis à niveau son abonnement', detail:'Initiée → Stratège',              ts: new Date(_now - 12*_d - 3*3600*1000) },
+  ];
+
+  var activiteFilters = { type:'tous', member:'', period:'semaine' };
+
+  function activiteFilteredData() {
+    var now = Date.now();
+    var cutoff = 0;
+    if (activiteFilters.period === 'jour')    cutoff = now - _d;
+    if (activiteFilters.period === 'semaine') cutoff = now - 7*_d;
+    if (activiteFilters.period === 'mois')    cutoff = now - 30*_d;
+    var search = activiteFilters.member.toLowerCase();
+    return activiteLog.filter(function(e) {
+      if (activiteFilters.period !== 'tout' && e.ts.getTime() < cutoff) return false;
+      if (activiteFilters.type !== 'tous' && e.type !== activiteFilters.type) return false;
+      if (search && e.member.toLowerCase().indexOf(search) === -1) return false;
+      return true;
+    });
+  }
+
+  function activiteSetType(t, btn) {
+    activiteFilters.type = t;
+    document.querySelectorAll('#act-type-pills .act-pill').forEach(function(p){ p.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    activiteRender();
+  }
+  function activiteSetPeriod(p, btn) {
+    activiteFilters.period = p;
+    document.querySelectorAll('#act-period-pills .act-pill').forEach(function(b){ b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    activiteRender();
+  }
+  function activiteSetMember(v) {
+    activiteFilters.member = v;
+    activiteRender();
+  }
+
+  function activiteRelTime(ts) {
+    var diff = Date.now() - ts.getTime();
+    var m = Math.floor(diff / 60000);
+    var h = Math.floor(diff / 3600000);
+    if (m < 1)  return 'à l\'instant';
+    if (m < 60) return 'il y a ' + m + ' min';
+    if (h < 24) return 'il y a ' + h + 'h';
+    return ts.toLocaleDateString('fr-FR', { day:'numeric', month:'long' });
+  }
+
+  function activiteDayKey(ts) {
+    var now = new Date();
+    var d = new Date(ts);
+    var diffD = Math.floor((now - d) / _d);
+    if (diffD === 0) return 'Aujourd\'hui';
+    if (diffD === 1) return 'Hier';
+    if (diffD < 7)  return 'Il y a ' + diffD + ' jours';
+    return d.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
+  }
+
+  function activiteRenderStats(data) {
+    var row = document.getElementById('act-stats-row');
+    if (!row) return;
+    var todayCutoff = Date.now() - _d;
+    var todayCount = data.filter(function(e){ return e.ts.getTime() > todayCutoff; }).length;
+    var members = {};
+    data.forEach(function(e){ members[e.member] = (members[e.member]||0)+1; });
+    var memberCount = Object.keys(members).length;
+    var avg = memberCount ? (data.length / memberCount).toFixed(1) : '0';
+    var typeCounts = {};
+    data.forEach(function(e){ typeCounts[e.type] = (typeCounts[e.type]||0)+1; });
+    var topType = 'Aucune';
+    var topCount = 0;
+    Object.keys(typeCounts).forEach(function(k){ if (typeCounts[k] > topCount) { topCount=typeCounts[k]; topType=k; } });
+    var cfg = actTypeConfig[topType] || {};
+    row.innerHTML =
+      '<div class="admin-stat-card"><div class="admin-stat-val"><em>'+data.length+'</em></div><div class="admin-stat-label">Événements (période)</div><div class="admin-stat-delta">↑ '+todayCount+' aujourd\'hui</div></div>'
+     +'<div class="admin-stat-card"><div class="admin-stat-val"><em>'+memberCount+'</em></div><div class="admin-stat-label">Membres actives</div><div class="admin-stat-delta">sur la période filtrée</div></div>'
+     +'<div class="admin-stat-card"><div class="admin-stat-val"><em>'+avg+'</em></div><div class="admin-stat-label">Actions moy. / membre</div><div class="admin-stat-delta">Indice d\'engagement</div></div>'
+     +'<div class="admin-stat-card"><div class="admin-stat-val" style="font-size:22px;">'+(cfg.icon||'–')+'</div><div class="admin-stat-label">Action dominante</div><div class="admin-stat-delta" style="color:'+( cfg.color||'#6ecf9e')+';">'+(cfg.label||topType)+' · '+topCount+' fois</div></div>';
+  }
+
+  function activiteRenderBilan(data) {
+    var grid = document.getElementById('act-bilan-grid');
+    if (!grid) return;
+    // Top membres
+    var members = {};
+    data.forEach(function(e){ members[e.member] = { count:(members[e.member]?members[e.member].count:0)+1, initial:e.initial, bg:e.bg }; });
+    var sortedMembers = Object.keys(members).map(function(k){ return { name:k, count:members[k].count, initial:members[k].initial, bg:members[k].bg }; });
+    sortedMembers.sort(function(a,b){ return b.count-a.count; });
+    var maxM = sortedMembers.length ? sortedMembers[0].count : 1;
+    var topMHtml = sortedMembers.slice(0,6).map(function(m,i){
+      return '<div class="act-rank-item">'
+        +'<span class="act-rank-num">'+(i+1)+'</span>'
+        +'<div class="act-avatar" style="background:'+m.bg+';width:26px;height:26px;font-size:10px;">'+m.initial+'</div>'
+        +'<span class="act-rank-name">'+m.name+'</span>'
+        +'<div class="act-rank-bar-wrap"><div class="act-rank-bar" style="width:'+Math.round(m.count/maxM*100)+'%"></div></div>'
+        +'<span class="act-rank-count">'+m.count+'</span>'
+      +'</div>';
+    }).join('');
+    // Distribution par type
+    var typeCounts = {};
+    data.forEach(function(e){ typeCounts[e.type]=(typeCounts[e.type]||0)+1; });
+    var sortedTypes = Object.keys(typeCounts).sort(function(a,b){ return typeCounts[b]-typeCounts[a]; });
+    var maxT = sortedTypes.length ? typeCounts[sortedTypes[0]] : 1;
+    var typeHtml = sortedTypes.map(function(t){
+      var cfg = actTypeConfig[t] || { icon:'•', color:'#888', label:t };
+      return '<div class="act-type-row">'
+        +'<div class="act-type-dot" style="background:'+cfg.color+'"></div>'
+        +'<span class="act-type-label">'+cfg.icon+' '+cfg.label+'</span>'
+        +'<div class="act-type-bar-wrap"><div class="act-type-bar" style="width:'+Math.round(typeCounts[t]/maxT*100)+'%;background:'+cfg.color+';"></div></div>'
+        +'<span class="act-type-count">'+typeCounts[t]+'</span>'
+      +'</div>';
+    }).join('');
+    if (data.length === 0) { grid.innerHTML=''; return; }
+    grid.innerHTML =
+      '<div class="act-bilan-card"><div class="act-bilan-title">Membres les plus actives</div>'+(topMHtml||'<div style="color:rgba(255,255,255,0.3);font-size:12px;">Aucune donnée</div>')+'</div>'
+     +'<div class="act-bilan-card"><div class="act-bilan-title">Répartition par type</div>'+(typeHtml||'<div style="color:rgba(255,255,255,0.3);font-size:12px;">Aucune donnée</div>')+'</div>';
+  }
+
+  function activiteRender() {
+    var data = activiteFilteredData();
+    activiteRenderStats(data);
+    var feed = document.getElementById('act-feed');
+    if (!feed) return;
+    if (data.length === 0) {
+      feed.innerHTML = '<div class="act-empty">🔍 Aucune activité ne correspond à vos filtres.</div>';
+      activiteRenderBilan([]);
+      return;
+    }
+    // Grouper par jour
+    var groups = {};
+    var groupOrder = [];
+    data.forEach(function(e) {
+      var key = activiteDayKey(e.ts);
+      if (!groups[key]) { groups[key]=[]; groupOrder.push(key); }
+      groups[key].push(e);
+    });
+    var html = '';
+    groupOrder.forEach(function(key) {
+      html += '<div class="act-feed-section"><div class="act-day-label">'+key+'</div>';
+      groups[key].forEach(function(e) {
+        var cfg = actTypeConfig[e.type] || { icon:'•', color:'#888', bg:'rgba(128,128,128,0.1)', label:e.type };
+        html += '<div class="act-card">'
+          +'<div class="act-avatar" style="background:'+e.bg+';flex-shrink:0;">'+e.initial+'</div>'
+          +'<div style="flex:1;min-width:0;">'
+            +'<div><span class="act-type-badge" style="background:'+cfg.bg+';color:'+cfg.color+';">'+cfg.icon+' '+cfg.label+'</span></div>'
+            +'<div class="act-desc"><strong>'+e.member+'</strong> '+e.action+(e.detail?' <span style="color:rgba(255,255,255,0.5);">'+e.detail+'</span>':'')+'</div>'
+            +'<div class="act-time">'+activiteRelTime(e.ts)+'</div>'
+          +'</div>'
+        +'</div>';
+      });
+      html += '</div>';
+    });
+    feed.innerHTML = html;
+    activiteRenderBilan(data);
+  }
+
+  function activiteInit() {
+    activiteFilters = { type:'tous', member:'', period:'semaine' };
+    var s = document.getElementById('act-member-search');
+    if (s) s.value = '';
+    document.querySelectorAll('#act-type-pills .act-pill').forEach(function(p,i){ p.classList.toggle('active',i===0); });
+    document.querySelectorAll('#act-period-pills .act-pill').forEach(function(p,i){ p.classList.toggle('active',i===1); });
+    activiteRender();
+  }
 
   // ══════════════════════════════════════════════════════
   // CONTACT — Formulaire public + Admin messages reçus
