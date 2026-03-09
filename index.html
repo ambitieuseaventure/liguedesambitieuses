@@ -16234,7 +16234,9 @@
     
   <!-- ═══ WIDGET FLOTTANT ADMIN — MESSAGERIE & COMMUNAUTÉ ═══ -->
 <style>
-  #admin-widget {
+  /* Widget visible uniquement dans l'espace admin */
+  #admin-widget { display: none; }
+  body.admin-mode #admin-widget {
     position: fixed;
     bottom: 28px;
     right: 28px;
