@@ -14835,7 +14835,7 @@
         + '<div class="notebook-header"><div class="notebook-title">' + (note.resourceTitle || 'Ressource') + '</div><div class="notebook-date">Modifié le ' + formatNoteDate(note.updatedAt) + '</div></div>'
         + '<label class="notes-field-label" for="notebook-retain-' + note.resourceId + '">Ce que je retiens</label>'
         + '<textarea class="notes-field" id="notebook-retain-' + note.resourceId + '">' + (note.retains || '') + '</textarea>'
-        + '<label class="notes-field-label" for="notebook-apply-' + note.resourceId + '">Comment je vais l'appliquer</label>'
+        + '<label class="notes-field-label" for="notebook-apply-' + note.resourceId + '">Comment je vais l\'appliquer</label>'
         + '<textarea class="notes-field" id="notebook-apply-' + note.resourceId + '">' + (note.apply || '') + '</textarea>'
         + '<div style="display:flex;align-items:center;"><button class="dl-btn notebook-save-btn" data-resource-id="' + note.resourceId + '" data-resource-title="' + (note.resourceTitle || '') + '">Enregistrer</button><span class="notes-status" id="notebook-status-' + note.resourceId + '"></span></div>';
       list.appendChild(item);
