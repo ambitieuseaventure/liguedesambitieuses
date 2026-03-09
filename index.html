@@ -787,6 +787,7 @@
   .stat-change { font-size:11px; color:#4caf50; margin-top:7px; font-weight:500; }
 
   .two-col { display:grid; grid-template-columns:1.5fr 1fr; gap:22px; margin-bottom:32px; }
+  .three-col { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-bottom:32px; }
 
   .card {
     background:white; border:1px solid rgba(20,36,53,0.08);
@@ -817,6 +818,47 @@
     background:linear-gradient(90deg, var(--navy), var(--steel));
     border-radius:4px;
   }
+
+  /* ── TO-DO LIST ── */
+  .todo-section-label {
+    font-size:11px; font-weight:700; text-transform:uppercase;
+    letter-spacing:.07em; color:var(--text-light);
+    margin-bottom:10px;
+  }
+  .todo-item {
+    display:flex; align-items:flex-start; gap:10px;
+    padding:8px 0;
+    border-bottom:1px solid rgba(20,36,53,0.06);
+  }
+  .todo-item:last-child { border-bottom:none; }
+  .todo-item.done .todo-text { text-decoration:line-through; color:var(--text-light); }
+  .todo-check {
+    flex-shrink:0; width:18px; height:18px; margin-top:1px;
+    border:2px solid rgba(20,36,53,0.25); border-radius:50%;
+    background:transparent; cursor:pointer; transition:all .2s;
+    position:relative;
+  }
+  .todo-check:hover { border-color:var(--gold-bright); }
+  .todo-item.done .todo-check {
+    background:var(--gold-bright); border-color:var(--gold-bright);
+  }
+  .todo-item.done .todo-check::after {
+    content:''; position:absolute; top:3px; left:5px;
+    width:5px; height:8px;
+    border:2px solid white; border-top:none; border-left:none;
+    transform:rotate(45deg);
+  }
+  .todo-body { display:flex; flex-direction:column; gap:4px; min-width:0; }
+  .todo-text { font-size:13px; color:var(--text-dark); font-weight:500; line-height:1.4; }
+  .todo-tag {
+    font-size:10px; font-weight:600; letter-spacing:.04em;
+    padding:2px 7px; border-radius:20px; width:fit-content;
+  }
+  .todo-tag-formation  { background:rgba(79,133,160,.15); color:var(--steel); }
+  .todo-tag-reseau     { background:rgba(235,193,76,.2);  color:#7a5c00; }
+  .todo-tag-event      { background:rgba(224,85,85,.12);  color:#b94040; }
+  .todo-tag-communaute { background:rgba(74,158,106,.15); color:#2d7a50; }
+  .todo-tag-strategie  { background:rgba(20,36,53,.1);    color:var(--navy); }
 
   .activity-item {
     display:flex; align-items:flex-start; gap:11px;
@@ -2054,6 +2096,7 @@
     .hero-right { display:none; }
     .dashboard-grid { grid-template-columns:repeat(2,1fr); }
     .two-col { grid-template-columns:1fr; }
+    .three-col { grid-template-columns:1fr; }
     .courses-grid { grid-template-columns:1fr; }
     .resources-grid { grid-template-columns:repeat(2,1fr); }
     .videos-grid { grid-template-columns:repeat(2,1fr); }
@@ -4373,16 +4416,15 @@
         </div>
       </div>
 
-      <div class="blason-badge">
-        <img src="assets/image-3.png" alt="Blason La Ligue des Ambitieuses">
-        <span>Membre active de La Ligue des Ambitieuses</span>
-      </div>
-
-      <div class="two-col">
+      <div class="three-col">
         <div class="card">
           <div class="card-title">
             Mes formations en cours
             <a onclick="showPage('classroom')">Voir tout →</a>
+          </div>
+          <div class="progress-course">
+            <div class="progress-name">Les bases de la comptabilité <span class="progress-pct">90%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
           </div>
           <div class="progress-course">
             <div class="progress-name">Lancer son offre de A à Z <span class="progress-pct">68%</span></div>
@@ -4391,14 +4433,6 @@
           <div class="progress-course">
             <div class="progress-name">Trouver ses premiers clients <span class="progress-pct">42%</span></div>
             <div class="progress-bar"><div class="progress-fill" style="width:42%"></div></div>
-          </div>
-          <div class="progress-course">
-            <div class="progress-name">Créer sa stratégie Instagram <span class="progress-pct">15%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:15%"></div></div>
-          </div>
-          <div class="progress-course">
-            <div class="progress-name">Les bases de la comptabilité <span class="progress-pct">90%</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
           </div>
         </div>
 
@@ -4427,6 +4461,48 @@
               <p>Nouvelle masterclass disponible !</p>
             </div>
             <div class="activity-time">1j</div>
+          </div>
+        </div>
+
+        <!-- ── TO-DO LIST ── -->
+        <div class="card">
+          <div class="card-title">Ma to-do list <a onclick="openAddTodo()">+ Ajouter</a></div>
+          <div class="todo-section-label">Aujourd'hui</div>
+          <div class="todo-item" id="todo-1">
+            <button class="todo-check" onclick="toggleTodo('todo-1')" title="Marquer comme fait"></button>
+            <div class="todo-body">
+              <span class="todo-text">Finir le module 3 – Comptabilité</span>
+              <span class="todo-tag todo-tag-formation">Formation</span>
+            </div>
+          </div>
+          <div class="todo-item" id="todo-2">
+            <button class="todo-check" onclick="toggleTodo('todo-2')" title="Marquer comme fait"></button>
+            <div class="todo-body">
+              <span class="todo-text">Répondre à Clara B.</span>
+              <span class="todo-tag todo-tag-reseau">Réseau</span>
+            </div>
+          </div>
+          <div class="todo-section-label" style="margin-top:14px;">Cette semaine</div>
+          <div class="todo-item" id="todo-3">
+            <button class="todo-check" onclick="toggleTodo('todo-3')" title="Marquer comme fait"></button>
+            <div class="todo-body">
+              <span class="todo-text">Préparer la session Q&amp;R du jeudi</span>
+              <span class="todo-tag todo-tag-event">Événement</span>
+            </div>
+          </div>
+          <div class="todo-item" id="todo-4">
+            <button class="todo-check" onclick="toggleTodo('todo-4')" title="Marquer comme fait"></button>
+            <div class="todo-body">
+              <span class="todo-text">Publier dans la communauté</span>
+              <span class="todo-tag todo-tag-communaute">Communauté</span>
+            </div>
+          </div>
+          <div class="todo-item" id="todo-5">
+            <button class="todo-check" onclick="toggleTodo('todo-5')" title="Marquer comme fait"></button>
+            <div class="todo-body">
+              <span class="todo-text">Finaliser mon plan d'action mensuel</span>
+              <span class="todo-tag todo-tag-strategie">Stratégie</span>
+            </div>
           </div>
         </div>
       </div>
@@ -10061,6 +10137,24 @@
       const el = document.getElementById(sectionId);
       if (el) el.scrollIntoView({behavior: 'smooth'});
     }));
+  }
+
+  /* ── TO-DO LIST ── */
+  function toggleTodo(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('done');
+  }
+  function openAddTodo() {
+    const text = prompt('Nouvelle tâche :');
+    if (!text || !text.trim()) return;
+    const list = document.querySelector('#page-dashboard .three-col .card:last-child');
+    if (!list) return;
+    const id = 'todo-' + Date.now();
+    const item = document.createElement('div');
+    item.className = 'todo-item';
+    item.id = id;
+    item.innerHTML = `<button class="todo-check" onclick="toggleTodo('${id}')" title="Marquer comme fait"></button><div class="todo-body"><span class="todo-text">${text.trim()}</span></div>`;
+    list.appendChild(item);
   }
 
   function showPage(page) {
