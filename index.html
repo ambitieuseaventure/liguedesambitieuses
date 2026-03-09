@@ -891,69 +891,183 @@
   .activity-time { font-size:11px; color:var(--text-light); white-space:nowrap; }
 
   /* ── COMMUNITY ── */
-  .community-layout { display:grid; grid-template-columns:1fr 290px; gap:24px; }
+  .community-layout { display:grid; grid-template-columns:1fr 300px; gap:26px; }
 
+  /* Page warm background */
+  #page-community { background:#FDF9F4; }
+
+  /* Ambient top bar */
+  .community-ambient-bar {
+    display:flex; align-items:center; gap:10px;
+    background:linear-gradient(135deg,rgba(252,186,51,0.12),rgba(245,120,80,0.05));
+    border:1px solid rgba(235,193,76,0.22);
+    border-radius:14px; padding:9px 18px; margin-bottom:22px;
+    font-size:13px; color:var(--text-mid); flex-wrap:wrap;
+  }
+  .community-vibe { margin-left:auto; font-size:12px; color:var(--text-light); font-style:italic; }
+
+  /* Post composer — journal cosy */
   .post-composer {
-    background:white; border:1px solid rgba(20,36,53,0.08);
-    border-radius:12px; padding:18px; margin-bottom:18px;
-    box-shadow:0 2px 8px rgba(20,36,53,0.05);
+    background:linear-gradient(145deg,#FFFBF5 0%,#FEF6EA 100%);
+    border:1.5px solid rgba(235,193,76,0.22);
+    border-radius:22px; padding:22px; margin-bottom:22px;
+    box-shadow:0 4px 24px rgba(160,100,40,0.07);
+    position:relative; overflow:hidden;
   }
-  .composer-top { display:flex; align-items:flex-start; gap:11px; margin-bottom:14px; }
+  .post-composer::after {
+    content:'✦  ✦  ✦'; position:absolute; right:22px; top:18px;
+    font-size:10px; letter-spacing:4px; color:rgba(235,193,76,0.28);
+    pointer-events:none;
+  }
+  .composer-label {
+    font-size:11.5px; font-weight:700; color:var(--text-light);
+    letter-spacing:0.05em; margin-bottom:14px; text-transform:uppercase;
+  }
+  .composer-top { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
   .composer-input {
-    flex:1; background:var(--bg);
-    border:1px solid rgba(20,36,53,0.12);
-    border-radius:8px; padding:11px 14px;
+    flex:1; background:rgba(255,255,255,0.82);
+    border:1.5px solid rgba(200,155,90,0.18);
+    border-radius:14px; padding:12px 16px;
     font-size:14px; font-family:'DM Sans',sans-serif;
-    color:var(--text-dark); resize:none; min-height:76px; width:100%;
-    outline:none; transition:border-color 0.2s;
+    color:var(--text-dark); resize:none; min-height:80px; width:100%;
+    outline:none; transition:all 0.2s;
   }
-  .composer-input:focus { border-color:var(--gold); }
+  .composer-input:focus {
+    border-color:rgba(235,193,76,0.5);
+    box-shadow:0 0 0 3px rgba(235,193,76,0.08);
+    background:white;
+  }
   .composer-input::placeholder { color:var(--text-light); }
+  .composer-tags { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+  .composer-tag-btn {
+    font-size:12px; padding:4px 13px; border-radius:20px;
+    border:1.5px solid rgba(200,155,90,0.2);
+    background:rgba(255,255,255,0.6); color:var(--text-mid);
+    cursor:pointer; transition:all 0.2s; font-weight:500; user-select:none;
+  }
+  .composer-tag-btn:hover { border-color:rgba(235,193,76,0.4); color:var(--navy); }
+  .composer-tag-btn.active {
+    background:linear-gradient(135deg,rgba(235,193,76,0.2),rgba(252,186,51,0.12));
+    border-color:rgba(235,193,76,0.5); color:var(--navy); font-weight:700;
+  }
   .composer-actions { display:flex; align-items:center; justify-content:space-between; }
   .composer-tools { display:flex; gap:10px; }
-  .tool-btn { background:none; border:none; font-size:17px; cursor:pointer; opacity:0.5; transition:opacity 0.2s; padding:0; }
+  .tool-btn { background:none; border:none; font-size:18px; cursor:pointer; opacity:0.42; transition:opacity 0.2s; padding:2px; }
   .tool-btn:hover { opacity:1; }
 
+  /* Post cards */
   .post-card {
-    background:white; border:1px solid rgba(20,36,53,0.08);
-    border-radius:12px; padding:22px; margin-bottom:14px;
-    transition:all 0.2s; box-shadow:0 2px 8px rgba(20,36,53,0.05);
+    background:white; border:1.5px solid rgba(200,155,90,0.12);
+    border-radius:20px; padding:24px 26px; margin-bottom:16px;
+    transition:all 0.25s; box-shadow:0 2px 16px rgba(160,100,40,0.05);
+    position:relative; overflow:hidden;
   }
-  .post-card:hover { border-color:rgba(252,186,51,0.4); }
+  .post-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    border-radius:20px 20px 0 0; opacity:0; transition:opacity 0.25s;
+    background:linear-gradient(90deg,var(--gold),var(--gold-bright),rgba(235,193,76,0.3));
+  }
+  .post-card:hover {
+    transform:translateY(-2px);
+    box-shadow:0 8px 32px rgba(160,100,40,0.1);
+    border-color:rgba(235,193,76,0.28);
+  }
+  .post-card:hover::before { opacity:1; }
 
-  .post-header { display:flex; align-items:center; gap:11px; margin-bottom:12px; }
+  .post-header { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
   .post-author { flex:1; }
-  .post-author strong { font-size:14px; color:var(--text-dark); }
-  .post-author span { font-size:12px; color:var(--text-light); display:block; margin-top:1px; }
-  .post-time { font-size:11px; color:var(--text-light); }
-
-  .post-body { font-size:14px; color:var(--text-mid); line-height:1.65; margin-bottom:14px; }
+  .post-author strong { font-size:14.5px; color:var(--text-dark); font-weight:600; }
+  .post-author span { font-size:12px; color:var(--text-light); display:block; margin-top:2px; }
+  .post-time {
+    font-size:11px; color:var(--text-light);
+    background:rgba(244,240,234,0.9); padding:3px 10px; border-radius:10px;
+  }
+  .post-body { font-size:14px; color:var(--text-mid); line-height:1.75; margin-bottom:16px; }
 
   .post-tag {
-    display:inline-block;
-    background:rgba(79,133,160,0.12); color:var(--navy);
-    font-size:11px; padding:3px 10px; border-radius:20px;
-    margin-bottom:12px; font-weight:500;
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:11.5px; padding:4px 12px; border-radius:20px;
+    margin-bottom:14px; font-weight:600; letter-spacing:0.02em;
+  }
+  .post-tag-victoire {
+    background:linear-gradient(135deg,rgba(251,191,36,0.18),rgba(245,158,11,0.1));
+    color:#92400E; border:1px solid rgba(251,191,36,0.35);
+  }
+  .post-tag-question {
+    background:linear-gradient(135deg,rgba(244,163,180,0.2),rgba(220,120,150,0.1));
+    color:#831843; border:1px solid rgba(220,120,150,0.3);
+  }
+  .post-tag-astuce {
+    background:linear-gradient(135deg,rgba(110,190,140,0.2),rgba(80,165,110,0.1));
+    color:#065F46; border:1px solid rgba(110,190,140,0.3);
   }
 
-  .post-actions { display:flex; gap:18px; }
+  .post-actions { display:flex; gap:10px; }
   .post-action {
-    background:none; border:none; font-size:13px; color:var(--text-light);
-    cursor:pointer; display:flex; align-items:center; gap:5px;
-    transition:color 0.2s; padding:0;
+    background:rgba(244,240,234,0.75); border:1px solid rgba(200,155,90,0.12);
+    border-radius:20px; padding:6px 14px; font-size:13px;
+    color:var(--text-mid); cursor:pointer; display:flex; align-items:center; gap:5px;
+    transition:all 0.2s; font-family:'DM Sans',sans-serif;
   }
-  .post-action:hover { color:var(--gold-bright); }
+  .post-action:hover {
+    background:linear-gradient(135deg,rgba(235,193,76,0.15),rgba(252,186,51,0.08));
+    border-color:rgba(235,193,76,0.32); color:#92400E; transform:scale(1.04);
+  }
 
-  .community-sidebar .card { margin-bottom:14px; }
-
-  .member-item { display:flex; align-items:center; gap:9px; padding:7px 0; }
+  /* Community sidebar */
+  .community-sidebar .card {
+    background:linear-gradient(145deg,#FFFBF5 0%,#FEF6EA 100%);
+    border:1.5px solid rgba(235,193,76,0.18);
+    border-radius:20px; margin-bottom:16px;
+    box-shadow:0 4px 20px rgba(160,100,40,0.06); padding:18px;
+  }
+  .community-sidebar .card-title {
+    font-size:13px; font-weight:700; color:var(--navy-darkest);
+    letter-spacing:0.02em; margin-bottom:14px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .member-item {
+    display:flex; align-items:center; gap:10px; padding:8px 0;
+    border-bottom:1px solid rgba(200,155,90,0.08);
+  }
+  .member-item:last-of-type { border-bottom:none; }
   .member-name { font-size:13px; color:var(--text-dark); font-weight:500; }
   .member-role { font-size:11px; color:var(--text-light); }
   .online-dot {
-    width:8px; height:8px; border-radius:50%;
-    background:#4caf50; margin-left:auto;
-    box-shadow:0 0 0 2px rgba(76,175,80,0.2);
+    width:9px; height:9px; border-radius:50%;
+    background:#4ade80; margin-left:auto; flex-shrink:0;
+    box-shadow:0 0 0 3px rgba(74,222,128,0.18);
+    animation:pulse-online 2.5s ease-in-out infinite;
   }
+  @keyframes pulse-online {
+    0%,100% { box-shadow:0 0 0 3px rgba(74,222,128,0.18); }
+    50% { box-shadow:0 0 0 6px rgba(74,222,128,0.07),0 0 10px rgba(74,222,128,0.12); }
+  }
+  .community-channel {
+    display:flex; align-items:center; gap:8px;
+    padding:8px 11px; border-radius:12px; font-size:13px;
+    color:var(--text-mid); cursor:pointer; transition:all 0.2s;
+    border:1px solid transparent; font-family:'DM Sans',sans-serif;
+  }
+  .community-channel:hover { background:rgba(255,255,255,0.9); border-color:rgba(235,193,76,0.22); color:var(--navy); }
+  .community-channel.active {
+    background:linear-gradient(135deg,rgba(235,193,76,0.14),rgba(252,186,51,0.07));
+    border-color:rgba(235,193,76,0.35); color:var(--navy); font-weight:600;
+  }
+  .cozy-inspiration {
+    background:linear-gradient(145deg,var(--navy-darkest),var(--navy-dark));
+    border-radius:20px; padding:22px; text-align:center;
+    box-shadow:0 8px 30px rgba(20,36,53,0.15);
+  }
+  .cozy-inspiration .inspiration-emoji { font-size:28px; margin-bottom:10px; }
+  .cozy-inspiration .inspiration-quote {
+    font-size:12.5px; color:rgba(255,255,255,0.82); line-height:1.7;
+    font-style:italic; font-family:'Playfair Display',serif; margin-bottom:10px;
+  }
+  .cozy-inspiration .inspiration-author { font-size:11px; color:var(--gold); font-weight:600; letter-spacing:0.04em; }
+  .cozy-see-more { text-align:center; padding-top:10px; }
+  .cozy-see-more a { font-size:12px; color:var(--gold-bright); text-decoration:none; transition:opacity 0.2s; }
+  .cozy-see-more a:hover { opacity:0.7; }
 
   /* ── RESOURCES ── */
   .resources-filters { display:flex; gap:8px; margin-bottom:26px; flex-wrap:wrap; }
@@ -4624,111 +4738,145 @@
   <!-- ── COMMUNITY ── -->
   <div class="page" id="page-community">
     <div class="page-content">
-      <div class="section-header">
-        <div class="section-title">La <em>Communauté</em></div>
-        <div class="section-sub">247 ambitieuses qui avancent ensemble 🌸</div>
+
+      <!-- Barre d'ambiance -->
+      <div class="community-ambient-bar">
+        <span>☕</span>
+        <span><strong>247 ambitieuses</strong> actives aujourd'hui</span>
+        <span class="community-vibe">Ambiance chaleureuse &amp; inspirée ✨</span>
       </div>
+
+      <div class="section-header">
+        <div class="section-title">Le <em>Salon</em> des Ambitieuses</div>
+        <div class="section-sub">Partagez, inspirez, célébrez — ensemble 🌸</div>
+      </div>
+
       <div class="community-layout">
+        <!-- Fil principal -->
         <div>
+          <!-- Composer -->
           <div class="post-composer">
+            <div class="composer-label">✍️ Qu'est-ce qui se passe dans ton aventure ?</div>
             <div class="composer-top">
-              <div class="user-avatar" style="width:38px;height:38px;font-size:14px">SA</div>
-              <textarea class="composer-input" placeholder="Partage ta victoire, ta question, ton aventure du jour…"></textarea>
+              <div class="user-avatar" style="width:42px;height:42px;font-size:15px">SA</div>
+              <textarea class="composer-input" placeholder="Partage ta victoire, ta question, ta pépite du jour…"></textarea>
+            </div>
+            <div class="composer-tags">
+              <span class="composer-tag-btn active">🎉 Victoire</span>
+              <span class="composer-tag-btn">❓ Question</span>
+              <span class="composer-tag-btn">💡 Astuce</span>
             </div>
             <div class="composer-actions">
               <div class="composer-tools">
-                <button class="tool-btn">📷</button>
-                <button class="tool-btn">📎</button>
-                <button class="tool-btn">🔗</button>
+                <button class="tool-btn" title="Photo">📷</button>
+                <button class="tool-btn" title="Fichier">📎</button>
+                <button class="tool-btn" title="Lien">🔗</button>
               </div>
-              <button class="btn-primary" style="padding:8px 18px;font-size:13px">Publier ✦</button>
+              <button class="btn-primary" style="padding:8px 20px;font-size:13px">Publier ✦</button>
             </div>
           </div>
 
+          <!-- Post 1 — Victoire -->
           <div class="post-card">
             <div class="post-header">
-              <div class="activity-avatar" style="background:linear-gradient(135deg,#fcba33,#ebc14c);width:40px;height:40px;font-size:15px">M</div>
+              <div class="activity-avatar" style="background:linear-gradient(135deg,#fcba33,#f59e3f);width:44px;height:44px;font-size:16px">M</div>
               <div class="post-author">
                 <strong>Marie-Lou Fontaine</strong>
-                <span>Membre depuis 3 mois · Coach bien-être</span>
+                <span>Coach bien-être · Membre depuis 3 mois</span>
               </div>
               <div class="post-time">Il y a 2h</div>
             </div>
-            <div class="post-tag">🎉 Victoire</div>
+            <div class="post-tag post-tag-victoire">🎉 Victoire</div>
             <div class="post-body">J'ai signé mon 5ème client ce matin grâce aux techniques du module "Trouver ses premiers clients" ! Je n'aurais jamais cru que ça irait si vite. Merci à cette communauté pour tout le soutien ✨</div>
             <div class="post-actions">
-              <button class="post-action">❤️ 24 likes</button>
-              <button class="post-action">💬 8 commentaires</button>
+              <button class="post-action">❤️ 24</button>
+              <button class="post-action">💬 8 réponses</button>
               <button class="post-action">🔖 Sauvegarder</button>
             </div>
           </div>
 
+          <!-- Post 2 — Question -->
           <div class="post-card">
             <div class="post-header">
-              <div class="activity-avatar" style="background:linear-gradient(135deg,#24425b,#4f85a0);width:40px;height:40px;font-size:15px">J</div>
+              <div class="activity-avatar" style="background:linear-gradient(135deg,#e8a4c0,#d4849b);width:44px;height:44px;font-size:16px">J</div>
               <div class="post-author">
                 <strong>Juliette M.</strong>
-                <span>Membre depuis 1 mois · Créatrice de bijoux</span>
+                <span>Créatrice de bijoux · Membre depuis 1 mois</span>
               </div>
               <div class="post-time">Il y a 5h</div>
             </div>
-            <div class="post-tag">❓ Question</div>
+            <div class="post-tag post-tag-question">❓ Question</div>
             <div class="post-body">Est-ce que quelqu'un a de l'expérience avec les foires artisanales pour démarrer ? Je me demande si c'est encore rentable en 2025 ou si je dois miser sur le 100% digital. Des retours ?</div>
             <div class="post-actions">
-              <button class="post-action">❤️ 11 likes</button>
-              <button class="post-action">💬 15 commentaires</button>
+              <button class="post-action">❤️ 11</button>
+              <button class="post-action">💬 15 réponses</button>
               <button class="post-action">🔖 Sauvegarder</button>
             </div>
           </div>
 
+          <!-- Post 3 — Astuce -->
           <div class="post-card">
             <div class="post-header">
-              <div class="activity-avatar" style="background:linear-gradient(135deg,#142435,#21374c);width:40px;height:40px;font-size:14px">L</div>
+              <div class="activity-avatar" style="background:linear-gradient(135deg,#7bad8a,#5a9470);width:44px;height:44px;font-size:14px">L</div>
               <div class="post-author">
                 <strong>Léa Renard</strong>
-                <span>Membre depuis 6 mois · Consultante RH</span>
+                <span>Consultante RH · Membre depuis 6 mois</span>
               </div>
               <div class="post-time">Hier</div>
             </div>
-            <div class="post-tag">💡 Astuce</div>
+            <div class="post-tag post-tag-astuce">💡 Astuce</div>
             <div class="post-body">Petit tip qui a tout changé pour moi : j'ai commencé à utiliser la méthode des "petites victoires" chaque vendredi. En quelques semaines, ça transforme complètement ta relation à l'entrepreneuriat !</div>
             <div class="post-actions">
-              <button class="post-action">❤️ 47 likes</button>
-              <button class="post-action">💬 22 commentaires</button>
+              <button class="post-action">❤️ 47</button>
+              <button class="post-action">💬 22 réponses</button>
               <button class="post-action">🔖 Sauvegarder</button>
             </div>
           </div>
         </div>
 
+        <!-- Sidebar -->
         <div class="community-sidebar">
+
+          <!-- Membres en ligne -->
           <div class="card">
-            <div class="card-title">Membres en ligne</div>
+            <div class="card-title">🕯️ En ce moment</div>
             <div class="member-item">
-              <div class="activity-avatar" style="background:linear-gradient(135deg,#fcba33,#ebc14c);width:32px;height:32px;font-size:12px">C</div>
+              <div class="activity-avatar" style="background:linear-gradient(135deg,#fcba33,#ebc14c);width:34px;height:34px;font-size:12px">C</div>
               <div><div class="member-name">Clara B.</div><div class="member-role">Styliste freelance</div></div>
               <div class="online-dot"></div>
             </div>
             <div class="member-item">
-              <div class="activity-avatar" style="background:linear-gradient(135deg,#24425b,#4f85a0);width:32px;height:32px;font-size:12px">A</div>
+              <div class="activity-avatar" style="background:linear-gradient(135deg,#e8a4c0,#d4849b);width:34px;height:34px;font-size:12px">A</div>
               <div><div class="member-name">Anaïs L.</div><div class="member-role">Coach nutrition</div></div>
               <div class="online-dot"></div>
             </div>
             <div class="member-item">
-              <div class="activity-avatar" style="background:linear-gradient(135deg,#142435,#21374c);width:32px;height:32px;font-size:12px">P</div>
+              <div class="activity-avatar" style="background:linear-gradient(135deg,#7bad8a,#5a9470);width:34px;height:34px;font-size:12px">P</div>
               <div><div class="member-name">Pauline D.</div><div class="member-role">Photographe</div></div>
               <div class="online-dot"></div>
             </div>
+            <div class="cozy-see-more"><a href="#">Voir les 247 membres →</a></div>
           </div>
+
+          <!-- Nos salons -->
           <div class="card">
-            <div class="card-title">Canaux thématiques</div>
-            <div style="display:flex;flex-direction:column;gap:6px">
-              <div class="nav-item" style="padding:7px 10px;border-radius:8px;font-size:13px;color:var(--text-mid)"># 🎯 Objectifs & vision</div>
-              <div class="nav-item" style="padding:7px 10px;border-radius:8px;font-size:13px;color:var(--text-mid)"># 💰 Finance & revenus</div>
-              <div class="nav-item active" style="padding:7px 10px;border-radius:8px;font-size:13px;background:rgba(235,193,76,0.1);color:var(--navy);border-left:3px solid var(--gold)"># 🌐 Marketing & réseaux</div>
-              <div class="nav-item" style="padding:7px 10px;border-radius:8px;font-size:13px;color:var(--text-mid)"># 🎉 Victoires du jour</div>
-              <div class="nav-item" style="padding:7px 10px;border-radius:8px;font-size:13px;color:var(--text-mid)"># 🤝 Entraide & feedback</div>
+            <div class="card-title">🏡 Nos Salons</div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div class="community-channel">🎯 Objectifs &amp; vision</div>
+              <div class="community-channel">💰 Finance &amp; revenus</div>
+              <div class="community-channel active">🌐 Marketing &amp; réseaux</div>
+              <div class="community-channel">🎉 Victoires du jour</div>
+              <div class="community-channel">🤝 Entraide &amp; feedback</div>
             </div>
           </div>
+
+          <!-- Citation du jour -->
+          <div class="cozy-inspiration">
+            <div class="inspiration-emoji">💫</div>
+            <div class="inspiration-quote">"Le succès n'est pas la clé du bonheur. Le bonheur est la clé du succès."</div>
+            <div class="inspiration-author">— Albert Schweitzer</div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -14285,6 +14433,22 @@
   // Init posts on DOMContentLoaded
   document.addEventListener('DOMContentLoaded', function() {
     adminRenderPosts();
+  });
+
+  // ── COMMUNITY — tag selector ──
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('#page-community .composer-tag-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('#page-community .composer-tag-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+    });
+    document.querySelectorAll('#page-community .community-channel').forEach(function(ch) {
+      ch.addEventListener('click', function() {
+        document.querySelectorAll('#page-community .community-channel').forEach(function(c) { c.classList.remove('active'); });
+        ch.classList.add('active');
+      });
+    });
   });
 
   // Bouton accès admin (dans sidebar membre)
