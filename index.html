@@ -16229,5 +16229,397 @@
     document.getElementById('mf-ia-result').innerHTML = '';
     document.getElementById('mf-ia-btn').style.display = 'block';
   }
+    <!-- ═══ WIDGET FLOTTANT ADMIN — MESSAGERIE & COMMUNAUTÉ ═══ -->
+<style>
+  #admin-widget {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  #widget-panel {
+    width: 360px;
+    background: #1a1825;
+    border: 1px solid rgba(255,215,160,0.15);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    transform-origin: bottom right;
+    animation: panelIn .25s cubic-bezier(.34,1.56,.64,1) both;
+    display: none;
+  }
+  #widget-panel.open { display: flex; flex-direction: column; }
+  @keyframes panelIn {
+    from { opacity: 0; transform: scale(.88) translateY(12px); }
+    to   { opacity: 1; transform: scale(1)  translateY(0); }
+  }
+  .widget-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .widget-tab {
+    flex: 1;
+    text-align: center;
+    padding: 0 4px 12px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    color: rgba(255,255,255,0.38);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .widget-tab:hover { color: rgba(255,255,255,0.65); }
+  .widget-tab.active { color: #f5c97a; border-bottom-color: #f5c97a; }
+  .widget-tab .badge {
+    background: #e8736a;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    padding: 0 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .widget-close {
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 2px 12px 10px;
+    transition: color .15s;
+    flex-shrink: 0;
+  }
+  .widget-close:hover { color: rgba(255,255,255,0.7); }
+  .widget-body {
+    height: 340px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .conv-list { padding: 8px 0; }
+  .conv-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .conv-item:hover { background: rgba(255,255,255,0.04); }
+  .conv-item.unread { background: rgba(245,201,122,0.05); }
+  .conv-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .conv-avatar .online-dot {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    width: 9px;
+    height: 9px;
+    background: #6bcf7f;
+    border-radius: 50%;
+    border: 2px solid #1a1825;
+  }
+  .conv-info { flex: 1; min-width: 0; }
+  .conv-name { font-size: 13px; font-weight: 600; color: #e8e0d8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .conv-preview { font-size: 11.5px; color: rgba(255,255,255,0.4); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+  .conv-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+  .conv-time { font-size: 10.5px; color: rgba(255,255,255,0.28); }
+  .conv-unread-dot { width: 8px; height: 8px; background: #f5c97a; border-radius: 50%; display: none; }
+  .conv-item.unread .conv-unread-dot { display: block; }
+  .conv-item.unread .conv-name { color: #f5e8c8; }
+  .conv-item.unread .conv-preview { color: rgba(255,255,255,0.6); }
+  .quick-reply {
+    padding: 10px 14px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .quick-reply input {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 12.5px;
+    color: #e8e0d8;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .quick-reply input::placeholder { color: rgba(255,255,255,0.28); }
+  .quick-reply input:focus { border-color: rgba(245,201,122,0.4); }
+  .quick-reply button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f5c97a, #e8a05e);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: opacity .2s, transform .15s;
+  }
+  .quick-reply button:hover { opacity: .85; transform: scale(1.07); }
+  .feed-list { padding: 8px 0; }
+  .feed-item {
+    padding: 11px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .feed-item:last-child { border-bottom: none; }
+  .feed-item:hover { background: rgba(255,255,255,0.04); }
+  .feed-item.new-post { border-left: 3px solid #f5c97a; padding-left: 13px; }
+  .feed-item.new-comment { border-left: 3px solid #8b9cf7; padding-left: 13px; }
+  .feed-item.new-reaction { border-left: 3px solid #6bcf7f; padding-left: 13px; }
+  .feed-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .feed-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .feed-author { font-size: 12.5px; font-weight: 600; color: #e0d8f0; flex: 1; }
+  .feed-time { font-size: 10.5px; color: rgba(255,255,255,0.28); flex-shrink: 0; }
+  .feed-type-tag { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 600; flex-shrink: 0; }
+  .tag-post     { background: rgba(245,201,122,0.15); color: #f5c97a; }
+  .tag-comment  { background: rgba(139,156,247,0.15); color: #8b9cf7; }
+  .tag-reaction { background: rgba(107,207,127,0.15); color: #6bcf7f; }
+  .feed-text { font-size: 12px; color: rgba(255,255,255,0.52); line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .feed-channel { font-size: 10.5px; color: rgba(255,255,255,0.25); margin-top: 4px; }
+  .widget-footer { padding: 9px 16px; border-top: 1px solid rgba(255,255,255,0.07); text-align: center; }
+  .widget-footer a { font-size: 11.5px; color: rgba(245,201,122,0.7); text-decoration: none; letter-spacing: .04em; font-weight: 600; transition: color .15s; }
+  .widget-footer a:hover { color: #f5c97a; }
+  #widget-fab {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f5c97a 0%, #e8a05e 100%);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(232,160,94,0.45), 0 2px 6px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  #widget-fab:hover { transform: scale(1.1); }
+  #fab-badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    background: #e8736a;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #1a1825;
+  }
+</style>
+
+<div id="admin-widget">
+  <div id="widget-panel">
+    <div class="widget-header">
+      <div class="widget-tab active" onclick="switchTab('messages', this)">
+        ✉️ Messages <span class="badge" id="badge-msg">4</span>
+      </div>
+      <div class="widget-tab" onclick="switchTab('community', this)">
+        🌸 Communauté <span class="badge" id="badge-comm">7</span>
+      </div>
+      <span class="widget-close" onclick="toggleWidget()">✕</span>
+    </div>
+    <div class="widget-body">
+      <div class="tab-content active" id="tab-messages">
+        <div class="conv-list">
+          <div class="conv-item unread" onclick="openConv('Sophie', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#c4937a,#e0a87a)">S<span class="online-dot"></span></div>
+            <div class="conv-info">
+              <div class="conv-name">Sophie Andreu</div>
+              <div class="conv-preview">Merci pour le bilan du mois ! 🙏</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">10h</span><span class="conv-unread-dot"></span></div>
+          </div>
+          <div class="conv-item unread" onclick="openConv('Léa', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#7a9cc4,#9ab4e0)">L</div>
+            <div class="conv-info">
+              <div class="conv-name">Léa Fontaine</div>
+              <div class="conv-preview">Question sur la prochaine session Q&R…</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">9h</span><span class="conv-unread-dot"></span></div>
+          </div>
+          <div class="conv-item unread" onclick="openConv('Emma', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#9a8bc4,#c4a0d4)">E</div>
+            <div class="conv-info">
+              <div class="conv-name">Emma Rousseau</div>
+              <div class="conv-preview">J'ai une question sur mon abonnement…</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">Hier</span><span class="conv-unread-dot"></span></div>
+          </div>
+          <div class="conv-item unread" onclick="openConv('Clara', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#8bc4b0,#a0d4c0)">C</div>
+            <div class="conv-info">
+              <div class="conv-name">Clara Vidal</div>
+              <div class="conv-preview">Super session hier ! ✨</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">Hier</span><span class="conv-unread-dot"></span></div>
+          </div>
+          <div class="conv-item" onclick="openConv('Alice', this)">
+            <div class="conv-avatar" style="background:linear-gradient(135deg,#c4c47a,#d4d490)">A</div>
+            <div class="conv-info">
+              <div class="conv-name">Alice Martin</div>
+              <div class="conv-preview">Merci pour l'accueil dans la Ligue 🌸</div>
+            </div>
+            <div class="conv-meta"><span class="conv-time">Lun</span><span class="conv-unread-dot"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-community">
+        <div class="feed-list">
+          <div class="feed-item new-post">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#c4937a,#e0a87a)">M</div>
+              <span class="feed-author">Marie-Lou Fontaine</span>
+              <span class="feed-type-tag tag-post">Nouveau post</span>
+              <span class="feed-time">2h</span>
+            </div>
+            <div class="feed-text">🎉 J'ai signé mon 5ème client ce matin grâce aux techniques du module "Trouver ses premiers clients" !</div>
+            <div class="feed-channel"># 🎉 Victoires du jour · 24 ❤️ · 8 💬</div>
+          </div>
+          <div class="feed-item new-comment">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#7a9cc4,#9ab4e0)">J</div>
+              <span class="feed-author">Juliette M.</span>
+              <span class="feed-type-tag tag-comment">Commentaire</span>
+              <span class="feed-time">3h</span>
+            </div>
+            <div class="feed-text">Est-ce que quelqu'un a de l'expérience avec les foires artisanales pour démarrer en 2025 ?</div>
+            <div class="feed-channel"># 🤝 Entraide & feedback · 15 💬</div>
+          </div>
+          <div class="feed-item new-reaction">
+            <div class="feed-top">
+              <div class="feed-avatar" style="background:linear-gradient(135deg,#9a8bc4,#c4a0d4)">L</div>
+              <span class="feed-author">Léa Renard</span>
+              <span class="feed-type-tag tag-reaction">Populaire 🔥</span>
+              <span class="feed-time">Hier</span>
+            </div>
+            <div class="feed-text">💡 La méthode des "petites victoires" chaque vendredi a tout changé dans ma relation à l'entrepreneuriat !</div>
+            <div class="feed-channel"># 🎯 Objectifs & vision · 47 ❤️ · 22 💬</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="quick-reply" id="quick-reply-bar">
+      <input type="text" placeholder="Répondre rapidement…" id="quick-input" />
+      <button onclick="sendQuickReply()">➤</button>
+    </div>
+    <div class="widget-footer">
+      <a href="#" id="footer-link" onclick="goToFull()">Voir toute la messagerie →</a>
+    </div>
+  </div>
+  <button id="widget-fab" onclick="toggleWidget()">
+    💬
+    <span id="fab-badge">11</span>
+  </button>
+</div>
+
+<script>
+  let widgetOpen = false;
+  let activeTab  = 'messages';
+
+  function toggleWidget() {
+    widgetOpen = !widgetOpen;
+    const panel = document.getElementById('widget-panel');
+    const fab   = document.getElementById('widget-fab');
+    if (widgetOpen) {
+      panel.classList.add('open');
+      panel.style.animation = 'none';
+      void panel.offsetWidth;
+      panel.style.animation = '';
+      fab.innerHTML = '✕<span id="fab-badge" style="display:none"></span>';
+    } else {
+      panel.classList.remove('open');
+      fab.innerHTML = '💬<span id="fab-badge">11</span>';
+    }
+  }
+
+  function switchTab(tab, el) {
+    activeTab = tab;
+    document.querySelectorAll('.widget-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('quick-reply-bar').style.display = tab === 'messages' ? 'flex' : 'none';
+    document.getElementById('footer-link').textContent = tab === 'messages'
+      ? 'Voir toute la messagerie →'
+      : 'Accéder à la communauté →';
+  }
+
+  function openConv(name, el) {
+    el.classList.remove('unread');
+    document.getElementById('quick-input').placeholder = 'Répondre à ' + name + '…';
+    document.querySelectorAll('#tab-messages .conv-item.unread').length;
+  }
+
+  function sendQuickReply() {
+    const input = document.getElementById('quick-input');
+    if (!input.value.trim()) return;
+    input.value = '';
+    const old = input.placeholder;
+    input.placeholder = 'Message envoyé ✓';
+    setTimeout(() => input.placeholder = old, 2000);
+  }
+
+  function goToFull() {
+    // Adapte selon ta navigation :
+    // activeTab === 'messages' ? window.location.hash = '#messagerie' : window.location.hash = '#communaute';
+  }
+</script>
+<!-- ═══ FIN DU WIDGET ═══ -->
   </script>
     
