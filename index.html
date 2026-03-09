@@ -5252,6 +5252,12 @@
         <div class="section-sub">Apprends à ton rythme avec des formations conçues pour toi</div>
       </div>
 
+      <div class="palmares-tabs" style="margin-bottom:18px;">
+        <button class="palmares-tab" id="classroom-tab-en-cours" onclick="switchClassroomTab('en-cours', this)">Mes formations en cours</button>
+        <button class="palmares-tab active" id="classroom-tab-toutes" onclick="switchClassroomTab('toutes', this)">Parcourir toutes les formations</button>
+        <button class="palmares-tab" id="classroom-tab-terminee" onclick="switchClassroomTab('terminee', this)">Mes formations terminées</button>
+      </div>
+
       <!-- Filtres compacts -->
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:22px;background:var(--bg);border-radius:12px;padding:8px 14px;flex-wrap:wrap;">
 
@@ -5296,7 +5302,7 @@
       </div>
 
       <!-- Compteur résultats -->
-      <div style="font-size:13px;color:var(--text-light);margin-bottom:18px;" id="courses-count">6 formations disponibles</div>
+      <div style="font-size:13px;color:var(--text-light);margin-bottom:18px;" id="courses-count">7 formations disponibles</div>
 
       <div class="courses-grid" id="courses-grid">
         <div class="course-card" data-statut="en-cours" data-niveau="debutant" data-theme="offre">
@@ -5392,6 +5398,22 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:0%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px;background:var(--navy)">Commencer →</button>
+          </div>
+        </div>
+
+        <div class="course-card" data-statut="terminee" data-niveau="debutant" data-theme="offre">
+          <div class="course-cover" style="background:linear-gradient(135deg,rgba(20,36,53,0.1),rgba(235,193,76,0.08))">✅<div class="course-level level-débutant">Débutant</div></div>
+          <div class="course-body">
+            <div style="display:flex;gap:6px;margin-bottom:8px;"><span style="font-size:10px;background:rgba(20,36,53,0.08);color:var(--navy);padding:3px 8px;border-radius:20px;font-weight:600;">💎 Offre & pricing</span></div>
+            <h3>Positionnement clair & différenciant</h3>
+            <p>Clarifie ton message et ta promesse pour attirer les bonnes clientes.</p>
+            <div class="course-stats">
+              <div class="course-stat">📹 7 vidéos</div>
+              <div class="course-stat">⏱ 2h10</div>
+              <div class="course-stat">📁 3 ressources</div>
+            </div>
+            <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:100%"></div></div>
+            <button class="btn-primary" style="width:100%;padding:10px;background:var(--navy-darkest)">Revoir la formation ✓</button>
           </div>
         </div>
       </div>
@@ -15155,6 +15177,7 @@
 
   function filterCoursesSelect(type, value) {
     activeFilters[type] = value;
+    if (type === 'statut') setClassroomTabFromStatut(value);
     _applyCourseFilters();
     // show/hide reset button
     var reset = document.getElementById('courses-reset-btn');
@@ -15172,7 +15195,38 @@
     });
     var reset = document.getElementById('courses-reset-btn');
     if (reset) reset.style.display = 'none';
+    setClassroomTabFromStatut('toutes');
     _applyCourseFilters();
+  }
+
+  function switchClassroomTab(statut, btn) {
+    activeFilters.statut = statut;
+    var selectStatut = document.getElementById('filter-statut');
+    if (selectStatut) selectStatut.value = statut;
+    setClassroomTabFromStatut(statut, btn);
+
+    var reset = document.getElementById('courses-reset-btn');
+    if (reset) {
+      var hasFilter = activeFilters.statut !== 'toutes' || activeFilters.niveau !== 'tous' || activeFilters.theme !== 'tous';
+      reset.style.display = hasFilter ? 'inline-block' : 'none';
+    }
+    _applyCourseFilters();
+  }
+
+  function setClassroomTabFromStatut(statut, activeBtn) {
+    var tabs = document.querySelectorAll('#page-classroom .palmares-tab');
+    tabs.forEach(function(tab) { tab.classList.remove('active'); });
+
+    if (activeBtn) {
+      activeBtn.classList.add('active');
+      return;
+    }
+
+    var tabId = 'classroom-tab-toutes';
+    if (statut === 'en-cours') tabId = 'classroom-tab-en-cours';
+    if (statut === 'terminee') tabId = 'classroom-tab-terminee';
+    var tab = document.getElementById(tabId);
+    if (tab) tab.classList.add('active');
   }
 
   function _applyCourseFilters() {
@@ -15185,7 +15239,20 @@
       var matchStatut = activeFilters.statut === 'toutes' || statut === activeFilters.statut;
       var matchNiveau = activeFilters.niveau === 'tous'   || niveau === activeFilters.niveau;
       var matchTheme  = activeFilters.theme  === 'tous'   || theme  === activeFilters.theme;
-      if (matchStatut && matchNiveau && matchTheme) { card.style.display = 'block'; visible++; }
+      if (matchStatut && matchNiveau && matchTheme) {
+        card.style.display = 'block';
+        // Dans l'onglet "Toutes les formations", on met les formations en cours en bas
+        // pour laisser les nouvelles (non commencées) plus visibles en premier.
+        if (activeFilters.statut === 'toutes') {
+          if (statut === 'non-commencee') card.style.order = '0';
+          else if (statut === 'terminee') card.style.order = '1';
+          else if (statut === 'en-cours') card.style.order = '2';
+          else card.style.order = '1';
+        } else {
+          card.style.order = '0';
+        }
+        visible++;
+      }
       else { card.style.display = 'none'; }
     });
     var countEl = document.getElementById('courses-count');
@@ -15197,6 +15264,13 @@
     }
   }
 
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Assure l'ordre voulu dans l'onglet "Toutes les formations" dès le premier affichage.
+    var defaultTabBtn = document.getElementById('classroom-tab-toutes');
+    if (defaultTabBtn) switchClassroomTab('toutes', defaultTabBtn);
+  });
 
   // ══════════════════════════════════════
   // AGENDA
