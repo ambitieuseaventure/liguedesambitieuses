@@ -6659,91 +6659,93 @@
         <!-- ── AGENDA ADMIN ── -->
         <div style="margin-top:20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;">
 
-        <!-- Header agenda -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:12px;">
-          <div style="display:flex;align-items:center;gap:16px;">
-            <div style="font-family:'Playfair Display',serif;font-size:15px;color:white;">Agenda</div>
-            <!-- Navigation mois/semaine -->
-            <div style="display:flex;align-items:center;gap:6px;">
-              <button onclick="adminCalPrev()" style="width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'">‹</button>
-              <div id="admin-cal-label" style="font-size:13px;font-weight:600;color:white;min-width:160px;text-align:center;">Mars 2026</div>
-              <button onclick="adminCalNext()" style="width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.5)'">›</button>
+          <!-- Header agenda : ligne 1 — titre + nav + vue + ajouter -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-family:'Playfair Display',serif;font-size:14px;color:white;">Agenda</div>
+              <div style="display:flex;align-items:center;gap:4px;">
+                <button onclick="adminCalPrev()" style="width:24px;height:24px;border-radius:5px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.45);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.45)'">‹</button>
+                <div id="admin-cal-label" style="font-size:12px;font-weight:600;color:white;min-width:140px;text-align:center;">Mars 2026</div>
+                <button onclick="adminCalNext()" style="width:24px;height:24px;border-radius:5px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.45);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.45)'">›</button>
+              </div>
             </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;">
-            <!-- Légende -->
-            <div style="display:flex;gap:12px;align-items:center;">
-              <div style="display:flex;align-items:center;gap:5px;"><div style="width:8px;height:8px;border-radius:50%;background:var(--gold-bright);"></div><span style="font-size:11px;color:rgba(255,255,255,0.4);">Événement</span></div>
-              <div style="display:flex;align-items:center;gap:5px;"><div style="width:8px;height:8px;border-radius:50%;background:#6ecf9e;"></div><span style="font-size:11px;color:rgba(255,255,255,0.4);">Q&R / Live</span></div>
-              <div style="display:flex;align-items:center;gap:5px;"><div style="width:8px;height:8px;border-radius:50%;background:#8ab4f8;"></div><span style="font-size:11px;color:rgba(255,255,255,0.4);">Coaching</span></div>
-              <div style="display:flex;align-items:center;gap:5px;"><div style="width:8px;height:8px;border-radius:50%;background:#cf6e9e;"></div><span style="font-size:11px;color:rgba(255,255,255,0.4);">Deadline</span></div>
-            </div>
-            <!-- Toggle vue -->
-            <div style="display:flex;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:3px;gap:2px;">
-              <button id="admin-view-semaine" onclick="adminCalView('semaine')" style="padding:5px 14px;border-radius:5px;border:none;cursor:pointer;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;transition:all .2s;background:rgba(235,193,76,0.2);color:var(--gold);">Semaine</button>
-              <button id="admin-view-mois" onclick="adminCalView('mois')" style="padding:5px 14px;border-radius:5px;border:none;cursor:pointer;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all .2s;background:transparent;color:rgba(255,255,255,0.4);">Mois</button>
-            </div>
-            <button onclick="openAdminEventModal()" style="padding:6px 14px;border-radius:7px;border:1px solid rgba(235,193,76,0.4);background:rgba(235,193,76,0.1);color:var(--gold);font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(235,193,76,0.2)'" onmouseout="this.style.background='rgba(235,193,76,0.1)'">+ Ajouter</button>
-          </div>
-        </div>
-
-        <!-- VUE SEMAINE -->
-        <div id="admin-cal-semaine">
-          <!-- En-têtes jours -->
-          <div style="display:grid;grid-template-columns:52px repeat(7,1fr);border-bottom:1px solid rgba(255,255,255,0.05);">
-            <div></div>
-            <div id="admin-week-h0" style="text-align:center;padding:10px 4px 8px;border-left:1px solid rgba(255,255,255,0.04);">
-              <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Lun</div>
-              <div style="font-family:'Playfair Display',serif;font-size:17px;color:rgba(255,255,255,0.7);margin-top:2px;">10</div>
-            </div>
-            <div id="admin-week-h1" style="text-align:center;padding:10px 4px 8px;border-left:1px solid rgba(255,255,255,0.04);">
-              <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Mar</div>
-              <div style="font-family:'Playfair Display',serif;font-size:17px;color:rgba(255,255,255,0.7);margin-top:2px;">11</div>
-            </div>
-            <div id="admin-week-h2" style="text-align:center;padding:10px 4px 8px;border-left:1px solid rgba(255,255,255,0.04);">
-              <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Mer</div>
-              <div style="font-family:'Playfair Display',serif;font-size:17px;color:rgba(255,255,255,0.7);margin-top:2px;">12</div>
-            </div>
-            <div id="admin-week-h3" style="text-align:center;padding:10px 4px 8px;border-left:1px solid rgba(255,255,255,0.04);">
-              <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Jeu</div>
-              <div style="font-family:'Playfair Display',serif;font-size:17px;color:rgba(255,255,255,0.7);margin-top:2px;">13</div>
-            </div>
-            <div id="admin-week-h4" style="text-align:center;padding:10px 4px 8px;border-left:1px solid rgba(255,255,255,0.04);">
-              <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Ven</div>
-              <div style="font-family:'Playfair Display',serif;font-size:17px;color:rgba(255,255,255,0.7);margin-top:2px;">14</div>
-            </div>
-            <div id="admin-week-h5" style="text-align:center;padding:10px 4px 8px;border-left:1px solid rgba(255,255,255,0.04);">
-              <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Sam</div>
-              <div style="font-family:'Playfair Display',serif;font-size:17px;color:rgba(255,255,255,0.3);margin-top:2px;">15</div>
-            </div>
-            <div id="admin-week-h6" style="text-align:center;padding:10px 4px 8px;border-left:1px solid rgba(255,255,255,0.04);">
-              <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Dim</div>
-              <div style="font-family:'Playfair Display',serif;font-size:17px;color:rgba(255,255,255,0.3);margin-top:2px;">16</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <!-- Légende compacte -->
+              <div style="display:flex;gap:8px;align-items:center;">
+                <div style="display:flex;align-items:center;gap:3px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--gold-bright);"></div><span style="font-size:10px;color:rgba(255,255,255,0.35);">Événement</span></div>
+                <div style="display:flex;align-items:center;gap:3px;"><div style="width:6px;height:6px;border-radius:50%;background:#6ecf9e;"></div><span style="font-size:10px;color:rgba(255,255,255,0.35);">Q&R</span></div>
+                <div style="display:flex;align-items:center;gap:3px;"><div style="width:6px;height:6px;border-radius:50%;background:#8ab4f8;"></div><span style="font-size:10px;color:rgba(255,255,255,0.35);">Coaching</span></div>
+                <div style="display:flex;align-items:center;gap:3px;"><div style="width:6px;height:6px;border-radius:50%;background:#cf6e9e;"></div><span style="font-size:10px;color:rgba(255,255,255,0.35);">Deadline</span></div>
+              </div>
+              <!-- Toggle vue -->
+              <div style="display:flex;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:2px;gap:2px;">
+                <button id="admin-view-semaine" onclick="adminCalView('semaine')" style="padding:4px 11px;border-radius:5px;border:none;cursor:pointer;font-size:11px;font-weight:700;font-family:'DM Sans',sans-serif;transition:all .2s;background:rgba(235,193,76,0.2);color:var(--gold);">Semaine</button>
+                <button id="admin-view-mois" onclick="adminCalView('mois')" style="padding:4px 11px;border-radius:5px;border:none;cursor:pointer;font-size:11px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all .2s;background:transparent;color:rgba(255,255,255,0.4);">Mois</button>
+              </div>
+              <button onclick="openAdminEventModal()" style="padding:5px 12px;border-radius:6px;border:1px solid rgba(235,193,76,0.4);background:rgba(235,193,76,0.1);color:var(--gold);font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;" onmouseover="this.style.background='rgba(235,193,76,0.2)'" onmouseout="this.style.background='rgba(235,193,76,0.1)'">+ Ajouter</button>
             </div>
           </div>
 
-          <!-- Grille horaire -->
-          <div style="display:grid;grid-template-columns:52px repeat(7,1fr);max-height:380px;overflow-y:auto;" id="admin-week-grid">
-            <!-- Heures + cellules générées par JS -->
+          <!-- Ligne 2 — Filtres -->
+          <div style="display:flex;align-items:center;gap:6px;padding:8px 18px;border-bottom:1px solid rgba(255,255,255,0.04);flex-wrap:wrap;">
+            <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;">Filtrer :</span>
+            <button class="cal-filter-btn cal-filter-active" id="cal-filter-tous" onclick="adminCalFilter('tous',this)" style="padding:3px 11px;border-radius:20px;border:1px solid rgba(235,193,76,0.4);background:rgba(235,193,76,0.12);color:var(--gold-bright);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">Tout</button>
+            <button class="cal-filter-btn" id="cal-filter-ana" onclick="adminCalFilter('ana',this)" style="padding:3px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">👤 Ana</button>
+            <button class="cal-filter-btn" id="cal-filter-audrey" onclick="adminCalFilter('audrey',this)" style="padding:3px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">👤 Audrey</button>
+            <button class="cal-filter-btn" id="cal-filter-communaute" onclick="adminCalFilter('communaute',this)" style="padding:3px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">🏘️ Communauté</button>
           </div>
-        </div>
 
-        <!-- VUE MOIS -->
-        <div id="admin-cal-mois" style="display:none;">
-          <!-- Noms des jours -->
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid rgba(255,255,255,0.05);">
-            <div style="text-align:center;padding:10px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Lun</div>
-            <div style="text-align:center;padding:10px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Mar</div>
-            <div style="text-align:center;padding:10px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Mer</div>
-            <div style="text-align:center;padding:10px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Jeu</div>
-            <div style="text-align:center;padding:10px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Ven</div>
-            <div style="text-align:center;padding:10px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Sam</div>
-            <div style="text-align:center;padding:10px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.3);font-weight:600;">Dim</div>
+          <!-- VUE SEMAINE -->
+          <div id="admin-cal-semaine">
+            <!-- En-têtes jours -->
+            <div style="display:grid;grid-template-columns:44px repeat(7,1fr);border-bottom:1px solid rgba(255,255,255,0.05);">
+              <div></div>
+              <div id="admin-week-h0" style="text-align:center;padding:7px 4px 6px;border-left:1px solid rgba(255,255,255,0.04);">
+                <div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Lun</div>
+                <div style="font-family:'Playfair Display',serif;font-size:15px;color:rgba(255,255,255,0.7);margin-top:1px;">10</div>
+              </div>
+              <div id="admin-week-h1" style="text-align:center;padding:7px 4px 6px;border-left:1px solid rgba(255,255,255,0.04);">
+                <div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Mar</div>
+                <div style="font-family:'Playfair Display',serif;font-size:15px;color:rgba(255,255,255,0.7);margin-top:1px;">11</div>
+              </div>
+              <div id="admin-week-h2" style="text-align:center;padding:7px 4px 6px;border-left:1px solid rgba(255,255,255,0.04);">
+                <div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Mer</div>
+                <div style="font-family:'Playfair Display',serif;font-size:15px;color:rgba(255,255,255,0.7);margin-top:1px;">12</div>
+              </div>
+              <div id="admin-week-h3" style="text-align:center;padding:7px 4px 6px;border-left:1px solid rgba(255,255,255,0.04);">
+                <div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Jeu</div>
+                <div style="font-family:'Playfair Display',serif;font-size:15px;color:rgba(255,255,255,0.7);margin-top:1px;">13</div>
+              </div>
+              <div id="admin-week-h4" style="text-align:center;padding:7px 4px 6px;border-left:1px solid rgba(255,255,255,0.04);">
+                <div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Ven</div>
+                <div style="font-family:'Playfair Display',serif;font-size:15px;color:rgba(255,255,255,0.7);margin-top:1px;">14</div>
+              </div>
+              <div id="admin-week-h5" style="text-align:center;padding:7px 4px 6px;border-left:1px solid rgba(255,255,255,0.04);">
+                <div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Sam</div>
+                <div style="font-family:'Playfair Display',serif;font-size:15px;color:rgba(255,255,255,0.3);margin-top:1px;">15</div>
+              </div>
+              <div id="admin-week-h6" style="text-align:center;padding:7px 4px 6px;border-left:1px solid rgba(255,255,255,0.04);">
+                <div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Dim</div>
+                <div style="font-family:'Playfair Display',serif;font-size:15px;color:rgba(255,255,255,0.3);margin-top:1px;">16</div>
+              </div>
+            </div>
+            <!-- Grille horaire -->
+            <div style="display:grid;grid-template-columns:44px repeat(7,1fr);max-height:300px;overflow-y:auto;" id="admin-week-grid"></div>
           </div>
-          <div id="admin-month-grid" style="display:grid;grid-template-columns:repeat(7,1fr);">
-            <!-- Généré par JS -->
+
+          <!-- VUE MOIS -->
+          <div id="admin-cal-mois" style="display:none;">
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid rgba(255,255,255,0.05);">
+              <div style="text-align:center;padding:8px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Lun</div>
+              <div style="text-align:center;padding:8px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Mar</div>
+              <div style="text-align:center;padding:8px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Mer</div>
+              <div style="text-align:center;padding:8px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Jeu</div>
+              <div style="text-align:center;padding:8px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Ven</div>
+              <div style="text-align:center;padding:8px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Sam</div>
+              <div style="text-align:center;padding:8px 4px;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.28);font-weight:600;">Dim</div>
+            </div>
+            <div id="admin-month-grid" style="display:grid;grid-template-columns:repeat(7,1fr);"></div>
           </div>
-        </div>
 
         </div>
 
@@ -6751,36 +6753,44 @@
 
       <!-- Modal ajout événement admin -->
       <div id="admin-event-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;display:none;align-items:center;justify-content:center;">
-        <div style="background:#1a2e42;border:1px solid rgba(255,255,255,0.1);border-radius:16px;width:420px;max-width:90vw;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
-            <div style="font-family:'Playfair Display',serif;font-size:16px;color:white;">Nouvel événement</div>
-            <button onclick="closeAdminEventModal()" style="width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-size:16px;">×</button>
+        <div style="background:#1a2e42;border:1px solid rgba(255,255,255,0.1);border-radius:16px;width:420px;max-width:90vw;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+            <div style="font-family:'Playfair Display',serif;font-size:15px;color:white;">Nouvel événement</div>
+            <button onclick="closeAdminEventModal()" style="width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-size:15px;">×</button>
           </div>
-          <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;flex-direction:column;gap:12px;">
             <div>
-              <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Titre</div>
-              <input id="admin-ev-titre" type="text" placeholder="Ex: Session Q&R Live" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:10px 13px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+              <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">Titre</div>
+              <input id="admin-ev-titre" type="text" placeholder="Ex: Session Q&R Live" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 12px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
               <div>
-                <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Date</div>
-                <input id="admin-ev-date" type="date" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:10px 13px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;color-scheme:dark;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">Date</div>
+                <input id="admin-ev-date" type="date" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 12px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;color-scheme:dark;box-sizing:border-box;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
               </div>
               <div>
-                <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Heure</div>
-                <input id="admin-ev-heure" type="time" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:10px 13px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;color-scheme:dark;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">Heure</div>
+                <input id="admin-ev-heure" type="time" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 12px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;color-scheme:dark;box-sizing:border-box;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
               </div>
             </div>
             <div>
-              <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Type</div>
-              <div style="display:flex;gap:7px;flex-wrap:wrap;" id="admin-ev-type-btns">
-                <button onclick="selectAdminEvType(this,'evenement')" class="admin-ev-type-btn" style="padding:6px 13px;border-radius:20px;border:1px solid rgba(252,186,51,0.4);background:rgba(252,186,51,0.1);color:var(--gold-bright);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">✦ Événement</button>
-                <button onclick="selectAdminEvType(this,'qr')" class="admin-ev-type-btn" style="padding:6px 13px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">💬 Q&R Live</button>
-                <button onclick="selectAdminEvType(this,'coaching')" class="admin-ev-type-btn" style="padding:6px 13px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">🎯 Coaching</button>
-                <button onclick="selectAdminEvType(this,'deadline')" class="admin-ev-type-btn" style="padding:6px 13px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">⚡ Deadline</button>
+              <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">Type</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;" id="admin-ev-type-btns">
+                <button onclick="selectAdminEvType(this,'evenement')" class="admin-ev-type-btn" style="padding:5px 11px;border-radius:20px;border:1px solid rgba(252,186,51,0.4);background:rgba(252,186,51,0.1);color:var(--gold-bright);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">✦ Événement</button>
+                <button onclick="selectAdminEvType(this,'qr')" class="admin-ev-type-btn" style="padding:5px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">💬 Q&R Live</button>
+                <button onclick="selectAdminEvType(this,'coaching')" class="admin-ev-type-btn" style="padding:5px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">🎯 Coaching</button>
+                <button onclick="selectAdminEvType(this,'deadline')" class="admin-ev-type-btn" style="padding:5px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">⚡ Deadline</button>
               </div>
             </div>
-            <button onclick="addAdminEvent()" style="padding:11px;border-radius:9px;border:none;background:var(--gold-bright);color:var(--navy-darkest);font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;transition:all .2s;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--gold-bright)'">Ajouter à l'agenda ✦</button>
+            <div>
+              <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">Organisé par</div>
+              <div style="display:flex;gap:6px;" id="admin-ev-owner-btns">
+                <button onclick="selectAdminEvOwner(this,'communaute')" class="admin-ev-owner-btn" style="padding:5px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.75);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">🏘️ Communauté</button>
+                <button onclick="selectAdminEvOwner(this,'ana')" class="admin-ev-owner-btn" style="padding:5px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">👤 Ana</button>
+                <button onclick="selectAdminEvOwner(this,'audrey')" class="admin-ev-owner-btn" style="padding:5px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">👤 Audrey</button>
+              </div>
+            </div>
+            <button onclick="addAdminEvent()" style="padding:10px;border-radius:8px;border:none;background:var(--gold-bright);color:var(--navy-darkest);font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:2px;transition:all .2s;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--gold-bright)'">Ajouter à l'agenda ✦</button>
           </div>
         </div>
       </div>
@@ -6788,48 +6798,47 @@
       <script>
       // ── AGENDA ADMIN ──
       (function(){
-        const JOURS_COURTS = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
         const MOIS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-        const HEURES = ['08h','09h','10h','11h','12h','13h','14h','15h','16h','17h','18h','19h'];
+        const HEURES  = ['08h','09h','10h','11h','12h','13h','14h','15h','16h','17h','18h','19h'];
 
-        // Type colors
         const TYPE_STYLE = {
-          evenement: { bg:'rgba(252,186,51,0.12)', border:'rgba(252,186,51,0.4)', color:'var(--gold-bright)', dot:'var(--gold-bright)' },
-          qr:        { bg:'rgba(110,207,158,0.12)', border:'rgba(110,207,158,0.35)', color:'#6ecf9e', dot:'#6ecf9e' },
-          coaching:  { bg:'rgba(138,180,248,0.12)', border:'rgba(138,180,248,0.35)', color:'#8ab4f8', dot:'#8ab4f8' },
-          deadline:  { bg:'rgba(207,110,158,0.12)', border:'rgba(207,110,158,0.35)', color:'#cf6e9e', dot:'#cf6e9e' },
+          evenement: { bg:'rgba(252,186,51,0.12)',   border:'rgba(252,186,51,0.4)',   color:'var(--gold-bright)', dot:'var(--gold-bright)' },
+          qr:        { bg:'rgba(110,207,158,0.12)',  border:'rgba(110,207,158,0.35)', color:'#6ecf9e',            dot:'#6ecf9e'            },
+          coaching:  { bg:'rgba(138,180,248,0.12)',  border:'rgba(138,180,248,0.35)', color:'#8ab4f8',            dot:'#8ab4f8'            },
+          deadline:  { bg:'rgba(207,110,158,0.12)',  border:'rgba(207,110,158,0.35)', color:'#cf6e9e',            dot:'#cf6e9e'            },
         };
 
-        // Événements par défaut
+        // owner : 'communaute' | 'ana' | 'audrey'
         window._adminEvents = [
-          { titre:'Petit-déj Club · Paris', date:'2026-03-10', heure:'08:30', type:'evenement' },
-          { titre:'Coaching Ana · Sophie A.', date:'2026-03-11', heure:'10:00', type:'coaching' },
-          { titre:'Session Q&R Live', date:'2026-03-12', heure:'12:00', type:'qr' },
-          { titre:'Deadline newsletter', date:'2026-03-13', heure:'17:00', type:'deadline' },
-          { titre:'Coaching Audrey · Clara V.', date:'2026-03-14', heure:'09:00', type:'coaching' },
-          { titre:'Apéro Business · Visio', date:'2026-03-18', heure:'18:00', type:'evenement' },
-          { titre:'Masterclass · Invitée', date:'2026-03-20', heure:'14:00', type:'qr' },
-          { titre:'Coaching Ana · Léa F.', date:'2026-03-21', heure:'11:00', type:'coaching' },
-          { titre:'Envoi newsletter mars', date:'2026-03-24', heure:'09:00', type:'deadline' },
-          { titre:'Q&R Questions Offres', date:'2026-03-26', heure:'12:00', type:'qr' },
+          { titre:'Petit-déj Club · Paris',      date:'2026-03-10', heure:'08:30', type:'evenement', owner:'communaute' },
+          { titre:'Coaching Ana · Sophie A.',    date:'2026-03-11', heure:'10:00', type:'coaching',  owner:'ana'        },
+          { titre:'Session Q&R Live',            date:'2026-03-12', heure:'12:00', type:'qr',        owner:'communaute' },
+          { titre:'Deadline newsletter',         date:'2026-03-13', heure:'17:00', type:'deadline',  owner:'communaute' },
+          { titre:'Coaching Audrey · Clara V.',  date:'2026-03-14', heure:'09:00', type:'coaching',  owner:'audrey'     },
+          { titre:'Apéro Business · Visio',      date:'2026-03-18', heure:'18:00', type:'evenement', owner:'communaute' },
+          { titre:'Masterclass · Invitée',       date:'2026-03-20', heure:'14:00', type:'qr',        owner:'communaute' },
+          { titre:'Coaching Ana · Léa F.',       date:'2026-03-21', heure:'11:00', type:'coaching',  owner:'ana'        },
+          { titre:'Envoi newsletter mars',       date:'2026-03-24', heure:'09:00', type:'deadline',  owner:'communaute' },
+          { titre:'Q&R Questions Offres',        date:'2026-03-26', heure:'12:00', type:'qr',        owner:'communaute' },
         ];
 
-        let curView = 'semaine';
-        let curDate = new Date(2026, 2, 7); // 7 mars 2026
+        let curView   = 'semaine';
+        let curFilter = 'tous';
+        let curDate   = new Date(2026, 2, 7);
 
-        // Helper: lundi de la semaine
-        function mondayOf(d) {
-          const day = d.getDay(); // 0=dim
-          const diff = (day === 0) ? -6 : 1 - day;
-          const m = new Date(d);
-          m.setDate(m.getDate() + diff);
-          return m;
+        function filteredEvents() {
+          if(curFilter === 'tous') return window._adminEvents;
+          return window._adminEvents.filter(function(ev){ return ev.owner === curFilter; });
         }
 
+        function mondayOf(d) {
+          const day = d.getDay();
+          const diff = (day === 0) ? -6 : 1 - day;
+          const m = new Date(d); m.setDate(m.getDate() + diff); return m;
+        }
         function isoDate(d) {
           return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
         }
-
         function sameDay(a, b) { return isoDate(a) === isoDate(b); }
 
         window.adminCalPrev = function() {
@@ -6845,7 +6854,7 @@
         window.adminCalView = function(v) {
           curView = v;
           document.getElementById('admin-cal-semaine').style.display = v==='semaine' ? '' : 'none';
-          document.getElementById('admin-cal-mois').style.display = v==='mois' ? '' : 'none';
+          document.getElementById('admin-cal-mois').style.display    = v==='mois'    ? '' : 'none';
           const btnS = document.getElementById('admin-view-semaine');
           const btnM = document.getElementById('admin-view-mois');
           if(v==='semaine'){
@@ -6857,21 +6866,26 @@
           }
           renderAdminCal();
         };
+        window.adminCalFilter = function(f, btn) {
+          curFilter = f;
+          document.querySelectorAll('.cal-filter-btn').forEach(function(b){
+            b.style.background='transparent'; b.style.color='rgba(255,255,255,0.4)'; b.style.borderColor='rgba(255,255,255,0.1)';
+          });
+          btn.style.background='rgba(235,193,76,0.12)'; btn.style.color='var(--gold-bright)'; btn.style.borderColor='rgba(235,193,76,0.4)';
+          renderAdminCal();
+        };
 
         function renderAdminCal() {
-          if(curView === 'semaine') renderWeek();
-          else renderMonth();
+          if(curView === 'semaine') renderWeek(); else renderMonth();
         }
 
         function renderWeek() {
           const today = new Date();
           const monday = mondayOf(curDate);
-          // Label
           const sunday = new Date(monday); sunday.setDate(monday.getDate()+6);
-          const lbl = monday.getDate() + ' – ' + sunday.getDate() + ' ' + MOIS_FR[sunday.getMonth()] + ' ' + sunday.getFullYear();
-          document.getElementById('admin-cal-label').textContent = lbl;
+          document.getElementById('admin-cal-label').textContent =
+            monday.getDate() + ' – ' + sunday.getDate() + ' ' + MOIS_FR[sunday.getMonth()] + ' ' + sunday.getFullYear();
 
-          // Headers
           for(let i=0;i<7;i++){
             const d = new Date(monday); d.setDate(monday.getDate()+i);
             const isToday = sameDay(d, today);
@@ -6879,50 +6893,43 @@
             const numEl = h.querySelector('div:last-child');
             numEl.textContent = d.getDate();
             const isWE = (i===5||i===6);
-            numEl.style.color = isToday ? 'var(--navy-darkest)' : isWE ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.75)';
+            numEl.style.color      = isToday ? 'var(--navy-darkest)' : isWE ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.75)';
             numEl.style.background = isToday ? 'var(--gold-bright)' : 'transparent';
-            numEl.style.borderRadius = isToday ? '50%' : '0';
-            numEl.style.width = isToday ? '28px' : 'auto';
-            numEl.style.height = isToday ? '28px' : 'auto';
-            numEl.style.display = isToday ? 'flex' : 'block';
-            numEl.style.alignItems = 'center';
-            numEl.style.justifyContent = 'center';
-            numEl.style.margin = isToday ? '2px auto 0' : '2px 0 0';
+            numEl.style.borderRadius    = isToday ? '50%' : '0';
+            numEl.style.width           = isToday ? '24px' : 'auto';
+            numEl.style.height          = isToday ? '24px' : 'auto';
+            numEl.style.display         = isToday ? 'flex'  : 'block';
+            numEl.style.alignItems      = 'center';
+            numEl.style.justifyContent  = 'center';
+            numEl.style.margin          = isToday ? '1px auto 0' : '1px 0 0';
           }
 
-          // Grid horaire
           const grid = document.getElementById('admin-week-grid');
           grid.innerHTML = '';
+          const evs = filteredEvents();
           HEURES.forEach(function(h) {
-            // Colonne heure
             const timeCell = document.createElement('div');
-            timeCell.style.cssText = 'height:52px;display:flex;align-items:flex-start;justify-content:flex-end;padding:4px 8px 0 0;font-size:10px;color:rgba(255,255,255,0.2);font-weight:500;border-bottom:1px solid rgba(255,255,255,0.04);border-right:1px solid rgba(255,255,255,0.04);letter-spacing:.02em;';
+            timeCell.style.cssText = 'height:42px;display:flex;align-items:flex-start;justify-content:flex-end;padding:3px 6px 0 0;font-size:9px;color:rgba(255,255,255,0.18);font-weight:500;border-bottom:1px solid rgba(255,255,255,0.04);border-right:1px solid rgba(255,255,255,0.04);letter-spacing:.02em;';
             timeCell.textContent = h;
             grid.appendChild(timeCell);
-
-            // 7 colonnes jours
             for(let i=0;i<7;i++){
               const d = new Date(monday); d.setDate(monday.getDate()+i);
               const dateStr = isoDate(d);
               const hourNum = parseInt(h);
               const isWE = (i===5||i===6);
               const cell = document.createElement('div');
-              cell.style.cssText = 'height:52px;border-bottom:1px solid rgba(255,255,255,0.04);border-left:1px solid rgba(255,255,255,0.04);position:relative;' + (isWE ? 'background:rgba(255,255,255,0.01);' : '');
-
-              // Trouver les événements de cette case
-              window._adminEvents.forEach(function(ev) {
-                if(ev.date === dateStr) {
-                  const evH = parseInt(ev.heure.split(':')[0]);
-                  if(evH === hourNum) {
-                    const s = TYPE_STYLE[ev.type] || TYPE_STYLE.evenement;
-                    const evEl = document.createElement('div');
-                    evEl.style.cssText = 'position:absolute;top:3px;left:3px;right:3px;border-radius:5px;padding:3px 6px;font-size:10px;font-weight:600;cursor:pointer;overflow:hidden;border-left:2px solid '+s.dot+';background:'+s.bg+';color:'+s.color+';line-height:1.3;transition:transform .15s;z-index:2;';
-                    evEl.textContent = ev.titre;
-                    evEl.title = ev.titre + ' · ' + ev.heure;
-                    evEl.onmouseover = function(){ this.style.transform='translateX(1px) scale(1.02)'; };
-                    evEl.onmouseout  = function(){ this.style.transform=''; };
-                    cell.appendChild(evEl);
-                  }
+              cell.style.cssText = 'height:42px;border-bottom:1px solid rgba(255,255,255,0.04);border-left:1px solid rgba(255,255,255,0.04);position:relative;' + (isWE ? 'background:rgba(255,255,255,0.01);' : '');
+              evs.forEach(function(ev) {
+                if(ev.date === dateStr && parseInt(ev.heure.split(':')[0]) === hourNum) {
+                  const s = TYPE_STYLE[ev.type] || TYPE_STYLE.evenement;
+                  const evEl = document.createElement('div');
+                  const ownerTag = ev.owner !== 'communaute' ? ' · ' + ev.owner.charAt(0).toUpperCase() + ev.owner.slice(1) : '';
+                  evEl.style.cssText = 'position:absolute;top:2px;left:2px;right:2px;border-radius:4px;padding:2px 5px;font-size:9px;font-weight:600;cursor:pointer;overflow:hidden;border-left:2px solid '+s.dot+';background:'+s.bg+';color:'+s.color+';line-height:1.3;transition:transform .15s;z-index:2;';
+                  evEl.textContent = ev.titre + ownerTag;
+                  evEl.title = ev.titre + ' · ' + ev.heure + (ownerTag ? ownerTag : '');
+                  evEl.onmouseover = function(){ this.style.transform='translateX(1px) scale(1.02)'; };
+                  evEl.onmouseout  = function(){ this.style.transform=''; };
+                  cell.appendChild(evEl);
                 }
               });
               grid.appendChild(cell);
@@ -6934,50 +6941,40 @@
           const today = new Date();
           const yr = curDate.getFullYear(), mo = curDate.getMonth();
           document.getElementById('admin-cal-label').textContent = MOIS_FR[mo] + ' ' + yr;
-
           const grid = document.getElementById('admin-month-grid');
           grid.innerHTML = '';
-
-          // Premier jour du mois (0=dim…6=sam → on veut lundi=0)
-          const firstDay = new Date(yr, mo, 1);
-          let startOffset = firstDay.getDay() - 1;
+          let startOffset = new Date(yr, mo, 1).getDay() - 1;
           if(startOffset < 0) startOffset = 6;
-
           const daysInMonth = new Date(yr, mo+1, 0).getDate();
-          const totalCells = Math.ceil((startOffset + daysInMonth) / 7) * 7;
-
+          const totalCells  = Math.ceil((startOffset + daysInMonth) / 7) * 7;
+          const evs = filteredEvents();
           for(let i=0; i<totalCells; i++){
             const dayNum = i - startOffset + 1;
             const isCurrentMonth = dayNum >= 1 && dayNum <= daysInMonth;
             const cellDate = new Date(yr, mo, dayNum);
-            const dateStr = isoDate(cellDate);
-            const isToday = isCurrentMonth && sameDay(cellDate, today);
-
+            const dateStr  = isoDate(cellDate);
+            const isToday  = isCurrentMonth && sameDay(cellDate, today);
             const cell = document.createElement('div');
-            cell.style.cssText = 'min-height:80px;border-right:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);padding:6px 5px;position:relative;cursor:pointer;transition:background .15s;';
+            cell.style.cssText = 'min-height:64px;border-right:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);padding:5px 4px;position:relative;cursor:pointer;transition:background .15s;';
             if(!isCurrentMonth) cell.style.opacity = '0.25';
-
-            // Numéro du jour
             const dayLabel = document.createElement('div');
-            dayLabel.style.cssText = 'font-size:12px;font-weight:600;margin-bottom:4px;';
+            dayLabel.style.cssText = 'font-size:11px;font-weight:600;margin-bottom:3px;';
             if(isToday){
-              dayLabel.style.cssText += 'display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--gold-bright);color:var(--navy-darkest);align-items:center;justify-content:center;font-size:11px;';
+              dayLabel.style.cssText += 'display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--gold-bright);color:var(--navy-darkest);align-items:center;justify-content:center;font-size:10px;';
             } else {
-              dayLabel.style.cssText += 'color:rgba(255,255,255,0.5);';
+              dayLabel.style.cssText += 'color:rgba(255,255,255,0.45);';
             }
             dayLabel.textContent = isCurrentMonth ? dayNum : '';
             cell.appendChild(dayLabel);
-
-            // Événements du jour
             if(isCurrentMonth){
-              window._adminEvents.forEach(function(ev){
+              evs.forEach(function(ev){
                 if(ev.date === dateStr){
                   const s = TYPE_STYLE[ev.type] || TYPE_STYLE.evenement;
                   const evEl = document.createElement('div');
-                  evEl.style.cssText = 'font-size:10px;font-weight:600;color:'+s.color+';background:'+s.bg+';border-left:2px solid '+s.dot+';border-radius:3px;padding:2px 5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;transition:opacity .15s;';
+                  evEl.style.cssText = 'font-size:9px;font-weight:600;color:'+s.color+';background:'+s.bg+';border-left:2px solid '+s.dot+';border-radius:3px;padding:1px 4px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;transition:opacity .15s;';
                   evEl.textContent = ev.heure.substring(0,5) + ' ' + ev.titre;
                   evEl.title = ev.titre;
-                  evEl.onmouseover = function(){ this.style.opacity='0.75'; };
+                  evEl.onmouseover = function(){ this.style.opacity='0.7'; };
                   evEl.onmouseout  = function(){ this.style.opacity='1'; };
                   cell.appendChild(evEl);
                 }
@@ -6990,10 +6987,11 @@
         }
 
         // Modal
-        let selectedEvType = 'evenement';
+        let selectedEvType  = 'evenement';
+        let selectedEvOwner = 'communaute';
+
         window.openAdminEventModal = function(){
-          const m = document.getElementById('admin-event-modal');
-          m.style.display='flex';
+          document.getElementById('admin-event-modal').style.display='flex';
         };
         window.closeAdminEventModal = function(){
           document.getElementById('admin-event-modal').style.display='none';
@@ -7006,12 +7004,19 @@
           const s = TYPE_STYLE[type];
           btn.style.background = s.bg; btn.style.color = s.color; btn.style.borderColor = s.border;
         };
+        window.selectAdminEvOwner = function(btn, owner){
+          selectedEvOwner = owner;
+          document.querySelectorAll('.admin-ev-owner-btn').forEach(function(b){
+            b.style.background='transparent'; b.style.color='rgba(255,255,255,0.4)'; b.style.borderColor='rgba(255,255,255,0.1)';
+          });
+          btn.style.background='rgba(255,255,255,0.08)'; btn.style.color='rgba(255,255,255,0.85)'; btn.style.borderColor='rgba(255,255,255,0.25)';
+        };
         window.addAdminEvent = function(){
           const titre = document.getElementById('admin-ev-titre').value.trim();
           const date  = document.getElementById('admin-ev-date').value;
           const heure = document.getElementById('admin-ev-heure').value;
           if(!titre || !date){ alert('Merci de renseigner un titre et une date.'); return; }
-          window._adminEvents.push({ titre, date, heure: heure||'09:00', type: selectedEvType });
+          window._adminEvents.push({ titre, date, heure: heure||'09:00', type: selectedEvType, owner: selectedEvOwner });
           renderAdminCal();
           closeAdminEventModal();
           document.getElementById('admin-ev-titre').value='';
@@ -7019,7 +7024,6 @@
           document.getElementById('admin-ev-heure').value='';
         };
 
-        // Init
         renderWeek();
       })();
       </script>
