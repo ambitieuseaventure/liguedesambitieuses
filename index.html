@@ -3106,8 +3106,7 @@
     .bib-card-title { font-family:'Playfair Display',serif;font-size:15px;color:var(--navy-darkest);font-weight:700;margin-bottom:8px;line-height:1.4; }
     .bib-card-desc { font-size:12.5px;color:var(--text-light);line-height:1.6;margin-bottom:12px;flex:1; }
     .bib-card-theme span { display:inline-block;font-size:11px;background:rgba(20,36,53,0.06);color:var(--navy);padding:3px 10px;border-radius:20px;font-weight:600;margin-bottom:16px; }
-    .bib-card-footer { display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid rgba(20,36,53,0.08); }
-    .bib-card-price { font-family:'Playfair Display',serif;font-size:22px;color:var(--navy-darkest);font-weight:700; }
+    .bib-card-price { font-family:'Playfair Display',serif;font-size:22px;color:var(--navy-darkest);font-weight:700;margin-right:auto; }
     .bib-btn-acheter { padding:9px 18px;background:var(--gold-bright);color:var(--navy-darkest);border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s; }
     .bib-btn-acheter:hover { opacity:.85; }
     .bib-member-note { font-size:11px;color:var(--gold-bright);margin-top:10px;padding:7px 10px;background:rgba(252,186,51,0.07);border-radius:8px;line-height:1.4; }
@@ -3115,6 +3114,9 @@
     .bib-badge-gratuit { display:inline-block;background:rgba(78,203,135,0.15);color:#4ecb87;border:1px solid rgba(78,203,135,0.3);font-size:13px;font-weight:700;padding:3px 12px;border-radius:20px; }
     .bib-btn-telecharger { padding:9px 18px;background:linear-gradient(135deg,#4ecb87,#3aaa6e);color:white;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s; }
     .bib-btn-telecharger:hover { opacity:.85; }
+    .bib-btn-voir { padding:9px 14px;background:transparent;color:var(--navy-darkest);border:1.5px solid rgba(20,36,53,0.25);border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s; }
+    .bib-btn-voir:hover { border-color:var(--navy-darkest);background:rgba(20,36,53,0.06); }
+    .bib-card-footer { display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:14px;border-top:1px solid rgba(20,36,53,0.08); }
     .bib-email-modal-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:10000;align-items:center;justify-content:center;padding:24px; }
     .bib-dropzone { border:2px dashed rgba(255,255,255,0.12);border-radius:12px;transition:border-color .2s,background .2s; }
     .bib-dropzone:hover,.bib-dropzone.bib-dz-over { border-color:rgba(252,186,51,0.4);background:rgba(252,186,51,0.03); }
@@ -8964,12 +8966,37 @@
                 onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
             </div>
 
-            <!-- Description -->
+            <!-- Description courte -->
             <div>
-              <div class="form-label">Description</div>
+              <div class="form-label">Description courte <span style="color:rgba(255,255,255,0.3);font-size:11px;font-weight:400;">— affichée sur la carte (aperçu)</span></div>
               <textarea id="bib-input-desc" placeholder="Décris brièvement ce que contient cette ressource et ce qu'elle apporte…" rows="3"
                 style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:10px 14px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;box-sizing:border-box;transition:border-color .2s;"
                 onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+            </div>
+
+            <!-- Description longue -->
+            <div>
+              <div class="form-label">Description longue <span style="color:rgba(255,255,255,0.3);font-size:11px;font-weight:400;">— affichée dans la page détail (laisser vide pour utiliser la courte)</span></div>
+              <textarea id="bib-input-longdesc" placeholder="Décris en détail le contenu, ce que la personne va apprendre, pour qui c'est fait, ce que la ressource inclut…" rows="6"
+                style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:10px 14px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;box-sizing:border-box;transition:border-color .2s;"
+                onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+            </div>
+
+            <!-- Carousel d'images -->
+            <div>
+              <div class="form-label">Images du carousel <span style="color:rgba(255,255,255,0.3);font-size:11px;font-weight:400;">— aperçus supplémentaires affichés dans la page détail</span></div>
+              <div id="bib-preview-dropzone" class="bib-dropzone"
+                ondragover="event.preventDefault();this.classList.add('bib-dz-over')"
+                ondragleave="this.classList.remove('bib-dz-over')"
+                ondrop="event.preventDefault();this.classList.remove('bib-dz-over');bibHandlePreviewImages(event.dataTransfer.files)">
+                <input type="file" id="bib-preview-file-input" accept="image/*" multiple style="display:none;" onchange="bibHandlePreviewImages(this.files)">
+                <div class="bib-dz-content" onclick="document.getElementById('bib-preview-file-input').click()">
+                  <div style="font-size:28px;margin-bottom:8px;">🖼️</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);">Cliquer ou glisser des images ici (plusieurs à la fois)</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">JPG, PNG, WebP · max 5 Mo par image</div>
+                </div>
+              </div>
+              <div id="bib-preview-thumbs" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;"></div>
             </div>
 
             <!-- Statut + Coup de cœur -->
@@ -14261,8 +14288,10 @@
         ? '<span class="bib-badge-gratuit">Gratuit</span>'
         : '<div class="bib-card-price">'+b.price+'€</div>';
       var btnHtml = isGratuit
-        ? '<button class="bib-btn-telecharger" onclick="event.stopPropagation();bibTelechargement(\''+b.id+'\')">Télécharger →</button>'
-        : '<button class="bib-btn-acheter" onclick="event.stopPropagation();bibAddToCart(\''+b.id+'\',event)">🛒 Ajouter</button>';
+        ? '<button class="bib-btn-voir" onclick="event.stopPropagation();bibOpenDetail(\''+b.id+'\')">👁 Voir</button>'
+          +'<button class="bib-btn-telecharger" onclick="event.stopPropagation();bibTelechargement(\''+b.id+'\')">Télécharger →</button>'
+        : '<button class="bib-btn-voir" onclick="event.stopPropagation();bibOpenDetail(\''+b.id+'\')">👁 Voir</button>'
+          +'<button class="bib-btn-acheter" onclick="event.stopPropagation();bibAddToCart(\''+b.id+'\',event)">🛒 Ajouter</button>';
       var card = document.createElement('div');
       card.className = 'bib-card';
       card.onclick = function(){ bibOpenDetail(b.id); };
@@ -14424,7 +14453,7 @@
     // Infos
     document.getElementById('bib-detail-format').textContent = b.format;
     document.getElementById('bib-detail-title').textContent = b.title;
-    document.getElementById('bib-detail-desc').textContent = b.desc;
+    document.getElementById('bib-detail-desc').textContent = (b.longDesc && b.longDesc.trim()) ? b.longDesc : b.desc;
     document.getElementById('bib-detail-meta').innerHTML =
       '<span class="bib-detail-tag">'+b.theme+'</span>'
       +(b.featured ? '<span class="bib-detail-tag">⭐ Coup de cœur</span>' : '');
@@ -14577,6 +14606,7 @@
   var bibImageData = '';   // dataUrl (upload) ou URL (texte)
   var bibFileData  = '';   // dataUrl (upload) ou URL externe
   var bibResourceFileName = '';
+  var bibPreviewImages = [];  // tableau de dataUrls pour le carousel
 
   var BIB_IMG_DEFAULT  = '<div style="font-size:28px;margin-bottom:8px;">🖼️</div><div style="font-size:13px;color:rgba(255,255,255,0.5);">Cliquer ou glisser une image ici</div><div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">JPG, PNG, WebP · max 5 Mo</div>';
   var BIB_FILE_DEFAULT = '<div style="font-size:28px;margin-bottom:8px;">📁</div><div style="font-size:13px;color:rgba(255,255,255,0.5);">Cliquer ou glisser un fichier ici</div><div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">PDF, Word, Excel, PowerPoint, ZIP · max 50 Mo</div>';
@@ -14662,6 +14692,42 @@
     reader.readAsDataURL(file);
   }
 
+  function bibRenderPreviewThumbs() {
+    var container = document.getElementById('bib-preview-thumbs');
+    if (!container) return;
+    container.innerHTML = '';
+    bibPreviewImages.forEach(function(src, idx) {
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'position:relative;width:72px;height:72px;border-radius:8px;overflow:hidden;flex-shrink:0;';
+      var img = document.createElement('img');
+      img.src = src;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+      var del = document.createElement('button');
+      del.innerHTML = '×';
+      del.style.cssText = 'position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;border:none;background:rgba(0,0,0,0.65);color:white;font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+      del.onclick = function() { bibPreviewImages.splice(idx, 1); bibRenderPreviewThumbs(); };
+      wrap.appendChild(img);
+      wrap.appendChild(del);
+      container.appendChild(wrap);
+    });
+  }
+
+  function bibHandlePreviewImages(files) {
+    if (!files || !files.length) return;
+    var arr = Array.prototype.slice.call(files);
+    arr.forEach(function(file) {
+      if (!file.type.startsWith('image/')) return;
+      if (file.size > 5 * 1024 * 1024) { alert(file.name + ' dépasse 5 Mo, ignoré.'); return; }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        bibPreviewImages.push(e.target.result);
+        bibRenderPreviewThumbs();
+      };
+      reader.readAsDataURL(file);
+    });
+    document.getElementById('bib-preview-file-input').value = '';
+  }
+
   function bibOpenModal(id) {
     bibEditingId = id || null;
     var b = id ? bibliothequeData.find(function(x){ return x.id===id; }) : null;
@@ -14669,7 +14735,11 @@
     document.getElementById('bib-save-btn').textContent = b ? 'Enregistrer les modifications ✦' : 'Ajouter la ressource ✦';
     document.getElementById('bib-input-title').value = b ? b.title : '';
     document.getElementById('bib-input-desc').value = b ? b.desc : '';
+    document.getElementById('bib-input-longdesc').value = b ? (b.longDesc || '') : '';
     document.getElementById('bib-input-price').value = b ? b.price : '';
+    // Carousel preview images
+    bibPreviewImages = b ? (b.previewImages ? b.previewImages.slice() : []) : [];
+    bibRenderPreviewThumbs();
     document.getElementById('bib-input-format').value = b ? b.format : '📋 Template';
     document.getElementById('bib-input-theme').value = b ? b.theme : '💎 Offre';
     document.getElementById('bib-input-status').value = b ? b.status : 'publie';
@@ -14715,11 +14785,13 @@
   function bibCloseModal() {
     document.getElementById('bib-modal').style.display = 'none';
     bibEditingId = null;
+    bibPreviewImages = [];
   }
 
   function bibSave() {
     var title    = document.getElementById('bib-input-title').value.trim();
     var desc     = document.getElementById('bib-input-desc').value.trim();
+    var longDesc = document.getElementById('bib-input-longdesc').value.trim();
     var pricing  = bibCurrentPricing;
     var price    = pricing === 'payant' ? (parseFloat(document.getElementById('bib-input-price').value) || 0) : 0;
     var format   = document.getElementById('bib-input-format').value;
@@ -14730,12 +14802,13 @@
     var status   = document.getElementById('bib-input-status').value;
     var featured = document.getElementById('bib-input-featured').checked;
     var cover    = (bibFormatIcons[format] || '📄');
+    var previewImages = bibPreviewImages.slice();
     if (!title) { alert('Merci de renseigner un titre.'); return; }
     if (bibEditingId) {
       var b = bibliothequeData.find(function(x){ return x.id===bibEditingId; });
-      if (b) { b.title=title; b.desc=desc; b.price=price; b.pricing=pricing; b.format=format; b.theme=theme; b.cover=cover; b.imageUrl=imageUrl; b.fileUrl=fileUrl; b.fileName=fileName; b.status=status; b.featured=featured; }
+      if (b) { b.title=title; b.desc=desc; b.longDesc=longDesc; b.price=price; b.pricing=pricing; b.format=format; b.theme=theme; b.cover=cover; b.imageUrl=imageUrl; b.fileUrl=fileUrl; b.fileName=fileName; b.status=status; b.featured=featured; b.previewImages=previewImages; }
     } else {
-      bibliothequeData.push({ id:'bib_'+Date.now(), title:title, desc:desc, price:price, pricing:pricing, format:format, theme:theme, cover:cover, imageUrl:imageUrl, fileUrl:fileUrl, fileName:fileName, status:status, featured:featured, previewImages:[] });
+      bibliothequeData.push({ id:'bib_'+Date.now(), title:title, desc:desc, longDesc:longDesc, price:price, pricing:pricing, format:format, theme:theme, cover:cover, imageUrl:imageUrl, fileUrl:fileUrl, fileName:fileName, status:status, featured:featured, previewImages:previewImages });
     }
     bibCloseModal();
     bibRenderTable();
