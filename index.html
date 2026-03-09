@@ -5748,7 +5748,7 @@
             <p style="font-size:13px;color:var(--text-mid);line-height:1.55;margin-bottom:10px;">J'accompagne les femmes entrepreneurs à retrouver de l'énergie et de la clarté dans leur business.</p>
             <div style="display:flex;align-items:center;justify-content:space-between;">
               <div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="post-tag">🧘 Bien-être</span><span class="post-tag">💬 Coaching</span></div>
-              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;">✉️ Contacter</button>
+              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;" onclick="showPage('messages')">✉️ Contacter</button>
             </div>
           </div>
         </div>
@@ -5769,7 +5769,7 @@
             <p style="font-size:13px;color:var(--text-mid);line-height:1.55;margin-bottom:10px;">Styliste personnelle pour entrepreneures qui veulent aligner leur image à leur ambition.</p>
             <div style="display:flex;align-items:center;justify-content:space-between;">
               <div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="post-tag">👗 Mode</span><span class="post-tag">✨ Image</span></div>
-              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;">✉️ Contacter</button>
+              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;" onclick="showPage('messages')">✉️ Contacter</button>
             </div>
           </div>
         </div>
@@ -5791,7 +5791,7 @@
             <p style="font-size:13px;color:var(--text-mid);line-height:1.55;margin-bottom:10px;">Je crée des identités visuelles percutantes pour les femmes qui veulent marquer les esprits.</p>
             <div style="display:flex;align-items:center;justify-content:space-between;">
               <div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="post-tag">🎨 Design</span><span class="post-tag">💡 Branding</span></div>
-              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;">✉️ Contacter</button>
+              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;" onclick="showPage('messages')">✉️ Contacter</button>
             </div>
           </div>
         </div>
@@ -5812,7 +5812,7 @@
             <p style="font-size:13px;color:var(--text-mid);line-height:1.55;margin-bottom:10px;">Copywriter spécialisée en contenu de marque pour PME et solopreneurs ambitieux.</p>
             <div style="display:flex;align-items:center;justify-content:space-between;">
               <div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="post-tag">✍️ Rédaction</span><span class="post-tag">📱 Social media</span></div>
-              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;">✉️ Contacter</button>
+              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;" onclick="showPage('messages')">✉️ Contacter</button>
             </div>
           </div>
         </div>
@@ -5833,7 +5833,7 @@
             <p style="font-size:13px;color:var(--text-mid);line-height:1.55;margin-bottom:10px;">J'aide les femmes à structurer leur offre et à passer à 5 chiffres par mois sereinement.</p>
             <div style="display:flex;align-items:center;justify-content:space-between;">
               <div style="display:flex;gap:6px;flex-wrap:wrap;"><span class="post-tag">💼 Business</span><span class="post-tag">📈 Croissance</span></div>
-              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;">✉️ Contacter</button>
+              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;" onclick="showPage('messages')">✉️ Contacter</button>
             </div>
           </div>
         </div>
@@ -10246,7 +10246,7 @@
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ── PROFIL ANNUAIRE ──
   var _profilStep = 1;
   var _profilSecteur = '';
@@ -10485,7 +10485,7 @@
       + '<p style="font-size:13px;color:var(--text-mid);line-height:1.55;margin-bottom:10px;">' + bio + '</p>'
       + '<div style="display:flex;align-items:center;justify-content:space-between;">'
       + '<div style="display:flex;gap:6px;flex-wrap:wrap;">' + tagsHtml + '</div>'
-      + '<button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;" onclick="showPage(\'messaging\')">✉️ Contacter</button>'
+      + '<button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;" onclick="showPage(\'messages\')">✉️ Contacter</button>'
       + '</div></div>';
 
     grid.appendChild(card);
@@ -15254,8 +15254,8 @@
 
   // ── PALMARES ──
   function switchPalmaresTab(tab, btn) {
-    document.querySelectorAll('.palmares-tab').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.palmares-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#page-palmares .palmares-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#page-palmares .palmares-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('panel-' + tab).classList.add('active');
   }
