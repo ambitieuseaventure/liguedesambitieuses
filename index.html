@@ -789,6 +789,18 @@
   .two-col { display:grid; grid-template-columns:1.5fr 1fr; gap:22px; margin-bottom:32px; }
   .three-col { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-bottom:32px; }
 
+  /* ── AGENDA + TODO SIDE BY SIDE ── */
+  .agenda-todo-row { display:grid; grid-template-columns:1fr 280px; gap:22px; margin-bottom:32px; align-items:start; }
+  .todo-aside { height:fit-content; }
+
+  /* ── FORMATIONS CLIQUABLES ── */
+  .progress-course-link {
+    cursor:pointer; border-radius:8px; padding:8px 10px; margin:0 -10px 6px;
+    transition:background .18s;
+  }
+  .progress-course-link:hover { background:rgba(79,133,160,0.07); }
+  .progress-course-link:hover .progress-name { color:var(--steel); }
+
   .card {
     background:white; border:1px solid rgba(20,36,53,0.08);
     border-radius:12px; padding:26px;
@@ -4416,21 +4428,21 @@
         </div>
       </div>
 
-      <div class="three-col">
+      <div class="two-col" style="grid-template-columns:1fr 1fr;">
         <div class="card">
           <div class="card-title">
             Mes formations en cours
             <a onclick="showPage('classroom')">Voir tout →</a>
           </div>
-          <div class="progress-course">
+          <div class="progress-course progress-course-link" onclick="showPage('classroom')" title="Accéder à la formation">
             <div class="progress-name">Les bases de la comptabilité <span class="progress-pct">90%</span></div>
             <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
           </div>
-          <div class="progress-course">
+          <div class="progress-course progress-course-link" onclick="showPage('classroom')" title="Accéder à la formation">
             <div class="progress-name">Lancer son offre de A à Z <span class="progress-pct">68%</span></div>
             <div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div>
           </div>
-          <div class="progress-course">
+          <div class="progress-course progress-course-link" onclick="showPage('classroom')" title="Accéder à la formation">
             <div class="progress-name">Trouver ses premiers clients <span class="progress-pct">42%</span></div>
             <div class="progress-bar"><div class="progress-fill" style="width:42%"></div></div>
           </div>
@@ -4463,49 +4475,10 @@
             <div class="activity-time">1j</div>
           </div>
         </div>
-
-        <!-- ── TO-DO LIST ── -->
-        <div class="card">
-          <div class="card-title">Ma to-do list <a onclick="openAddTodo()">+ Ajouter</a></div>
-          <div class="todo-section-label">Aujourd'hui</div>
-          <div class="todo-item" id="todo-1">
-            <button class="todo-check" onclick="toggleTodo('todo-1')" title="Marquer comme fait"></button>
-            <div class="todo-body">
-              <span class="todo-text">Finir le module 3 – Comptabilité</span>
-              <span class="todo-tag todo-tag-formation">Formation</span>
-            </div>
-          </div>
-          <div class="todo-item" id="todo-2">
-            <button class="todo-check" onclick="toggleTodo('todo-2')" title="Marquer comme fait"></button>
-            <div class="todo-body">
-              <span class="todo-text">Répondre à Clara B.</span>
-              <span class="todo-tag todo-tag-reseau">Réseau</span>
-            </div>
-          </div>
-          <div class="todo-section-label" style="margin-top:14px;">Cette semaine</div>
-          <div class="todo-item" id="todo-3">
-            <button class="todo-check" onclick="toggleTodo('todo-3')" title="Marquer comme fait"></button>
-            <div class="todo-body">
-              <span class="todo-text">Préparer la session Q&amp;R du jeudi</span>
-              <span class="todo-tag todo-tag-event">Événement</span>
-            </div>
-          </div>
-          <div class="todo-item" id="todo-4">
-            <button class="todo-check" onclick="toggleTodo('todo-4')" title="Marquer comme fait"></button>
-            <div class="todo-body">
-              <span class="todo-text">Publier dans la communauté</span>
-              <span class="todo-tag todo-tag-communaute">Communauté</span>
-            </div>
-          </div>
-          <div class="todo-item" id="todo-5">
-            <button class="todo-check" onclick="toggleTodo('todo-5')" title="Marquer comme fait"></button>
-            <div class="todo-body">
-              <span class="todo-text">Finaliser mon plan d'action mensuel</span>
-              <span class="todo-tag todo-tag-strategie">Stratégie</span>
-            </div>
-          </div>
-        </div>
       </div>
+
+      <!-- ── AGENDA + TO-DO LIST ── -->
+      <div class="agenda-todo-row">
 
       <!-- ── AGENDA ── -->
       <div class="agenda-block" id="agenda-block">
@@ -4563,6 +4536,88 @@
         </div>
       </div>
 
+        <!-- ── TO-DO LIST (à droite de l'agenda) ── -->
+        <div class="card todo-aside">
+          <div class="card-title">Ma to-do list <a onclick="openAddTodo()">+ Ajouter</a></div>
+          <div class="todo-section-label">Aujourd'hui</div>
+          <div class="todo-item" id="todo-1">
+            <button class="todo-check" onclick="toggleTodo('todo-1')" title="Marquer comme fait"></button>
+            <div class="todo-body">
+              <span class="todo-text">Finir le module 3 – Comptabilité</span>
+              <span class="todo-tag todo-tag-formation">Formation</span>
+            </div>
+          </div>
+          <div class="todo-item" id="todo-2">
+            <button class="todo-check" onclick="toggleTodo('todo-2')" title="Marquer comme fait"></button>
+            <div class="todo-body">
+              <span class="todo-text">Répondre à Clara B.</span>
+              <span class="todo-tag todo-tag-reseau">Réseau</span>
+            </div>
+          </div>
+          <div class="todo-section-label" style="margin-top:14px;">Cette semaine</div>
+          <div class="todo-item" id="todo-3">
+            <button class="todo-check" onclick="toggleTodo('todo-3')" title="Marquer comme fait"></button>
+            <div class="todo-body">
+              <span class="todo-text">Préparer la session Q&amp;R du jeudi</span>
+              <span class="todo-tag todo-tag-event">Événement</span>
+            </div>
+          </div>
+          <div class="todo-item" id="todo-4">
+            <button class="todo-check" onclick="toggleTodo('todo-4')" title="Marquer comme fait"></button>
+            <div class="todo-body">
+              <span class="todo-text">Publier dans la communauté</span>
+              <span class="todo-tag todo-tag-communaute">Communauté</span>
+            </div>
+          </div>
+          <div class="todo-item" id="todo-5">
+            <button class="todo-check" onclick="toggleTodo('todo-5')" title="Marquer comme fait"></button>
+            <div class="todo-body">
+              <span class="todo-text">Finaliser mon plan d'action mensuel</span>
+              <span class="todo-tag todo-tag-strategie">Stratégie</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end agenda-todo-row -->
+
+    </div>
+  </div>
+
+  <!-- ── MODALE AJOUT TÂCHE ── -->
+  <div id="todo-add-modal" onclick="if(event.target===this)closeTodoModal()" style="display:none;position:fixed;inset:0;background:rgba(20,36,53,0.55);backdrop-filter:blur(4px);z-index:9000;align-items:center;justify-content:center;padding:20px;">
+    <div style="background:white;border-radius:20px;width:480px;max-width:96vw;padding:36px 32px;box-shadow:0 40px 100px rgba(0,0,0,0.25);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy-darkest);">Nouvelle tâche</div>
+        <button onclick="closeTodoModal()" style="width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(20,36,53,0.12);background:transparent;color:var(--text-light);cursor:pointer;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;">×</button>
+      </div>
+      <label style="display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);margin-bottom:6px;">Titre de la tâche</label>
+      <input id="todo-modal-text" type="text" placeholder="Ex : Préparer ma présentation..."
+        style="width:100%;padding:12px 14px;border:1.5px solid rgba(20,36,53,0.15);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;margin-bottom:16px;color:var(--navy-darkest);transition:border-color .2s;"
+        onfocus="this.style.borderColor='var(--gold-bright)'" onblur="this.style.borderColor='rgba(20,36,53,0.15)'"
+        onkeydown="if(event.key==='Enter')submitTodoModal()">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+        <div>
+          <label style="display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);margin-bottom:6px;">Catégorie</label>
+          <select id="todo-modal-cat" style="width:100%;padding:10px 12px;border:1.5px solid rgba(20,36,53,0.15);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--navy-darkest);background:white;outline:none;cursor:pointer;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23142435' opacity='.4'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 12px center;">
+            <option value="formation">Formation</option>
+            <option value="reseau">Réseau</option>
+            <option value="event">Événement</option>
+            <option value="communaute">Communauté</option>
+            <option value="strategie">Stratégie</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);margin-bottom:6px;">Échéance</label>
+          <select id="todo-modal-section" style="width:100%;padding:10px 12px;border:1.5px solid rgba(20,36,53,0.15);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--navy-darkest);background:white;outline:none;cursor:pointer;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23142435' opacity='.4'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 12px center;">
+            <option value="today">Aujourd'hui</option>
+            <option value="week">Cette semaine</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button onclick="closeTodoModal()" style="flex:1;padding:12px;border:1.5px solid rgba(20,36,53,0.12);border-radius:10px;background:transparent;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;color:var(--text-mid);cursor:pointer;">Annuler</button>
+        <button onclick="submitTodoModal()" style="flex:2;padding:12px;background:var(--gold-bright);border:none;border-radius:10px;font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;color:var(--navy-darkest);cursor:pointer;transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Ajouter la tâche ✦</button>
+      </div>
     </div>
   </div>
 
@@ -10145,16 +10200,42 @@
     if (el) el.classList.toggle('done');
   }
   function openAddTodo() {
-    const text = prompt('Nouvelle tâche :');
-    if (!text || !text.trim()) return;
-    const list = document.querySelector('#page-dashboard .three-col .card:last-child');
-    if (!list) return;
-    const id = 'todo-' + Date.now();
+    const modal = document.getElementById('todo-add-modal');
+    document.getElementById('todo-modal-text').value = '';
+    document.getElementById('todo-modal-cat').value = 'formation';
+    document.getElementById('todo-modal-section').value = 'today';
+    modal.style.display = 'flex';
+    setTimeout(() => document.getElementById('todo-modal-text').focus(), 50);
+  }
+  function closeTodoModal() {
+    document.getElementById('todo-add-modal').style.display = 'none';
+  }
+  function submitTodoModal() {
+    const text = document.getElementById('todo-modal-text').value.trim();
+    if (!text) { document.getElementById('todo-modal-text').focus(); return; }
+    const cat = document.getElementById('todo-modal-cat').value;
+    const section = document.getElementById('todo-modal-section').value;
+    const catLabels = { formation:'Formation', reseau:'Réseau', event:'Événement', communaute:'Communauté', strategie:'Stratégie' };
+    const todoCard = document.querySelector('.todo-aside');
+    if (!todoCard) return;
+    // Find or create section label
+    const sectionLabel = section === 'today' ? "Aujourd'hui" : 'Cette semaine';
+    let insertBefore = null;
+    const labels = todoCard.querySelectorAll('.todo-section-label');
+    labels.forEach(lbl => { if (lbl.textContent.trim() === sectionLabel) insertBefore = lbl; });
+    const id = 'todo-u-' + Date.now();
     const item = document.createElement('div');
     item.className = 'todo-item';
     item.id = id;
-    item.innerHTML = `<button class="todo-check" onclick="toggleTodo('${id}')" title="Marquer comme fait"></button><div class="todo-body"><span class="todo-text">${text.trim()}</span></div>`;
-    list.appendChild(item);
+    item.innerHTML = `<button class="todo-check" onclick="toggleTodo('${id}')" title="Marquer comme fait"></button><div class="todo-body"><span class="todo-text">${text}</span><span class="todo-tag todo-tag-${cat}">${catLabels[cat]}</span></div>`;
+    if (insertBefore) {
+      let next = insertBefore.nextSibling;
+      while (next && next.classList && next.classList.contains('todo-item')) next = next.nextSibling;
+      todoCard.insertBefore(item, next);
+    } else {
+      todoCard.appendChild(item);
+    }
+    closeTodoModal();
   }
 
   function showPage(page) {
