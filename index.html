@@ -1379,27 +1379,67 @@
     margin-left:8px;
   }
 
-  .notebook-list { display:flex; flex-direction:column; gap:14px; }
-  .notebook-item {
-    background:white;
-    border:1px solid rgba(20,36,53,0.09);
-    border-radius:12px;
-    padding:16px;
+  .notebook-toolbar { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+  .notebook-theme-tags { display:flex; gap:8px; flex-wrap:wrap; }
+  .notebook-theme-tag {
+    border:1px solid rgba(20,36,53,0.14); background:white; color:var(--text-mid);
+    border-radius:18px; font-size:12px; font-weight:600; padding:6px 12px; cursor:pointer;
+  }
+  .notebook-theme-tag.active { background:var(--navy-darkest); color:white; border-color:var(--navy-darkest); }
+  .notebook-sort-wrap { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-light); font-weight:600; }
+  .notebook-sort-wrap select {
+    border:1px solid rgba(20,36,53,0.12); border-radius:8px; background:white; color:var(--navy);
+    font-size:12px; font-weight:600; padding:6px 10px;
+  }
+
+  .notebook-sections { display:flex; flex-direction:column; gap:16px; }
+  .notebook-section-box {
+    background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(250,248,242,0.95));
+    border:1px solid rgba(20,36,53,0.08); border-radius:14px; padding:16px;
+  }
+  .notebook-section-title {
+    font-family:'Playfair Display',serif; font-size:20px; color:var(--navy-darkest);
+    margin-bottom:12px;
+  }
+
+  .notebook-list, .notebook-ideas-list, .notebook-actions-list { display:flex; flex-direction:column; gap:14px; }
+  .notebook-item, .notebook-idea-item {
+    background:white; border:1px solid rgba(20,36,53,0.09); border-radius:12px; padding:16px;
     box-shadow:0 2px 10px rgba(20,36,53,0.05);
   }
-  .notebook-header {
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:10px;
-    margin-bottom:10px;
-  }
-  .notebook-title {
-    font-size:16px;
-    font-weight:700;
-    color:var(--text-dark);
-  }
+  .notebook-header { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:10px; }
+  .notebook-title { font-size:16px; font-weight:700; color:var(--text-dark); }
   .notebook-date { font-size:12px; color:var(--text-light); }
+  .notebook-theme-chip {
+    display:inline-block; margin-right:6px; margin-bottom:8px; font-size:10px; font-weight:700;
+    border-radius:20px; padding:3px 8px; background:rgba(79,133,160,0.12); color:var(--navy);
+  }
+
+  .notebook-idea-row { display:flex; align-items:center; gap:8px; justify-content:space-between; }
+  .notebook-idea-status {
+    border:1px solid rgba(20,36,53,0.12); border-radius:8px; padding:6px 10px; font-size:12px;
+    color:var(--navy); background:white; font-weight:600;
+  }
+
+  .notebook-actions-input-row { display:flex; gap:8px; margin-bottom:12px; }
+  .notebook-actions-input-row input {
+    flex:1; border:1px solid rgba(20,36,53,0.15); border-radius:8px; padding:10px;
+    font-size:13px; font-family:'DM Sans',sans-serif;
+  }
+  .notebook-action-item {
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:white; border:1px solid rgba(20,36,53,0.09); border-radius:10px; padding:10px 12px;
+  }
+  .notebook-action-text { cursor:pointer; color:var(--text-dark); }
+  .notebook-action-item.done .notebook-action-text { text-decoration:line-through; color:var(--text-light); }
+  .notebook-action-del { border:none; background:transparent; color:var(--text-light); cursor:pointer; font-size:14px; }
+
+  .notebook-monthly-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+  .notebook-kpi {
+    background:white; border:1px solid rgba(20,36,53,0.09); border-radius:10px; padding:12px;
+  }
+  .notebook-kpi-label { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-light); font-weight:700; }
+  .notebook-kpi-value { font-size:22px; font-weight:700; color:var(--navy-darkest); margin-top:4px; }
 
   /* ── HOTLINE VOCAL ── */
   @keyframes hlPulse {
@@ -5344,13 +5384,50 @@
     <div class="page-content">
       <div class="section-header">
         <div class="section-title">Mon carnet <em>d'apprentissage</em></div>
-        <div class="section-sub">Retrouve et ajuste tous tes pense-bêtes personnels, ressource par ressource.</div>
+        <div class="section-sub">Ton espace structuré pour transformer tes notes en actions et en progrès mensuels.</div>
       </div>
-      <div class="notebook-list" id="notebook-list"></div>
+
+      <div class="notebook-toolbar">
+        <div class="notebook-theme-tags" id="notebook-theme-tags"></div>
+        <div class="notebook-sort-wrap">
+          <span>Trier :</span>
+          <select id="notebook-sort" onchange="setNotebookSort(this.value)">
+            <option value="recent">Plus récentes</option>
+            <option value="oldest">Plus anciennes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="notebook-sections">
+        <div class="notebook-section-box">
+          <div class="notebook-section-title">Section 1 · Mes déclics récents</div>
+          <div class="notebook-list" id="notebook-declics-list"></div>
+        </div>
+
+        <div class="notebook-section-box">
+          <div class="notebook-section-title">Section 2 · Mes idées à tester</div>
+          <div class="notebook-ideas-list" id="notebook-ideas-list"></div>
+        </div>
+
+        <div class="notebook-section-box">
+          <div class="notebook-section-title">Section 3 · Mes actions concrètes</div>
+          <div class="notebook-actions-input-row">
+            <input id="notebook-action-input" type="text" placeholder="Ex: Tester une nouvelle accroche sur Instagram" />
+            <button class="dl-btn" onclick="addNotebookAction()">Ajouter</button>
+          </div>
+          <div class="notebook-actions-list" id="notebook-actions-list"></div>
+        </div>
+
+        <div class="notebook-section-box">
+          <div class="notebook-section-title">Section 4 · Bilan automatique mensuel</div>
+          <div class="notebook-monthly-summary" id="notebook-monthly-summary"></div>
+        </div>
+      </div>
+
       <div id="notebook-empty" style="display:none;text-align:center;padding:56px 20px;background:white;border:1px solid rgba(20,36,53,0.08);border-radius:12px;">
         <div style="font-size:38px;margin-bottom:10px;">📝</div>
         <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text-dark);margin-bottom:8px;">Ton carnet est vide pour le moment</div>
-        <div style="font-size:14px;color:var(--text-light);">Rends-toi dans l'onglet « Mes ressources » pour enregistrer tes premiers pense-bêtes.</div>
+        <div style="font-size:14px;color:var(--text-light);">Ajoute des pense-bêtes dans tes ressources/formations, puis crée des actions concrètes ici.</div>
       </div>
     </div>
   </div>
@@ -5430,6 +5507,14 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:68%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px">Continuer · 68%</button>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-lancer-offre">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-lancer-offre" data-note-field="retains" data-resource-id="course-lancer-offre" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-lancer-offre">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-lancer-offre" data-note-field="apply" data-resource-id="course-lancer-offre" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-lancer-offre','Formation · Lancer son offre de A à Z')">Enregistrer</button><span class="notes-status" id="note-status-course-lancer-offre">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
 
@@ -5446,6 +5531,14 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:42%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px">Continuer · 42%</button>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-premiers-clients">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-premiers-clients" data-note-field="retains" data-resource-id="course-premiers-clients" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-premiers-clients">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-premiers-clients" data-note-field="apply" data-resource-id="course-premiers-clients" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-premiers-clients','Formation · Trouver ses premiers clients')">Enregistrer</button><span class="notes-status" id="note-status-course-premiers-clients">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
 
@@ -5462,6 +5555,14 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:15%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px">Continuer · 15%</button>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-instagram">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-instagram" data-note-field="retains" data-resource-id="course-instagram" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-instagram">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-instagram" data-note-field="apply" data-resource-id="course-instagram" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-instagram','Formation · Stratégie Instagram pour son business')">Enregistrer</button><span class="notes-status" id="note-status-course-instagram">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
 
@@ -5478,6 +5579,14 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:90%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px;background:var(--steel)">Presque terminé · 90%</button>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-compta">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-compta" data-note-field="retains" data-resource-id="course-compta" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-compta">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-compta" data-note-field="apply" data-resource-id="course-compta" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-compta','Formation · Les bases de la comptabilité')">Enregistrer</button><span class="notes-status" id="note-status-course-compta">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
 
@@ -5526,6 +5635,14 @@
             </div>
             <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:100%"></div></div>
             <button class="btn-primary" style="width:100%;padding:10px;background:var(--navy-darkest)">Revoir la formation ✓</button>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-positionnement">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-positionnement" data-note-field="retains" data-resource-id="course-positionnement" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-positionnement">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-positionnement" data-note-field="apply" data-resource-id="course-positionnement" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-positionnement','Formation · Positionnement clair & différenciant')">Enregistrer</button><span class="notes-status" id="note-status-course-positionnement">Aucune note enregistrée</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -14759,6 +14876,19 @@
   // Init posts on DOMContentLoaded
 
   var currentUserId = 'user-sophie-a';
+  var notebookThemeFilter = 'tous';
+  var notebookSort = 'recent';
+
+  var NOTE_THEME_LABELS = {
+    offre:'💎 Offre & pricing', clients:'🎯 Trouver des clients', marketing:'📱 Marketing & réseaux',
+    finance:'💰 Finance & gestion', mindset:'🧠 Mindset', organisation:'🗂️ Organisation'
+  };
+
+  function escapeHtml(v) {
+    return String(v || '').replace(/[&<>"']/g, function(c) {
+      return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c];
+    });
+  }
 
   function getResourceNotesStore() {
     var raw = localStorage.getItem('resource_notes_db');
@@ -14770,10 +14900,51 @@
     localStorage.setItem('resource_notes_db', JSON.stringify(store || {}));
   }
 
+  function getIdeasStatusStore() {
+    var raw = localStorage.getItem('notebook_ideas_status_db');
+    if (!raw) return {};
+    try { return JSON.parse(raw) || {}; } catch(e) { return {}; }
+  }
+
+  function setIdeasStatusStore(store) {
+    localStorage.setItem('notebook_ideas_status_db', JSON.stringify(store || {}));
+  }
+
+  function getActionsStore() {
+    var raw = localStorage.getItem('notebook_actions_db');
+    if (!raw) return [];
+    try {
+      var all = JSON.parse(raw) || {};
+      return all[currentUserId] || [];
+    } catch(e) { return []; }
+  }
+
+  function setActionsStore(items) {
+    var raw = localStorage.getItem('notebook_actions_db');
+    var all = {};
+    try { all = JSON.parse(raw) || {}; } catch(e) { all = {}; }
+    all[currentUserId] = items || [];
+    localStorage.setItem('notebook_actions_db', JSON.stringify(all));
+  }
+
   function formatNoteDate(iso) {
     if (!iso) return '-';
     var d = new Date(iso);
     return d.toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'numeric' }) + ' · ' + d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  function deriveNoteMeta(resourceId, resourceTitle) {
+    var field = document.querySelector('[data-note-field="retains"][data-resource-id="' + resourceId + '"]') ||
+                document.querySelector('[data-note-field="apply"][data-resource-id="' + resourceId + '"]');
+    var card = field ? field.closest('.resource-card, .course-card') : null;
+    var theme = card && card.dataset ? (card.dataset.theme || 'autre') : 'autre';
+    var contentType = (resourceId || '').indexOf('course-') === 0 ? 'formation' : 'ressource';
+    return {
+      theme: theme,
+      themeLabel: NOTE_THEME_LABELS[theme] || '🏷️ Autre',
+      contentType: contentType,
+      resourceTitle: resourceTitle || (contentType === 'formation' ? 'Formation' : 'Ressource')
+    };
   }
 
   function saveResourceNote(resourceId, resourceTitle) {
@@ -14782,12 +14953,16 @@
     if (!retainEl || !applyEl) return;
     var store = getResourceNotesStore();
     var key = currentUserId + '::' + resourceId;
+    var meta = deriveNoteMeta(resourceId, resourceTitle);
     store[key] = {
       userId: currentUserId,
       resourceId: resourceId,
-      resourceTitle: resourceTitle,
+      resourceTitle: meta.resourceTitle,
       retains: retainEl.value.trim(),
       apply: applyEl.value.trim(),
+      theme: meta.theme,
+      themeLabel: meta.themeLabel,
+      contentType: meta.contentType,
       updatedAt: new Date().toISOString()
     };
     setResourceNotesStore(store);
@@ -14810,42 +14985,207 @@
     });
   }
 
-  function renderNotebookPage() {
-    var list = document.getElementById('notebook-list');
-    var empty = document.getElementById('notebook-empty');
-    if (!list || !empty) return;
-    var store = getResourceNotesStore();
-    var notes = Object.values(store).filter(function(note) {
+  function setNotebookSort(value) {
+    notebookSort = value === 'oldest' ? 'oldest' : 'recent';
+    renderNotebookPage();
+  }
+
+  function setNotebookThemeFilter(value) {
+    notebookThemeFilter = value || 'tous';
+    renderNotebookPage();
+  }
+
+  function getUserNotes() {
+    return Object.values(getResourceNotesStore()).filter(function(note) {
       return note && note.userId === currentUserId && (note.retains || note.apply);
-    }).sort(function(a, b) {
-      return new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0);
     });
+  }
 
-    list.innerHTML = '';
-    if (!notes.length) {
-      empty.style.display = 'block';
-      return;
-    }
-    empty.style.display = 'none';
+  function getFilteredSortedNotes() {
+    var notes = getUserNotes().filter(function(note) {
+      return notebookThemeFilter === 'tous' || note.theme === notebookThemeFilter;
+    });
+    notes.sort(function(a, b) {
+      return notebookSort === 'oldest'
+        ? new Date(a.updatedAt || 0) - new Date(b.updatedAt || 0)
+        : new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0);
+    });
+    return notes;
+  }
 
-    notes.forEach(function(note) {
-      var item = document.createElement('div');
-      item.className = 'notebook-item';
-      item.innerHTML = ''
-        + '<div class="notebook-header"><div class="notebook-title">' + (note.resourceTitle || 'Ressource') + '</div><div class="notebook-date">Modifié le ' + formatNoteDate(note.updatedAt) + '</div></div>'
+  function renderNotebookThemeTags(notes) {
+    var wrap = document.getElementById('notebook-theme-tags');
+    if (!wrap) return;
+    var themesMap = { tous: 'Tous' };
+    notes.forEach(function(n) { if (n.theme) themesMap[n.theme] = n.themeLabel || NOTE_THEME_LABELS[n.theme] || n.theme; });
+    var keys = Object.keys(themesMap);
+    wrap.innerHTML = keys.map(function(themeKey) {
+      var active = themeKey === notebookThemeFilter ? ' active' : '';
+      return '<button class="notebook-theme-tag' + active + '" data-theme="' + themeKey + '">' + escapeHtml(themesMap[themeKey]) + '</button>';
+    }).join('');
+    wrap.querySelectorAll('.notebook-theme-tag').forEach(function(btn) {
+      btn.addEventListener('click', function() { setNotebookThemeFilter(btn.dataset.theme || 'tous'); });
+    });
+  }
+
+  function renderNotebookDeclics(notes) {
+    var list = document.getElementById('notebook-declics-list');
+    if (!list) return;
+    list.innerHTML = notes.map(function(note) {
+      return ''
+        + '<div class="notebook-item">'
+        + '<div class="notebook-header"><div><div class="notebook-title">' + escapeHtml(note.resourceTitle || 'Contenu') + '</div><span class="notebook-theme-chip">' + escapeHtml(note.themeLabel || NOTE_THEME_LABELS[note.theme] || '🏷️ Autre') + '</span></div><div class="notebook-date">' + formatNoteDate(note.updatedAt) + '</div></div>'
         + '<label class="notes-field-label" for="notebook-retain-' + note.resourceId + '">Ce que je retiens</label>'
-        + '<textarea class="notes-field" id="notebook-retain-' + note.resourceId + '">' + (note.retains || '') + '</textarea>'
+        + '<textarea class="notes-field" id="notebook-retain-' + note.resourceId + '">' + escapeHtml(note.retains || '') + '</textarea>'
         + '<label class="notes-field-label" for="notebook-apply-' + note.resourceId + '">Comment je vais l\'appliquer</label>'
-        + '<textarea class="notes-field" id="notebook-apply-' + note.resourceId + '">' + (note.apply || '') + '</textarea>'
-        + '<div style="display:flex;align-items:center;"><button class="dl-btn notebook-save-btn" data-resource-id="' + note.resourceId + '" data-resource-title="' + (note.resourceTitle || '') + '">Enregistrer</button><span class="notes-status" id="notebook-status-' + note.resourceId + '"></span></div>';
-      list.appendChild(item);
-    });
+        + '<textarea class="notes-field" id="notebook-apply-' + note.resourceId + '">' + escapeHtml(note.apply || '') + '</textarea>'
+        + '<div style="display:flex;align-items:center;"><button class="dl-btn notebook-save-btn" data-resource-id="' + note.resourceId + '" data-resource-title="' + escapeHtml(note.resourceTitle || '') + '">Enregistrer</button><span class="notes-status" id="notebook-status-' + note.resourceId + '"></span></div>'
+        + '</div>';
+    }).join('') || '<div style="font-size:13px;color:var(--text-light);">Aucun déclic pour les filtres actuels.</div>';
 
     list.querySelectorAll('.notebook-save-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        saveNotebookNote(btn.dataset.resourceId, btn.dataset.resourceTitle || 'Ressource');
+        saveNotebookNote(btn.dataset.resourceId, btn.dataset.resourceTitle || 'Contenu');
       });
     });
+  }
+
+  function renderNotebookIdeas(notes) {
+    var list = document.getElementById('notebook-ideas-list');
+    if (!list) return;
+    var ideasStatus = getIdeasStatusStore();
+    var ideas = notes.filter(function(n) { return !!(n.apply || '').trim(); });
+    list.innerHTML = ideas.map(function(note) {
+      var key = currentUserId + '::' + note.resourceId;
+      var status = ideasStatus[key] || 'a-tester';
+      return ''
+        + '<div class="notebook-idea-item">'
+        +   '<div class="notebook-idea-row"><strong style="font-size:14px;color:var(--text-dark);">' + escapeHtml(note.resourceTitle || 'Contenu') + '</strong>'
+        +   '<select class="notebook-idea-status" data-resource-id="' + note.resourceId + '">'
+        +   '<option value="a-tester"' + (status === 'a-tester' ? ' selected' : '') + '>À tester</option>'
+        +   '<option value="en-cours"' + (status === 'en-cours' ? ' selected' : '') + '>En cours</option>'
+        +   '<option value="teste"' + (status === 'teste' ? ' selected' : '') + '>Testé</option>'
+        +   '</select></div>'
+        +   '<span class="notebook-theme-chip">' + escapeHtml(note.themeLabel || NOTE_THEME_LABELS[note.theme] || '🏷️ Autre') + '</span>'
+        +   '<div style="font-size:13px;color:var(--text-mid);line-height:1.6;">' + escapeHtml(note.apply || '') + '</div>'
+        + '</div>';
+    }).join('') || '<div style="font-size:13px;color:var(--text-light);">Ajoute des notes “Comment je vais l\'appliquer” pour voir tes idées ici.</div>';
+
+    list.querySelectorAll('.notebook-idea-status').forEach(function(sel) {
+      sel.addEventListener('change', function() {
+        updateIdeaStatus(sel.dataset.resourceId, sel.value);
+      });
+    });
+  }
+
+  function updateIdeaStatus(resourceId, status) {
+    var store = getIdeasStatusStore();
+    store[currentUserId + '::' + resourceId] = status;
+    setIdeasStatusStore(store);
+    renderNotebookPage();
+  }
+
+  function addNotebookAction() {
+    var input = document.getElementById('notebook-action-input');
+    if (!input) return;
+    var txt = (input.value || '').trim();
+    if (!txt) return;
+    var actions = getActionsStore();
+    actions.unshift({ id: 'a_' + Date.now(), text: txt, done: false, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
+    setActionsStore(actions);
+    input.value = '';
+    renderNotebookPage();
+  }
+
+  function toggleNotebookAction(actionId) {
+    var actions = getActionsStore().map(function(a) {
+      if (a.id === actionId) { a.done = !a.done; a.updatedAt = new Date().toISOString(); }
+      return a;
+    });
+    setActionsStore(actions);
+    renderNotebookPage();
+  }
+
+  function deleteNotebookAction(actionId) {
+    var actions = getActionsStore().filter(function(a) { return a.id !== actionId; });
+    setActionsStore(actions);
+    renderNotebookPage();
+  }
+
+  function renderNotebookActions() {
+    var list = document.getElementById('notebook-actions-list');
+    if (!list) return;
+    var actions = getActionsStore();
+    list.innerHTML = actions.map(function(action) {
+      return ''
+        + '<div class="notebook-action-item ' + (action.done ? 'done' : '') + '">'
+        + '<div class="notebook-action-text" data-action-toggle="' + action.id + '">' + escapeHtml(action.text) + '</div>'
+        + '<button class="notebook-action-del" data-action-delete="' + action.id + '">✕</button>'
+        + '</div>';
+    }).join('') || '<div style="font-size:13px;color:var(--text-light);">Ajoute tes premières actions concrètes.</div>';
+
+    list.querySelectorAll('[data-action-toggle]').forEach(function(el) {
+      el.addEventListener('click', function() { toggleNotebookAction(el.dataset.actionToggle); });
+    });
+    list.querySelectorAll('[data-action-delete]').forEach(function(el) {
+      el.addEventListener('click', function() { deleteNotebookAction(el.dataset.actionDelete); });
+    });
+  }
+
+  function isInCurrentMonth(iso) {
+    var d = new Date(iso || 0);
+    var now = new Date();
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }
+
+  function renderMonthlySummary(notes) {
+    var box = document.getElementById('notebook-monthly-summary');
+    if (!box) return;
+    var monthNotes = notes.filter(function(n) { return isInCurrentMonth(n.updatedAt); });
+    var actions = getActionsStore();
+    var monthActions = actions.filter(function(a) { return isInCurrentMonth(a.updatedAt || a.createdAt); });
+    var doneActions = monthActions.filter(function(a) { return a.done; }).length;
+    var notDoneActions = monthActions.filter(function(a) { return !a.done; }).length;
+    var openActionsGlobal = actions.filter(function(a) { return !a.done; }).length;
+
+    var themesCount = {};
+    monthNotes.forEach(function(n) { themesCount[n.theme] = (themesCount[n.theme] || 0) + 1; });
+    var dominantTheme = '—';
+    Object.keys(themesCount).sort(function(a,b){ return themesCount[b]-themesCount[a]; }).slice(0,1).forEach(function(k){ dominantTheme = NOTE_THEME_LABELS[k] || k; });
+
+    var ideasCount = monthNotes.filter(function(n) { return !!(n.apply || '').trim(); }).length;
+    var contentsCount = Object.keys(monthNotes.reduce(function(acc, n){ acc[n.resourceId] = true; return acc; }, {})).length;
+
+    var data = [
+      ['Contenus consultés', contentsCount],
+      ['Notes créées', monthNotes.length],
+      ['Idées à tester', ideasCount],
+      ['Actions réalisées', doneActions],
+      ['Actions non réalisées', notDoneActions],
+      ['Actions non terminées', openActionsGlobal],
+      ['Thème dominant', dominantTheme]
+    ];
+
+    box.innerHTML = data.map(function(item) {
+      return '<div class="notebook-kpi"><div class="notebook-kpi-label">' + escapeHtml(item[0]) + '</div><div class="notebook-kpi-value">' + escapeHtml(item[1]) + '</div></div>';
+    }).join('');
+  }
+
+  function renderNotebookPage() {
+    var empty = document.getElementById('notebook-empty');
+    if (!empty) return;
+
+    var allNotes = getUserNotes();
+    var filteredNotes = getFilteredSortedNotes();
+    renderNotebookThemeTags(allNotes);
+    renderNotebookDeclics(filteredNotes);
+    renderNotebookIdeas(filteredNotes);
+    renderNotebookActions();
+    renderMonthlySummary(allNotes);
+
+    var noNotes = allNotes.length === 0;
+    var noActions = getActionsStore().length === 0;
+    empty.style.display = (noNotes && noActions) ? 'block' : 'none';
   }
 
   function saveNotebookNote(resourceId, resourceTitle) {
@@ -14854,12 +15194,17 @@
     if (!retainEl || !applyEl) return;
     var store = getResourceNotesStore();
     var key = currentUserId + '::' + resourceId;
+    var existing = store[key] || {};
+    var meta = deriveNoteMeta(resourceId, resourceTitle || existing.resourceTitle);
     store[key] = {
       userId: currentUserId,
       resourceId: resourceId,
-      resourceTitle: resourceTitle,
+      resourceTitle: resourceTitle || existing.resourceTitle || meta.resourceTitle,
       retains: retainEl.value.trim(),
       apply: applyEl.value.trim(),
+      theme: existing.theme || meta.theme,
+      themeLabel: existing.themeLabel || meta.themeLabel,
+      contentType: existing.contentType || meta.contentType,
       updatedAt: new Date().toISOString()
     };
     setResourceNotesStore(store);
