@@ -1395,7 +1395,78 @@
     font-size:12px; font-weight:700;
     padding:6px 12px; cursor:pointer;
     transition:all .18s ease;
+  .notebook-theme-tag:hover { transform:translateY(-1px); box-shadow:0 6px 14px rgba(20,36,53,0.08); }
+  .notebook-theme-tag.active {
+    background:linear-gradient(120deg,var(--navy-darkest),var(--steel));
+    color:white; border-color:transparent;
+  .notebook-sort-wrap { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-mid); font-weight:700; }
+  .notebook-sort-wrap select {
+    border:1px solid rgba(20,36,53,0.12); border-radius:999px; background:white; color:var(--navy);
+    font-size:12px; font-weight:700; padding:7px 12px;
   }
+
+  .notebook-sections { display:flex; flex-direction:column; gap:18px; }
+  .notebook-duo-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .notebook-section-box {
+    background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,250,243,.92));
+    border:1px solid rgba(20,36,53,0.08); border-radius:16px; padding:18px;
+    box-shadow:0 8px 24px rgba(20,36,53,0.06);
+  .notebook-section-title {
+    font-family:'Playfair Display',serif; font-size:24px; color:var(--navy-darkest);
+    margin-bottom:12px; letter-spacing:.01em;
+  }
+
+  .notebook-list, .notebook-ideas-list, .notebook-actions-list { display:flex; flex-direction:column; gap:14px; }
+  .notebook-item, .notebook-idea-item {
+    background:white; border:1px solid rgba(20,36,53,0.08); border-radius:14px; padding:16px;
+    box-shadow:0 4px 16px rgba(20,36,53,0.06);
+  }
+  .notebook-header { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:10px; }
+  .notebook-title { font-size:16px; font-weight:700; color:var(--text-dark); }
+  .notebook-theme-chip {
+    display:inline-block; margin-right:6px; margin-bottom:8px; font-size:10px; font-weight:700;
+    border-radius:20px; padding:4px 9px;
+    background:linear-gradient(120deg,rgba(79,133,160,0.16),rgba(252,186,51,0.14)); color:var(--navy);
+  }
+  .notebook-theme-group-title {
+    font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700;
+    color:var(--text-light); margin:8px 0 2px;
+  }
+  @media (max-width: 980px) {
+    .notebook-duo-grid { grid-template-columns:1fr; }
+  }
+
+  .notebook-idea-row { display:flex; align-items:center; gap:8px; justify-content:space-between; }
+  .notebook-idea-status {
+    border:1px solid rgba(20,36,53,0.12); border-radius:999px; padding:7px 11px; font-size:12px;
+    color:var(--navy); background:white; font-weight:700;
+  }
+
+  .notebook-actions-input-row { display:flex; gap:8px; margin-bottom:12px; }
+  .notebook-actions-input-row input {
+    flex:1; border:1px solid rgba(20,36,53,0.15); border-radius:10px; padding:10px;
+    font-size:13px; font-family:'DM Sans',sans-serif; background:rgba(255,255,255,0.9);
+  }
+  .notebook-actions-input-row select {
+    border:1px solid rgba(20,36,53,0.15); border-radius:10px; padding:10px;
+    font-size:13px; font-family:'DM Sans',sans-serif; color:var(--navy); background:white;
+    min-width:130px;
+  }
+  .notebook-action-item {
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:white; border:1px solid rgba(20,36,53,0.09); border-radius:12px; padding:10px 12px;
+  }
+  .notebook-action-text { cursor:pointer; color:var(--text-dark); font-weight:600; }
+  .notebook-action-item.done .notebook-action-text { text-decoration:line-through; color:var(--text-light); }
+  .notebook-action-del { border:none; background:transparent; color:var(--text-light); cursor:pointer; font-size:14px; }
+
+  .notebook-monthly-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+  .notebook-kpi {
+    background:linear-gradient(180deg,white,rgba(250,248,242,.95));
+    border:1px solid rgba(20,36,53,0.08); border-radius:12px; padding:12px;
+  }
+  .notebook-kpi-label { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-light); font-weight:700; }
+  .notebook-kpi-value { font-size:22px; font-weight:700; color:var(--navy-darkest); margin-top:4px; }
   .notebook-theme-tag:hover { transform:translateY(-1px); box-shadow:0 6px 14px rgba(20,36,53,0.08); }
   .notebook-theme-tag.active {
     background:linear-gradient(120deg,var(--navy-darkest),var(--steel));
@@ -5319,9 +5390,56 @@
               <span style="font-size:10px;background:rgba(79,133,160,0.12);color:var(--navy);padding:2px 7px;border-radius:20px;font-weight:600;">🎯 Clients</span>
               <span style="font-size:10px;background:rgba(235,193,76,0.15);color:#7a5c00;padding:2px 7px;border-radius:20px;font-weight:600;">🟡 Débutant</span>
             </div>
-            <h4>Définir son client idéal</h4>
-            <p>Le guide ultime pour créer ton persona et parler à ceux qui ont besoin de toi.</p>
-            <div class="resource-meta"><span class="resource-size">PDF · 3.8 Mo</span><button class="dl-btn">⬇ Télécharger</button></div>
+        <div class="section-sub">Un carnet créatif et chaleureux pour capter tes déclics, tester tes idées et suivre ton évolution mois après mois.</div>
+      </div>
+
+      <div class="notebook-toolbar">
+        <div class="notebook-theme-tags" id="notebook-theme-tags"></div>
+        <div class="notebook-sort-wrap">
+          <span>Trier :</span>
+          <select id="notebook-sort" onchange="setNotebookSort(this.value)">
+            <option value="recent">Plus récentes</option>
+            <option value="oldest">Plus anciennes</option>
+          </select>
+        </div>
+
+      <div class="notebook-sections">
+        <div class="notebook-duo-grid">
+          <div class="notebook-section-box">
+            <div class="notebook-section-title">✨ Mes déclics récents</div>
+            <div class="notebook-list" id="notebook-declics-list"></div>
+          </div>
+
+          <div class="notebook-section-box">
+            <div class="notebook-section-title">💡 Mes idées à tester</div>
+            <div class="notebook-ideas-list" id="notebook-ideas-list"></div>
+          </div>
+        </div>
+
+        <div class="notebook-section-box">
+          <div class="notebook-section-title">✅ Mes actions concrètes</div>
+          <div class="notebook-actions-input-row">
+            <select id="notebook-action-theme">
+              <option value="finances">Finances</option>
+              <option value="marketing">Marketing</option>
+              <option value="vente">Vente</option>
+              <option value="mindset">Mindset</option>
+              <option value="gestion">Gestion</option>
+              <option value="autre">Autre</option>
+            </select>
+            <input id="notebook-action-input" type="text" placeholder="Ex: Tester une nouvelle accroche sur Instagram" />
+            <button class="dl-btn" onclick="addNotebookAction()">Ajouter</button>
+          </div>
+          <div class="notebook-actions-list" id="notebook-actions-list"></div>
+        </div>
+
+        <div class="notebook-section-box">
+          <div class="notebook-section-title">📊 Bilan automatique mensuel</div>
+          <div class="notebook-monthly-summary" id="notebook-monthly-summary"></div>
+        </div>
+      </div>
+
+        <div style="font-size:14px;color:var(--text-light);">Ajoute des pense-bêtes dans tes ressources/formations, puis crée des actions concrètes ici.</div>
           </div>
         </div>
 
@@ -5407,6 +5525,46 @@
         <div style="font-size:14px;color:var(--text-light);" id="resources-empty-sub">Essaie une autre combinaison de filtres</div>
       </div>
 
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-lancer-offre">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-lancer-offre" data-note-field="retains" data-resource-id="course-lancer-offre" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-lancer-offre">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-lancer-offre" data-note-field="apply" data-resource-id="course-lancer-offre" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-lancer-offre','Formation · Lancer son offre de A à Z')">Enregistrer</button><span class="notes-status" id="note-status-course-lancer-offre">Aucune note enregistrée</span></div>
+            </div>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-premiers-clients">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-premiers-clients" data-note-field="retains" data-resource-id="course-premiers-clients" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-premiers-clients">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-premiers-clients" data-note-field="apply" data-resource-id="course-premiers-clients" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-premiers-clients','Formation · Trouver ses premiers clients')">Enregistrer</button><span class="notes-status" id="note-status-course-premiers-clients">Aucune note enregistrée</span></div>
+            </div>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-instagram">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-instagram" data-note-field="retains" data-resource-id="course-instagram" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-instagram">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-instagram" data-note-field="apply" data-resource-id="course-instagram" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-instagram','Formation · Stratégie Instagram pour son business')">Enregistrer</button><span class="notes-status" id="note-status-course-instagram">Aucune note enregistrée</span></div>
+            </div>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-compta">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-compta" data-note-field="retains" data-resource-id="course-compta" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-compta">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-compta" data-note-field="apply" data-resource-id="course-compta" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-compta','Formation · Les bases de la comptabilité')">Enregistrer</button><span class="notes-status" id="note-status-course-compta">Aucune note enregistrée</span></div>
+            </div>
+            <div class="notes-card">
+              <div class="notes-card-title">Mon pense-bête</div>
+              <label class="notes-field-label" for="retain-course-positionnement">Ce que je retiens</label>
+              <textarea class="notes-field" id="retain-course-positionnement" data-note-field="retains" data-resource-id="course-positionnement" placeholder="Les idées importantes à retenir de cette formation..."></textarea>
+              <label class="notes-field-label" for="apply-course-positionnement">Comment je vais l'appliquer</label>
+              <textarea class="notes-field" id="apply-course-positionnement" data-note-field="apply" data-resource-id="course-positionnement" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
+              <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-positionnement','Formation · Positionnement clair & différenciant')">Enregistrer</button><span class="notes-status" id="note-status-course-positionnement">Aucune note enregistrée</span></div>
+            </div>
     </div>
   </div>
 
@@ -14734,35 +14892,319 @@
   }
 
   function qrTogglePrio(btn) {
-    btn.classList.toggle('active');
-    var card = btn.closest('.qr-pre-card');
-    if (card) card.classList.toggle('prio');
+  var notebookThemeFilter = 'tous';
+  var notebookSort = 'recent';
+
+  var NOTE_THEME_LABELS = {
+    finances:'Finances', marketing:'Marketing', vente:'Vente', mindset:'Mindset', gestion:'Gestion', autre:'Autre'
+  };
+  var NOTE_THEME_EMOJIS = {
+    finances:'💰', marketing:'📣', vente:'🤝', mindset:'🧠', gestion:'🗂️', autre:'🏷️'
+  };
+
+  function normalizeNotebookTheme(raw) {
+    var t = (raw || '').toLowerCase();
+    if (t === 'finance') return 'finances';
+    if (t === 'organisation') return 'gestion';
+    if (t === 'offre' || t === 'clients' || t === 'vente') return 'vente';
+    if (t === 'marketing') return 'marketing';
+    if (t === 'mindset') return 'mindset';
+    if (t === 'finances' || t === 'gestion' || t === 'autre') return t;
+    return 'autre';
   }
 
-  function qrDeletePre(btn) {
-    var card = btn.closest('.qr-pre-card');
-    if (card) card.remove();
+  function formatNotebookTheme(themeKey) {
+    var key = normalizeNotebookTheme(themeKey);
+    return (NOTE_THEME_EMOJIS[key] || '🏷️') + ' ' + (NOTE_THEME_LABELS[key] || 'Autre');
   }
 
-  function qrOpenArchive(row, date) {
-    alert('Transcript de la session du ' + date + ' — fonctionnalité d\'export à venir.');
+  function escapeHtml(v) {
+    return String(v || '').replace(/[&<>"']/g, function(c) {
+      return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c];
+    });
+  }
+  function getIdeasStatusStore() {
+    var raw = localStorage.getItem('notebook_ideas_status_db');
+    if (!raw) return {};
+    try { return JSON.parse(raw) || {}; } catch(e) { return {}; }
   }
 
-  // ── COMMUNAUTÉ ADMIN ──
-  var adminPostsData = {
-    '🎯 Objectifs & vision': [
-      { id:1, author:'Sophie Andreu', avatar:'S', time:'il y a 5 min', text:"Qui a déjà défini ses objectifs annuels avec la méthode OKR ? J'aimerais vos retours avant de me lancer 🎯", pinned:false, isAdmin:false, replies:[
-        { author:'Léa Fontaine', avatar:'L', time:'il y a 2 min', text:"Oui ! Je l'utilise depuis 6 mois et c'est vraiment puissant pour les objectifs trimestriels.", isAdmin:false }
-      ]},
-      { id:2, author:'Admin', avatar:'✦', time:'il y a 1h', text:"📌 Rappel : le prochain bilan collectif a lieu mercredi à 12h. Venez avec vos victoires et vos blocages du mois !", pinned:true, isAdmin:true, replies:[] },
-    ],
-    '💰 Finance & revenus': [
-      { id:3, author:'Clara Vidal', avatar:'C', time:'il y a 30 min', text:"Comment gérez-vous la facturation quand un client est en retard de paiement ? Je cherche un message type pas trop agressif 😅", pinned:false, isAdmin:false, replies:[] },
-    ],
-    '🌐 Marketing & réseaux': [
-      { id:4, author:'Léa Fontaine', avatar:'L', time:'il y a 22 min', text:"Quelqu'un a testé les Reels sponsorisés dernièrement ? Quels résultats pour une petite audience ?", pinned:false, isAdmin:false, replies:[
-        { author:'Admin', avatar:'✦', time:'il y a 10 min', text:"Super question Léa ! On va d'ailleurs aborder ce sujet lors de la prochaine masterclass marketing — inscris-toi pour ne pas rater ça 🌟", isAdmin:true }
-      ]},
+  function setIdeasStatusStore(store) {
+    localStorage.setItem('notebook_ideas_status_db', JSON.stringify(store || {}));
+  }
+
+  function getActionsStore() {
+    var raw = localStorage.getItem('notebook_actions_db');
+    if (!raw) return [];
+    try {
+      var all = JSON.parse(raw) || {};
+      return all[currentUserId] || [];
+    } catch(e) { return []; }
+  }
+
+  function setActionsStore(items) {
+    var raw = localStorage.getItem('notebook_actions_db');
+    var all = {};
+    try { all = JSON.parse(raw) || {}; } catch(e) { all = {}; }
+    all[currentUserId] = items || [];
+    localStorage.setItem('notebook_actions_db', JSON.stringify(all));
+  }
+
+  function deriveNoteMeta(resourceId, resourceTitle) {
+    var field = document.querySelector('[data-note-field="retains"][data-resource-id="' + resourceId + '"]') ||
+                document.querySelector('[data-note-field="apply"][data-resource-id="' + resourceId + '"]');
+    var card = field ? field.closest('.resource-card, .course-card') : null;
+    var theme = normalizeNotebookTheme(card && card.dataset ? card.dataset.theme : 'autre');
+    var contentType = (resourceId || '').indexOf('course-') === 0 ? 'formation' : 'ressource';
+    return {
+      theme: theme,
+      themeLabel: formatNotebookTheme(theme),
+      contentType: contentType,
+      resourceTitle: resourceTitle || (contentType === 'formation' ? 'Formation' : 'Ressource')
+    };
+  }
+
+    var meta = deriveNoteMeta(resourceId, resourceTitle);
+      resourceTitle: meta.resourceTitle,
+      theme: meta.theme,
+      themeLabel: meta.themeLabel,
+      contentType: meta.contentType,
+  function setNotebookSort(value) {
+    notebookSort = value === 'oldest' ? 'oldest' : 'recent';
+    renderNotebookPage();
+  }
+
+  function setNotebookThemeFilter(value) {
+    notebookThemeFilter = value || 'tous';
+    renderNotebookPage();
+  }
+
+  function getUserNotes() {
+    return Object.values(getResourceNotesStore()).filter(function(note) {
+    }).map(function(note){
+      note.theme = normalizeNotebookTheme(note.theme);
+      note.themeLabel = formatNotebookTheme(note.theme);
+      return note;
+  }
+
+  function getFilteredSortedNotes() {
+    var notes = getUserNotes().filter(function(note) {
+      return notebookThemeFilter === 'tous' || note.theme === notebookThemeFilter;
+    });
+    notes.sort(function(a, b) {
+      return notebookSort === 'oldest'
+        ? new Date(a.updatedAt || 0) - new Date(b.updatedAt || 0)
+        : new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0);
+    });
+    return notes;
+  }
+  function groupByTheme(items) {
+    var ordered = ['finances','marketing','vente','mindset','gestion','autre'];
+    var groups = {};
+    ordered.forEach(function(k){ groups[k] = []; });
+    (items || []).forEach(function(it) {
+      var key = normalizeNotebookTheme(it.theme);
+      groups[key].push(it);
+    });
+    return ordered.filter(function(k){ return groups[k].length; }).map(function(k){ return { key:k, label:formatNotebookTheme(k), items:groups[k] }; });
+  }
+
+  function renderNotebookThemeTags() {
+    var wrap = document.getElementById('notebook-theme-tags');
+    if (!wrap) return;
+    var ordered = ['tous','finances','marketing','vente','mindset','gestion','autre'];
+    wrap.innerHTML = ordered.map(function(themeKey) {
+      var active = themeKey === notebookThemeFilter ? ' active' : '';
+      var label = themeKey === 'tous' ? 'Tous les thèmes' : formatNotebookTheme(themeKey);
+      return '<button class="notebook-theme-tag' + active + '" data-theme="' + themeKey + '">' + escapeHtml(label) + '</button>';
+    }).join('');
+    wrap.querySelectorAll('.notebook-theme-tag').forEach(function(btn) {
+      btn.addEventListener('click', function() { setNotebookThemeFilter(btn.dataset.theme || 'tous'); });
+  }
+
+  function renderNotebookDeclics(notes) {
+    var list = document.getElementById('notebook-declics-list');
+    if (!list) return;
+    var groups = groupByTheme(notes);
+    var html = groups.map(function(group) {
+      var block = '<div class="notebook-theme-group-title">' + escapeHtml(group.label) + '</div>';
+      block += group.items.map(function(note) {
+        return ''
+          + '<div class="notebook-item">'
+          + '<div class="notebook-header"><div><div class="notebook-title">' + escapeHtml(note.resourceTitle || 'Contenu') + '</div><span class="notebook-theme-chip">' + escapeHtml(note.themeLabel) + '</span></div><div class="notebook-date">' + formatNoteDate(note.updatedAt) + '</div></div>'
+          + '<label class="notes-field-label" for="notebook-retain-' + note.resourceId + '">Ce que je retiens</label>'
+          + '<textarea class="notes-field" id="notebook-retain-' + note.resourceId + '">' + escapeHtml(note.retains || '') + '</textarea>'
+          + '<label class="notes-field-label" for="notebook-apply-' + note.resourceId + '">Comment je vais l\'appliquer</label>'
+          + '<textarea class="notes-field" id="notebook-apply-' + note.resourceId + '">' + escapeHtml(note.apply || '') + '</textarea>'
+          + '<div style="display:flex;align-items:center;"><button class="dl-btn notebook-save-btn" data-resource-id="' + note.resourceId + '" data-resource-title="' + escapeHtml(note.resourceTitle || '') + '">Enregistrer</button><span class="notes-status" id="notebook-status-' + note.resourceId + '"></span></div>'
+          + '</div>';
+      }).join('');
+      return block;
+    }).join('');
+
+    list.innerHTML = html || '<div style="font-size:13px;color:var(--text-light);">Aucun déclic pour les filtres actuels.</div>';
+        saveNotebookNote(btn.dataset.resourceId, btn.dataset.resourceTitle || 'Contenu');
+  function renderNotebookIdeas(notes) {
+    var list = document.getElementById('notebook-ideas-list');
+    if (!list) return;
+    var ideasStatus = getIdeasStatusStore();
+    var ideas = notes.filter(function(n) { return !!(n.apply || '').trim(); });
+    var groups = groupByTheme(ideas);
+    var html = groups.map(function(group) {
+      var block = '<div class="notebook-theme-group-title">' + escapeHtml(group.label) + '</div>';
+      block += group.items.map(function(note) {
+        var key = currentUserId + '::' + note.resourceId;
+        var status = ideasStatus[key] || 'a-tester';
+        return ''
+          + '<div class="notebook-idea-item">'
+          +   '<div class="notebook-idea-row"><strong style="font-size:14px;color:var(--text-dark);">' + escapeHtml(note.resourceTitle || 'Contenu') + '</strong>'
+          +   '<select class="notebook-idea-status" data-resource-id="' + note.resourceId + '">'
+          +   '<option value="a-tester"' + (status === 'a-tester' ? ' selected' : '') + '>À tester</option>'
+          +   '<option value="en-cours"' + (status === 'en-cours' ? ' selected' : '') + '>En cours</option>'
+          +   '<option value="teste"' + (status === 'teste' ? ' selected' : '') + '>Testé</option>'
+          +   '</select></div>'
+          +   '<span class="notebook-theme-chip">' + escapeHtml(note.themeLabel) + '</span>'
+          +   '<div style="font-size:13px;color:var(--text-mid);line-height:1.6;">' + escapeHtml(note.apply || '') + '</div>'
+          + '</div>';
+      }).join('');
+      return block;
+    }).join('');
+
+    list.innerHTML = html || '<div style="font-size:13px;color:var(--text-light);">Ajoute des notes “Comment je vais l\'appliquer” pour voir tes idées ici.</div>';
+
+    list.querySelectorAll('.notebook-idea-status').forEach(function(sel) {
+      sel.addEventListener('change', function() {
+        updateIdeaStatus(sel.dataset.resourceId, sel.value);
+      });
+    });
+  }
+
+  function updateIdeaStatus(resourceId, status) {
+    var store = getIdeasStatusStore();
+    store[currentUserId + '::' + resourceId] = status;
+    setIdeasStatusStore(store);
+    renderNotebookPage();
+  }
+
+  function addNotebookAction() {
+    var input = document.getElementById('notebook-action-input');
+    var themeSelect = document.getElementById('notebook-action-theme');
+    if (!input) return;
+    var txt = (input.value || '').trim();
+    if (!txt) return;
+    var actions = getActionsStore();
+    var actionTheme = normalizeNotebookTheme(themeSelect ? themeSelect.value : 'autre');
+    actions.unshift({ id: 'a_' + Date.now(), text: txt, theme: actionTheme, done: false, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
+    setActionsStore(actions);
+    input.value = '';
+    renderNotebookPage();
+  }
+
+  function toggleNotebookAction(actionId) {
+    var actions = getActionsStore().map(function(a) {
+      if (a.id === actionId) { a.done = !a.done; a.updatedAt = new Date().toISOString(); }
+      return a;
+    });
+    setActionsStore(actions);
+    renderNotebookPage();
+  }
+
+  function deleteNotebookAction(actionId) {
+    var actions = getActionsStore().filter(function(a) { return a.id !== actionId; });
+    setActionsStore(actions);
+    renderNotebookPage();
+  }
+
+  function renderNotebookActions() {
+    var list = document.getElementById('notebook-actions-list');
+    if (!list) return;
+    var actions = getActionsStore().map(function(a){ a.theme = normalizeNotebookTheme(a.theme); return a; });
+    if (notebookThemeFilter !== 'tous') actions = actions.filter(function(a){ return a.theme === notebookThemeFilter; });
+    var groups = groupByTheme(actions);
+    var html = groups.map(function(group) {
+      var block = '<div class="notebook-theme-group-title">' + escapeHtml(group.label) + '</div>';
+      block += group.items.map(function(action) {
+        return ''
+          + '<div class="notebook-action-item ' + (action.done ? 'done' : '') + '">'
+          + '<div class="notebook-action-text" data-action-toggle="' + action.id + '">' + escapeHtml(action.text) + '</div>'
+          + '<button class="notebook-action-del" data-action-delete="' + action.id + '">✕</button>'
+          + '</div>';
+      }).join('');
+      return block;
+    }).join('');
+
+    list.innerHTML = html || '<div style="font-size:13px;color:var(--text-light);">Ajoute tes premières actions concrètes.</div>';
+
+    list.querySelectorAll('[data-action-toggle]').forEach(function(el) {
+      el.addEventListener('click', function() { toggleNotebookAction(el.dataset.actionToggle); });
+    });
+    list.querySelectorAll('[data-action-delete]').forEach(function(el) {
+      el.addEventListener('click', function() { deleteNotebookAction(el.dataset.actionDelete); });
+    });
+  }
+
+  function isInCurrentMonth(iso) {
+    var d = new Date(iso || 0);
+    var now = new Date();
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }
+
+  function renderMonthlySummary(notes) {
+    var box = document.getElementById('notebook-monthly-summary');
+    if (!box) return;
+    var monthNotes = notes.filter(function(n) { return isInCurrentMonth(n.updatedAt); });
+    var actions = getActionsStore().map(function(a){ a.theme = normalizeNotebookTheme(a.theme); return a; });
+    var monthActions = actions.filter(function(a) { return isInCurrentMonth(a.updatedAt || a.createdAt); });
+    var doneActions = monthActions.filter(function(a) { return a.done; }).length;
+    var notDoneActions = monthActions.filter(function(a) { return !a.done; }).length;
+    var openActionsGlobal = actions.filter(function(a) { return !a.done; }).length;
+
+    var themesCount = {};
+    monthNotes.forEach(function(n) { themesCount[n.theme] = (themesCount[n.theme] || 0) + 1; });
+    var dominantTheme = '—';
+    Object.keys(themesCount).sort(function(a,b){ return themesCount[b]-themesCount[a]; }).slice(0,1).forEach(function(k){ dominantTheme = NOTE_THEME_LABELS[k] || k; });
+
+    var ideasCount = monthNotes.filter(function(n) { return !!(n.apply || '').trim(); }).length;
+    var contentsCount = Object.keys(monthNotes.reduce(function(acc, n){ acc[n.resourceId] = true; return acc; }, {})).length;
+
+    var data = [
+      ['Contenus consultés', contentsCount],
+      ['Notes créées', monthNotes.length],
+      ['Idées à tester', ideasCount],
+      ['Actions réalisées', doneActions],
+      ['Actions non réalisées', notDoneActions],
+      ['Actions non terminées', openActionsGlobal],
+      ['Thème dominant', dominantTheme]
+    ];
+
+    box.innerHTML = data.map(function(item) {
+      return '<div class="notebook-kpi"><div class="notebook-kpi-label">' + escapeHtml(item[0]) + '</div><div class="notebook-kpi-value">' + escapeHtml(item[1]) + '</div></div>';
+    }).join('');
+  }
+
+  function renderNotebookPage() {
+    var empty = document.getElementById('notebook-empty');
+    if (!empty) return;
+
+    var allNotes = getUserNotes();
+    var filteredNotes = getFilteredSortedNotes();
+    renderNotebookThemeTags();
+    renderNotebookDeclics(filteredNotes);
+    renderNotebookIdeas(filteredNotes);
+    renderNotebookActions();
+    renderMonthlySummary(allNotes);
+
+    var noNotes = allNotes.length === 0;
+    var noActions = getActionsStore().length === 0;
+    empty.style.display = (noNotes && noActions) ? 'block' : 'none';
+  }
+
+    var existing = store[key] || {};
+    var meta = deriveNoteMeta(resourceId, resourceTitle || existing.resourceTitle);
+      resourceTitle: resourceTitle || existing.resourceTitle || meta.resourceTitle,
+      theme: normalizeNotebookTheme(existing.theme || meta.theme),
+      themeLabel: formatNotebookTheme(existing.theme || meta.theme),
+      contentType: existing.contentType || meta.contentType,
     ],
     '🎉 Victoires du jour': [
       { id:5, author:'Sophie Andreu', avatar:'S', time:'il y a 5 min', text:"🎉 J'ai signé mon 1er client à 2 000€ grâce au module pricing ! Merci infiniment pour tout ce que vous partagez ici 💛", pinned:false, isAdmin:false, replies:[
