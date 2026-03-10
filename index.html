@@ -5330,6 +5330,7 @@
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
               <span style="font-size:10px;background:rgba(252,186,51,0.12);color:var(--navy);padding:2px 7px;border-radius:20px;font-weight:600;">💎 Offre</span>
+
             </div>
             <h4>Lancer son offre en 30 jours</h4>
             <p>La checklist semaine par semaine pour passer de l'idée à la première vente.</p>
@@ -5722,11 +5723,11 @@
         </div>
       </div>
 
-      <!-- Barre titre + filtre compact -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
-        <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text-dark);">Toutes les masterclass</div>
-        <div style="display:flex;align-items:center;gap:6px;background:white;border:1px solid rgba(20,36,53,0.1);border-radius:30px;padding:5px 8px;box-shadow:0 2px 8px rgba(20,36,53,0.06);">
-          <span style="font-size:11px;color:var(--text-light);padding:0 4px;">Thème :</span>
+              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;">✉️ Contacter</button>
+              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;">✉️ Contacter</button>
+              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;">✉️ Contacter</button>
+              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;">✉️ Contacter</button>
+              <button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;">✉️ Contacter</button>
           <button onclick="filterMasterclass('tous',this)" class="mc-pill active" style="padding:5px 13px;border-radius:20px;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;background:var(--navy-darkest);color:white;">Toutes</button>
           <button onclick="filterMasterclass('mindset',this)" class="mc-pill" style="padding:5px 13px;border-radius:20px;border:none;cursor:pointer;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;background:transparent;color:var(--text-light);">🧠 Mindset</button>
           <button onclick="filterMasterclass('offre',this)" class="mc-pill" style="padding:5px 13px;border-radius:20px;border:none;cursor:pointer;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;background:transparent;color:var(--text-light);">💎 Offre & pricing</button>
@@ -10220,7 +10221,7 @@
               </div>
             </div>
 
-            <!-- Aperçu badge -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
               <div style="font-size:11px;color:rgba(255,255,255,0.3);">Aperçu du badge :</div>
               <span id="role-badge-preview" style="padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);">🔑 Nouveau rôle</span>
@@ -10460,7 +10461,7 @@
     } else {
       btnNext.textContent = 'Continuer →';
     }
-  }
+      + '<button class="dl-btn" style="font-size:11px;padding:5px 12px;flex-shrink:0;" onclick="showPage(\'messaging\')">✉️ Contacter</button>'
 
   function profilNextStep() {
     if (_profilStep === 1) {
@@ -15228,8 +15229,8 @@
     });
   }
 
-  function isInCurrentMonth(iso) {
-    var d = new Date(iso || 0);
+    document.querySelectorAll('.palmares-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.palmares-panel').forEach(p => p.classList.remove('active'));
     var now = new Date();
     return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
   }
@@ -18056,6 +18057,7 @@
   }
   .quick-reply input::placeholder { color: rgba(255,255,255,0.28); }
   .quick-reply input:focus { border-color: rgba(245,201,122,0.4); }
+
 
 <script defer src="assets/notebook-enhanced.js" data-notebook-enhanced></script>
     width: 32px;
