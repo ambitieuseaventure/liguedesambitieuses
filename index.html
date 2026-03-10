@@ -1400,6 +1400,50 @@
     color:var(--text-dark);
   }
   .notebook-date { font-size:12px; color:var(--text-light); }
+  .notebook-theme-chip {
+    display:inline-block; margin-right:6px; margin-bottom:8px; font-size:10px; font-weight:700;
+    border-radius:20px; padding:4px 9px;
+    background:linear-gradient(120deg,rgba(79,133,160,0.16),rgba(252,186,51,0.14)); color:var(--navy);
+  }
+  .notebook-theme-group-title {
+    font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700;
+    color:var(--text-light); margin:8px 0 2px;
+  }
+  .notebook-toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:18px; }
+  .notebook-theme-tags { display:flex; flex-wrap:wrap; gap:8px; }
+  .notebook-theme-tag {
+    border:1px solid rgba(20,36,53,0.14); border-radius:999px; padding:7px 14px;
+    font-size:12px; font-weight:700; color:var(--navy); background:white; cursor:pointer;
+    transition:all .18s;
+  }
+  .notebook-theme-tag:hover { transform:translateY(-1px); box-shadow:0 6px 14px rgba(20,36,53,0.08); }
+  .notebook-theme-tag.active { background:linear-gradient(120deg,var(--navy-darkest),var(--steel)); color:white; border-color:transparent; }
+  .notebook-sort-wrap { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-mid); font-weight:700; }
+  .notebook-sort-wrap select { border:1px solid rgba(20,36,53,0.12); border-radius:999px; background:white; color:var(--navy); font-size:12px; font-weight:700; padding:7px 12px; }
+  .notebook-sections { display:flex; flex-direction:column; gap:18px; }
+  .notebook-duo-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width: 980px) { .notebook-duo-grid { grid-template-columns:1fr; } }
+  .notebook-section-box {
+    background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,250,243,.92));
+    border:1px solid rgba(20,36,53,0.08); border-radius:16px; padding:18px;
+    box-shadow:0 8px 24px rgba(20,36,53,0.06);
+  }
+  .notebook-section-title { font-family:'Playfair Display',serif; font-size:24px; color:var(--navy-darkest); margin-bottom:12px; letter-spacing:.01em; }
+  .notebook-list, .notebook-ideas-list, .notebook-actions-list { display:flex; flex-direction:column; gap:14px; }
+  .notebook-idea-item { background:white; border:1px solid rgba(20,36,53,0.08); border-radius:14px; padding:16px; box-shadow:0 4px 16px rgba(20,36,53,0.06); }
+  .notebook-idea-row { display:flex; align-items:center; gap:8px; justify-content:space-between; }
+  .notebook-idea-status { border:1px solid rgba(20,36,53,0.12); border-radius:999px; padding:7px 11px; font-size:12px; color:var(--navy); background:white; font-weight:700; }
+  .notebook-actions-input-row { display:flex; gap:8px; margin-bottom:12px; }
+  .notebook-actions-input-row input { flex:1; border:1px solid rgba(20,36,53,0.15); border-radius:10px; padding:10px; font-size:13px; font-family:'DM Sans',sans-serif; background:rgba(255,255,255,0.9); }
+  .notebook-actions-input-row select { border:1px solid rgba(20,36,53,0.15); border-radius:10px; padding:10px; font-size:13px; font-family:'DM Sans',sans-serif; color:var(--navy); background:white; min-width:130px; }
+  .notebook-action-item { display:flex; align-items:center; justify-content:space-between; gap:10px; background:white; border:1px solid rgba(20,36,53,0.09); border-radius:12px; padding:10px 12px; }
+  .notebook-action-text { cursor:pointer; color:var(--text-dark); font-weight:600; }
+  .notebook-action-item.done .notebook-action-text { text-decoration:line-through; color:var(--text-light); }
+  .notebook-action-del { border:none; background:transparent; color:var(--text-light); cursor:pointer; font-size:14px; }
+  .notebook-monthly-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+  .notebook-kpi { background:linear-gradient(180deg,white,rgba(250,248,242,.95)); border:1px solid rgba(20,36,53,0.08); border-radius:12px; padding:12px; }
+  .notebook-kpi-label { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-light); font-weight:700; }
+  .notebook-kpi-value { font-size:22px; font-weight:700; color:var(--navy-darkest); margin-top:4px; }
 
   /* ── HOTLINE VOCAL ── */
   @keyframes hlPulse {
@@ -5344,13 +5388,59 @@
     <div class="page-content">
       <div class="section-header">
         <div class="section-title">Mon carnet <em>d'apprentissage</em></div>
-        <div class="section-sub">Retrouve et ajuste tous tes pense-bêtes personnels, sur tes ressources et tes formations.</div>
+        <div class="section-sub">Un carnet créatif et chaleureux pour capter tes déclics, tester tes idées et suivre ton évolution mois après mois.</div>
       </div>
-      <div class="notebook-list" id="notebook-list"></div>
+
+      <div class="notebook-toolbar">
+        <div class="notebook-theme-tags" id="notebook-theme-tags"></div>
+        <div class="notebook-sort-wrap">
+          <span>Trier :</span>
+          <select id="notebook-sort" onchange="setNotebookSort(this.value)">
+            <option value="recent">Plus récentes</option>
+            <option value="oldest">Plus anciennes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="notebook-sections">
+        <div class="notebook-duo-grid">
+          <div class="notebook-section-box">
+            <div class="notebook-section-title">✨ Mes déclics récents</div>
+            <div class="notebook-list" id="notebook-declics-list"></div>
+          </div>
+          <div class="notebook-section-box">
+            <div class="notebook-section-title">💡 Mes idées à tester</div>
+            <div class="notebook-ideas-list" id="notebook-ideas-list"></div>
+          </div>
+        </div>
+
+        <div class="notebook-section-box">
+          <div class="notebook-section-title">✅ Mes actions concrètes</div>
+          <div class="notebook-actions-input-row">
+            <select id="notebook-action-theme">
+              <option value="finances">Finances</option>
+              <option value="marketing">Marketing</option>
+              <option value="vente">Vente</option>
+              <option value="mindset">Mindset</option>
+              <option value="gestion">Gestion</option>
+              <option value="autre">Autre</option>
+            </select>
+            <input id="notebook-action-input" type="text" placeholder="Ex: Tester une nouvelle accroche sur Instagram" />
+            <button class="dl-btn" onclick="addNotebookAction()">Ajouter</button>
+          </div>
+          <div class="notebook-actions-list" id="notebook-actions-list"></div>
+        </div>
+
+        <div class="notebook-section-box">
+          <div class="notebook-section-title">📊 Bilan automatique mensuel</div>
+          <div class="notebook-monthly-summary" id="notebook-monthly-summary"></div>
+        </div>
+      </div>
+
       <div id="notebook-empty" style="display:none;text-align:center;padding:56px 20px;background:white;border:1px solid rgba(20,36,53,0.08);border-radius:12px;">
         <div style="font-size:38px;margin-bottom:10px;">📝</div>
         <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text-dark);margin-bottom:8px;">Ton carnet est vide pour le moment</div>
-        <div style="font-size:14px;color:var(--text-light);">Rends-toi dans l'onglet « Mes ressources » ou dans tes formations en cours/terminées pour enregistrer tes premiers pense-bêtes.</div>
+        <div style="font-size:14px;color:var(--text-light);">Ajoute des pense-bêtes dans tes ressources/formations, puis crée des actions concrètes ici.</div>
       </div>
     </div>
   </div>
@@ -18122,3 +18212,4 @@
   }
 </script>
 <!-- ═══ FIN DU WIDGET MEMBRE ═══ -->
+<script defer src="assets/notebook-enhanced.js" data-notebook-enhanced></script>
