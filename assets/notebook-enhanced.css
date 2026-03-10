@@ -4,7 +4,35 @@
 .nb-grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.nb-section{background:#fff;border:1px solid rgba(20,36,53,.09);border-radius:14px;padding:14px;box-shadow:0 4px 16px rgba(20,36,53,.05)}
 .nb-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy-darkest);margin-bottom:10px}.nb-list{display:flex;flex-direction:column;gap:10px}
 .nb-item{border:1px solid rgba(20,36,53,.08);border-radius:12px;padding:12px;background:#fff}
+.nb-item.done{opacity:.65}
 .nb-chip{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;background:rgba(79,133,160,.15);margin:6px 0}
 .nb-actions-input{display:flex;gap:8px;margin-bottom:10px}.nb-actions-input select,.nb-actions-input input{border:1px solid rgba(20,36,53,.15);border-radius:10px;padding:10px;font-size:13px}.nb-actions-input input{flex:1}
-.nb-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.nb-kpi{border:1px solid rgba(20,36,53,.08);border-radius:10px;padding:10px}.nb-kpi .k{font-size:11px;color:var(--text-light);text-transform:uppercase}.nb-kpi .v{font-size:22px;font-weight:700}
-@media (max-width:980px){.nb-grid2{grid-template-columns:1fr}}
+.nb-action-item{transition:opacity .2s}
+.nb-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}.nb-kpi{border:1px solid rgba(20,36,53,.08);border-radius:10px;padding:10px}.nb-kpi .k{font-size:11px;color:var(--text-light);text-transform:uppercase}.nb-kpi .v{font-size:22px;font-weight:700}
+.nb-empty-msg{font-size:13px;color:var(--text-light);text-align:center;padding:20px 10px;line-height:1.6}
+/* Focus du Jour */
+.nb-focus-card{background:linear-gradient(135deg,rgba(252,186,51,.08),rgba(79,133,160,.06));border:1px solid rgba(235,193,76,.3)!important}
+.nb-focus-inner{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-top:4px}
+.nb-focus-col{background:#fff;border:1px solid rgba(20,36,53,.08);border-radius:12px;padding:14px}
+.nb-focus-col-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-light);margin-bottom:12px}
+.nb-focus-mood-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.nb-focus-mood-emoji{font-size:28px;line-height:1}
+.nb-focus-mood-label{font-size:15px;font-weight:700;color:var(--text-dark)}
+.nb-focus-mode{font-size:11px;color:var(--text-light);margin-top:2px}
+.nb-focus-advice{font-size:12px;color:var(--text-mid);font-style:italic;line-height:1.55;padding:8px 10px;background:rgba(235,193,76,.07);border-left:2px solid rgba(235,193,76,.5);border-radius:0 6px 6px 0;margin-bottom:8px}
+.nb-focus-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.nb-focus-tag{font-size:10px;padding:3px 9px;border-radius:999px;background:rgba(235,193,76,.12);color:var(--text-mid);font-weight:600}
+.nb-focus-no-journal{text-align:center;padding:14px 8px;color:var(--text-light);font-size:13px;line-height:1.6}
+.nb-focus-cta-link{color:var(--gold);font-weight:700;text-decoration:none;font-size:13px}
+.nb-focus-action-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid rgba(20,36,53,.08);border-radius:10px;background:rgba(20,36,53,.02)}
+.nb-focus-action-text{flex:1;font-size:13px;color:var(--text-dark)}
+.nb-focus-no-action{font-size:13px;color:var(--text-light);text-align:center;padding:18px 10px;line-height:1.6}
+/* Idées statuts */
+.nb-idea-status{border:1px solid rgba(20,36,53,.15);border-radius:8px;padding:5px 8px;font-size:12px;font-weight:600;cursor:pointer;margin-top:6px}
+.nb-idea-status--a-tester{background:rgba(20,36,53,.04);color:var(--text-mid)}
+.nb-idea-status--en-cours{background:rgba(252,186,51,.15);color:#b87f00}
+.nb-idea-status--teste{background:rgba(76,175,80,.12);color:#388e3c}
+/* Victoires */
+.nb-victoire-item{border-left:3px solid var(--gold)!important;background:linear-gradient(to right,rgba(235,193,76,.05),#fff)!important}
+.nb-focus-victoire-sub{font-size:12px;color:var(--text-light);margin-top:-6px;margin-bottom:10px}
+@media (max-width:980px){.nb-grid2{grid-template-columns:1fr}.nb-focus-inner{grid-template-columns:1fr}}

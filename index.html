@@ -18430,6 +18430,49 @@
     updateJournalStreak();
     var hist = el('journal-history');
     if (hist && hist.style.display !== 'none') renderJournalHistory();
+
+    /* ── Bridge journal → carnet ── */
+    /* Refresh notebook if currently visible */
+    if (window.renderNotebookPage) {
+      var nbPage = document.getElementById('page-notebook');
+      if (nbPage && (nbPage.style.display === 'block' || nbPage.classList.contains('active'))) {
+        window.renderNotebookPage();
+      }
+    }
+
+    /* Si blocage : proposer de créer une action dans le carnet */
+    if (journalMode === 'blocage') {
+      var toastId = 'journal-blocage-toast-' + Date.now();
+      var shortText = text.length > 60 ? text.slice(0, 60) + '…' : text;
+      var toast = document.createElement('div');
+      toast.id = toastId;
+      toast.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--navy-darkest);color:#fff;border:1px solid rgba(235,193,76,.35);border-radius:14px;padding:14px 18px;max-width:320px;box-shadow:0 8px 32px rgba(0,0,0,.25);font-size:13px;line-height:1.55;';
+      toast.innerHTML = '<div style="font-weight:700;margin-bottom:6px;">🔓 Blocage noté !</div>'
+        + '<div style="color:rgba(255,255,255,.7);margin-bottom:10px;">Veux-tu créer une action dans ton carnet pour dépasser ce blocage ?</div>'
+        + '<div style="display:flex;gap:8px;">'
+        + '<button onclick="createActionFromJournal(\'' + shortText.replace(/'/g, "\\'") + '\',\'mindset\');document.getElementById(\'' + toastId + '\').remove();" style="background:var(--gold);color:var(--navy-darkest);border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;">Créer une action →</button>'
+        + '<button onclick="document.getElementById(\'' + toastId + '\').remove();" style="background:rgba(255,255,255,.1);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;">Non merci</button>'
+        + '</div>';
+      document.body.appendChild(toast);
+      setTimeout(function(){ var t = document.getElementById(toastId); if(t) t.remove(); }, 12000);
+    }
+
+    /* Si victoire : proposer de voir dans le carnet */
+    if (journalMode === 'victoire') {
+      var toastVId = 'journal-victoire-toast-' + Date.now();
+      var toastV = document.createElement('div');
+      toastV.id = toastVId;
+      toastV.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:linear-gradient(135deg,var(--navy-darkest),#1a3a5c);color:#fff;border:1px solid rgba(235,193,76,.5);border-radius:14px;padding:14px 18px;max-width:320px;box-shadow:0 8px 32px rgba(0,0,0,.25);font-size:13px;line-height:1.55;';
+      toastV.innerHTML = '<div style="font-size:20px;margin-bottom:4px;">🏆</div>'
+        + '<div style="font-weight:700;margin-bottom:6px;color:var(--gold);">Victoire enregistrée !</div>'
+        + '<div style="color:rgba(255,255,255,.7);margin-bottom:10px;">Ta victoire apparaît maintenant dans ton carnet d\'apprentissage.</div>'
+        + '<div style="display:flex;gap:8px;">'
+        + '<button onclick="if(window.showPage)window.showPage(\'notebook\');document.getElementById(\'' + toastVId + '\').remove();" style="background:var(--gold);color:var(--navy-darkest);border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;">Voir dans le carnet →</button>'
+        + '<button onclick="document.getElementById(\'' + toastVId + '\').remove();" style="background:rgba(255,255,255,.1);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;">Fermer</button>'
+        + '</div>';
+      document.body.appendChild(toastV);
+      setTimeout(function(){ var t = document.getElementById(toastVId); if(t) t.remove(); }, 10000);
+    }
   };
 
   /* ── streak ── */
