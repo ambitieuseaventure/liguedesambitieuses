@@ -1379,68 +1379,85 @@
     margin-left:8px;
   }
 
-  .notebook-toolbar { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+  .notebook-toolbar {
+    display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;
+    margin-bottom:20px; padding:12px 14px;
+    background:linear-gradient(120deg, rgba(252,186,51,0.16), rgba(232,164,192,0.14) 45%, rgba(79,133,160,0.12));
+    border:1px solid rgba(20,36,53,0.08); border-radius:14px;
+    box-shadow:0 8px 24px rgba(20,36,53,0.06);
+  }
   .notebook-theme-tags { display:flex; gap:8px; flex-wrap:wrap; }
   .notebook-theme-tag {
-    border:1px solid rgba(20,36,53,0.14); background:white; color:var(--text-mid);
-    border-radius:18px; font-size:12px; font-weight:600; padding:6px 12px; cursor:pointer;
+    border:1px solid rgba(20,36,53,0.12);
+    background:rgba(255,255,255,0.82);
+    color:var(--text-mid);
+    border-radius:999px;
+    font-size:12px; font-weight:700;
+    padding:6px 12px; cursor:pointer;
+    transition:all .18s ease;
   }
-  .notebook-theme-tag.active { background:var(--navy-darkest); color:white; border-color:var(--navy-darkest); }
-  .notebook-sort-wrap { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-light); font-weight:600; }
+  .notebook-theme-tag:hover { transform:translateY(-1px); box-shadow:0 6px 14px rgba(20,36,53,0.08); }
+  .notebook-theme-tag.active {
+    background:linear-gradient(120deg,var(--navy-darkest),var(--steel));
+    color:white; border-color:transparent;
+  }
+  .notebook-sort-wrap { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-mid); font-weight:700; }
   .notebook-sort-wrap select {
-    border:1px solid rgba(20,36,53,0.12); border-radius:8px; background:white; color:var(--navy);
-    font-size:12px; font-weight:600; padding:6px 10px;
+    border:1px solid rgba(20,36,53,0.12); border-radius:999px; background:white; color:var(--navy);
+    font-size:12px; font-weight:700; padding:7px 12px;
   }
 
-  .notebook-sections { display:flex; flex-direction:column; gap:16px; }
+  .notebook-sections { display:flex; flex-direction:column; gap:18px; }
   .notebook-section-box {
-    background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(250,248,242,0.95));
-    border:1px solid rgba(20,36,53,0.08); border-radius:14px; padding:16px;
+    background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,250,243,.92));
+    border:1px solid rgba(20,36,53,0.08); border-radius:16px; padding:18px;
+    box-shadow:0 8px 24px rgba(20,36,53,0.06);
   }
   .notebook-section-title {
-    font-family:'Playfair Display',serif; font-size:20px; color:var(--navy-darkest);
-    margin-bottom:12px;
+    font-family:'Playfair Display',serif; font-size:24px; color:var(--navy-darkest);
+    margin-bottom:12px; letter-spacing:.01em;
   }
 
   .notebook-list, .notebook-ideas-list, .notebook-actions-list { display:flex; flex-direction:column; gap:14px; }
   .notebook-item, .notebook-idea-item {
-    background:white; border:1px solid rgba(20,36,53,0.09); border-radius:12px; padding:16px;
-    box-shadow:0 2px 10px rgba(20,36,53,0.05);
+    background:white; border:1px solid rgba(20,36,53,0.08); border-radius:14px; padding:16px;
+    box-shadow:0 4px 16px rgba(20,36,53,0.06);
   }
   .notebook-header { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:10px; }
   .notebook-title { font-size:16px; font-weight:700; color:var(--text-dark); }
   .notebook-date { font-size:12px; color:var(--text-light); }
   .notebook-theme-chip {
     display:inline-block; margin-right:6px; margin-bottom:8px; font-size:10px; font-weight:700;
-    border-radius:20px; padding:3px 8px; background:rgba(79,133,160,0.12); color:var(--navy);
+    border-radius:20px; padding:4px 9px;
+    background:linear-gradient(120deg,rgba(79,133,160,0.16),rgba(252,186,51,0.14)); color:var(--navy);
   }
 
   .notebook-idea-row { display:flex; align-items:center; gap:8px; justify-content:space-between; }
   .notebook-idea-status {
-    border:1px solid rgba(20,36,53,0.12); border-radius:8px; padding:6px 10px; font-size:12px;
-    color:var(--navy); background:white; font-weight:600;
+    border:1px solid rgba(20,36,53,0.12); border-radius:999px; padding:7px 11px; font-size:12px;
+    color:var(--navy); background:white; font-weight:700;
   }
 
   .notebook-actions-input-row { display:flex; gap:8px; margin-bottom:12px; }
   .notebook-actions-input-row input {
-    flex:1; border:1px solid rgba(20,36,53,0.15); border-radius:8px; padding:10px;
-    font-size:13px; font-family:'DM Sans',sans-serif;
+    flex:1; border:1px solid rgba(20,36,53,0.15); border-radius:10px; padding:10px;
+    font-size:13px; font-family:'DM Sans',sans-serif; background:rgba(255,255,255,0.9);
   }
   .notebook-action-item {
     display:flex; align-items:center; justify-content:space-between; gap:10px;
-    background:white; border:1px solid rgba(20,36,53,0.09); border-radius:10px; padding:10px 12px;
+    background:white; border:1px solid rgba(20,36,53,0.09); border-radius:12px; padding:10px 12px;
   }
-  .notebook-action-text { cursor:pointer; color:var(--text-dark); }
+  .notebook-action-text { cursor:pointer; color:var(--text-dark); font-weight:600; }
   .notebook-action-item.done .notebook-action-text { text-decoration:line-through; color:var(--text-light); }
   .notebook-action-del { border:none; background:transparent; color:var(--text-light); cursor:pointer; font-size:14px; }
 
   .notebook-monthly-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
   .notebook-kpi {
-    background:white; border:1px solid rgba(20,36,53,0.09); border-radius:10px; padding:12px;
+    background:linear-gradient(180deg,white,rgba(250,248,242,.95));
+    border:1px solid rgba(20,36,53,0.08); border-radius:12px; padding:12px;
   }
   .notebook-kpi-label { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-light); font-weight:700; }
   .notebook-kpi-value { font-size:22px; font-weight:700; color:var(--navy-darkest); margin-top:4px; }
-
   /* ── HOTLINE VOCAL ── */
   @keyframes hlPulse {
     0%, 100% { opacity: 1; transform: scale(1); }
@@ -5384,7 +5401,7 @@
     <div class="page-content">
       <div class="section-header">
         <div class="section-title">Mon carnet <em>d'apprentissage</em></div>
-        <div class="section-sub">Ton espace structuré pour transformer tes notes en actions et en progrès mensuels.</div>
+        <div class="section-sub">Un carnet créatif et chaleureux pour capter tes déclics, tester tes idées et suivre ton évolution mois après mois.</div>
       </div>
 
       <div class="notebook-toolbar">
@@ -5400,17 +5417,17 @@
 
       <div class="notebook-sections">
         <div class="notebook-section-box">
-          <div class="notebook-section-title">Section 1 · Mes déclics récents</div>
+          <div class="notebook-section-title">✨ Mes déclics récents</div>
           <div class="notebook-list" id="notebook-declics-list"></div>
         </div>
 
         <div class="notebook-section-box">
-          <div class="notebook-section-title">Section 2 · Mes idées à tester</div>
+          <div class="notebook-section-title">💡 Mes idées à tester</div>
           <div class="notebook-ideas-list" id="notebook-ideas-list"></div>
         </div>
 
         <div class="notebook-section-box">
-          <div class="notebook-section-title">Section 3 · Mes actions concrètes</div>
+          <div class="notebook-section-title">✅ Mes actions concrètes</div>
           <div class="notebook-actions-input-row">
             <input id="notebook-action-input" type="text" placeholder="Ex: Tester une nouvelle accroche sur Instagram" />
             <button class="dl-btn" onclick="addNotebookAction()">Ajouter</button>
@@ -5419,7 +5436,7 @@
         </div>
 
         <div class="notebook-section-box">
-          <div class="notebook-section-title">Section 4 · Bilan automatique mensuel</div>
+          <div class="notebook-section-title">📊 Bilan automatique mensuel</div>
           <div class="notebook-monthly-summary" id="notebook-monthly-summary"></div>
         </div>
       </div>
