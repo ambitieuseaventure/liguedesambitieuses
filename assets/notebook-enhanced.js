@@ -4,6 +4,15 @@
   var THEMES=['finances','marketing','vente','mindset','gestion','autre'];
   var LABEL={finances:'💰 Finances',marketing:'📣 Marketing',vente:'🤝 Vente',mindset:'🧠 Mindset',gestion:'🗂️ Gestion',autre:'🏷️ Autre'};
 
+  function ensureCss(){
+    if (document.querySelector('link[data-notebook-enhanced-css]')) return;
+    var l=document.createElement('link');
+    l.rel='stylesheet';
+    l.href='assets/notebook-enhanced.css';
+    l.setAttribute('data-notebook-enhanced-css','1');
+    document.head.appendChild(l);
+  }
+
   function norm(t){ t=(t||'').toLowerCase(); if(t==='finance')return'finances'; if(t==='organisation')return'gestion'; if(t==='offre'||t==='clients')return'vente'; return THEMES.includes(t)?t:'autre'; }
   function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];});}
   function g(k,d){ try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d));}catch(e){return d;} }
@@ -113,6 +122,6 @@
 
   window.renderNotebookPage = renderNotebook;
   window.preloadResourceNotes = preloadResourceNotes;
-  function init(){ addCourseNoteCards(); preloadResourceNotes(); renderNotebook(); }
+  function init(){ ensureCss(); addCourseNoteCards(); preloadResourceNotes(); renderNotebook(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
