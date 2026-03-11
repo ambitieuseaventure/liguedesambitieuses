@@ -17141,6 +17141,11 @@
       </div>
 
       <!-- Footer modale avec navigation -->
+      <div id="profil-modal-footer" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-top:1px solid rgba(20,36,53,0.08);background:linear-gradient(180deg,rgba(248,244,236,0.45),rgba(255,255,255,0.95));flex-shrink:0;">
+        <button id="profil-btn-back" class="btn-ghost" style="display:none;padding:10px 16px;" onclick="profilPrevStep()">← Retour</button>
+        <div id="profil-step-label" style="font-size:12px;color:var(--text-light);font-weight:700;letter-spacing:.04em;text-transform:uppercase;">Étape 1 sur 3</div>
+        <button id="profil-btn-next" class="btn-primary" style="padding:10px 18px;" onclick="profilNextStep()">Continuer →</button>
+      </div>
 
     </div><!-- /inner white container profil-modal -->
   </div><!-- /profil-modal-overlay -->
