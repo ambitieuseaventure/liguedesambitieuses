@@ -3972,7 +3972,7 @@
   <nav class="sidebar-nav">
     <div class="nav-section-label">Principal</div>
     <a class="nav-item" onclick="showPage('dashboard')">
-      <span class="nav-icon">🏡</span> Tableau de bord
+      <span class="nav-icon">🏡</span> Accueil
     </a>
     <a class="nav-item" onclick="showPage('messages')">
       <span class="nav-icon">✉️</span> Messagerie
@@ -4047,7 +4047,7 @@
 <div class="main">
 
   <div class="topbar" id="topbar">
-    <div class="topbar-title" id="topbar-title">Tableau de bord</div>
+    <div class="topbar-title" id="topbar-title">Accueil</div>
     <div class="topbar-actions">
       <div class="search-bar">🔍 Rechercher...</div>
       <div class="notif-btn">🔔<div class="notif-dot"></div></div>
@@ -10982,12 +10982,12 @@
     };
     const titles = {
       landing: "Page d'accueil",
-      dashboard: 'Tableau de bord',
+      dashboard: 'Accueil',
       community: 'Communauté',
       classroom: 'Formations',
       masterclass: 'Masterclass',
       resources: 'Ressources',
-      notebook: "Mon carnet d'apprentissage",
+      notebook: 'Carnet de bord',
       messages: 'Messagerie',
       annuaire: 'Annuaire',
       evenements: 'Événements',
@@ -18727,7 +18727,7 @@
       notebookLink.setAttribute('onclick', "showPage('notebook')");
     }
 
-    notebookLink.innerHTML = '<span class="nav-icon">📓</span> Carnet d\'apprentissage';
+    notebookLink.innerHTML = '<span class="nav-icon">📓</span> Carnet de bord';
 
     var afterDashboard = dashboardLink.nextElementSibling;
     if (afterDashboard === notebookLink) {
