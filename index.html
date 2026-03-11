@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Ligue des Ambitieuses – Ambitieuse Aventure</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/course-feedback.css">
 <style>
   :root {
     --navy-darkest: #142435;
@@ -1531,52 +1532,6 @@
   .course-body p { font-size:13px; color:var(--text-light); line-height:1.55; margin-bottom:14px; }
   .course-stats { display:flex; gap:14px; margin-bottom:14px; }
   .course-stat { font-size:12px; color:var(--text-light); display:flex; align-items:center; gap:4px; }
-
-  .course-feedback-card {
-    margin-top:14px;
-    padding:14px;
-    border-radius:12px;
-    border:1px solid rgba(20,36,53,0.08);
-    background:linear-gradient(180deg, rgba(244,247,250,0.8), rgba(255,255,255,0.95));
-  }
-  .course-feedback-title {
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    font-weight:700;
-    color:var(--text-light);
-    margin-bottom:8px;
-  }
-  .course-rating-stars { display:flex; gap:4px; margin-bottom:8px; }
-  .star-btn {
-    border:none;
-    background:transparent;
-    font-size:24px;
-    line-height:1;
-    cursor:pointer;
-    color:rgba(20,36,53,0.25);
-    transition:transform .15s ease, color .2s ease;
-    padding:0;
-  }
-  .star-btn:hover { transform:translateY(-1px) scale(1.05); }
-  .star-btn.active { color:var(--gold-bright); }
-  .course-rating-hint { font-size:11px; color:var(--text-light); margin-bottom:10px; }
-
-  .admin-formation-feedback-wrap { margin-top:20px; }
-  .admin-feedback-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
-  .admin-feedback-card {
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:12px;
-    padding:14px;
-  }
-  .admin-feedback-header { display:flex; justify-content:space-between; gap:10px; margin-bottom:10px; }
-  .admin-feedback-title { font-size:13px; font-weight:600; color:white; }
-  .admin-feedback-avg { font-size:12px; color:var(--gold-bright); white-space:nowrap; }
-  .admin-feedback-item { border-top:1px dashed rgba(255,255,255,0.1); padding-top:8px; margin-top:8px; }
-  .admin-feedback-item:first-of-type { border-top:none; margin-top:0; padding-top:0; }
-  .admin-feedback-meta { font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:3px; }
-  .admin-feedback-comment { font-size:12px; color:rgba(255,255,255,0.75); line-height:1.5; }
 
   /* ── MASTERCLASS ── */
   .masterclass-hero {
@@ -11700,7 +11655,7 @@
       grid.appendChild(card);
     });
     formUpdateCountLabel();
-    renderAdminFormationFeedback();
+    if (typeof renderAdminFormationFeedback === 'function') renderAdminFormationFeedback();
   }
 
   function formUpdateCountLabel() {
@@ -15071,108 +15026,6 @@
     });
   }
 
-  function escapeHtml(str) {
-    return String(str || '').replace(/[&<>"']/g, function(ch) {
-      return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[ch] || ch;
-    });
-  }
-
-  function getCourseReviewsStore() {
-    var raw = localStorage.getItem('course_reviews_db');
-    if (!raw) return {};
-    try { return JSON.parse(raw) || {}; } catch(e) { return {}; }
-  }
-
-  function setCourseReviewsStore(store) {
-    localStorage.setItem('course_reviews_db', JSON.stringify(store || {}));
-  }
-
-  function setCourseRating(resourceId, rating) {
-    var stars = document.querySelectorAll('[data-rating-course="' + resourceId + '"] .star-btn');
-    stars.forEach(function(star){
-      var val = parseInt(star.getAttribute('data-star-value') || '0', 10);
-      star.classList.toggle('active', val <= rating);
-    });
-    var hint = document.getElementById('rating-hint-' + resourceId);
-    if (hint) hint.textContent = rating + '/5 · Merci pour ta note ✨';
-    var wrap = document.querySelector('[data-rating-course="' + resourceId + '"]');
-    if (wrap) wrap.setAttribute('data-rating-value', String(rating));
-  }
-
-  function saveCourseReview(resourceId, resourceTitle) {
-    var wrap = document.querySelector('[data-rating-course="' + resourceId + '"]');
-    var commentEl = document.querySelector('[data-review-field="comment"][data-resource-id="' + resourceId + '"]');
-    if (!wrap || !commentEl) return;
-    var rating = parseInt(wrap.getAttribute('data-rating-value') || '0', 10);
-    if (!rating) { finToast(`Choisis une note de 1 à 5 étoiles avant d'envoyer ✨`, 'rgba(252,186,51,0.9)'); return; }
-    var store = getCourseReviewsStore();
-    var key = currentUserId + '::' + resourceId;
-    store[key] = {
-      userId: currentUserId,
-      resourceId: resourceId,
-      resourceTitle: resourceTitle,
-      rating: rating,
-      comment: commentEl.value.trim(),
-      updatedAt: new Date().toISOString()
-    };
-    setCourseReviewsStore(store);
-    var status = document.getElementById('review-status-' + resourceId);
-    if (status) status.textContent = 'Avis envoyé le ' + formatNoteDate(store[key].updatedAt);
-    renderAdminFormationFeedback();
-    finToast('✓ Merci, ton avis a été envoyé', '#6ecf9e');
-  }
-
-  function preloadCourseReviews() {
-    var store = getCourseReviewsStore();
-    Object.keys(store).forEach(function(key) {
-      var item = store[key];
-      if (!item || item.userId !== currentUserId) return;
-      setCourseRating(item.resourceId, parseInt(item.rating || 0, 10));
-      var commentEl = document.querySelector('[data-review-field="comment"][data-resource-id="' + item.resourceId + '"]');
-      if (commentEl) commentEl.value = item.comment || '';
-      var status = document.getElementById('review-status-' + item.resourceId);
-      if (status) status.textContent = 'Avis envoyé le ' + formatNoteDate(item.updatedAt);
-    });
-    renderAdminFormationFeedback();
-  }
-
-  function renderAdminFormationFeedback() {
-    var grid = document.getElementById('admin-formations-feedback-grid');
-    if (!grid) return;
-    var byFormation = {};
-    Object.values(getCourseReviewsStore()).forEach(function(item) {
-      if (!item || !item.resourceId) return;
-      if (!byFormation[item.resourceId]) byFormation[item.resourceId] = { title:item.resourceTitle || item.resourceId, entries:[] };
-      byFormation[item.resourceId].entries.push(item);
-    });
-
-    var groups = Object.keys(byFormation);
-    if (!groups.length) {
-      grid.innerHTML = `<div class="admin-feedback-card" style="grid-column:1 / -1;"><div class="admin-feedback-title">Pas encore d'avis membre</div><div class="admin-feedback-comment">Les notes et commentaires des formations terminées apparaîtront ici automatiquement.</div></div>`;
-      return;
-    }
-
-    grid.innerHTML = groups.map(function(resourceId) {
-      var block = byFormation[resourceId];
-      var entries = (block.entries || []).sort(function(a,b){ return new Date(b.updatedAt||0) - new Date(a.updatedAt||0); });
-      var avg = entries.reduce(function(acc,e){ return acc + (parseInt(e.rating || 0, 10) || 0); }, 0) / entries.length;
-      var avgTxt = isNaN(avg) ? '0.0' : avg.toFixed(1);
-      var rows = entries.slice(0,3).map(function(e) {
-        var stars = '★'.repeat(parseInt(e.rating || 0, 10)) + '☆'.repeat(5 - parseInt(e.rating || 0, 10));
-        var com = e.comment ? escapeHtml(e.comment) : '<em style="color:rgba(255,255,255,0.35);">(Pas de commentaire)</em>';
-        return '<div class="admin-feedback-item">'
-          + '<div class="admin-feedback-meta">' + stars + ' · ' + formatNoteDate(e.updatedAt) + '</div>'
-          + '<div class="admin-feedback-comment">' + com + '</div>'
-        + '</div>';
-      }).join('');
-
-      return '<div class="admin-feedback-card">'
-        + '<div class="admin-feedback-header"><div class="admin-feedback-title">' + escapeHtml(block.title) + '</div><div class="admin-feedback-avg">⭐ ' + avgTxt + '/5 · ' + entries.length + ' avis</div></div>'
-        + rows
-      + '</div>';
-    }).join('');
-  }
-
   function renderNotebookPage() {
     var list = document.getElementById('notebook-list');
     var empty = document.getElementById('notebook-empty');
@@ -15910,7 +15763,7 @@
     // Initialise l'onglet ressources : masque les ressources déjà téléchargées dans "Toutes".
     _applyResourceFilters();
     preloadResourceNotes();
-    preloadCourseReviews();
+    if (typeof preloadCourseReviews === 'function') preloadCourseReviews();
     renderNotebookPage();
   });
 
@@ -18705,3 +18558,4 @@
 })();
 </script>
 <script defer src="assets/notebook-enhanced.js" data-notebook-enhanced></script>
+<script defer src="assets/course-feedback.js"></script>
