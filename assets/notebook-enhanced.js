@@ -43,7 +43,7 @@
   /* ── Toggle action by ID (used by focus card) ── */
   window.toggleNotebookActionById=function(id){
     var arr=actionsStore().map(function(a){if(a.id===id){a.done=!a.done;a.updatedAt=new Date().toISOString();}return a;});
-    setActionsStore(arr); renderNotebook();
+    setActionsStore(arr); renderNotebook(); renderDashboardFocusDuJour();
   };
 
   /* ── Create action from journal blocage ── */
@@ -153,6 +153,12 @@
 
     html+='</div>';
     return html;
+  }
+
+  function renderDashboardFocusDuJour(){
+    var target=document.getElementById('dashboard-focus-du-jour');
+    if(!target) return;
+    target.innerHTML=buildFocusDuJour();
   }
 
   /* ── Victoires du journal ── */
@@ -269,10 +275,12 @@
       ['Thème dominant',dom]
     ];
     var kb=document.getElementById('nb-kpis'); kb.innerHTML=kpis.map(function(i){return '<div class="nb-kpi"><div class="k">'+esc(i[0])+'</div><div class="v">'+esc(i[1])+'</div></div>';}).join('');
+    renderDashboardFocusDuJour();
   }
 
   window.renderNotebookPage = renderNotebook;
   window.preloadResourceNotes = preloadResourceNotes;
-  function init(){ ensureCss(); addCourseNoteCards(); preloadResourceNotes(); renderNotebook(); }
+  window.renderDashboardFocusDuJour = renderDashboardFocusDuJour;
+  function init(){ ensureCss(); addCourseNoteCards(); preloadResourceNotes(); renderNotebook(); renderDashboardFocusDuJour(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
