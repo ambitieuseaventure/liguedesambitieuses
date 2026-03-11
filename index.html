@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Ligue des Ambitieuses – Ambitieuse Aventure</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/course-feedback.css">
 <style>
   :root {
     --navy-darkest: #142435;
@@ -3928,62 +3929,56 @@
     <a class="nav-item" onclick="showPage('dashboard')">
       <span class="nav-icon">🏡</span> Tableau de bord
     </a>
+    <a class="nav-item" onclick="showPage('messages')">
+      <span class="nav-icon">✉️</span> Messagerie
+      <span class="badge">3</span>
+    </a>
     <a class="nav-item" onclick="showPage('community')">
       <span class="nav-icon">🌸</span> Communauté
       <span class="badge">12</span>
-    </a>
-    <a class="nav-item" onclick="showPage('annuaire')">
-      <span class="nav-icon">🗺️</span> Annuaire
     </a>
     <a class="nav-item" onclick="showPage('evenements')">
       <span class="nav-icon">📅</span> Événements
       <span class="badge">2</span>
     </a>
-    <a class="nav-item" onclick="showPage('messages')">
-      <span class="nav-icon">✉️</span> Messagerie
-      <span class="badge">3</span>
+
+    <div class="nav-section-label">Accompagnement</div>
+    <a class="nav-item" onclick="showPage('hotline')">
+      <span class="nav-icon">⚡</span> Hotline Business
+    </a>
+    <a class="nav-item" onclick="showPage('qr')">
+      <span class="nav-icon">🎙️</span> Live Q&amp;R
+    </a>
+    <a class="nav-item" onclick="showPage('bilan')">
+      <span class="nav-icon">📊</span> Bilans &amp; Audits
+    </a>
+    <a class="nav-item" onclick="showPage('coaching')">
+      <span class="nav-icon">📞</span> Coaching 1-1
+    </a>
+    <a class="nav-item" onclick="showPage('plan')">
+      <span class="nav-icon">🎯</span> Plan d'action trimestriel
     </a>
 
-    <div class="nav-section-label">Apprentissage</div>
+    <div class="nav-section-label">Transformation Personnelle</div>
+    <a class="nav-item" onclick="showPage('mindset')">
+      <span class="nav-icon">🧘</span> Focus Mindset
+    </a>
     <a class="nav-item" onclick="showPage('classroom')">
       <span class="nav-icon">📚</span> Formations
-    </a>
-    <a class="nav-item" onclick="showPage('masterclass')">
-      <span class="nav-icon">🎬</span> Masterclass
     </a>
     <a class="nav-item" onclick="showPage('resources')">
       <span class="nav-icon">📁</span> Ressources
     </a>
-    <a class="nav-item" onclick="showPage('notebook')">
-      <span class="nav-icon">📓</span> Mon carnet d'apprentissage
+    <a class="nav-item" onclick="showPage('masterclass')">
+      <span class="nav-icon">🎬</span> Masterclass
     </a>
 
-    <div class="nav-section-label">Stratège & +</div>
-    <a class="nav-item" onclick="showPage('qr')">
-      <span class="nav-icon">🎙️</span> Sessions Q&R
-    </a>
-    <a class="nav-item" onclick="showPage('bilan')">
-      <span class="nav-icon">📊</span> Bilan & Audit
+    <div class="nav-section-label">Réseau Ambitieux</div>
+    <a class="nav-item" onclick="showPage('annuaire')">
+      <span class="nav-icon">🗺️</span> Annuaire
     </a>
     <a class="nav-item" onclick="showPage('buddy')">
       <span class="nav-icon">🤝</span> Accountability Buddy
-    </a>
-
-    <div class="nav-section-label">Visionnaire</div>
-    <a class="nav-item" onclick="showPage('coaching')">
-      <span class="nav-icon">📞</span> Coaching 1-1
-    </a>
-    <a class="nav-item" onclick="showPage('hotline')">
-      <span class="nav-icon">⚡</span> Hotline Business
-    </a>
-    <a class="nav-item" onclick="showPage('plan')">
-      <span class="nav-icon">🎯</span> Plan d'action
-    </a>
-    <a class="nav-item" onclick="showPage('palmares')">
-      <span>🏆</span><span>Palmarès</span>
-    </a>
-    <a class="nav-item" onclick="showPage('mindset')">
-      <span class="nav-icon">🧘</span> Focus Mindset
     </a>
 
     <div class="nav-section-label">Mon compte</div>
@@ -5669,6 +5664,23 @@
               <label class="notes-field-label" for="apply-course-positionnement">Comment je vais l'appliquer</label>
               <textarea class="notes-field" id="apply-course-positionnement" data-note-field="apply" data-resource-id="course-positionnement" placeholder="Les prochaines actions concrètes à mettre en place..."></textarea>
               <div style="display:flex;align-items:center;"><button class="dl-btn" onclick="saveResourceNote('course-positionnement','Formation · Positionnement clair & différenciant')">Enregistrer</button><span class="notes-status" id="note-status-course-positionnement">Aucune note enregistrée</span></div>
+            </div>
+            <div class="course-feedback-card">
+              <div class="course-feedback-title">Ton avis sur cette formation</div>
+              <div class="course-rating-stars" data-rating-course="course-positionnement">
+                <button class="star-btn" type="button" data-star-value="1" onclick="setCourseRating('course-positionnement',1)" aria-label="1 étoile">★</button>
+                <button class="star-btn" type="button" data-star-value="2" onclick="setCourseRating('course-positionnement',2)" aria-label="2 étoiles">★</button>
+                <button class="star-btn" type="button" data-star-value="3" onclick="setCourseRating('course-positionnement',3)" aria-label="3 étoiles">★</button>
+                <button class="star-btn" type="button" data-star-value="4" onclick="setCourseRating('course-positionnement',4)" aria-label="4 étoiles">★</button>
+                <button class="star-btn" type="button" data-star-value="5" onclick="setCourseRating('course-positionnement',5)" aria-label="5 étoiles">★</button>
+              </div>
+              <div class="course-rating-hint" id="rating-hint-course-positionnement">Clique sur les étoiles pour noter cette formation.</div>
+              <label class="notes-field-label" for="review-course-positionnement">Ton avis personnel</label>
+              <textarea class="notes-field" id="review-course-positionnement" data-review-field="comment" data-resource-id="course-positionnement" placeholder="Partage ce que tu as aimé, ce qui t'a aidée, ou ce que tu améliorerais..."></textarea>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <button class="dl-btn" onclick="saveCourseReview('course-positionnement','Formation · Positionnement clair & différenciant')">Envoyer mon avis</button>
+                <span class="notes-status" id="review-status-course-positionnement">Aucun avis enregistré</span>
+              </div>
             </div>
           </div>
         </div>
@@ -8088,6 +8100,10 @@
         </div>
         <div class="admin-content-grid" id="admin-formations-grid">
           <!-- généré par JS -->
+        </div>
+        <div class="admin-formation-feedback-wrap">
+          <div style="font-family:'Playfair Display',serif;font-size:17px;color:white;margin-bottom:12px;">Avis des membres sur les formations</div>
+          <div class="admin-feedback-grid" id="admin-formations-feedback-grid"></div>
         </div>
       </div>
 
@@ -11633,6 +11649,7 @@
       grid.appendChild(card);
     });
     formUpdateCountLabel();
+    if (typeof renderAdminFormationFeedback === 'function') renderAdminFormationFeedback();
   }
 
   function formUpdateCountLabel() {
@@ -15740,6 +15757,7 @@
     // Initialise l'onglet ressources : masque les ressources déjà téléchargées dans "Toutes".
     _applyResourceFilters();
     preloadResourceNotes();
+    if (typeof preloadCourseReviews === 'function') preloadCourseReviews();
     renderNotebookPage();
   });
 
@@ -18534,3 +18552,4 @@
 })();
 </script>
 <script defer src="assets/notebook-enhanced.js" data-notebook-enhanced></script>
+<script defer src="assets/course-feedback.js"></script>
