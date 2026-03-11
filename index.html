@@ -4925,31 +4925,8 @@
         </div>
 
         <div class="card">
-          <div class="card-title">Activité récente <a onclick="showPage('community')">Voir tout →</a></div>
-          <div class="activity-item">
-            <div class="activity-avatar" style="background:linear-gradient(135deg,#fcba33,#ebc14c)">M</div>
-            <div class="activity-text">
-              <strong>Marie-Lou</strong>
-              <p>A commenté ta publication dans la communauté</p>
-            </div>
-            <div class="activity-time">2h</div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-avatar" style="background:linear-gradient(135deg,#24425b,#4f85a0)">C</div>
-            <div class="activity-text">
-              <strong>Clara B.</strong>
-              <p>T'a envoyé un message privé</p>
-            </div>
-            <div class="activity-time">5h</div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-avatar" style="background:linear-gradient(135deg,#142435,#21374c)">AA</div>
-            <div class="activity-text">
-              <strong>Ambitieuse Aventure</strong>
-              <p>Nouvelle masterclass disponible !</p>
-            </div>
-            <div class="activity-time">1j</div>
-          </div>
+          <div class="card-title">🌟 Focus du jour <a onclick="showPage('notebook')">Voir le carnet →</a></div>
+          <div id="dashboard-focus-du-jour"></div>
         </div>
       </div>
 
@@ -10972,6 +10949,10 @@
       sidebar.style.display = 'flex';
       document.body.classList.add('member-page');
     }
+    if (page === 'dashboard' && typeof window.renderDashboardFocusDuJour === 'function') {
+      window.renderDashboardFocusDuJour();
+    }
+
     if (window.innerWidth <= 900) sidebar.classList.remove('open');
   }
 
@@ -17160,6 +17141,11 @@
       </div>
 
       <!-- Footer modale avec navigation -->
+      <div id="profil-modal-footer" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-top:1px solid rgba(20,36,53,0.08);background:linear-gradient(180deg,rgba(248,244,236,0.45),rgba(255,255,255,0.95));flex-shrink:0;">
+        <button id="profil-btn-back" class="btn-ghost" style="display:none;padding:10px 16px;" onclick="profilPrevStep()">← Retour</button>
+        <div id="profil-step-label" style="font-size:12px;color:var(--text-light);font-weight:700;letter-spacing:.04em;text-transform:uppercase;">Étape 1 sur 3</div>
+        <button id="profil-btn-next" class="btn-primary" style="padding:10px 18px;" onclick="profilNextStep()">Continuer →</button>
+      </div>
 
     </div><!-- /inner white container profil-modal -->
   </div><!-- /profil-modal-overlay -->
