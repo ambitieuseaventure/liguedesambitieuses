@@ -3972,7 +3972,7 @@
   <nav class="sidebar-nav">
     <div class="nav-section-label">Principal</div>
     <a class="nav-item" onclick="showPage('dashboard')">
-      <span class="nav-icon">🏡</span> Tableau de bord
+      <span class="nav-icon">🏡</span> Accueil
     </a>
     <a class="nav-item" onclick="showPage('messages')">
       <span class="nav-icon">✉️</span> Messagerie
@@ -4047,7 +4047,7 @@
 <div class="main">
 
   <div class="topbar" id="topbar">
-    <div class="topbar-title" id="topbar-title">Tableau de bord</div>
+    <div class="topbar-title" id="topbar-title">Accueil</div>
     <div class="topbar-actions">
       <div class="search-bar">🔍 Rechercher...</div>
       <div class="notif-btn">🔔<div class="notif-dot"></div></div>
@@ -5504,7 +5504,7 @@
   <div class="page" id="page-classroom">
     <div class="page-content">
       <div class="section-header">
-        <div class="section-title">Le <em>Classroom</em></div>
+        <div class="section-title">Formations</div>
         <div class="section-sub">Apprends à ton rythme avec des formations conçues pour toi</div>
       </div>
 
@@ -10982,12 +10982,12 @@
     };
     const titles = {
       landing: "Page d'accueil",
-      dashboard: 'Tableau de bord',
+      dashboard: 'Accueil',
       community: 'Communauté',
       classroom: 'Formations',
       masterclass: 'Masterclass',
       resources: 'Ressources',
-      notebook: "Mon carnet d'apprentissage",
+      notebook: 'Carnet de bord',
       messages: 'Messagerie',
       annuaire: 'Annuaire',
       evenements: 'Événements',
@@ -15617,6 +15617,27 @@
     document.getElementById('panel-' + tab).classList.add('active');
   }
 
+  // ── BILANS & AUDITS ──
+  function switchBilanTab(tab, btn) {
+    var tabs = ['bilan-mensuel', 'audit-express', 'historique'];
+
+    tabs.forEach(function(t) {
+      var tabBtn = document.getElementById('tab-' + t);
+      var panel = document.getElementById('bilanTab-' + t);
+      var isActive = t === tab;
+
+      if (tabBtn) {
+        tabBtn.style.background = isActive ? 'var(--navy-darkest)' : 'transparent';
+        tabBtn.style.color = isActive ? 'white' : 'var(--text-light)';
+        tabBtn.style.fontWeight = isActive ? '600' : '500';
+      }
+
+      if (panel) {
+        panel.style.display = isActive ? 'block' : 'none';
+      }
+    });
+  }
+
   // ── FILTRES MASTERCLASS ──
   function filterMasterclass(theme, btn) {
     document.querySelectorAll('.mc-pill').forEach(b => {
@@ -18706,7 +18727,7 @@
       notebookLink.setAttribute('onclick', "showPage('notebook')");
     }
 
-    notebookLink.innerHTML = '<span class="nav-icon">📓</span> Carnet d\'apprentissage';
+    notebookLink.innerHTML = '<span class="nav-icon">📓</span> Carnet de bord';
 
     var afterDashboard = dashboardLink.nextElementSibling;
     if (afterDashboard === notebookLink) {
