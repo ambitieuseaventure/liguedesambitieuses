@@ -15104,7 +15104,7 @@
     var commentEl = document.querySelector('[data-review-field="comment"][data-resource-id="' + resourceId + '"]');
     if (!wrap || !commentEl) return;
     var rating = parseInt(wrap.getAttribute('data-rating-value') || '0', 10);
-    if (!rating) { finToast("Choisis une note de 1 à 5 étoiles avant d'envoyer ✨", 'rgba(252,186,51,0.9)'); return; }
+    if (!rating) { finToast(`Choisis une note de 1 à 5 étoiles avant d'envoyer ✨`, 'rgba(252,186,51,0.9)'); return; }
     var store = getCourseReviewsStore();
     var key = currentUserId + '::' + resourceId;
     store[key] = {
@@ -15148,7 +15148,7 @@
 
     var groups = Object.keys(byFormation);
     if (!groups.length) {
-      grid.innerHTML = "<div class=\"admin-feedback-card\" style=\"grid-column:1 / -1;\"><div class=\"admin-feedback-title\">Pas encore d'avis membre</div><div class=\"admin-feedback-comment\">Les notes et commentaires des formations terminées apparaîtront ici automatiquement.</div></div>";
+      grid.innerHTML = `<div class="admin-feedback-card" style="grid-column:1 / -1;"><div class="admin-feedback-title">Pas encore d'avis membre</div><div class="admin-feedback-comment">Les notes et commentaires des formations terminées apparaîtront ici automatiquement.</div></div>`;
       return;
     }
 
