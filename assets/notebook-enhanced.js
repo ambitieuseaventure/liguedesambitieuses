@@ -84,9 +84,10 @@
   function addCourseNoteCards(){
     document.querySelectorAll('#courses-grid .course-card').forEach(function(card){
       var st=card.dataset.statut; if(st!=='en-cours'&&st!=='terminee') return;
-      if(card.querySelector('.nb-course-note')) return;
+      if(card.querySelector('[data-note-field="retains"],[data-note-field="apply"],.nb-course-note')) return;
       var title=(card.querySelector('h3')||{}).textContent||'Formation';
-      var rid='course-'+title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+      var existingRid=((card.querySelector('[data-note-field][data-resource-id]')||{}).dataset||{}).resourceId;
+var rid=existingRid||('course-'+title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''));
       var box=document.createElement('div'); box.className='notes-card nb-course-note';
       box.innerHTML='<div class="notes-card-title">Mon pense-bête</div>'+
         '<label class="notes-field-label">Ce que je retiens</label><textarea class="notes-field" data-note-field="retains" data-resource-id="'+rid+'"></textarea>'+
