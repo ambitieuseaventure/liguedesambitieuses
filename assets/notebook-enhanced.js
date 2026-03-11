@@ -155,45 +155,10 @@
     return html;
   }
 
-  function buildDashboardFocusDuJour(){
-    var todayEntry=getTodayJournalEntry();
-    var pending=actionsStore().filter(function(a){return !a.done;});
-    var topAction=pending[0]||null;
-
-    var html='';
-    html+='<div class="nb-focus-col-title" style="margin-bottom:8px;">💪 Action prioritaire du jour</div>';
-    if(topAction){
-      html+='<div class="nb-focus-action-item" style="margin-bottom:8px;">';
-      html+='<input type="checkbox" onchange="toggleNotebookActionById(\''+topAction.id+'\')" style="width:16px;height:16px;cursor:pointer;flex-shrink:0;">';
-      html+='<span class="nb-focus-action-text">'+esc(topAction.text)+'</span>';
-      html+='<span class="nb-chip" style="margin:0;flex-shrink:0;">'+esc(LABEL[norm(topAction.theme)]||topAction.theme)+'</span>';
-      html+='</div>';
-      if(pending.length>1){
-        html+='<div style="font-size:11px;color:var(--text-light);margin-bottom:12px;">+ '+(pending.length-1)+' autre'+(pending.length>2?'s':'')+' action'+(pending.length>2?'s':'')+' en attente</div>';
-      }
-    } else {
-      html+='<div class="nb-focus-no-action" style="margin-bottom:12px;">Toutes tes actions sont faites — bravo ! 🎉<br><span style="font-size:11px;opacity:.7;">Ajoute une nouvelle action dans ton carnet.</span></div>';
-    }
-
-    html+='<div style="height:1px;background:rgba(20,36,53,0.08);margin:12px 0;"></div>';
-    html+='<div class="nb-focus-col-title" style="margin-bottom:8px;">📓 Journal du jour</div>';
-    if(todayEntry){
-      html+='<div class="nb-focus-mood-row">';
-      html+='<span class="nb-focus-mood-emoji">'+(todayEntry.moodEmoji||'')+'</span>';
-      html+='<div><div class="nb-focus-mood-label">'+esc(todayEntry.moodLabel||'')+'</div>';
-      if(todayEntry.mode) html+='<div class="nb-focus-mode">'+esc(MODE_LABELS[todayEntry.mode]||todayEntry.mode)+'</div>';
-      html+='</div></div>';
-    } else {
-      html+='<div class="nb-focus-no-journal" style="padding:10px 12px;">Tu n\'as pas encore journalisé aujourd\'hui.</div>';
-    }
-
-    return html;
-  }
-
   function renderDashboardFocusDuJour(){
     var target=document.getElementById('dashboard-focus-du-jour');
     if(!target) return;
-    target.innerHTML=buildDashboardFocusDuJour();
+    target.innerHTML=buildFocusDuJour();
   }
 
   /* ── Victoires du journal ── */
