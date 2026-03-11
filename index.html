@@ -15617,6 +15617,27 @@
     document.getElementById('panel-' + tab).classList.add('active');
   }
 
+  // ── BILANS & AUDITS ──
+  function switchBilanTab(tab, btn) {
+    var tabs = ['bilan-mensuel', 'audit-express', 'historique'];
+
+    tabs.forEach(function(t) {
+      var tabBtn = document.getElementById('tab-' + t);
+      var panel = document.getElementById('bilanTab-' + t);
+      var isActive = t === tab;
+
+      if (tabBtn) {
+        tabBtn.style.background = isActive ? 'var(--navy-darkest)' : 'transparent';
+        tabBtn.style.color = isActive ? 'white' : 'var(--text-light)';
+        tabBtn.style.fontWeight = isActive ? '600' : '500';
+      }
+
+      if (panel) {
+        panel.style.display = isActive ? 'block' : 'none';
+      }
+    });
+  }
+
   // ── FILTRES MASTERCLASS ──
   function filterMasterclass(theme, btn) {
     document.querySelectorAll('.mc-pill').forEach(b => {
