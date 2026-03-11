@@ -18689,11 +18689,52 @@
     }
   }
 
+  function ensureMemberSidebarNotebookPlacement() {
+    var nav = document.querySelector('#sidebar .sidebar-nav');
+    if (!nav) return;
+
+    var dashboardLink = nav.querySelector("a.nav-item[onclick=\"showPage('dashboard')\"]");
+    if (!dashboardLink) return;
+
+    var messagesLink = nav.querySelector("a.nav-item[onclick=\"showPage('messages')\"]");
+    var notebookLinks = Array.from(nav.querySelectorAll("a.nav-item[onclick=\"showPage('notebook')\"]"));
+    var notebookLink = notebookLinks[0] || null;
+
+    if (!notebookLink) {
+      notebookLink = document.createElement('a');
+      notebookLink.className = 'nav-item';
+      notebookLink.setAttribute('onclick', "showPage('notebook')");
+    }
+
+    notebookLink.innerHTML = '<span class="nav-icon">📓</span> Carnet d\'apprentissage';
+
+    var afterDashboard = dashboardLink.nextElementSibling;
+    if (afterDashboard === notebookLink) {
+      afterDashboard = notebookLink.nextElementSibling;
+    }
+    nav.insertBefore(notebookLink, afterDashboard || null);
+
+    if (messagesLink) {
+      var notebookNext = notebookLink.nextElementSibling;
+      if (notebookNext !== messagesLink) {
+        nav.insertBefore(messagesLink, notebookNext || null);
+      }
+    }
+
+    notebookLinks.slice(1).forEach(function(duplicateLink) {
+      duplicateLink.remove();
+    });
+  }
+
   /* ── auto-init ── */
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', window.initJournal);
+    document.addEventListener('DOMContentLoaded', function() {
+      window.initJournal();
+      ensureMemberSidebarNotebookPlacement();
+    });
   } else {
     window.initJournal();
+    ensureMemberSidebarNotebookPlacement();
   }
 
 })();
