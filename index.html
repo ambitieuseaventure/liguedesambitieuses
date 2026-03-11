@@ -3928,13 +3928,6 @@
     <a class="nav-item" onclick="showPage('dashboard')">
       <span class="nav-icon">🏡</span> Tableau de bord
     </a>
-    <a class="nav-item" onclick="showPage('notebook')">
-      <span class="nav-icon">📓</span> Carnet d'apprentissage
-    </a>
-    <a class="nav-item" onclick="showPage('messages')">
-      <span class="nav-icon">✉️</span> Messagerie
-      <span class="badge">3</span>
-    </a>
     <a class="nav-item" onclick="showPage('community')">
       <span class="nav-icon">🌸</span> Communauté
       <span class="badge">12</span>
@@ -3946,6 +3939,11 @@
       <span class="nav-icon">📅</span> Événements
       <span class="badge">2</span>
     </a>
+    <a class="nav-item" onclick="showPage('messages')">
+      <span class="nav-icon">✉️</span> Messagerie
+      <span class="badge">3</span>
+    </a>
+
     <div class="nav-section-label">Apprentissage</div>
     <a class="nav-item" onclick="showPage('classroom')">
       <span class="nav-icon">📚</span> Formations
@@ -3955,6 +3953,9 @@
     </a>
     <a class="nav-item" onclick="showPage('resources')">
       <span class="nav-icon">📁</span> Ressources
+    </a>
+    <a class="nav-item" onclick="showPage('notebook')">
+      <span class="nav-icon">📓</span> Mon carnet d'apprentissage
     </a>
 
     <div class="nav-section-label">Stratège & +</div>
@@ -18523,11 +18524,52 @@
     }
   }
 
+  function ensureMemberSidebarNotebookPlacement() {
+    var nav = document.querySelector('#sidebar .sidebar-nav');
+    if (!nav) return;
+
+    var dashboardLink = nav.querySelector("a.nav-item[onclick=\"showPage('dashboard')\"]");
+    if (!dashboardLink) return;
+
+    var messagesLink = nav.querySelector("a.nav-item[onclick=\"showPage('messages')\"]");
+    var notebookLinks = Array.from(nav.querySelectorAll("a.nav-item[onclick=\"showPage('notebook')\"]"));
+    var notebookLink = notebookLinks[0] || null;
+
+    if (!notebookLink) {
+      notebookLink = document.createElement('a');
+      notebookLink.className = 'nav-item';
+      notebookLink.setAttribute('onclick', "showPage('notebook')");
+    }
+
+    notebookLink.innerHTML = '<span class="nav-icon">📓</span> Carnet d\'apprentissage';
+
+    var afterDashboard = dashboardLink.nextElementSibling;
+    if (afterDashboard === notebookLink) {
+      afterDashboard = notebookLink.nextElementSibling;
+    }
+    nav.insertBefore(notebookLink, afterDashboard || null);
+
+    if (messagesLink) {
+      var notebookNext = notebookLink.nextElementSibling;
+      if (notebookNext !== messagesLink) {
+        nav.insertBefore(messagesLink, notebookNext || null);
+      }
+    }
+
+    notebookLinks.slice(1).forEach(function(duplicateLink) {
+      duplicateLink.remove();
+    });
+  }
+
   /* ── auto-init ── */
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', window.initJournal);
+    document.addEventListener('DOMContentLoaded', function() {
+      window.initJournal();
+      ensureMemberSidebarNotebookPlacement();
+    });
   } else {
     window.initJournal();
+    ensureMemberSidebarNotebookPlacement();
   }
 
 })();
