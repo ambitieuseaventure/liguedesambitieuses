@@ -7326,13 +7326,16 @@
 
       <nav class="admin-nav">
         <div class="admin-nav-group">
-          <div class="admin-nav-label">Vue d'ensemble</div>
+          <div class="admin-nav-label">Pilotage</div>
           <div class="admin-nav-item active" onclick="adminPage('dashboard',this)">
             <span class="nav-icon">📊</span> Tableau de bord
           </div>
           <div class="admin-nav-item" onclick="adminPage('activite',this)">
-            <span class="nav-icon">⚡</span> Activité live
+            <span class="nav-icon">⚡</span> Activité
             <span class="admin-badge-count">3</span>
+          </div>
+          <div class="admin-nav-item" onclick="adminPage('finances',this)">
+            <span class="nav-icon">💰</span> Finances
           </div>
         </div>
 
@@ -7341,10 +7344,41 @@
           <div class="admin-nav-item" onclick="adminPage('membres',this)">
             <span class="nav-icon">👥</span> Gérer les membres
           </div>
+          <div class="admin-nav-item" onclick="adminPage('messagerie',this)">
+            <span class="nav-icon">💬</span> Messagerie (messages privés avec les membres)
+            <span class="admin-badge-count">4</span>
+          </div>
+          <div class="admin-nav-item" onclick="adminPage('crm',this)">
+            <span class="nav-icon">🗃️</span> CRM & Prospects
+          </div>
         </div>
 
         <div class="admin-nav-group">
-          <div class="admin-nav-label">Contenus</div>
+          <div class="admin-nav-label">Communication</div>
+          <div class="admin-nav-item" onclick="adminPage('contact',this)" id="admin-nav-contact">
+            <span class="nav-icon">✉️</span> Messages reçus
+            <span class="admin-badge-count" id="contact-nav-badge" style="display:none;">0</span>
+          </div>
+          <div class="admin-nav-item" onclick="adminPage('emailing',this)">
+            <span class="nav-icon">✉️</span> Emailing
+          </div>
+          <div class="admin-nav-item" onclick="adminPage('annonces',this)">
+            <span class="nav-icon">📣</span> Annonces plateforme
+          </div>
+        </div>
+
+        <div class="admin-nav-group">
+          <div class="admin-nav-label">Communauté et événements</div>
+          <div class="admin-nav-item" onclick="adminPage('communaute',this)">
+            <span class="nav-icon">🏘️</span> Communauté
+          </div>
+          <div class="admin-nav-item" onclick="adminPage('evenements',this)">
+            <span class="nav-icon">📅</span> Événements
+          </div>
+        </div>
+
+        <div class="admin-nav-group">
+          <div class="admin-nav-label">Programme et Contenus</div>
           <div class="admin-nav-item" onclick="adminPage('formations',this)">
             <span class="nav-icon">📚</span> Formations
           </div>
@@ -7354,69 +7388,18 @@
           <div class="admin-nav-item" onclick="adminPage('ressources',this)">
             <span class="nav-icon">🗂️</span> Ressources
           </div>
-          <div class="admin-nav-item" onclick="adminPage('evenements',this)">
-            <span class="nav-icon">📅</span> Événements
-          </div>
-        </div>
-
-        <div class="admin-nav-group">
-          <div class="admin-nav-label">Interactions membres</div>
-          <div class="admin-nav-item" onclick="adminPage('messagerie',this)">
-            <span class="nav-icon">💬</span> Messagerie
-            <span class="admin-badge-count">4</span>
-          </div>
-          <div class="admin-nav-item" onclick="adminPage('communaute',this)">
-            <span class="nav-icon">🏘️</span> Communauté
-          </div>
-          <div class="admin-nav-item" onclick="adminPage('qr-admin',this)">
-            <span class="nav-icon">🎤</span> Q&R Live
-          </div>
-          <div class="admin-nav-item" onclick="adminPage('bilans-admin',this)">
-            <span class="nav-icon">📋</span> Bilans & Audit
-          </div>
-          <div class="admin-nav-item" onclick="adminPage('hotline-admin',this)">
-            <span class="nav-icon">🔥</span> Hotline Business
-            <span class="admin-badge-count">2</span>
-          </div>
-          <div class="admin-nav-item" onclick="adminPage('coaching-admin',this)">
-            <span class="nav-icon">🎯</span> Coaching 1-1
-          </div>
-        </div>
-
-        <div class="admin-nav-group">
-          <div class="admin-nav-label">Communication</div>
-          <div class="admin-nav-item" onclick="adminPage('emailing',this)">
-            <span class="nav-icon">✉️</span> Emailing
-          </div>
-          <div class="admin-nav-item" onclick="adminPage('annonces',this)">
-            <span class="nav-icon">📣</span> Annonces plateforme
-          </div>
-          <div class="admin-nav-item" onclick="adminPage('blog-admin',this)">
-            <span class="nav-icon">✍️</span> Blog · Le Carnet
-          </div>
-        </div>
-
-        <div class="admin-nav-group">
-          <div class="admin-nav-label">Business</div>
-          <div class="admin-nav-item" onclick="adminPage('finances',this)">
-            <span class="nav-icon">💰</span> Finances & abonnements
-          </div>
-          <div class="admin-nav-item" onclick="adminPage('crm',this)">
-            <span class="nav-icon">🗃️</span> CRM & prospects
-          </div>
-          <div class="admin-nav-item" onclick="adminPage('contact',this)" id="admin-nav-contact">
-            <span class="nav-icon">✉️</span> Messages reçus
-            <span class="admin-badge-count" id="contact-nav-badge" style="display:none;">0</span>
-          </div>
           <div class="admin-nav-item" onclick="adminPage('bibliotheque',this)">
             <span class="nav-icon">📚</span> Bibliothèque Ambitieuse
           </div>
+          <div class="admin-nav-item" onclick="adminPage('blog-admin',this)">
+            <span class="nav-icon">✍️</span> Blog
+          </div>
         </div>
 
         <div class="admin-nav-group">
-          <div class="admin-nav-label">Équipe</div>
+          <div class="admin-nav-label">Admin</div>
           <div class="admin-nav-item" onclick="adminPage('equipe',this)">
-            <span class="nav-icon">🔑</span> Accès & rôles
+            <span class="nav-icon">🔑</span> Accès & Rôles
           </div>
         </div>
       </nav>
