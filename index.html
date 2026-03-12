@@ -2762,7 +2762,7 @@
       display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
       min-height: 600px;
     }
-    .lp-hero-left { position: relative; z-index: 2; padding-bottom: 80px; }
+    .lp-hero-left { position: relative; z-index: 2; padding-bottom: 80px; margin-top: -22px; }
     .lp-pill {
       display: inline-flex; align-items: center; gap: 6px;
       background: rgba(252,186,51,0.12); border: 1px solid rgba(252,186,51,0.3);
@@ -2799,8 +2799,8 @@
     .lp-avatars .lp-av:first-child { margin-left: 0; }
 
     .lp-hero-right { position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: center; }
-    .lp-hero-img-wrap { position: relative; width: 100%; max-width: 380px; }
-    .lp-hero-img { width: 100%; object-fit: contain; display: block; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)); }
+    .lp-hero-img-wrap { position: relative; width: 100%; max-width: 500px; padding-right: 88px; }
+    .lp-hero-img { width: 100%; object-fit: contain; display: block; filter: drop-shadow(0 24px 42px rgba(0,0,0,0.45)); }
     .lp-floating-card {
       position: absolute; background: white; border-radius: 12px;
       padding: 12px 16px; display: flex; align-items: center; gap: 10px;
@@ -2808,8 +2808,8 @@
       font-size: 12px; white-space: nowrap;
       animation: float 3s ease-in-out infinite;
     }
-    .lp-fc-top { top: 12%; left: -60px; }
-    .lp-fc-bot { bottom: 20%; right: -50px; animation-delay: 1.5s; }
+    .lp-fc-top { top: 10%; right: -34px; }
+    .lp-fc-bot { bottom: 16%; left: -62px; animation-delay: 1.5s; }
     .lp-floating-card strong { display: block; font-size: 13px; color: var(--navy-darkest); }
     .lp-floating-card span { color: var(--text-light); }
     .lp-fc-icon { font-size: 22px; flex-shrink: 0; }
@@ -2886,7 +2886,7 @@
     .lp-feat p { font-size: 14px; color: var(--text-light); line-height: 1.65; margin-bottom: 16px; }
     .lp-feat-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
     .lp-feat-list li { font-size: 13px; color: var(--navy); font-weight: 500; }
-    .lp-feat-cta { background: var(--navy-darkest); border-color: rgba(235,193,76,0.2); text-align: center; }
+    .lp-feat-cta { background: linear-gradient(145deg,var(--navy-darkest) 0%,var(--navy-dark) 60%,var(--navy) 100%); border-color: rgba(235,193,76,0.2); text-align: center; }
     .lp-feat-cta h3 { color: white; }
     .lp-feat-cta p { color: rgba(255,255,255,0.6); }
     .lp-feat-cta:hover { border-color: var(--gold); }
@@ -3181,8 +3181,8 @@
 
     .lp-hero { background:linear-gradient(145deg,var(--navy-darkest) 0%,var(--navy-dark) 60%,var(--navy) 100%);position:relative;overflow:hidden; }
     .lp-hero::before { content:'';position:absolute;top:-20%;right:5%;width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(252,186,51,0.09),transparent 70%); }
-    .lp-hero-inner { max-width:1200px;margin:0 auto;padding:40px 40px 0;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:flex-start;min-height:780px; }
-    .lp-hero-left { position:relative;z-index:2;padding-bottom:70px; }
+    .lp-hero-inner { max-width:1200px;margin:0 auto;padding:40px 40px 0;display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:flex-start;min-height:780px; }
+    .lp-hero-left { position:relative;z-index:2;padding-bottom:70px;margin-top:-22px; }
     .lp-pill { display:inline-flex;align-items:center;gap:6px;background:rgba(252,186,51,0.12);border:1px solid rgba(252,186,51,0.3);color:var(--gold-light);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:22px; }
     .lp-h1 { font-family:'Playfair Display',serif;font-size:clamp(30px,3.5vw,50px);color:white;line-height:1.12;margin-bottom:20px; }
     .lp-h1 em { color:var(--gold);font-style:italic; }
@@ -3196,12 +3196,12 @@
     .lp-avatars { display:flex; }
     .lp-av { width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;font-family:'Playfair Display',serif;border:2px solid var(--navy-darkest);margin-left:-8px;flex-shrink:0; }
     .lp-avatars .lp-av:first-child { margin-left:0; }
-    .lp-hero-right { position:relative;z-index:2;display:flex;align-items:flex-start;justify-content:center;padding-top:30px; }
-    .lp-hero-img-wrap { position:relative;width:100%;max-width:360px; }
-    .lp-hero-img { width:100%;max-height:1000px;object-fit:contain;object-position:top center;display:block; }
+    .lp-hero-right { position:relative;z-index:2;display:flex;align-items:flex-start;justify-content:center;padding-top:4px; }
+    .lp-hero-img-wrap { position:relative;width:100%;max-width:500px;padding-right:90px; }
+    .lp-hero-img { width:100%;max-height:1000px;object-fit:contain;object-position:top center;display:block;filter:drop-shadow(0 24px 42px rgba(0,0,0,0.45)); }
     .lp-floating-card { position:absolute;background:white;border-radius:12px;padding:11px 14px;display:flex;align-items:center;gap:9px;box-shadow:0 8px 28px rgba(20,36,53,0.22);font-size:12px;white-space:nowrap;animation:float 3s ease-in-out infinite; }
-    .lp-fc-top { top:15%;left:-55px; }
-    .lp-fc-bot { bottom:22%;right:-45px;animation-delay:1.5s; }
+    .lp-fc-top { top:8%;right:-22px; }
+    .lp-fc-bot { bottom:17%;left:-60px;animation-delay:1.5s; }
     .lp-floating-card strong { display:block;font-size:12px;color:var(--navy-darkest); }
     .lp-floating-card span { color:var(--text-light); }
     .lp-fc-icon { font-size:20px;flex-shrink:0; }
@@ -3245,7 +3245,7 @@
     .lp-feat p { font-size:14px;color:var(--text-light);line-height:1.65;margin-bottom:14px; }
     .lp-feat-list { list-style:none;display:flex;flex-direction:column;gap:5px; }
     .lp-feat-list li { font-size:13px;color:var(--navy);font-weight:500; }
-    .lp-feat-cta { background:var(--navy-darkest);border-color:rgba(235,193,76,0.2);text-align:center; }
+    .lp-feat-cta { background:linear-gradient(145deg,var(--navy-darkest) 0%,var(--navy-dark) 60%,var(--navy) 100%);border-color:rgba(235,193,76,0.2);text-align:center; }
     .lp-feat-cta h3 { color:white; }
     .lp-feat-cta p { color:rgba(255,255,255,0.6); }
     .lp-feat-cta:hover { border-color:var(--gold); }
@@ -3396,7 +3396,7 @@
     /* ══ SPACING FIXES ══ */
     .lp-section { padding: 96px 40px; }
     .lp-hero-inner { min-height: 580px; padding: 80px 40px 0; gap: 56px; }
-    .lp-hero-left { padding-bottom: 80px; }
+    .lp-hero-left { padding-bottom: 80px; margin-top: -22px; }
     .lp-trust { padding: 32px 40px; }
     .lp-trust-badges { gap: 14px; }
     .lp-trust-b { padding: 10px 22px; font-size: 13.5px; }
@@ -4201,10 +4201,10 @@
             <ul class="lp-feat-list"><li>✓ 34 ressources prêtes à l'emploi</li><li>✓ Business plan, suivi financier…</li><li>✓ Nouvelles ressources chaque semaine</li></ul>
           </div>
           <div class="lp-feat">
-            <div class="lp-feat-icon" style="background:linear-gradient(135deg,rgba(20,36,53,0.1),rgba(36,66,91,0.06))">✉️</div>
-            <h3>Messagerie Privée</h3>
-            <p>Échange en direct avec les autres membres, trouve des partenaires ou une oreille bienveillante.</p>
-            <ul class="lp-feat-list"><li>✓ Messages privés illimités</li><li>✓ Réseau de femmes entrepreneurs</li><li>✓ Connexions durables</li></ul>
+            <div class="lp-feat-icon" style="background:linear-gradient(135deg,rgba(20,36,53,0.1),rgba(36,66,91,0.06))">🗓️</div>
+            <h3>Événements</h3>
+            <p>Retrouve des rendez-vous réguliers pour apprendre, networker et garder ton élan toute l'année.</p>
+            <ul class="lp-feat-list"><li>✓ Sessions live &amp; ateliers thématiques</li><li>✓ Rencontres networking entre membres</li><li>✓ Calendrier d&rsquo;&eacute;v&eacute;nements mis &agrave; jour</li></ul>
           </div>
           <div class="lp-feat lp-feat-cta">
             <img src="assets/image-3.png" alt="Blason" style="width:72px;margin-bottom:14px">
