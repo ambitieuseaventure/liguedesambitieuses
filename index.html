@@ -151,6 +151,30 @@
   .user-info .name { font-size:13px; font-weight:600; color:white; }
   .user-info .plan { font-size:10px; color:var(--gold); font-weight:500; }
 
+  .profile-quick-link { cursor:pointer; transition:opacity .2s, transform .2s; }
+  .profile-quick-link:hover { opacity:.88; transform:translateY(-1px); }
+  .profile-quick-link:focus-visible { outline:2px solid var(--gold-bright); outline-offset:3px; border-radius:10px; }
+
+  .profile-shell { max-width:1120px; margin:0 auto; display:flex; flex-direction:column; gap:22px; }
+  .profile-hero { display:grid; grid-template-columns:auto 1fr auto; gap:20px; align-items:center; padding:24px; border-radius:18px; background:linear-gradient(135deg,var(--navy-darkest),#223f58); color:white; }
+  .profile-avatar-lg { width:78px; height:78px; border-radius:50%; background:linear-gradient(135deg,var(--gold),var(--gold-bright)); color:var(--navy-darkest); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:30px; font-weight:700; box-shadow:0 0 0 4px rgba(252,186,51,0.2); }
+  .profile-tabs { display:flex; gap:8px; flex-wrap:wrap; }
+  .profile-tab-btn { border:1px solid rgba(20,36,53,0.15); background:white; color:var(--text-mid); border-radius:999px; padding:8px 14px; font-size:12px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
+  .profile-tab-btn.active { background:var(--navy-darkest); border-color:var(--navy-darkest); color:white; }
+  .profile-tab-pane { display:none; }
+  .profile-tab-pane.active { display:block; }
+  .profile-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; }
+  .profile-card { background:white; border:1px solid rgba(20,36,53,0.08); border-radius:16px; padding:20px; box-shadow:0 8px 20px rgba(20,36,53,0.05); }
+  .profile-timeline { display:flex; flex-direction:column; gap:10px; }
+  .profile-event { border-left:2px solid rgba(79,133,160,0.35); padding:0 0 10px 12px; }
+  .profile-event:last-child { padding-bottom:0; }
+  .profile-section-title { font-family:'Playfair Display',serif; font-size:19px; color:var(--navy-darkest); margin-bottom:12px; }
+  .profile-badge { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px; font-size:11px; font-weight:700; background:rgba(110,207,158,0.18); color:#2d7d57; }
+  .billing-table { width:100%; border-collapse:collapse; font-size:12px; }
+  .billing-table th,.billing-table td { text-align:left; padding:10px 8px; border-bottom:1px solid rgba(20,36,53,0.08); }
+  .billing-table th { color:var(--text-light); font-size:11px; text-transform:uppercase; letter-spacing:.07em; }
+
+
   /* ── MAIN ── */
   .main { margin-left:240px; min-height:100vh; }
 
@@ -2639,6 +2663,8 @@
     .conversations-list { height:280px; }
     .community-layout { grid-template-columns:1fr; }
     #communityFeed { grid-template-columns:1fr; }
+    .profile-hero { grid-template-columns:1fr; text-align:center; }
+    .profile-grid { grid-template-columns:1fr; }
     .topbar { padding:10px 16px; }
     .topbar-title { font-size:16px; }
 
@@ -4034,8 +4060,8 @@
 
   <div class="sidebar-footer">
     <div class="user-card">
-      <div class="user-avatar">SA</div>
-      <div class="user-info">
+      <div class="user-avatar profile-quick-link" role="button" tabindex="0" onclick="showPage('profil')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showPage('profil')}">SA</div>
+      <div class="user-info profile-quick-link" role="button" tabindex="0" onclick="showPage('profil')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showPage('profil')}">
         <div class="name">Sophie A.</div>
         <div class="plan">✦ Membre Ligue</div>
       </div>
@@ -5118,6 +5144,128 @@
       </div>
     </div>
   </div>
+
+  <!-- ── MON PROFIL ── -->
+  <div class="page" id="page-profil">
+    <div class="page-content" style="background:#f4f7fa;">
+      <div class="profile-shell">
+        <div class="profile-hero">
+          <div class="profile-avatar-lg">SA</div>
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-size:30px;line-height:1.1;">Sophie Andreu</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.72);margin-top:5px;">Graphiste & branding · Bordeaux</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+              <span style="font-size:11px;background:rgba(252,186,51,0.2);border:1px solid rgba(252,186,51,0.3);color:var(--gold-light);padding:4px 10px;border-radius:20px;font-weight:700;">⭐ Visionnaire</span>
+              <span style="font-size:11px;background:rgba(255,255,255,0.14);color:rgba(255,255,255,0.86);padding:4px 10px;border-radius:20px;">🎨 Design & identité de marque</span>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="showPage('annuaire')" style="white-space:nowrap;">Voir dans l'annuaire</button>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+          <div class="profile-tabs">
+            <button class="profile-tab-btn active" data-profile-tab="overview" onclick="profileSwitchTab('overview',this)">Profil, activité & achats</button>
+            <button class="profile-tab-btn" data-profile-tab="abonnement" onclick="profileSwitchTab('abonnement',this)">Mon abonnement</button>
+          </div>
+          <div style="font-size:12px;color:var(--text-light);">Dernière connexion : aujourd'hui · 08:42</div>
+        </div>
+
+        <div class="profile-tab-pane active" data-profile-pane="overview">
+          <div class="profile-grid">
+            <div class="profile-card">
+              <div class="profile-section-title">Mon profil complet</div>
+              <p style="font-size:14px;line-height:1.6;color:var(--text-mid);margin:0 0 12px;">Je crée des identités visuelles percutantes pour les femmes qui veulent marquer les esprits. Mon credo : ton image doit être aussi ambitieuse que toi.</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;">
+                <div><strong>Secteur</strong><br>Créatif & design</div>
+                <div><strong>Membre depuis</strong><br>Octobre 2023</div>
+                <div><strong>Spécialité</strong><br>Branding & identité visuelle</div>
+                <div><strong>Disponible pour</strong><br>Collaborations & conseils</div>
+              </div>
+            </div>
+            <div class="profile-card">
+              <div class="profile-section-title">Statistiques plateforme</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div style="padding:10px;border-radius:12px;background:rgba(79,133,160,0.08);"><strong style="font-size:20px;color:var(--navy-darkest);">184</strong><br><span style="font-size:12px;color:var(--text-light);">messages envoyés</span></div>
+                <div style="padding:10px;border-radius:12px;background:rgba(252,186,51,0.1);"><strong style="font-size:20px;color:var(--navy-darkest);">27</strong><br><span style="font-size:12px;color:var(--text-light);">publications communauté</span></div>
+                <div style="padding:10px;border-radius:12px;background:rgba(110,207,158,0.14);"><strong style="font-size:20px;color:var(--navy-darkest);">16</strong><br><span style="font-size:12px;color:var(--text-light);">événements suivis</span></div>
+                <div style="padding:10px;border-radius:12px;background:rgba(20,36,53,0.07);"><strong style="font-size:20px;color:var(--navy-darkest);">1 240</strong><br><span style="font-size:12px;color:var(--text-light);">points gagnés</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-grid">
+            <div class="profile-card">
+              <div class="profile-section-title">Historique d'activité</div>
+              <div class="profile-timeline">
+                <div class="profile-event"><div style="font-size:12px;color:var(--text-light);">Aujourd'hui · 08:30</div><div style="font-size:14px;color:var(--text-dark);">Publication dans <strong>Communauté</strong> : “Mon plan de lancement est prêt ✨”.</div></div>
+                <div class="profile-event"><div style="font-size:12px;color:var(--text-light);">Hier · 19:12</div><div style="font-size:14px;color:var(--text-dark);">Participation à l'événement <strong>Masterclass : LinkedIn Pro</strong>.</div></div>
+                <div class="profile-event"><div style="font-size:12px;color:var(--text-light);">11 mars · 09:45</div><div style="font-size:14px;color:var(--text-dark);">Message privé envoyé à Clara Vidal pour une collab branding.</div></div>
+                <div class="profile-event"><div style="font-size:12px;color:var(--text-light);">9 mars · 16:04</div><div style="font-size:14px;color:var(--text-dark);">Progression formation : <strong>Structurer son offre premium</strong> (leçon 5 terminée).</div></div>
+              </div>
+            </div>
+            <div class="profile-card">
+              <div class="profile-section-title">Historique des achats</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="padding:10px 12px;border-radius:12px;background:rgba(20,36,53,0.04);">
+                  <div style="font-size:13px;font-weight:700;color:var(--navy-darkest);">Bibliothèque · Pack Templates Storytelling</div>
+                  <div style="font-size:12px;color:var(--text-light);">Acheté le 06/03/2026 · 19,00 €</div>
+                </div>
+                <div style="padding:10px 12px;border-radius:12px;background:rgba(20,36,53,0.04);">
+                  <div style="font-size:13px;font-weight:700;color:var(--navy-darkest);">Bibliothèque · Tableau de bord business (Excel)</div>
+                  <div style="font-size:12px;color:var(--text-light);">Acheté le 18/02/2026 · 15,00 €</div>
+                </div>
+                <div style="padding:10px 12px;border-radius:12px;background:rgba(20,36,53,0.04);">
+                  <div style="font-size:13px;font-weight:700;color:var(--navy-darkest);">Replay Masterclass · Offre & pricing</div>
+                  <div style="font-size:12px;color:var(--text-light);">Acheté le 28/01/2026 · 12,00 €</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-tab-pane" data-profile-pane="abonnement">
+          <div class="profile-grid">
+            <div class="profile-card">
+              <div class="profile-section-title">Mon abonnement actuel</div>
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+                <div>
+                  <div style="font-family:'Playfair Display',serif;font-size:24px;color:var(--navy-darkest);">Visionnaire</div>
+                  <div style="font-size:13px;color:var(--text-light);margin-top:2px;">79 €/mois · renouvellement le 02/04/2026</div>
+                </div>
+                <span class="profile-badge">● Actif</span>
+              </div>
+              <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+                <button class="btn-primary">Changer mon niveau d'abonnement</button>
+                <button class="dl-btn" style="background:transparent;border:1px solid rgba(255,90,90,0.28);color:#b94747;">Résilier mon abonnement</button>
+              </div>
+            </div>
+            <div class="profile-card">
+              <div class="profile-section-title">Inclus dans mon plan</div>
+              <ul style="margin:0;padding-left:18px;color:var(--text-mid);line-height:1.8;font-size:13px;">
+                <li>Accès à toutes les formations & masterclass</li>
+                <li>Accès communauté & événements illimités</li>
+                <li>1 session coaching 1-1 / mois</li>
+                <li>Support prioritaire sur la hotline business</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-section-title">Historique de facturation</div>
+            <table class="billing-table">
+              <thead><tr><th>Date</th><th>Facture</th><th>Montant</th><th>Statut</th></tr></thead>
+              <tbody>
+                <tr><td>02/03/2026</td><td>INV-2026-0302</td><td>79,00 €</td><td><span class="profile-badge">Payée</span></td></tr>
+                <tr><td>02/02/2026</td><td>INV-2026-0202</td><td>79,00 €</td><td><span class="profile-badge">Payée</span></td></tr>
+                <tr><td>02/01/2026</td><td>INV-2026-0102</td><td>79,00 €</td><td><span class="profile-badge">Payée</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- ── COMMUNITY ── -->
   <div class="page" id="page-community">
@@ -10958,6 +11106,7 @@
       landing:'landing', dashboard:'dashboard', community:'community',
       classroom:'classroom', masterclass:'masterclass',
       resources:'resources', notebook:'notebook', messages:'messages',
+      profil:'profil',
       annuaire:'annuaire', evenements:'evenements', qr:'qr',
       bilan:'bilan', buddy:'buddy', coaching:'coaching',
       hotline:'hotline', plan:'plan', mindset:'mindset',
@@ -10972,6 +11121,7 @@
       resources: 'Ressources',
       notebook: 'Carnet de bord',
       messages: 'Messagerie',
+      profil: 'Mon profil',
       annuaire: 'Annuaire',
       evenements: 'Événements',
       qr: 'Sessions Q&R',
@@ -11003,6 +11153,14 @@
     }
 
     if (window.innerWidth <= 900) sidebar.classList.remove('open');
+  }
+
+  function profileSwitchTab(tab, btn) {
+    document.querySelectorAll('.profile-tab-btn').forEach(function(el){ el.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    document.querySelectorAll('[data-profile-pane]').forEach(function(pane){
+      pane.classList.toggle('active', pane.getAttribute('data-profile-pane') === tab);
+    });
   }
 
   function toggleSidebar() {
