@@ -193,7 +193,7 @@ var rid=existingRid||('course-'+title.toLowerCase().replace(/[^a-z0-9]+/g,'-').r
     var victories=getJournalEntries().filter(function(e){return e.mode==='victoire';});
 
     page.innerHTML=''
-      +'<div class="section-header"><div class="section-title">Mon carnet <em>d\'apprentissage</em></div><div class="section-sub">Ton outil quotidien pour apprendre, agir et célébrer tes victoires.</div></div>'
+      +'<div class="section-header"><div class="section-title">Mon carnet <em>de bord</em></div><div class="section-sub">Ton outil quotidien pour apprendre, agir et célébrer tes victoires.</div></div>'
 
       /* Focus du Jour */
       +'<div class="nb-section nb-focus-card" style="margin-bottom:16px;">'
