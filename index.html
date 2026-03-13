@@ -3979,6 +3979,187 @@
     .bib-carousel { min-height:0; height:100%; }
   }
 
+  /* ── SUBSCRIPTION ACCESS CONTROL ── */
+  .nav-item.nav-locked {
+    opacity: 0.45;
+    cursor: not-allowed;
+    position: relative;
+  }
+  .nav-item.nav-locked:hover {
+    background: rgba(255,255,255,0.02);
+    color: rgba(255,255,255,0.4);
+    border-left-color: transparent;
+  }
+  .nav-lock-icon {
+    margin-left: auto;
+    font-size: 11px;
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+  .nav-tier-badge {
+    margin-left: auto;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.4);
+  }
+  /* Locked page overlay */
+  .page-lock-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, rgba(20,36,53,0.96) 0%, rgba(34,63,88,0.97) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .page-lock-card {
+    background: white;
+    border-radius: 24px;
+    padding: 48px 52px;
+    max-width: 520px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 32px 80px rgba(20,36,53,0.35);
+  }
+  .page-lock-icon {
+    font-size: 52px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .page-lock-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--navy-darkest);
+    margin-bottom: 8px;
+  }
+  .page-lock-desc {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .page-lock-tier-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+  }
+  .page-lock-tier-badge.tier-stratege {
+    background: rgba(79,133,160,0.12);
+    color: var(--steel);
+    border: 1px solid rgba(79,133,160,0.25);
+  }
+  .page-lock-tier-badge.tier-visionnaire {
+    background: rgba(235,193,76,0.12);
+    color: #9a6e10;
+    border: 1px solid rgba(235,193,76,0.3);
+  }
+  .page-lock-features {
+    list-style: none;
+    text-align: left;
+    margin: 0 0 28px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .page-lock-features li {
+    font-size: 13px;
+    color: var(--text-mid);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .page-lock-features li::before {
+    content: '✓';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(110,207,158,0.18);
+    color: #2d7d57;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .page-lock-upgrade-btn {
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--navy-darkest), var(--navy-dark));
+    color: var(--gold-bright);
+    border: none;
+    border-radius: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .page-lock-upgrade-btn:hover {
+    background: linear-gradient(135deg, var(--navy-dark), var(--steel));
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(20,36,53,0.25);
+  }
+  .page-lock-back-link {
+    display: block;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-light);
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .page-lock-back-link:hover { color: var(--navy-darkest); }
+  /* Demo subscription switcher in sidebar */
+  .sub-demo-switcher {
+    padding: 12px 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.15);
+  }
+  .sub-demo-label {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .sub-demo-select {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: var(--gold-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 10px;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(249,227,141,0.5)'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 26px;
+  }
+  .sub-demo-select option { background: #142435; color: white; }
+
   </style>
 </head>
 <body>
@@ -3997,73 +4178,81 @@
 
   <nav class="sidebar-nav">
     <div class="nav-section-label">Principal</div>
-    <a class="nav-item" onclick="showPage('dashboard')">
+    <a class="nav-item" data-page="dashboard" onclick="showPage('dashboard')">
       <span class="nav-icon">🏡</span> Accueil
     </a>
-    <a class="nav-item" onclick="showPage('messages')">
+    <a class="nav-item" data-page="messages" onclick="showPage('messages')">
       <span class="nav-icon">✉️</span> Messagerie
       <span class="badge">3</span>
     </a>
-    <a class="nav-item" onclick="showPage('community')">
+    <a class="nav-item" data-page="community" onclick="showPage('community')">
       <span class="nav-icon">🌸</span> Communauté
       <span class="badge">12</span>
     </a>
-    <a class="nav-item" onclick="showPage('evenements')">
+    <a class="nav-item" data-page="evenements" onclick="showPage('evenements')">
       <span class="nav-icon">📅</span> Événements
       <span class="badge">2</span>
     </a>
 
     <div class="nav-section-label">Accompagnement</div>
-    <a class="nav-item" onclick="showPage('hotline')">
+    <a class="nav-item" data-page="hotline" data-min-tier="visionnaire" onclick="showPage('hotline')">
       <span class="nav-icon">⚡</span> Hotline Business
     </a>
-    <a class="nav-item" onclick="showPage('qr')">
+    <a class="nav-item" data-page="qr" onclick="showPage('qr')">
       <span class="nav-icon">🎙️</span> Live Q&amp;R
     </a>
-    <a class="nav-item" onclick="showPage('bilan')">
+    <a class="nav-item" data-page="bilan" data-min-tier="stratege" onclick="showPage('bilan')">
       <span class="nav-icon">📊</span> Bilans &amp; Audits
     </a>
-    <a class="nav-item" onclick="showPage('coaching')">
+    <a class="nav-item" data-page="coaching" data-min-tier="visionnaire" onclick="showPage('coaching')">
       <span class="nav-icon">📞</span> Coaching 1-1
     </a>
-    <a class="nav-item" onclick="showPage('plan')">
+    <a class="nav-item" data-page="plan" data-min-tier="visionnaire" onclick="showPage('plan')">
       <span class="nav-icon">🎯</span> Plan d'action trimestriel
     </a>
 
     <div class="nav-section-label">Transformation Personnelle</div>
-    <a class="nav-item" onclick="showPage('mindset')">
+    <a class="nav-item" data-page="mindset" data-min-tier="stratege" onclick="showPage('mindset')">
       <span class="nav-icon">🧘</span> Focus Mindset
     </a>
-    <a class="nav-item" onclick="showPage('classroom')">
+    <a class="nav-item" data-page="classroom" onclick="showPage('classroom')">
       <span class="nav-icon">📚</span> Formations
     </a>
-    <a class="nav-item" onclick="showPage('resources')">
+    <a class="nav-item" data-page="resources" onclick="showPage('resources')">
       <span class="nav-icon">📁</span> Ressources
     </a>
-    <a class="nav-item" onclick="showPage('masterclass')">
+    <a class="nav-item" data-page="masterclass" data-min-tier="stratege" onclick="showPage('masterclass')">
       <span class="nav-icon">🎬</span> Masterclass
     </a>
 
     <div class="nav-section-label">Réseau Ambitieux</div>
-    <a class="nav-item" onclick="showPage('annuaire')">
+    <a class="nav-item" data-page="annuaire" onclick="showPage('annuaire')">
       <span class="nav-icon">🗺️</span> Annuaire
     </a>
-    <a class="nav-item" onclick="showPage('buddy')">
+    <a class="nav-item" data-page="buddy" data-min-tier="stratege" onclick="showPage('buddy')">
       <span class="nav-icon">🤝</span> Accountability Buddy
     </a>
 
     <div class="nav-section-label">Mon compte</div>
-    <a class="nav-item" onclick="showPage('landing')">
+    <a class="nav-item" data-page="landing" onclick="showPage('landing')">
       <span class="nav-icon">🌐</span> Page d'accueil
     </a>
   </nav>
 
+  <div class="sub-demo-switcher">
+    <span class="sub-demo-label">Simuler un abonnement</span>
+    <select class="sub-demo-select" id="sub-demo-select" onchange="switchSubscriptionDemo(this.value)">
+      <option value="initiee">🌿 L'Initiée — 25 €/mois</option>
+      <option value="stratege">⚡ La Stratège — 65 €/mois</option>
+      <option value="visionnaire" selected>🔮 La Visionnaire — 555 €/mois</option>
+    </select>
+  </div>
   <div class="sidebar-footer">
     <div class="user-card">
       <div class="user-avatar profile-quick-link" role="button" tabindex="0" onclick="showPage('profil')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showPage('profil')}">SA</div>
       <div class="user-info profile-quick-link" role="button" tabindex="0" onclick="showPage('profil')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showPage('profil')}">
         <div class="name">Sophie A.</div>
-        <div class="plan">✦ Membre Ligue</div>
+        <div class="plan" id="sidebar-user-plan">🔮 La Visionnaire</div>
       </div>
     </div>
   </div>
@@ -5155,7 +5344,7 @@
             <div style="font-family:'Playfair Display',serif;font-size:30px;line-height:1.1;">Sophie Andreu</div>
             <div style="font-size:13px;color:rgba(255,255,255,0.72);margin-top:5px;">Graphiste & branding · Bordeaux</div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
-              <span style="font-size:11px;background:rgba(252,186,51,0.2);border:1px solid rgba(252,186,51,0.3);color:var(--gold-light);padding:4px 10px;border-radius:20px;font-weight:700;">⭐ Visionnaire</span>
+              <span id="profile-hero-tier-badge" style="font-size:11px;background:rgba(252,186,51,0.2);border:1px solid rgba(252,186,51,0.3);color:var(--gold-light);padding:4px 10px;border-radius:20px;font-weight:700;">🔮 La Visionnaire</span>
               <span style="font-size:11px;background:rgba(255,255,255,0.14);color:rgba(255,255,255,0.86);padding:4px 10px;border-radius:20px;">🎨 Design & identité de marque</span>
             </div>
           </div>
@@ -5229,23 +5418,24 @@
               <div class="profile-section-title">Mon abonnement actuel</div>
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
                 <div>
-                  <div style="font-family:'Playfair Display',serif;font-size:24px;color:var(--navy-darkest);">Visionnaire</div>
-                  <div style="font-size:13px;color:var(--text-light);margin-top:2px;">79 €/mois · renouvellement le 02/04/2026</div>
+                  <div id="profile-plan-name" style="font-family:'Playfair Display',serif;font-size:24px;color:var(--navy-darkest);">La Visionnaire</div>
+                  <div id="profile-plan-price" style="font-size:13px;color:var(--text-light);margin-top:2px;">555 €/mois · renouvellement le 02/04/2026</div>
                 </div>
                 <span class="profile-badge">● Actif</span>
               </div>
               <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
-                <button class="btn-primary">Changer mon niveau d'abonnement</button>
+                <button id="profile-change-plan-btn" class="btn-primary" onclick="document.getElementById('profile-upgrade-section').style.display='block';this.style.display='none'">Changer mon niveau d'abonnement</button>
                 <button class="dl-btn" style="background:transparent;border:1px solid rgba(255,90,90,0.28);color:#b94747;">Résilier mon abonnement</button>
               </div>
             </div>
             <div class="profile-card">
               <div class="profile-section-title">Inclus dans mon plan</div>
-              <ul style="margin:0;padding-left:18px;color:var(--text-mid);line-height:1.8;font-size:13px;">
-                <li>Accès à toutes les formations & masterclass</li>
-                <li>Accès communauté & événements illimités</li>
-                <li>1 session coaching 1-1 / mois</li>
-                <li>Support prioritaire sur la hotline business</li>
+              <ul id="profile-features-list" style="margin:0;padding-left:18px;color:var(--text-mid);line-height:1.8;font-size:13px;">
+                <li>Tous les avantages de la Stratège</li>
+                <li>1h de coaching mensuel 1-1 avec Ana et/ou Audrey</li>
+                <li>Hotline Business — accès 7j/7</li>
+                <li>Plan d'action trimestriel personnalisé</li>
+                <li>Focus Mindset complet & ateliers interactifs</li>
               </ul>
             </div>
           </div>
@@ -5255,11 +5445,53 @@
             <table class="billing-table">
               <thead><tr><th>Date</th><th>Facture</th><th>Montant</th><th>Statut</th></tr></thead>
               <tbody>
-                <tr><td>02/03/2026</td><td>INV-2026-0302</td><td>79,00 €</td><td><span class="profile-badge">Payée</span></td></tr>
-                <tr><td>02/02/2026</td><td>INV-2026-0202</td><td>79,00 €</td><td><span class="profile-badge">Payée</span></td></tr>
-                <tr><td>02/01/2026</td><td>INV-2026-0102</td><td>79,00 €</td><td><span class="profile-badge">Payée</span></td></tr>
+                <tr><td>02/03/2026</td><td>INV-2026-0302</td><td class="billing-amount">555,00 €</td><td><span class="profile-badge">Payée</span></td></tr>
+                <tr><td>02/02/2026</td><td>INV-2026-0202</td><td class="billing-amount">555,00 €</td><td><span class="profile-badge">Payée</span></td></tr>
+                <tr><td>02/01/2026</td><td>INV-2026-0102</td><td class="billing-amount">555,00 €</td><td><span class="profile-badge">Payée</span></td></tr>
               </tbody>
             </table>
+          </div>
+
+          <!-- Section upgrade (affichée au clic sur "Changer mon niveau") -->
+          <div id="profile-upgrade-section" style="display:none;">
+            <div class="profile-section-title" style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy-darkest);margin-bottom:16px;">Choisir un nouveau niveau</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+              <div style="background:white;border:2px solid rgba(79,133,160,0.18);border-radius:16px;padding:20px;">
+                <div style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px;">🌿 L'Initiée</div>
+                <div style="font-size:22px;font-weight:700;color:var(--navy-darkest);margin-bottom:12px;"><strong>25 €</strong><span style="font-size:13px;font-weight:400;color:var(--text-light);">/mois</span></div>
+                <ul style="font-size:12px;color:var(--text-mid);padding-left:16px;line-height:1.9;margin:0 0 16px;">
+                  <li>Live Q&R & Événements</li>
+                  <li>Communauté & Annuaire</li>
+                  <li>3 ressources business/mois</li>
+                  <li>1 formation</li>
+                </ul>
+                <button onclick="switchSubscriptionDemo('initiee');document.getElementById('profile-upgrade-section').style.display='none';document.getElementById('profile-change-plan-btn').style.display='';" style="width:100%;padding:10px;background:rgba(79,133,160,0.1);border:1px solid rgba(79,133,160,0.25);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--steel);cursor:pointer;">Choisir L'Initiée</button>
+              </div>
+              <div style="background:white;border:2px solid rgba(79,133,160,0.35);border-radius:16px;padding:20px;position:relative;">
+                <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--steel);color:white;font-size:10px;font-weight:700;padding:3px 12px;border-radius:20px;white-space:nowrap;">⭐ Le plus populaire</div>
+                <div style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px;">⚡ La Stratège</div>
+                <div style="font-size:22px;font-weight:700;color:var(--navy-darkest);margin-bottom:12px;"><strong>65 €</strong><span style="font-size:13px;font-weight:400;color:var(--text-light);">/mois</span></div>
+                <ul style="font-size:12px;color:var(--text-mid);padding-left:16px;line-height:1.9;margin:0 0 16px;">
+                  <li>Tout l'Initiée +</li>
+                  <li>Bilans & Masterclass</li>
+                  <li>Accountability Buddy</li>
+                  <li>Toutes les ressources & formations</li>
+                </ul>
+                <button onclick="switchSubscriptionDemo('stratege');document.getElementById('profile-upgrade-section').style.display='none';document.getElementById('profile-change-plan-btn').style.display='';" style="width:100%;padding:10px;background:var(--navy-darkest);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--gold-bright);cursor:pointer;">Choisir La Stratège</button>
+              </div>
+              <div style="background:linear-gradient(135deg,var(--navy-darkest),#223f58);border:2px solid rgba(235,193,76,0.3);border-radius:16px;padding:20px;color:white;">
+                <div style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px;">🔮 La Visionnaire</div>
+                <div style="font-size:22px;font-weight:700;color:var(--gold-bright);margin-bottom:12px;"><strong>555 €</strong><span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.5);">/mois</span></div>
+                <ul style="font-size:12px;color:rgba(255,255,255,0.75);padding-left:16px;line-height:1.9;margin:0 0 16px;">
+                  <li>Tout la Stratège +</li>
+                  <li>Coaching 1-1 mensuel</li>
+                  <li>Hotline Business 7j/7</li>
+                  <li>Plan d'action trimestriel</li>
+                </ul>
+                <button onclick="switchSubscriptionDemo('visionnaire');document.getElementById('profile-upgrade-section').style.display='none';document.getElementById('profile-change-plan-btn').style.display='';" style="width:100%;padding:10px;background:var(--gold-bright);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--navy-darkest);cursor:pointer;">Choisir La Visionnaire</button>
+              </div>
+            </div>
+            <button onclick="document.getElementById('profile-upgrade-section').style.display='none';document.getElementById('profile-change-plan-btn').style.display='';" style="margin-top:14px;background:none;border:none;font-size:12px;color:var(--text-light);cursor:pointer;text-decoration:underline;font-family:'DM Sans',sans-serif;">Annuler</button>
           </div>
         </div>
       </div>
@@ -18900,5 +19132,302 @@
   }
 
 })();
+</script>
+<script>
+// ══════════════════════════════════════════════════════════════════════
+// SYSTÈME DE CONTRÔLE D'ACCÈS PAR NIVEAU D'ABONNEMENT
+// ══════════════════════════════════════════════════════════════════════
+
+var SUBSCRIPTION_TIERS = {
+  initiee: {
+    name: "L'Initiée",
+    emoji: '🌿',
+    color: '#4f85a0',
+    priceMonthly: 25,
+    priceAnnual: 250,
+    pages: ['dashboard','messages','community','evenements','qr','annuaire','resources','classroom','notebook','profil','landing','blog','bibliotheque','contact','palmares'],
+    features: [
+      'Sessions Live Q&R hebdomadaires',
+      'Événements en ligne (petits-dej, apéro business…)',
+      'Communauté privée d\'ambitieuses',
+      'Annuaire des entrepreneures',
+      'Accès à 3 ressources business par mois',
+      'Accès à 1 formation'
+    ],
+    planLabel: '🌿 L\'Initiée'
+  },
+  stratege: {
+    name: 'La Stratège',
+    emoji: '⚡',
+    color: '#4f85a0',
+    priceMonthly: 65,
+    priceAnnual: 650,
+    pages: ['dashboard','messages','community','evenements','qr','annuaire','resources','classroom','notebook','profil','landing','blog','bibliotheque','contact','palmares','bilan','masterclass','buddy','mindset'],
+    features: [
+      'Tous les avantages de l\'Initiée',
+      'Bilan mensuel & audit express',
+      'Masterclass experts chaque mois',
+      'Accountability Buddy',
+      'Mise en avant mensuelle dans l\'annuaire',
+      'Accès à toutes les ressources business',
+      'Accès à quelques ressources Focus Mindset',
+      'Accès à toutes les formations'
+    ],
+    planLabel: '⚡ La Stratège'
+  },
+  visionnaire: {
+    name: 'La Visionnaire',
+    emoji: '🔮',
+    color: '#ebc14c',
+    priceMonthly: 555,
+    priceAnnual: 5550,
+    pages: ['dashboard','messages','community','evenements','qr','annuaire','resources','classroom','notebook','profil','landing','blog','bibliotheque','contact','palmares','bilan','masterclass','buddy','mindset','coaching','hotline','plan'],
+    features: [
+      'Tous les avantages de la Stratège',
+      '1h de coaching mensuel 1-1 avec Ana et/ou Audrey',
+      'Hotline Business — accès 7j/7',
+      'Plan d\'action trimestriel personnalisé',
+      'Focus Mindset complet & ateliers interactifs'
+    ],
+    planLabel: '🔮 La Visionnaire'
+  }
+};
+
+var TIER_ORDER = ['initiee', 'stratege', 'visionnaire'];
+
+// Infos d'upgrade pour chaque page verrouillée
+var PAGE_LOCK_INFO = {
+  bilan:      { requiredTier: 'stratege',    icon: '📊', title: 'Bilans & Audits', desc: 'Les bilans mensuels et audits express sont réservés aux membres Stratège et Visionnaire.' },
+  masterclass: { requiredTier: 'stratege',   icon: '🎤', title: 'Masterclass', desc: 'Les masterclass experts mensuels sont disponibles dès le niveau Stratège.' },
+  buddy:      { requiredTier: 'stratege',    icon: '🤝', title: 'Accountability Buddy', desc: 'Le programme Accountability Buddy est disponible dès le niveau Stratège.' },
+  mindset:    { requiredTier: 'stratege',    icon: '🧘', title: 'Focus Mindset', desc: 'L\'espace Focus Mindset est accessible à partir du niveau Stratège.' },
+  coaching:   { requiredTier: 'visionnaire', icon: '📞', title: 'Coaching 1-1', desc: 'La session coaching mensuel 1-1 avec Ana et Audrey est réservée aux membres Visionnaire.' },
+  hotline:    { requiredTier: 'visionnaire', icon: '⚡', title: 'Hotline Business', desc: 'La Hotline Business 7j/7 est un avantage exclusif du niveau Visionnaire.' },
+  plan:       { requiredTier: 'visionnaire', icon: '🗺️', title: 'Plan d\'action trimestriel', desc: 'Le plan d\'action trimestriel personnalisé est réservé aux membres Visionnaire.' }
+};
+
+// Niveau actuel (persisté en localStorage pour la démo)
+function getCurrentSubscription() {
+  return localStorage.getItem('demo_subscription_level') || 'visionnaire';
+}
+
+function setCurrentSubscription(level) {
+  if (!SUBSCRIPTION_TIERS[level]) return;
+  localStorage.setItem('demo_subscription_level', level);
+}
+
+function hasPageAccess(page) {
+  var tier = getCurrentSubscription();
+  var tierData = SUBSCRIPTION_TIERS[tier];
+  if (!tierData) return true;
+  return tierData.pages.indexOf(page) !== -1;
+}
+
+function getTierRank(tierKey) {
+  return TIER_ORDER.indexOf(tierKey);
+}
+
+function updateSidebarLockState() {
+  var tier = getCurrentSubscription();
+  var tierRank = getTierRank(tier);
+
+  document.querySelectorAll('.nav-item[data-min-tier]').forEach(function(item) {
+    var minTier = item.getAttribute('data-min-tier');
+    var minRank = getTierRank(minTier);
+    var isLocked = tierRank < minRank;
+
+    // Remove old lock indicators
+    var oldBadge = item.querySelector('.nav-tier-badge');
+    if (oldBadge) oldBadge.remove();
+    var oldLock = item.querySelector('.nav-lock-icon');
+    if (oldLock) oldLock.remove();
+
+    if (isLocked) {
+      item.classList.add('nav-locked');
+      var badge = document.createElement('span');
+      badge.className = 'nav-tier-badge';
+      badge.textContent = minTier === 'stratege' ? 'Stratège' : 'Visionnaire';
+      item.appendChild(badge);
+    } else {
+      item.classList.remove('nav-locked');
+    }
+  });
+
+  // Update sidebar footer plan label
+  var planEl = document.getElementById('sidebar-user-plan');
+  if (planEl && SUBSCRIPTION_TIERS[tier]) {
+    planEl.textContent = SUBSCRIPTION_TIERS[tier].planLabel;
+  }
+
+  // Sync demo select
+  var sel = document.getElementById('sub-demo-select');
+  if (sel) sel.value = tier;
+}
+
+function showLockedOverlay(page) {
+  var pageEl = document.getElementById('page-' + page);
+  if (!pageEl) return;
+
+  // Remove existing overlay
+  var existing = pageEl.querySelector('.page-lock-overlay');
+  if (existing) existing.remove();
+
+  pageEl.style.position = 'relative';
+
+  var info = PAGE_LOCK_INFO[page] || {
+    requiredTier: 'stratege',
+    icon: '🔒',
+    title: 'Contenu verrouillé',
+    desc: 'Ce contenu n\'est pas inclus dans votre abonnement actuel.'
+  };
+
+  var requiredTier = SUBSCRIPTION_TIERS[info.requiredTier];
+  var tierClass = info.requiredTier === 'visionnaire' ? 'tier-visionnaire' : 'tier-stratege';
+
+  var featuresList = '';
+  if (requiredTier) {
+    featuresList = '<ul class="page-lock-features">'
+      + requiredTier.features.slice(0, 4).map(function(f) {
+          return '<li>' + f + '</li>';
+        }).join('')
+      + '</ul>';
+  }
+
+  var priceText = requiredTier ? requiredTier.priceMonthly + ' €/mois' : '';
+
+  var overlay = document.createElement('div');
+  overlay.className = 'page-lock-overlay';
+  overlay.innerHTML = '<div class="page-lock-card">'
+    + '<span class="page-lock-icon">' + info.icon + '</span>'
+    + '<div class="page-lock-title">' + info.title + '</div>'
+    + '<div class="page-lock-desc">' + info.desc + '</div>'
+    + (requiredTier ? '<span class="page-lock-tier-badge ' + tierClass + '">' + requiredTier.emoji + ' ' + requiredTier.name + ' — à partir de ' + priceText + '</span>' : '')
+    + featuresList
+    + '<button class="page-lock-upgrade-btn" onclick="openUpgradeModal(\'' + info.requiredTier + '\')">'
+    + 'Passer à ' + (requiredTier ? requiredTier.name : 'un niveau supérieur') + ' →'
+    + '</button>'
+    + '<button class="page-lock-back-link" onclick="showPage(\'dashboard\')">Retourner au tableau de bord</button>'
+    + '</div>';
+
+  pageEl.appendChild(overlay);
+}
+
+function hideLockedOverlay(page) {
+  var pageEl = document.getElementById('page-' + page);
+  if (!pageEl) return;
+  var overlay = pageEl.querySelector('.page-lock-overlay');
+  if (overlay) overlay.remove();
+}
+
+function openUpgradeModal(targetTier) {
+  // Simple redirect vers le profil onglet abonnement avec scroll
+  showPage('profil');
+  setTimeout(function() {
+    var btn = document.querySelector('[data-profile-tab="abonnement"]');
+    if (btn) profileSwitchTab('abonnement', btn);
+  }, 50);
+}
+
+// Surcharger showPage pour intégrer le contrôle d'accès
+var _origShowPage = window.showPage;
+window.showPage = function(page) {
+  _origShowPage(page);
+
+  // Vérifier l'accès après affichage de la page
+  var memberPages = Object.keys(PAGE_LOCK_INFO);
+  if (memberPages.indexOf(page) !== -1) {
+    if (!hasPageAccess(page)) {
+      showLockedOverlay(page);
+    } else {
+      hideLockedOverlay(page);
+    }
+  }
+
+  // Mettre à jour l'état actif de la nav (data-page)
+  document.querySelectorAll('.nav-item[data-page]').forEach(function(item) {
+    item.classList.toggle('active', item.getAttribute('data-page') === page);
+  });
+
+  // Rafraîchir l'onglet abonnement si on va sur le profil
+  if (page === 'profil') {
+    setTimeout(renderProfileSubscriptionTab, 10);
+  }
+};
+
+function switchSubscriptionDemo(level) {
+  if (!SUBSCRIPTION_TIERS[level]) return;
+  setCurrentSubscription(level);
+  updateSidebarLockState();
+
+  // Si on est actuellement sur une page verrouillée, afficher l'overlay
+  var activePage = document.querySelector('.page.active');
+  if (activePage) {
+    var pageId = activePage.id.replace('page-', '');
+    var memberPages = Object.keys(PAGE_LOCK_INFO);
+    if (memberPages.indexOf(pageId) !== -1) {
+      if (!hasPageAccess(pageId)) {
+        showLockedOverlay(pageId);
+      } else {
+        hideLockedOverlay(pageId);
+      }
+    }
+  }
+
+  // Mettre à jour l'onglet abonnement si ouvert
+  if (document.querySelector('#page-profil.active')) {
+    renderProfileSubscriptionTab();
+  }
+}
+
+function renderProfileSubscriptionTab() {
+  var tier = getCurrentSubscription();
+  var tierData = SUBSCRIPTION_TIERS[tier];
+  if (!tierData) return;
+
+  // Mettre à jour le nom du plan
+  var planNameEl = document.getElementById('profile-plan-name');
+  if (planNameEl) planNameEl.textContent = tierData.name;
+
+  // Mettre à jour le prix et la date de renouvellement
+  var planPriceEl = document.getElementById('profile-plan-price');
+  if (planPriceEl) planPriceEl.textContent = tierData.priceMonthly + ' €/mois · renouvellement le 02/04/2026';
+
+  // Mettre à jour la liste des avantages inclus
+  var featuresList = document.getElementById('profile-features-list');
+  if (featuresList) {
+    featuresList.innerHTML = tierData.features.map(function(f) {
+      return '<li>' + f + '</li>';
+    }).join('');
+  }
+
+  // Mettre à jour le badge emoji dans le hero du profil
+  var heroTierBadge = document.getElementById('profile-hero-tier-badge');
+  if (heroTierBadge) {
+    heroTierBadge.textContent = tierData.emoji + ' ' + tierData.name;
+  }
+
+  // Mettre à jour les montants dans l'historique de facturation
+  var billingAmounts = document.querySelectorAll('.billing-amount');
+  billingAmounts.forEach(function(el) {
+    el.textContent = tierData.priceMonthly.toLocaleString('fr-FR') + ',00 €';
+  });
+
+  // Réinitialiser la section upgrade si elle était ouverte
+  var upgradeSection = document.getElementById('profile-upgrade-section');
+  var changePlanBtn = document.getElementById('profile-change-plan-btn');
+  if (upgradeSection) upgradeSection.style.display = 'none';
+  if (changePlanBtn) changePlanBtn.style.display = '';
+}
+
+// Init au chargement
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialiser depuis localStorage (ou défaut 'visionnaire' pour la démo)
+  var saved = getCurrentSubscription();
+  var sel = document.getElementById('sub-demo-select');
+  if (sel) sel.value = saved;
+
+  updateSidebarLockState();
+  renderProfileSubscriptionTab();
+});
 </script>
 <script defer src="assets/notebook-enhanced.js" data-notebook-enhanced></script>
