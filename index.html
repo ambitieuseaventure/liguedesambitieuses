@@ -4214,6 +4214,9 @@
   .fd-cta-btn:hover { background:var(--navy-darkest);transform:translateY(-1px);box-shadow:0 6px 20px rgba(20,36,53,0.2); }
   .fd-cta-buy { background:var(--gold-bright);color:var(--navy-darkest); }
   .fd-cta-buy:hover { background:var(--gold-light);box-shadow:0 6px 20px rgba(252,186,51,0.3); }
+  .rd-info { display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px; }
+  .rd-info-item { display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-light);background:var(--bg);padding:8px 12px;border-radius:8px; }
+  .rd-cta-done { background:rgba(20,36,53,0.08)!important;color:var(--text-light)!important;cursor:default!important;transform:none!important;box-shadow:none!important; }
 
   /* ── RESOURCE CARD LOCK (Initiée) ── */
   .resource-card { position: relative; overflow: hidden; }
@@ -5426,6 +5429,11 @@
   </div>
 
   <!-- ── MODALE AJOUT TÂCHE ── -->
+  <!-- Resource Detail Modal -->
+  <div id="rd-modal" onclick="if(event.target===this)closeRd()" style="display:none;position:fixed;inset:0;background:rgba(20,36,53,0.6);backdrop-filter:blur(4px);z-index:9500;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
+    <div id="rd-inner" style="background:white;border-radius:20px;width:520px;max-width:96vw;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.3);position:relative;"></div>
+  </div>
+
   <!-- Formation Detail Modal -->
   <div id="fd-modal" onclick="if(event.target===this)closeFd()" style="display:none;position:fixed;inset:0;background:rgba(20,36,53,0.6);backdrop-filter:blur(4px);z-index:9500;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
     <div id="fd-inner" style="background:white;border-radius:20px;width:560px;max-width:96vw;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.3);position:relative;"></div>
@@ -12192,6 +12200,17 @@
         if (!card) return;
         if (e.target.closest('.notes-card')) return;
         openFormationDetail(card.getAttribute('data-course-id'));
+      });
+    }
+
+    // Clic sur une carte ressource → ouvre le détail
+    var resGrid = document.getElementById('resources-grid');
+    if (resGrid) {
+      resGrid.addEventListener('click', function(e) {
+        var card = e.target.closest('.resource-card[data-res-admin-id]');
+        if (!card) return;
+        if (e.target.closest('.notes-card') || e.target.closest('.dl-btn')) return;
+        openResourceDetail(card.getAttribute('data-res-admin-id'));
       });
     }
   });
@@ -19849,6 +19868,100 @@ function closeFd() {
   if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
 }
 
+// ── Resource Detail Modal ──
+function openResourceDetail(resAdminId) {
+  var r = (typeof ressourcesData !== 'undefined') ? ressourcesData.find(function(x){ return x.id === resAdminId; }) : null;
+  if (!r) return;
+
+  var tier = (typeof getCurrentSubscription === 'function') ? getCurrentSubscription() : 'visionnaire';
+  var store = (typeof getInitieeResStore === 'function') ? getInitieeResStore() : { used: [], purchased: [] };
+  var purchased = store.purchased.indexOf(resAdminId) !== -1;
+  var usedFree  = store.used.indexOf(resAdminId) !== -1;
+  var hasAccess;
+  if (tier !== 'initiee') {
+    hasAccess = true;
+  } else if (!r.lockedForInitiee) {
+    hasAccess = usedFree || store.used.length < 3;
+  } else {
+    hasAccess = purchased;
+  }
+
+  var coverBgMap = {
+    '💎 Offre':        'linear-gradient(135deg,rgba(252,186,51,0.25),rgba(235,193,76,0.08))',
+    '💰 Finance':      'linear-gradient(135deg,rgba(110,207,158,0.22),rgba(235,193,76,0.1))',
+    '🎯 Clients':      'linear-gradient(135deg,rgba(79,133,160,0.22),rgba(36,66,91,0.1))',
+    '📣 Marketing':    'linear-gradient(135deg,rgba(255,130,100,0.22),rgba(252,186,51,0.08))',
+    '🧠 Mindset':      'linear-gradient(135deg,rgba(180,140,220,0.22),rgba(79,133,160,0.1))',
+    '⚙️ Organisation': 'linear-gradient(135deg,rgba(160,160,160,0.18),rgba(36,66,91,0.1))',
+  };
+  var bg = coverBgMap[r.theme] || 'linear-gradient(135deg,rgba(79,133,160,0.2),rgba(36,66,91,0.1))';
+  var fmtEmoji = r.format ? r.format.split(' ')[0] : '📄';
+
+  var card = document.querySelector('.resource-card[data-res-admin-id="' + resAdminId + '"]');
+  var alreadyDownloaded = card && card.getAttribute('data-telecharge') === 'oui';
+
+  var accessBadge = '';
+  if (tier !== 'initiee') {
+    accessBadge = '<span class="fd-access-badge fd-included">✓ Incluse dans votre abonnement</span>';
+  } else if (r.lockedForInitiee && purchased) {
+    accessBadge = '<span class="fd-access-badge fd-purchased">✓ Achetée</span>';
+  } else if (!r.lockedForInitiee) {
+    accessBadge = '<span class="fd-access-badge fd-free">🌿 Incluse Initiée</span>';
+  }
+
+  var infoHtml = '<div class="rd-info">'
+    + (r.format   ? '<div class="rd-info-item">' + r.format + '</div>' : '')
+    + (r.fileSize ? '<div class="rd-info-item">💾 ' + r.fileSize + '</div>' : '')
+    + (r.downloads ? '<div class="rd-info-item">⬇ ' + r.downloads + ' téléchargements</div>' : '')
+    + '</div>';
+
+  var cta = '';
+  if (alreadyDownloaded) {
+    cta = '<button class="fd-cta-btn rd-cta-done" disabled>✓ Déjà téléchargée</button>';
+  } else if (hasAccess) {
+    cta = '<button class="fd-cta-btn" onclick="closeRdAndDownload(\'' + resAdminId + '\')">Télécharger la ressource →</button>';
+  } else {
+    var price = r.unitPrice || 7;
+    cta = '<button class="fd-cta-btn fd-cta-buy" onclick="closeRd();purchaseResource(\'' + resAdminId + '\')">Acheter l\'accès · ' + price + ' € →</button>';
+  }
+
+  document.getElementById('rd-inner').innerHTML =
+    '<div class="fd-cover" style="background:' + bg + '">'
+    + '<div class="fd-emoji">' + fmtEmoji + '</div>'
+    + '<button class="fd-close" onclick="closeRd()">×</button>'
+    + '</div>'
+    + '<div class="fd-body">'
+    + '<div class="fd-badges">'
+    + '<span style="font-size:11px;color:var(--text-light);font-weight:600;">' + r.theme + '</span>'
+    + '<span style="font-size:11px;color:var(--text-light);font-weight:600;">' + r.format + '</span>'
+    + accessBadge
+    + '</div>'
+    + '<h2 class="fd-title">' + r.title + '</h2>'
+    + '<p class="fd-desc">' + r.desc + '</p>'
+    + infoHtml
+    + cta
+    + '</div>';
+
+  var modal = document.getElementById('rd-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeRd() {
+  var modal = document.getElementById('rd-modal');
+  if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
+}
+
+function closeRdAndDownload(resAdminId) {
+  closeRd();
+  setTimeout(function() {
+    var card = document.querySelector('.resource-card[data-res-admin-id="' + resAdminId + '"]');
+    if (!card) return;
+    var btn = card.querySelector('.dl-btn:not(.dl-btn-done)');
+    if (btn) btn.click();
+  }, 200);
+}
+
 // ── Appliquer les verrous sur les cartes formations ──
 function applyClassroomAccessControl() {
   var tier = (typeof getCurrentSubscription === 'function') ? getCurrentSubscription() : 'visionnaire';
@@ -19952,7 +20065,7 @@ function applyResourceAccessControl() {
         + '<div class="resource-lock-name">' + r.title + '</div>'
         + '<div class="resource-lock-price">' + r.unitPrice + ' €</div>'
         + '<div class="resource-lock-hint">Accès à l\'unité</div>'
-        + '<button class="resource-lock-btn" onclick="event.stopPropagation();purchaseResource(\'' + resId + '\')">Débloquer →</button>';
+        + '<button class="resource-lock-btn" onclick="event.stopPropagation();openResourceDetail(\'' + resId + '\')">Voir la ressource →</button>';
       card.appendChild(overlay);
       return;
     }
@@ -19967,7 +20080,7 @@ function applyResourceAccessControl() {
         + '<div style="font-size:11px;color:rgba(255,255,255,0.55);margin-bottom:8px;">Quota mensuel atteint</div>'
         + '<div class="resource-lock-price">' + r.unitPrice + ' €</div>'
         + '<div class="resource-lock-hint">Ou attends le mois prochain</div>'
-        + '<button class="resource-lock-btn" onclick="event.stopPropagation();purchaseResource(\'' + resId + '\')">Débloquer →</button>';
+        + '<button class="resource-lock-btn" onclick="event.stopPropagation();openResourceDetail(\'' + resId + '\')">Voir la ressource →</button>';
       card.appendChild(overlay2);
     }
     // Sinon : accès libre via quota → pas d'overlay, mais intercepter le téléchargement
