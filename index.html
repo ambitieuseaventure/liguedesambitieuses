@@ -12190,7 +12190,7 @@
       grid.addEventListener('click', function(e) {
         var card = e.target.closest('.course-card[data-course-id]');
         if (!card) return;
-        if (e.target.closest('.course-lock-overlay') || e.target.closest('.notes-card')) return;
+        if (e.target.closest('.notes-card')) return;
         openFormationDetail(card.getAttribute('data-course-id'));
       });
     }
@@ -19893,7 +19893,7 @@ function applyClassroomAccessControl() {
       + '<div class="course-lock-name">' + (f.title || 'Formation') + '</div>'
       + '<div class="course-lock-price">' + (f.unitPrice || 29) + ' €</div>'
       + '<div class="course-lock-hint">Accès à l\'unité · Non inclus Initiée</div>'
-      + '<button class="course-lock-btn" onclick="event.stopPropagation();purchaseCourse(\'' + courseId + '\')">Acheter cette formation →</button>';
+      + '<button class="course-lock-btn" onclick="event.stopPropagation();openFormationDetail(\'' + courseId + '\')">Voir la formation →</button>';
     card.appendChild(overlay);
   });
 }
