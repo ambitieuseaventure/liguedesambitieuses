@@ -4193,6 +4193,28 @@
     pointer-events: none;
   }
 
+  /* ── FORMATION DETAIL MODAL ── */
+  .fd-cover { position:relative;height:180px;display:flex;align-items:center;justify-content:center; }
+  .fd-emoji { font-size:72px; }
+  .fd-close { position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(20,36,53,0.15);background:white;color:var(--text-light);cursor:pointer;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .2s; }
+  .fd-close:hover { border-color:var(--navy);color:var(--navy); }
+  .fd-body { padding:28px 32px 32px; }
+  .fd-badges { display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px; }
+  .fd-title { font-family:'Playfair Display',serif;font-size:22px;color:var(--navy-darkest);line-height:1.25;margin-bottom:12px; }
+  .fd-desc { font-size:14px;color:var(--text-light);line-height:1.65;margin-bottom:24px; }
+  .fd-section-title { font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-mid);font-weight:700;margin-bottom:12px; }
+  .fd-modules { list-style:none;padding:0;margin:0 0 28px;display:flex;flex-direction:column;gap:8px; }
+  .fd-module { display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dark);background:var(--bg);padding:10px 14px;border-radius:10px; }
+  .fd-mod-num { width:22px;height:22px;border-radius:50%;background:var(--navy);color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+  .fd-access-badge { font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px; }
+  .fd-free { background:rgba(110,207,158,0.2);color:#0d4d30; }
+  .fd-included { background:rgba(20,36,53,0.08);color:var(--navy); }
+  .fd-purchased { background:rgba(252,186,51,0.2);color:var(--navy-darkest); }
+  .fd-cta-btn { width:100%;padding:14px;background:var(--navy);color:white;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s; }
+  .fd-cta-btn:hover { background:var(--navy-darkest);transform:translateY(-1px);box-shadow:0 6px 20px rgba(20,36,53,0.2); }
+  .fd-cta-buy { background:var(--gold-bright);color:var(--navy-darkest); }
+  .fd-cta-buy:hover { background:var(--gold-light);box-shadow:0 6px 20px rgba(252,186,51,0.3); }
+
   /* ── RESOURCE CARD LOCK (Initiée) ── */
   .resource-card { position: relative; overflow: hidden; }
   .resource-lock-overlay {
@@ -5404,6 +5426,11 @@
   </div>
 
   <!-- ── MODALE AJOUT TÂCHE ── -->
+  <!-- Formation Detail Modal -->
+  <div id="fd-modal" onclick="if(event.target===this)closeFd()" style="display:none;position:fixed;inset:0;background:rgba(20,36,53,0.6);backdrop-filter:blur(4px);z-index:9500;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
+    <div id="fd-inner" style="background:white;border-radius:20px;width:560px;max-width:96vw;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.3);position:relative;"></div>
+  </div>
+
   <div id="todo-add-modal" onclick="if(event.target===this)closeTodoModal()" style="display:none;position:fixed;inset:0;background:rgba(20,36,53,0.55);backdrop-filter:blur(4px);z-index:9000;align-items:center;justify-content:center;padding:20px;">
     <div style="background:white;border-radius:20px;width:480px;max-width:96vw;padding:36px 32px;box-shadow:0 40px 100px rgba(0,0,0,0.25);">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
@@ -12156,6 +12183,17 @@
   document.addEventListener('DOMContentLoaded', function(){
     var mm = document.getElementById('modl-modal');
     if (mm) mm.addEventListener('click', function(e){ if(e.target===mm) modlClose(); });
+
+    // Clic sur une carte formation → ouvre le détail
+    var grid = document.getElementById('courses-grid');
+    if (grid) {
+      grid.addEventListener('click', function(e) {
+        var card = e.target.closest('.course-card[data-course-id]');
+        if (!card) return;
+        if (e.target.closest('.course-lock-overlay') || e.target.closest('.notes-card')) return;
+        openFormationDetail(card.getAttribute('data-course-id'));
+      });
+    }
   });
 
   // ── FORMATIONS ──
@@ -19723,6 +19761,92 @@ function purchaseCourse(courseId) {
   addCoursePurchase(courseId);
   applyClassroomAccessControl();
   finToast && finToast('✓ Formation débloquée ! Bonne formation 🎓', '#6ecf9e');
+}
+
+// ── Formation Detail Modal ──
+function openFormationDetail(courseId) {
+  var f = (typeof formationsData !== 'undefined') ? formationsData.find(function(x){ return x.courseId === courseId; }) : null;
+  if (!f) return;
+
+  var tier = (typeof getCurrentSubscription === 'function') ? getCurrentSubscription() : 'visionnaire';
+  var purchased = (typeof getCourseAccessStore === 'function') ? getCourseAccessStore().indexOf(courseId) !== -1 : false;
+  var hasAccess = tier !== 'initiee' || f.freeForInitiee || purchased;
+
+  var coverBgMap = {
+    '💼 Business':        'linear-gradient(135deg,rgba(110,207,158,0.22),rgba(79,133,160,0.12))',
+    '💎 Offre & pricing': 'linear-gradient(135deg,rgba(252,186,51,0.25),rgba(235,193,76,0.08))',
+    '🎯 Clients':         'linear-gradient(135deg,rgba(79,133,160,0.22),rgba(36,66,91,0.1))',
+    '🎯 Trouver des clients': 'linear-gradient(135deg,rgba(79,133,160,0.22),rgba(36,66,91,0.1))',
+    '💰 Finance':         'linear-gradient(135deg,rgba(110,207,158,0.22),rgba(235,193,76,0.1))',
+    '📣 Marketing':       'linear-gradient(135deg,rgba(255,130,100,0.22),rgba(252,186,51,0.08))',
+    '🧠 Mindset':         'linear-gradient(135deg,rgba(180,140,220,0.22),rgba(79,133,160,0.1))',
+    '🤝 Réseau':          'linear-gradient(135deg,rgba(138,180,248,0.22),rgba(36,66,91,0.1))',
+    '⚙️ Organisation':    'linear-gradient(135deg,rgba(160,160,160,0.18),rgba(36,66,91,0.1))',
+    '🌐 Réseaux sociaux': 'linear-gradient(135deg,rgba(79,180,160,0.22),rgba(36,66,91,0.1))',
+  };
+  var bg = coverBgMap[f.theme] || 'linear-gradient(135deg,rgba(79,133,160,0.2),rgba(36,66,91,0.1))';
+
+  var dur = f.hours ? (f.hours + 'h' + (f.mins ? f.mins : '')) : '';
+
+  var mods = '';
+  if (f.modules && f.modules.length) {
+    mods = '<div class="fd-section-title">Au programme</div><ol class="fd-modules">';
+    f.modules.forEach(function(m, i) {
+      mods += '<li class="fd-module"><span class="fd-mod-num">' + (i + 1) + '</span>' + m.title + '</li>';
+    });
+    mods += '</ol>';
+  }
+
+  var accessBadge = '';
+  if (f.freeForInitiee) {
+    accessBadge = '<span class="fd-access-badge fd-free">🌿 Incluse Initiée</span>';
+  } else if (tier !== 'initiee') {
+    accessBadge = '<span class="fd-access-badge fd-included">✓ Incluse dans votre abonnement</span>';
+  } else if (purchased) {
+    accessBadge = '<span class="fd-access-badge fd-purchased">✓ Achetée</span>';
+  }
+
+  var cta = '';
+  if (hasAccess) {
+    var card = document.querySelector('.course-card[data-course-id="' + courseId + '"]');
+    var fill = card ? card.querySelector('.progress-fill') : null;
+    var pct = fill ? (parseInt(fill.style.width) || 0) : 0;
+    var label = pct > 0 ? ('Continuer la formation · ' + pct + '%') : 'Commencer la formation →';
+    cta = '<button class="fd-cta-btn" onclick="closeFd()">' + label + '</button>';
+  } else {
+    var price = f.unitPrice || 29;
+    cta = '<button class="fd-cta-btn fd-cta-buy" onclick="closeFd();purchaseCourse(\'' + courseId + '\')">Acheter cette formation · ' + price + ' € →</button>';
+  }
+
+  var lvlStyles = { 'Débutant': 'background:rgba(235,193,76,0.2);color:#7a5c00;', 'Intermédiaire': 'background:rgba(79,133,160,0.2);color:var(--navy);', 'Avancé': 'background:rgba(20,36,53,0.15);color:var(--navy-dark);' };
+  var lvlStyle = lvlStyles[f.level] || 'background:rgba(20,36,53,0.1);color:var(--navy);';
+
+  document.getElementById('fd-inner').innerHTML =
+    '<div class="fd-cover" style="background:' + bg + '">'
+    + '<div class="fd-emoji">' + f.cover + '</div>'
+    + '<button class="fd-close" onclick="closeFd()">×</button>'
+    + '</div>'
+    + '<div class="fd-body">'
+    + '<div class="fd-badges">'
+    + '<span style="font-size:10px;padding:4px 10px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;' + lvlStyle + '">' + f.level + '</span>'
+    + '<span style="font-size:11px;color:var(--text-light);font-weight:600;">' + f.theme + '</span>'
+    + (dur ? '<span style="font-size:11px;color:var(--text-light);">⏱ ' + dur + '</span>' : '')
+    + accessBadge
+    + '</div>'
+    + '<h2 class="fd-title">' + f.title + '</h2>'
+    + '<p class="fd-desc">' + f.desc + '</p>'
+    + mods
+    + cta
+    + '</div>';
+
+  var modal = document.getElementById('fd-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFd() {
+  var modal = document.getElementById('fd-modal');
+  if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
 }
 
 // ── Appliquer les verrous sur les cartes formations ──
