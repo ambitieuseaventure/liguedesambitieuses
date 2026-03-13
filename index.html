@@ -3335,16 +3335,17 @@
     .blog-nl-input::placeholder { color:rgba(255,255,255,0.3); }
 
     /* ── Article reader ── */
-    .blog-article-overlay { display:none;position:fixed;inset:0;background:white;z-index:8000;overflow-y:auto; }
+    .blog-article-overlay { display:none;position:fixed;inset:0;background:#f7f5f0;z-index:8000;overflow-y:auto; }
     .blog-article-overlay.active { display:block; }
-    .blog-article-topbar { position:sticky;top:0;background:white;border-bottom:1px solid rgba(20,36,53,0.08);padding:0 40px;height:60px;display:flex;align-items:center;gap:16px;z-index:1; }
+    .blog-article-sitenav { position:sticky;top:0;z-index:100; }
+    .blog-article-topbar { position:sticky;top:62px;background:#f7f5f0;border-bottom:1px solid rgba(20,36,53,0.10);padding:0 40px;height:48px;display:flex;align-items:center;gap:16px;z-index:99; }
     .blog-article-back { display:flex;align-items:center;gap:7px;color:var(--gold-bright);font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;border:none;background:none;font-family:'DM Sans',sans-serif;transition:opacity .2s; }
     .blog-article-back:hover { opacity:.7; }
     .blog-article-body { max-width:720px;margin:0 auto;padding:48px 40px 80px; }
     .blog-article-hero { border-radius:16px;overflow:hidden;margin-bottom:36px;background:linear-gradient(135deg,var(--navy-darkest),var(--navy));display:flex;align-items:center;justify-content:center;height:280px;font-size:90px; }
     .blog-article-cat { font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-bright);font-weight:700;margin-bottom:12px; }
     .blog-article-title { font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,36px);color:var(--navy-darkest);line-height:1.2;margin-bottom:16px; }
-    .blog-article-meta { display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-light);margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid rgba(20,36,53,0.08); }
+    .blog-article-meta { display:none; }
     .blog-article-author-chip { display:flex;align-items:center;gap:7px; }
     .blog-article-avatar { width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ebc14c,#fcba33);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--navy-darkest);flex-shrink:0; }
     .blog-article-content { font-size:15px;color:var(--text-dark);line-height:1.8; }
@@ -5182,6 +5183,28 @@
 
   <!-- ── ARTICLE READER (overlay sur la page blog) ── -->
   <div class="blog-article-overlay" id="blog-article-overlay">
+    <nav class="pub-nav blog-article-sitenav">
+      <div class="pub-nav-inner">
+        <div class="pub-nav-logo" onclick="blogCloseArticle();showPage('landing')" style="cursor:pointer">
+          <img src="assets/image-1.png" alt="Logo">
+          <div>
+            <span class="pub-brand">Ambitieuse Aventure</span>
+            <span class="pub-product">La Ligue des Ambitieuses</span>
+          </div>
+        </div>
+        <div class="pub-nav-links">
+          <a href="javascript:void(0)" onclick="blogCloseArticle();navigateTo('pourquoi')">Pourquoi la Ligue ?</a>
+          <a href="javascript:void(0)" onclick="blogCloseArticle();navigateTo('apropos')">Notre histoire</a>
+          <a href="javascript:void(0)" onclick="blogCloseArticle();navigateTo('inclus')">Ce qui est inclus</a>
+          <a href="javascript:void(0)" onclick="blogCloseArticle();navigateTo('offre')">Tarifs</a>
+          <a href="javascript:void(0)" onclick="blogCloseArticle()" style="color:var(--gold-bright);">← Retour au Carnet</a>
+          <a href="javascript:void(0)" onclick="blogCloseArticle();showPage('bibliotheque')">La Bibliothèque</a>
+          <a href="javascript:void(0)" onclick="blogCloseArticle();showPage('contact')">Contact</a>
+        </div>
+        <button class="btn-primary pub-nav-cta" onclick="blogCloseArticle();navigateTo('offre')">Voir les offres →</button>
+        <button class="pub-nav-hamburger" onclick="pubNavOpen()" aria-label="Menu">☰</button>
+      </div>
+    </nav>
     <div class="blog-article-topbar">
       <button class="blog-article-back" onclick="blogCloseArticle()">← Retour au Carnet</button>
       <div style="flex:1;"></div>
