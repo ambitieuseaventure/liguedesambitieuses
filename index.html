@@ -4160,6 +4160,90 @@
   }
   .sub-demo-select option { background: #142435; color: white; }
 
+  /* ── COURSE CARD LOCK (Initiée) ── */
+  .course-card { position: relative; overflow: hidden; }
+  .course-lock-overlay {
+    position: absolute; inset: 0; z-index: 10;
+    background: linear-gradient(160deg, rgba(20,36,53,0.94) 0%, rgba(34,63,88,0.97) 100%);
+    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 24px 20px; text-align: center; border-radius: 16px;
+  }
+  .course-lock-icon { font-size: 34px; margin-bottom: 8px; }
+  .course-lock-name { font-family: 'Playfair Display', serif; font-size: 14px; color: white; line-height: 1.3; margin-bottom: 6px; }
+  .course-lock-price { font-size: 18px; font-weight: 700; color: var(--gold-bright); margin-bottom: 4px; }
+  .course-lock-hint { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+  .course-lock-btn {
+    padding: 10px 22px; background: var(--gold-bright); color: var(--navy-darkest);
+    border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s;
+  }
+  .course-lock-btn:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(252,186,51,0.35); }
+  .course-free-badge {
+    position: absolute; top: 10px; right: 10px; z-index: 6;
+    background: rgba(110,207,158,0.92); color: #0d4d30;
+    font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px;
+    pointer-events: none;
+  }
+  .course-purchased-badge {
+    position: absolute; top: 10px; right: 10px; z-index: 6;
+    background: rgba(252,186,51,0.92); color: var(--navy-darkest);
+    font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px;
+    pointer-events: none;
+  }
+
+  /* ── RESOURCE CARD LOCK (Initiée) ── */
+  .resource-card { position: relative; overflow: hidden; }
+  .resource-lock-overlay {
+    position: absolute; inset: 0; z-index: 10;
+    background: linear-gradient(160deg, rgba(20,36,53,0.93) 0%, rgba(34,63,88,0.96) 100%);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 16px; text-align: center; border-radius: 14px;
+  }
+  .resource-lock-icon { font-size: 26px; margin-bottom: 6px; }
+  .resource-lock-name { font-size: 12px; font-weight: 700; color: white; margin-bottom: 4px; line-height: 1.3; }
+  .resource-lock-price { font-size: 16px; font-weight: 700; color: var(--gold-bright); margin-bottom: 3px; }
+  .resource-lock-hint { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+  .resource-lock-btn {
+    padding: 8px 16px; background: var(--gold-bright); color: var(--navy-darkest);
+    border: none; border-radius: 9px; font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 700; cursor: pointer; transition: all .2s;
+  }
+  .resource-lock-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .resource-purchased-badge {
+    position: absolute; top: 8px; right: 8px; z-index: 6;
+    background: rgba(252,186,51,0.92); color: var(--navy-darkest);
+    font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 20px; pointer-events: none;
+  }
+
+  /* ── INITIÉE MONTHLY RESOURCE BANNER ── */
+  .initiee-monthly-banner {
+    background: linear-gradient(135deg, rgba(252,186,51,0.08), rgba(235,193,76,0.04));
+    border: 1px solid rgba(252,186,51,0.22); border-radius: 13px;
+    padding: 13px 18px; display: flex; align-items: center; gap: 14px;
+    margin-bottom: 18px; flex-wrap: wrap;
+  }
+  .initiee-monthly-slots { display: flex; gap: 5px; align-items: center; }
+  .slot-dot {
+    width: 11px; height: 11px; border-radius: 50%; transition: background .3s;
+  }
+  .slot-dot.used { background: var(--gold-bright); }
+  .slot-dot.free { background: rgba(252,186,51,0.18); border: 1.5px solid rgba(252,186,51,0.5); }
+  .slot-dot.purchased { background: rgba(110,207,158,0.8); border: 1.5px solid rgba(110,207,158,0.9); }
+
+  /* ── ADMIN INITIEE BADGE ── */
+  .admin-initiee-free-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;
+    background: rgba(110,207,158,0.12); color: #6ecf9e; border: 1px solid rgba(110,207,158,0.2);
+  }
+  .admin-initiee-lock-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;
+    background: rgba(252,186,51,0.1); color: var(--gold-bright); border: 1px solid rgba(252,186,51,0.2);
+  }
+
   </style>
 </head>
 <body>
@@ -5683,9 +5767,23 @@
       <!-- Compteur -->
       <div style="font-size:13px;color:var(--text-light);margin-bottom:18px;" id="resources-count">8 ressources disponibles</div>
 
+      <!-- Bandeau mensuel Initiée (visible uniquement pour l'Initiée) -->
+      <div class="initiee-monthly-banner" id="initiee-monthly-banner" style="display:none;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:700;color:var(--navy-darkest);">Tes accès gratuits ce mois-ci</div>
+          <div style="font-size:12px;color:var(--text-light);margin-top:2px;" id="initiee-monthly-text">0 / 3 ressources utilisées</div>
+        </div>
+        <div class="initiee-monthly-slots" id="initiee-monthly-slots">
+          <div class="slot-dot free"></div>
+          <div class="slot-dot free"></div>
+          <div class="slot-dot free"></div>
+        </div>
+        <div style="font-size:11px;color:var(--text-light);text-align:right;white-space:nowrap;">Les ressources 🔒<br>sont disponibles à l'achat</div>
+      </div>
+
       <div class="resources-grid" id="resources-grid">
 
-        <div class="resource-card" data-format="template" data-theme="offre" data-niveau="debutant" data-telecharge="oui" data-resource-id="res-business-plan">
+        <div class="resource-card" data-res-admin-id="r-business-plan" data-format="template" data-theme="offre" data-niveau="debutant" data-telecharge="oui" data-resource-id="res-business-plan">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(252,186,51,0.12),rgba(235,193,76,0.06))">📋<div class="resource-type">Template</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5706,7 +5804,7 @@
           </div>
         </div>
 
-        <div class="resource-card" data-format="tableau" data-theme="finance" data-niveau="debutant">
+        <div class="resource-card" data-res-admin-id="r-revenus-depenses" data-format="tableau" data-theme="finance" data-niveau="debutant">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(79,133,160,0.1),rgba(36,66,91,0.06))">📊<div class="resource-type">Tableau</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5719,7 +5817,7 @@
           </div>
         </div>
 
-        <div class="resource-card" data-format="guide" data-theme="clients" data-niveau="debutant">
+        <div class="resource-card" data-res-admin-id="r-client-ideal" data-format="guide" data-theme="clients" data-niveau="debutant">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(20,36,53,0.08),rgba(36,66,91,0.06))">🎯<div class="resource-type">Guide</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5732,7 +5830,7 @@
           </div>
         </div>
 
-        <div class="resource-card" data-format="checklist" data-theme="offre" data-niveau="debutant">
+        <div class="resource-card" data-res-admin-id="r-offre-30jours" data-format="checklist" data-theme="offre" data-niveau="debutant">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(235,193,76,0.1),rgba(249,227,141,0.1))">✅<div class="resource-type">Checklist</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5745,7 +5843,7 @@
           </div>
         </div>
 
-        <div class="resource-card" data-format="template" data-theme="marketing" data-niveau="debutant" data-telecharge="oui" data-resource-id="res-accroches-instagram">
+        <div class="resource-card" data-res-admin-id="r-accroches-instagram" data-format="template" data-theme="marketing" data-niveau="debutant" data-telecharge="oui" data-resource-id="res-accroches-instagram">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(79,133,160,0.1),rgba(235,193,76,0.08))">📱<div class="resource-type">Template</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5766,7 +5864,7 @@
           </div>
         </div>
 
-        <div class="resource-card" data-format="audio" data-theme="mindset" data-niveau="debutant">
+        <div class="resource-card" data-res-admin-id="r-meditation" data-format="audio" data-theme="mindset" data-niveau="debutant">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(252,186,51,0.1),rgba(20,36,53,0.06))">🎧<div class="resource-type">Audio</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5779,7 +5877,7 @@
           </div>
         </div>
 
-        <div class="resource-card" data-format="guide" data-theme="marketing" data-niveau="intermediaire">
+        <div class="resource-card" data-res-admin-id="r-copywriting" data-format="guide" data-theme="marketing" data-niveau="intermediaire">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(79,133,160,0.12),rgba(20,36,53,0.06))">✍️<div class="resource-type">Guide</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5792,7 +5890,7 @@
           </div>
         </div>
 
-        <div class="resource-card" data-format="tableau" data-theme="organisation" data-niveau="intermediaire">
+        <div class="resource-card" data-res-admin-id="r-tableau-ceo" data-format="tableau" data-theme="organisation" data-niveau="intermediaire">
           <div class="resource-thumb" style="background:linear-gradient(135deg,rgba(20,36,53,0.1),rgba(79,133,160,0.08))">🗂️<div class="resource-type">Tableau</div></div>
           <div class="resource-body">
             <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;">
@@ -5941,7 +6039,26 @@
       <div style="font-size:13px;color:var(--text-light);margin-bottom:18px;" id="courses-count">7 formations disponibles</div>
 
       <div class="courses-grid" id="courses-grid">
-        <div class="course-card" data-statut="en-cours" data-niveau="debutant" data-theme="offre">
+
+        <!-- Formation gratuite pour l'Initiée -->
+        <div class="course-card" data-course-id="bases-business" data-statut="en-cours" data-niveau="debutant" data-theme="offre">
+          <span class="course-free-badge">🌿 Incluse Initiée</span>
+          <div class="course-cover" style="background:linear-gradient(135deg,rgba(110,207,158,0.18),rgba(36,66,91,0.08))">🏗️<div class="course-level level-débutant">Débutant</div></div>
+          <div class="course-body">
+            <div style="display:flex;gap:6px;margin-bottom:8px;"><span style="font-size:10px;background:rgba(110,207,158,0.12);color:var(--navy);padding:3px 8px;border-radius:20px;font-weight:600;">💼 Business</span></div>
+            <h3>Les bases d'un business solide</h3>
+            <p>Pose les fondations de ton activité : modèle économique, positionnement et premières étapes.</p>
+            <div class="course-stats">
+              <div class="course-stat">📹 8 vidéos</div>
+              <div class="course-stat">⏱ 3h</div>
+              <div class="course-stat">📁 5 ressources</div>
+            </div>
+            <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" style="width:0%"></div></div>
+            <button class="btn-primary" style="width:100%;padding:10px;background:var(--navy)">Commencer →</button>
+          </div>
+        </div>
+
+        <div class="course-card" data-course-id="lancer-offre" data-statut="en-cours" data-niveau="debutant" data-theme="offre">
           <div class="course-cover" style="background:linear-gradient(135deg,rgba(252,186,51,0.15),rgba(235,193,76,0.05))">🚀<div class="course-level level-débutant">Débutant</div></div>
           <div class="course-body">
             <div style="display:flex;gap:6px;margin-bottom:8px;"><span style="font-size:10px;background:rgba(252,186,51,0.12);color:var(--navy);padding:3px 8px;border-radius:20px;font-weight:600;">💎 Offre & pricing</span></div>
@@ -5965,7 +6082,7 @@
           </div>
         </div>
 
-        <div class="course-card" data-statut="en-cours" data-niveau="debutant" data-theme="clients">
+        <div class="course-card" data-course-id="premiers-clients" data-statut="en-cours" data-niveau="debutant" data-theme="clients">
           <div class="course-cover" style="background:linear-gradient(135deg,rgba(79,133,160,0.15),rgba(36,66,91,0.05))">🎯<div class="course-level level-débutant">Débutant</div></div>
           <div class="course-body">
             <div style="display:flex;gap:6px;margin-bottom:8px;"><span style="font-size:10px;background:rgba(79,133,160,0.12);color:var(--navy);padding:3px 8px;border-radius:20px;font-weight:600;">🎯 Trouver des clients</span></div>
@@ -5989,7 +6106,7 @@
           </div>
         </div>
 
-        <div class="course-card" data-statut="en-cours" data-niveau="intermediaire" data-theme="marketing">
+        <div class="course-card" data-course-id="instagram" data-statut="en-cours" data-niveau="intermediaire" data-theme="marketing">
           <div class="course-cover" style="background:linear-gradient(135deg,rgba(20,36,53,0.1),rgba(79,133,160,0.08))">📱<div class="course-level level-intermédiaire">Intermédiaire</div></div>
           <div class="course-body">
             <div style="display:flex;gap:6px;margin-bottom:8px;"><span style="font-size:10px;background:rgba(20,36,53,0.08);color:var(--navy);padding:3px 8px;border-radius:20px;font-weight:600;">📱 Marketing & réseaux</span></div>
@@ -6013,7 +6130,7 @@
           </div>
         </div>
 
-        <div class="course-card" data-statut="en-cours" data-niveau="debutant" data-theme="finance">
+        <div class="course-card" data-course-id="compta" data-statut="en-cours" data-niveau="debutant" data-theme="finance">
           <div class="course-cover" style="background:linear-gradient(135deg,rgba(235,193,76,0.1),rgba(252,186,51,0.06))">💰<div class="course-level level-débutant">Débutant</div></div>
           <div class="course-body">
             <div style="display:flex;gap:6px;margin-bottom:8px;"><span style="font-size:10px;background:rgba(235,193,76,0.12);color:var(--navy);padding:3px 8px;border-radius:20px;font-weight:600;">💰 Finance & gestion</span></div>
@@ -6037,7 +6154,7 @@
           </div>
         </div>
 
-        <div class="course-card" data-statut="non-commencee" data-niveau="intermediaire" data-theme="mindset">
+        <div class="course-card" data-course-id="mindset-entrepreneurse" data-statut="non-commencee" data-niveau="intermediaire" data-theme="mindset">
           <div class="course-cover" style="background:linear-gradient(135deg,rgba(235,193,76,0.08),rgba(20,36,53,0.05))">🧠<div class="course-level level-intermédiaire">Intermédiaire</div></div>
           <div class="course-body">
             <div style="display:flex;gap:6px;margin-bottom:8px;"><span style="font-size:10px;background:rgba(235,193,76,0.1);color:var(--navy);padding:3px 8px;border-radius:20px;font-weight:600;">🧠 Mindset</span></div>
@@ -6053,7 +6170,7 @@
           </div>
         </div>
 
-        <div class="course-card" data-statut="non-commencee" data-niveau="avance" data-theme="organisation">
+        <div class="course-card" data-course-id="scaler" data-statut="non-commencee" data-niveau="avance" data-theme="organisation">
           <div class="course-cover" style="background:linear-gradient(135deg,rgba(79,133,160,0.08),rgba(20,36,53,0.06))">🗂️<div class="course-level level-avancé">Avancé</div></div>
           <div class="course-body">
             <div style="display:flex;gap:6px;margin-bottom:8px;"><span style="font-size:10px;background:rgba(79,133,160,0.1);color:var(--navy);padding:3px 8px;border-radius:20px;font-weight:600;">🗂️ Organisation</span></div>
@@ -6069,7 +6186,7 @@
           </div>
         </div>
 
-        <div class="course-card" data-statut="terminee" data-niveau="debutant" data-theme="offre">
+        <div class="course-card" data-course-id="positionnement" data-statut="terminee" data-niveau="debutant" data-theme="offre">
           <div class="course-cover" style="background:linear-gradient(135deg,rgba(20,36,53,0.1),rgba(235,193,76,0.08))">✅<div class="course-level level-débutant">Débutant</div></div>
           <div class="course-body">
             <div style="display:flex;gap:6px;margin-bottom:8px;"><span style="font-size:10px;background:rgba(20,36,53,0.08);color:var(--navy);padding:3px 8px;border-radius:20px;font-weight:600;">💎 Offre & pricing</span></div>
@@ -8594,12 +8711,27 @@
 
             <!-- Ligne 5 : Accès + Couverture -->
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-              <div>
-                <div class="form-label">Accès réservé aux formules</div>
-                <div style="display:flex;flex-direction:column;gap:7px;">
-                  <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.65);"><input type="checkbox" id="form-acc-initiee" checked style="accent-color:var(--gold-bright);">🌿 Initiée</label>
-                  <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.65);"><input type="checkbox" id="form-acc-stratege" checked style="accent-color:var(--gold-bright);">⚡ Stratège</label>
-                  <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.65);"><input type="checkbox" id="form-acc-visionnaire" checked style="accent-color:var(--gold-bright);">🔮 Visionnaire</label>
+              <div style="display:flex;flex-direction:column;gap:14px;">
+                <div>
+                  <div class="form-label">Accès réservé aux formules</div>
+                  <div style="display:flex;flex-direction:column;gap:7px;">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.65);"><input type="checkbox" id="form-acc-initiee" checked style="accent-color:var(--gold-bright);">🌿 Initiée</label>
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.65);"><input type="checkbox" id="form-acc-stratege" checked style="accent-color:var(--gold-bright);">⚡ Stratège</label>
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.65);"><input type="checkbox" id="form-acc-visionnaire" checked style="accent-color:var(--gold-bright);">🔮 Visionnaire</label>
+                  </div>
+                </div>
+                <!-- Accès Initiée -->
+                <div style="background:rgba(110,207,158,0.05);border:1px solid rgba(110,207,158,0.18);border-radius:10px;padding:12px;">
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(110,207,158,0.7);margin-bottom:10px;">🌿 Accès Initiée</div>
+                  <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:10px;">
+                    <input type="checkbox" id="form-free-initiee" style="accent-color:#6ecf9e;" onchange="document.getElementById('form-unit-price-wrap').style.display=this.checked?'none':'flex'">
+                    Incluse gratuitement dans l'abonnement Initiée
+                  </label>
+                  <div id="form-unit-price-wrap" style="display:flex;align-items:center;gap:8px;">
+                    <span style="font-size:12px;color:rgba(255,255,255,0.45);">Prix à l'unité :</span>
+                    <input id="form-unit-price" type="number" min="0" max="999" placeholder="29" style="width:70px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:7px 10px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;text-align:center;" onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                    <span style="font-size:12px;color:rgba(255,255,255,0.45);">€</span>
+                  </div>
                 </div>
               </div>
               <div>
@@ -8839,7 +8971,7 @@
         </div>
         <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;">
           <table class="admin-table">
-            <thead><tr><th>Ressource</th><th>Format</th><th>Thème</th><th>Accès</th><th>Téléchargements</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Ressource</th><th>Format</th><th>Thème</th><th>Accès & Initiée</th><th>Téléchargements</th><th>Actions</th></tr></thead>
             <tbody id="res-table-body"></tbody>
           </table>
         </div>
@@ -8944,10 +9076,24 @@
             <!-- Accès formules -->
             <div>
               <div class="form-label">Accès réservé aux formules</div>
-              <div style="display:flex;gap:18px;flex-wrap:wrap;">
+              <div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:12px;">
                 <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.65);"><input type="checkbox" id="res-acc-initiee" checked style="accent-color:var(--gold-bright);">🌿 Initiée</label>
                 <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.65);"><input type="checkbox" id="res-acc-stratege" checked style="accent-color:var(--gold-bright);">⚡ Stratège</label>
                 <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.65);"><input type="checkbox" id="res-acc-visionnaire" checked style="accent-color:var(--gold-bright);">🔮 Visionnaire</label>
+              </div>
+              <!-- Accès Initiée avancé -->
+              <div style="background:rgba(252,186,51,0.05);border:1px solid rgba(252,186,51,0.18);border-radius:10px;padding:12px;">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(252,186,51,0.6);margin-bottom:10px;">🌿 Accès Initiée (quota 3/mois)</div>
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:10px;">
+                  <input type="checkbox" id="res-locked-initiee" style="accent-color:var(--gold-bright);" onchange="document.getElementById('res-unit-price-wrap').style.display=this.checked?'flex':'none'">
+                  🔒 Verrouillée pour les Initiées (payante à l'unité)
+                </label>
+                <div id="res-unit-price-wrap" style="display:none;align-items:center;gap:8px;">
+                  <span style="font-size:12px;color:rgba(255,255,255,0.45);">Prix d'accès Initiée :</span>
+                  <input id="res-unit-price" type="number" min="0" max="999" placeholder="9" style="width:70px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:7px 10px;font-size:13px;color:white;font-family:'DM Sans',sans-serif;outline:none;text-align:center;" onfocus="this.style.borderColor='rgba(252,186,51,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                  <span style="font-size:12px;color:rgba(255,255,255,0.45);">€</span>
+                </div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.28);margin-top:8px;">Si non verrouillée, la ressource compte dans le quota mensuel de 3 de l'Initiée.</div>
               </div>
             </div>
 
@@ -12005,7 +12151,14 @@
 
   // Modules sont maintenant des objets : { id, title, blocks:[] }
   var formationsData = [
-    { id:'f1', title:'Fixer ses prix avec confiance', theme:'💎 Offre & pricing', level:'Intermédiaire', hours:4, mins:20, desc:'Apprends à valoriser ton travail et à fixer des tarifs alignés avec ta valeur.', cover:'💎', status:'publie',
+    { id:'f0', title:'Les bases d\'un business solide', theme:'💼 Business', level:'Débutant', hours:3, mins:0, desc:'Pose les fondations de ton activité : modèle économique, positionnement et premières étapes.', cover:'🏗️', status:'publie', courseId:'bases-business', freeForInitiee:true, unitPrice:0,
+      modules:[
+        { id:'m0a', title:'Comprendre son modèle économique', blocks:[] },
+        { id:'m0b', title:'Définir son positionnement', blocks:[] },
+        { id:'m0c', title:'Les premières étapes concrètes', blocks:[] },
+      ]
+    },
+    { id:'f1', title:'Fixer ses prix avec confiance', theme:'💎 Offre & pricing', level:'Intermédiaire', hours:4, mins:20, desc:'Apprends à valoriser ton travail et à fixer des tarifs alignés avec ta valeur.', cover:'💎', status:'publie', courseId:'lancer-offre', freeForInitiee:false, unitPrice:29,
       modules:[
         { id:'m1a', title:'Introduction : la valeur vs le prix', blocks:[{ id:'b1',type:'text',data:{content:'Dans ce module, nous allons explorer la différence fondamentale entre la valeur perçue et le prix affiché.'}}] },
         { id:'m1b', title:'Méthode des 3 piliers', blocks:[] },
@@ -12013,17 +12166,22 @@
         { id:'m1d', title:'Exercice : ton tarif idéal', blocks:[] },
       ]
     },
-    { id:'f2', title:'Trouver ses 5 premiers clients', theme:'🎯 Clients', level:'Débutant', hours:3, mins:10, desc:'Stratégies concrètes pour décrocher tes premiers clients sans réseau préexistant.', cover:'🎯', status:'publie',
+    { id:'f2', title:'Trouver ses 5 premiers clients', theme:'🎯 Clients', level:'Débutant', hours:3, mins:10, desc:'Stratégies concrètes pour décrocher tes premiers clients sans réseau préexistant.', cover:'🎯', status:'publie', courseId:'premiers-clients', freeForInitiee:false, unitPrice:29,
       modules:[
         { id:'m2a', title:'Définir son client idéal', blocks:[] },
         { id:'m2b', title:'Les 3 canaux qui fonctionnent', blocks:[] },
       ]
     },
-    { id:'f3', title:'Vendre sans forcer', theme:'🎯 Clients', level:'Intermédiaire', hours:2, mins:45, desc:'', cover:'🎬', status:'brouillon',
+    { id:'f3', title:'Vendre sans forcer', theme:'🎯 Clients', level:'Intermédiaire', hours:2, mins:45, desc:'', cover:'🎬', status:'brouillon', courseId:'', freeForInitiee:false, unitPrice:29,
       modules:[
         { id:'m3a', title:'Pourquoi la vente fait peur', blocks:[] },
       ]
     },
+    { id:'f4', title:'Stratégie Instagram pour son business', theme:'📣 Marketing', level:'Intermédiaire', hours:5, mins:0, desc:'Construis une présence authentique qui attire naturellement tes clients idéaux.', cover:'📱', status:'publie', courseId:'instagram', freeForInitiee:false, unitPrice:39, modules:[] },
+    { id:'f5', title:'Les bases de la comptabilité', theme:'💰 Finance', level:'Débutant', hours:2, mins:30, desc:'Comprendre les chiffres de ton business sans prise de tête.', cover:'💰', status:'publie', courseId:'compta', freeForInitiee:false, unitPrice:29, modules:[] },
+    { id:'f6', title:'Le mindset de l\'entrepreneuse qui réussit', theme:'🧠 Mindset', level:'Intermédiaire', hours:3, mins:30, desc:'Brise tes croyances limitantes et construis une relation saine avec ton business.', cover:'🧠', status:'publie', courseId:'mindset-entrepreneurse', freeForInitiee:false, unitPrice:35, modules:[] },
+    { id:'f7', title:'Scaler sans s\'épuiser', theme:'⚙️ Organisation', level:'Avancé', hours:5, mins:0, desc:'Systèmes, délégation et routines pour développer ton business sans brûler.', cover:'🗂️', status:'publie', courseId:'scaler', freeForInitiee:false, unitPrice:45, modules:[] },
+    { id:'f8', title:'Positionnement clair & différenciant', theme:'💎 Offre & pricing', level:'Débutant', hours:2, mins:10, desc:'Clarifie ton message et ta promesse pour attirer les bonnes clientes.', cover:'✅', status:'publie', courseId:'positionnement', freeForInitiee:false, unitPrice:25, modules:[] },
   ];
 
   var formModuleCounter = 0;
@@ -12048,12 +12206,16 @@
       var metaText  = isDraft ? '✦ Brouillon · prête à publier'
                     : isProg  ? '🗓 Programmée · ' + schedFormatDate(f.scheduledFor)
                     : f.theme+' · '+f.level+' · '+dur;
+      var initieeTag = f.freeForInitiee
+        ? '<span class="admin-initiee-free-badge">🌿 Gratuite Initiée</span>'
+        : (f.unitPrice ? '<span class="admin-initiee-lock-badge">🔒 '+f.unitPrice+'€ unité</span>' : '');
       card.innerHTML =
         '<div class="admin-content-thumb" style="background:'+grad+';">'+f.cover+'</div>'
         +'<div class="admin-content-body">'
           +'<div class="admin-content-title">'+f.title+'</div>'
           +'<div class="admin-content-meta" style="'+metaColor+'">'+metaText+'</div>'
           +(f.modules.length ? '<div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">'+f.modules.length+' module'+(f.modules.length>1?'s':'')+'</div>' : '')
+          +(initieeTag ? '<div style="margin-top:6px;">'+initieeTag+'</div>' : '')
         +'</div>'
         +'<div class="admin-content-footer">'
           +'<button class="admin-action-btn admin-action-btn-ghost" onclick="formOpenModal(\''+f.id+'\')">✏️ Modifier</button>'
@@ -12158,6 +12320,14 @@
       if (dInp2) dInp2.value = '';
       if (tInp2) tInp2.value = '';
     }
+
+    // Accès Initiée
+    var freeInitieeChk = document.getElementById('form-free-initiee');
+    var unitPriceInp   = document.getElementById('form-unit-price');
+    var unitPriceWrap  = document.getElementById('form-unit-price-wrap');
+    if (freeInitieeChk) freeInitieeChk.checked = f ? !!f.freeForInitiee : false;
+    if (unitPriceInp)   unitPriceInp.value      = f ? (f.unitPrice || 29) : 29;
+    if (unitPriceWrap)  unitPriceWrap.style.display = (f && f.freeForInitiee) ? 'none' : 'flex';
 
     formUpdatePreview();
     document.getElementById('form-modal').style.display = 'flex';
@@ -12325,6 +12495,9 @@
     var mins     = parseInt(document.getElementById('form-input-mins').value)  || 0;
     var desc     = document.getElementById('form-input-desc').value.trim();
 
+    var freeForInitiee = document.getElementById('form-free-initiee') ? document.getElementById('form-free-initiee').checked : false;
+    var unitPrice      = parseInt(document.getElementById('form-unit-price') ? document.getElementById('form-unit-price').value : 29) || 29;
+
     var targetId = formEditingId || formDraftId;
     if (targetId) {
       var f = formationsData.find(function(x){ return x.id === targetId; });
@@ -12332,9 +12505,10 @@
         f.title  = title; f.theme = theme; f.level = levelVal;
         f.hours  = hours; f.mins  = mins;  f.desc  = desc;
         f.cover  = formSelectedCover; f.status = status; f.scheduledFor = scheduledFor;
+        f.freeForInitiee = freeForInitiee; f.unitPrice = unitPrice;
       }
     } else {
-      formationsData.push({ id:'f_'+Date.now(), title:title, theme:theme, level:levelVal, hours:hours, mins:mins, desc:desc, cover:formSelectedCover, status:status, scheduledFor:scheduledFor, modules:[] });
+      formationsData.push({ id:'f_'+Date.now(), title:title, theme:theme, level:levelVal, hours:hours, mins:mins, desc:desc, cover:formSelectedCover, status:status, scheduledFor:scheduledFor, modules:[], courseId:'', freeForInitiee:freeForInitiee, unitPrice:unitPrice });
     }
 
     formCloseModal();
@@ -12873,9 +13047,17 @@
   };
 
   var ressourcesData = [
-    { id:'r1', title:'Template de contrat freelance', format:'📋 Template', theme:'💎 Offre',    desc:'Un contrat clé-en-main à personnaliser pour sécuriser tes missions.',  url:'', fileName:'contrat-freelance.docx', fileSize:'48 Ko', acces:['initiee','stratege','visionnaire'], downloads:134 },
-    { id:'r2', title:'Guide : Fixer son TJM',         format:'📖 Guide PDF',theme:'💎 Offre',    desc:'Méthode pas-à-pas pour calculer et défendre ton tarif journalier.',     url:'', fileName:'guide-tjm.pdf',          fileSize:'1.2 Mo', acces:['initiee','stratege','visionnaire'], downloads:98  },
-    { id:'r3', title:'Tableau de bord finances',       format:'📊 Tableau', theme:'💰 Finance',  desc:'Suis tes revenus, dépenses et objectifs dans un fichier Excel prêt.',   url:'', fileName:'tableau-finances.xlsx',  fileSize:'320 Ko', acces:['stratege','visionnaire'],          downloads:76  },
+    { id:'r-business-plan',       title:'Business Plan Simplifié',            format:'📋 Template', theme:'💎 Offre',      desc:'Modèle complet pour structurer ton projet en moins de 2h.',                          url:'', fileName:'business-plan.pdf',       fileSize:'2.4 Mo', acces:['initiee','stratege','visionnaire'], downloads:112, lockedForInitiee:false, unitPrice:7  },
+    { id:'r-revenus-depenses',    title:'Suivi des revenus & dépenses',        format:'📊 Tableau',  theme:'💰 Finance',    desc:'Tableau Excel clé en main pour piloter ta trésorerie.',                              url:'', fileName:'suivi-finances.xlsx',     fileSize:'1.1 Mo', acces:['initiee','stratege','visionnaire'], downloads:87,  lockedForInitiee:false, unitPrice:7  },
+    { id:'r-client-ideal',        title:'Définir son client idéal',            format:'📖 Guide PDF',theme:'🎯 Clients',    desc:'Le guide ultime pour créer ton persona et parler à ceux qui ont besoin de toi.',    url:'', fileName:'client-ideal.pdf',        fileSize:'3.8 Mo', acces:['initiee','stratege','visionnaire'], downloads:94,  lockedForInitiee:false, unitPrice:9  },
+    { id:'r-offre-30jours',       title:'Lancer son offre en 30 jours',        format:'📖 Guide PDF',theme:'💎 Offre',      desc:'La checklist semaine par semaine pour passer de l\'idée à la première vente.',      url:'', fileName:'offre-30jours.pdf',       fileSize:'0.8 Mo', acces:['initiee','stratege','visionnaire'], downloads:76,  lockedForInitiee:true,  unitPrice:9  },
+    { id:'r-accroches-instagram', title:'50 accroches Instagram',              format:'📋 Template', theme:'📣 Marketing',  desc:'Phrases d\'amorce testées pour tes publications sur les réseaux sociaux.',            url:'', fileName:'accroches-instagram.pdf', fileSize:'1.2 Mo', acces:['initiee','stratege','visionnaire'], downloads:134, lockedForInitiee:false, unitPrice:7  },
+    { id:'r-meditation',          title:'Méditation : Confiance en soi',       format:'🎧 Audio',    theme:'🧠 Mindset',    desc:'Une méditation guidée de 15 min pour les entrepreneures.',                           url:'', fileName:'meditation-confiance.mp3',fileSize:'18 Mo',  acces:['initiee','stratege','visionnaire'], downloads:62,  lockedForInitiee:true,  unitPrice:5  },
+    { id:'r-copywriting',         title:'Guide copywriting : écrire pour vendre',format:'📖 Guide PDF',theme:'📣 Marketing', desc:'Les techniques pour rédiger des pages de vente et emails qui convertissent.',       url:'', fileName:'guide-copywriting.pdf',   fileSize:'5.2 Mo', acces:['initiee','stratege','visionnaire'], downloads:98,  lockedForInitiee:true,  unitPrice:12 },
+    { id:'r-tableau-ceo',         title:'Tableau de bord CEO',                 format:'📊 Tableau',  theme:'⚙️ Organisation',desc:'Suivi hebdomadaire de tes indicateurs clés : CA, leads, tâches prioritaires.',    url:'', fileName:'tableau-ceo.xlsx',        fileSize:'2.0 Mo', acces:['initiee','stratege','visionnaire'], downloads:71,  lockedForInitiee:true,  unitPrice:9  },
+    { id:'r1', title:'Template de contrat freelance', format:'📋 Template', theme:'💎 Offre',    desc:'Un contrat clé-en-main à personnaliser pour sécuriser tes missions.',  url:'', fileName:'contrat-freelance.docx', fileSize:'48 Ko', acces:['initiee','stratege','visionnaire'], downloads:134, lockedForInitiee:false, unitPrice:7 },
+    { id:'r2', title:'Guide : Fixer son TJM',         format:'📖 Guide PDF',theme:'💎 Offre',    desc:'Méthode pas-à-pas pour calculer et défendre ton tarif journalier.',     url:'', fileName:'guide-tjm.pdf',          fileSize:'1.2 Mo', acces:['initiee','stratege','visionnaire'], downloads:98,  lockedForInitiee:false, unitPrice:9 },
+    { id:'r3', title:'Tableau de bord finances',       format:'📊 Tableau', theme:'💰 Finance',  desc:'Suis tes revenus, dépenses et objectifs dans un fichier Excel prêt.',   url:'', fileName:'tableau-finances.xlsx',  fileSize:'320 Ko', acces:['stratege','visionnaire'],          downloads:76,  lockedForInitiee:true,  unitPrice:9 },
   ];
 
   var resEditingId   = null;
@@ -12889,6 +13071,9 @@
     ressourcesData.forEach(function(r) {
       var accesLabel = r.acces.length === 3 ? 'Toutes'
         : r.acces.map(function(a){ return a==='initiee'?'🌿':a==='stratege'?'⚡':'🔮'; }).join(' ');
+      var initieeLabel = r.lockedForInitiee
+        ? '<br><span class="admin-initiee-lock-badge" style="margin-top:4px;">🔒 '+r.unitPrice+'€ unité</span>'
+        : '<br><span class="admin-initiee-free-badge" style="margin-top:4px;">🌿 quota 3/mois</span>';
       var tr = document.createElement('tr');
       tr.innerHTML =
         '<td><div style="font-weight:600;color:white;">'+r.title+'</div>'
@@ -12896,7 +13081,7 @@
         +'</td>'
         +'<td>'+r.format+'</td>'
         +'<td>'+r.theme+'</td>'
-        +'<td style="font-size:12px;">'+accesLabel+'</td>'
+        +'<td style="font-size:12px;">'+accesLabel+initieeLabel+'</td>'
         +'<td style="color:var(--gold-bright);font-weight:600;">'+r.downloads+'</td>'
         +'<td><div style="display:flex;gap:6px;">'
           +'<button class="admin-action-btn admin-action-btn-ghost" onclick="resOpenModal(\''+r.id+'\')">✏️ Modifier</button>'
@@ -12941,6 +13126,14 @@
       var cb = document.getElementById('res-acc-'+a);
       if (cb) cb.checked = r ? r.acces.indexOf(a)!==-1 : true;
     });
+
+    // Accès Initiée avancé
+    var lockedChk  = document.getElementById('res-locked-initiee');
+    var unitPriceI = document.getElementById('res-unit-price');
+    var unitWrap   = document.getElementById('res-unit-price-wrap');
+    if (lockedChk)  lockedChk.checked   = r ? !!r.lockedForInitiee : false;
+    if (unitPriceI) unitPriceI.value     = r ? (r.unitPrice || 9) : 9;
+    if (unitWrap)   unitWrap.style.display = (r && r.lockedForInitiee) ? 'flex' : 'none';
 
     // Fichier existant
     var card = document.getElementById('res-file-card');
@@ -13065,16 +13258,20 @@
     var desc   = document.getElementById('res-input-desc').value.trim();
     var url    = document.getElementById('res-input-url').value.trim();
     var acces  = ['initiee','stratege','visionnaire'].filter(function(a){ var cb=document.getElementById('res-acc-'+a); return cb&&cb.checked; });
+    var lockedForInitiee = document.getElementById('res-locked-initiee') ? document.getElementById('res-locked-initiee').checked : false;
+    var unitPrice        = parseInt(document.getElementById('res-unit-price') ? document.getElementById('res-unit-price').value : 9) || 9;
     var fileName = '', fileSize = '';
     if (resTempFile) { fileName=resTempFile.name; fileSize=resTempFile.size; }
     else if (resEditingId) { var re=ressourcesData.find(function(x){return x.id===resEditingId;}); if(re){fileName=re.fileName||'';fileSize=re.fileSize||'';} }
 
     if (resEditingId) {
       var r = ressourcesData.find(function(x){ return x.id===resEditingId; });
-      if (r) { r.title=title; r.format=fmt; r.theme=theme; r.desc=desc; r.url=url; r.acces=acces; if(fileName) r.fileName=fileName; if(fileSize) r.fileSize=fileSize; }
+      if (r) { r.title=title; r.format=fmt; r.theme=theme; r.desc=desc; r.url=url; r.acces=acces; r.lockedForInitiee=lockedForInitiee; r.unitPrice=unitPrice; if(fileName) r.fileName=fileName; if(fileSize) r.fileSize=fileSize; }
     } else {
-      ressourcesData.push({ id:'r_'+Date.now(), title:title, format:fmt, theme:theme, desc:desc, url:url, fileName:fileName, fileSize:fileSize, acces:acces, downloads:0 });
+      ressourcesData.push({ id:'r_'+Date.now(), title:title, format:fmt, theme:theme, desc:desc, url:url, fileName:fileName, fileSize:fileSize, acces:acces, downloads:0, lockedForInitiee:lockedForInitiee, unitPrice:unitPrice });
     }
+    // Mettre à jour les contrôles d'accès côté membre
+    if (typeof applyResourceAccessControl === 'function') applyResourceAccessControl();
 
     resCloseModal();
     resRenderTable();
@@ -19428,6 +19625,276 @@ document.addEventListener('DOMContentLoaded', function() {
 
   updateSidebarLockState();
   renderProfileSubscriptionTab();
+});
+</script>
+<script>
+// ══════════════════════════════════════════════════════════════════════
+// CONTRÔLE D'ACCÈS FORMATIONS & RESSOURCES (Initiée)
+// ══════════════════════════════════════════════════════════════════════
+
+// ── Achats simulés (localStorage) ──
+function getCourseAccessStore() {
+  try { return JSON.parse(localStorage.getItem('initiee_course_purchases') || '[]'); } catch(e) { return []; }
+}
+function addCoursePurchase(courseId) {
+  var list = getCourseAccessStore();
+  if (list.indexOf(courseId) === -1) list.push(courseId);
+  localStorage.setItem('initiee_course_purchases', JSON.stringify(list));
+}
+function hasCourseAccess(courseId) {
+  // Vérifier les données de formation
+  var f = (typeof formationsData !== 'undefined') ? formationsData.find(function(x){ return x.courseId === courseId; }) : null;
+  if (!f) return true; // inconnu → accès libre
+  if (f.freeForInitiee) return true;
+  return getCourseAccessStore().indexOf(courseId) !== -1;
+}
+
+// ── Ressources : quota mensuel ──
+function getInitieeResStore() {
+  var key = 'initiee_res_' + getCurrentYearMonth();
+  try { return JSON.parse(localStorage.getItem(key) || '{"used":[],"purchased":[]}'); } catch(e) { return { used:[], purchased:[] }; }
+}
+function setInitieeResStore(data) {
+  localStorage.setItem('initiee_res_' + getCurrentYearMonth(), JSON.stringify(data));
+}
+function getCurrentYearMonth() {
+  var d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+}
+function hasResourceAccess(resAdminId) {
+  var r = (typeof ressourcesData !== 'undefined') ? ressourcesData.find(function(x){ return x.id === resAdminId; }) : null;
+  if (!r) return true; // inconnu → accès libre
+  if (!r.lockedForInitiee) {
+    // Compte dans le quota : vérifier si déjà utilisé ou si quota dispo
+    var store = getInitieeResStore();
+    return store.used.indexOf(resAdminId) !== -1 || store.used.length < 3;
+  }
+  // Verrouillé : doit avoir été acheté
+  return getInitieeResStore().purchased.indexOf(resAdminId) !== -1;
+}
+function markResourceUsed(resAdminId) {
+  var r = (typeof ressourcesData !== 'undefined') ? ressourcesData.find(function(x){ return x.id === resAdminId; }) : null;
+  if (!r || r.lockedForInitiee) return;
+  var store = getInitieeResStore();
+  if (store.used.indexOf(resAdminId) === -1 && store.used.length < 3) {
+    store.used.push(resAdminId);
+    setInitieeResStore(store);
+  }
+}
+function purchaseResource(resAdminId) {
+  var r = (typeof ressourcesData !== 'undefined') ? ressourcesData.find(function(x){ return x.id === resAdminId; }) : null;
+  var price = r ? r.unitPrice : 0;
+  // Simulation d'achat
+  if (!confirm('Acheter l\'accès à cette ressource pour ' + price + ' € ?')) return;
+  var store = getInitieeResStore();
+  if (store.purchased.indexOf(resAdminId) === -1) store.purchased.push(resAdminId);
+  setInitieeResStore(store);
+  applyResourceAccessControl();
+  updateInitieeMonthlyBanner();
+  finToast && finToast('✓ Accès débloqué ! Bonne lecture 🎉', '#6ecf9e');
+}
+function purchaseCourse(courseId) {
+  var f = (typeof formationsData !== 'undefined') ? formationsData.find(function(x){ return x.courseId === courseId; }) : null;
+  var price = f ? f.unitPrice : 29;
+  if (!confirm('Acheter l\'accès à cette formation pour ' + price + ' € ?')) return;
+  addCoursePurchase(courseId);
+  applyClassroomAccessControl();
+  finToast && finToast('✓ Formation débloquée ! Bonne formation 🎓', '#6ecf9e');
+}
+
+// ── Appliquer les verrous sur les cartes formations ──
+function applyClassroomAccessControl() {
+  var tier = (typeof getCurrentSubscription === 'function') ? getCurrentSubscription() : 'visionnaire';
+  if (tier !== 'initiee') {
+    // Retirer tous les overlays pour Stratège et Visionnaire
+    document.querySelectorAll('.course-card .course-lock-overlay').forEach(function(el){ el.remove(); });
+    document.querySelectorAll('.course-card .course-purchased-badge').forEach(function(el){ el.remove(); });
+    return;
+  }
+
+  document.querySelectorAll('.course-card[data-course-id]').forEach(function(card) {
+    var courseId = card.getAttribute('data-course-id');
+    var f = (typeof formationsData !== 'undefined') ? formationsData.find(function(x){ return x.courseId === courseId; }) : null;
+
+    // Retirer les anciens overlays
+    var oldOverlay = card.querySelector('.course-lock-overlay');
+    if (oldOverlay) oldOverlay.remove();
+    var oldPurchased = card.querySelector('.course-purchased-badge');
+    if (oldPurchased) oldPurchased.remove();
+
+    if (!f) return;
+
+    if (f.freeForInitiee) {
+      // Déjà marqué avec .course-free-badge dans le HTML — rien à faire
+      return;
+    }
+
+    var purchased = getCourseAccessStore().indexOf(courseId) !== -1;
+    if (purchased) {
+      var badge = document.createElement('span');
+      badge.className = 'course-purchased-badge';
+      badge.textContent = '✓ Achetée';
+      card.appendChild(badge);
+      return;
+    }
+
+    // Verrouillé → overlay
+    var overlay = document.createElement('div');
+    overlay.className = 'course-lock-overlay';
+    overlay.innerHTML =
+      '<span class="course-lock-icon">🔒</span>'
+      + '<div class="course-lock-name">' + (f.title || 'Formation') + '</div>'
+      + '<div class="course-lock-price">' + (f.unitPrice || 29) + ' €</div>'
+      + '<div class="course-lock-hint">Accès à l\'unité · Non inclus Initiée</div>'
+      + '<button class="course-lock-btn" onclick="event.stopPropagation();purchaseCourse(\'' + courseId + '\')">Acheter cette formation →</button>';
+    card.appendChild(overlay);
+  });
+}
+
+// ── Appliquer les verrous sur les cartes ressources ──
+function applyResourceAccessControl() {
+  var tier = (typeof getCurrentSubscription === 'function') ? getCurrentSubscription() : 'visionnaire';
+  var banner = document.getElementById('initiee-monthly-banner');
+
+  if (tier !== 'initiee') {
+    // Retirer tous les overlays
+    document.querySelectorAll('.resource-card .resource-lock-overlay').forEach(function(el){ el.remove(); });
+    document.querySelectorAll('.resource-card .resource-purchased-badge').forEach(function(el){ el.remove(); });
+    if (banner) banner.style.display = 'none';
+    return;
+  }
+
+  if (banner) banner.style.display = 'flex';
+  updateInitieeMonthlyBanner();
+
+  document.querySelectorAll('.resource-card[data-res-admin-id]').forEach(function(card) {
+    var resId = card.getAttribute('data-res-admin-id');
+    var r = (typeof ressourcesData !== 'undefined') ? ressourcesData.find(function(x){ return x.id === resId; }) : null;
+
+    // Retirer anciens overlays
+    var oldOverlay = card.querySelector('.resource-lock-overlay');
+    if (oldOverlay) oldOverlay.remove();
+    var oldBadge = card.querySelector('.resource-purchased-badge');
+    if (oldBadge) oldBadge.remove();
+
+    if (!r) return;
+
+    var store = getInitieeResStore();
+    var isPurchased  = store.purchased.indexOf(resId) !== -1;
+    var isUsedFree   = store.used.indexOf(resId) !== -1;
+
+    if (isPurchased) {
+      var badge = document.createElement('span');
+      badge.className = 'resource-purchased-badge';
+      badge.textContent = '✓ Acheté';
+      card.appendChild(badge);
+      return;
+    }
+
+    if (isUsedFree && !r.lockedForInitiee) {
+      // Déjà utilisé dans le quota — accès maintenu ce mois
+      return;
+    }
+
+    if (r.lockedForInitiee) {
+      // Toujours payant pour Initiée
+      var overlay = document.createElement('div');
+      overlay.className = 'resource-lock-overlay';
+      overlay.innerHTML =
+        '<span class="resource-lock-icon">🔒</span>'
+        + '<div class="resource-lock-name">' + r.title + '</div>'
+        + '<div class="resource-lock-price">' + r.unitPrice + ' €</div>'
+        + '<div class="resource-lock-hint">Accès à l\'unité</div>'
+        + '<button class="resource-lock-btn" onclick="event.stopPropagation();purchaseResource(\'' + resId + '\')">Débloquer →</button>';
+      card.appendChild(overlay);
+      return;
+    }
+
+    // Ressource dans le quota : vérifier si quota épuisé
+    if (store.used.length >= 3) {
+      var overlay2 = document.createElement('div');
+      overlay2.className = 'resource-lock-overlay';
+      overlay2.innerHTML =
+        '<span class="resource-lock-icon">📅</span>'
+        + '<div class="resource-lock-name">' + r.title + '</div>'
+        + '<div style="font-size:11px;color:rgba(255,255,255,0.55);margin-bottom:8px;">Quota mensuel atteint</div>'
+        + '<div class="resource-lock-price">' + r.unitPrice + ' €</div>'
+        + '<div class="resource-lock-hint">Ou attends le mois prochain</div>'
+        + '<button class="resource-lock-btn" onclick="event.stopPropagation();purchaseResource(\'' + resId + '\')">Débloquer →</button>';
+      card.appendChild(overlay2);
+    }
+    // Sinon : accès libre via quota → pas d'overlay, mais intercepter le téléchargement
+    // On modifie le bouton pour compter l'utilisation
+    else {
+      var dlBtn = card.querySelector('.dl-btn:not(.dl-btn-done)');
+      if (dlBtn && !dlBtn.getAttribute('data-res-quota-wired')) {
+        dlBtn.setAttribute('data-res-quota-wired', '1');
+        var origClick = dlBtn.onclick;
+        dlBtn.onclick = function(e) {
+          markResourceUsed(resId);
+          updateInitieeMonthlyBanner();
+          applyResourceAccessControl();
+          if (origClick) origClick.call(this, e);
+        };
+      }
+    }
+  });
+}
+
+// ── Mettre à jour le bandeau mensuel ──
+function updateInitieeMonthlyBanner() {
+  var store = getInitieeResStore();
+  var usedCount = store.used.length;
+  var purchasedCount = store.purchased.length;
+
+  var textEl = document.getElementById('initiee-monthly-text');
+  var slotsEl = document.getElementById('initiee-monthly-slots');
+  if (!textEl || !slotsEl) return;
+
+  textEl.textContent = usedCount + ' / 3 ressources gratuites utilisées ce mois-ci'
+    + (purchasedCount > 0 ? ' · ' + purchasedCount + ' achetée' + (purchasedCount > 1 ? 's' : '') : '');
+
+  slotsEl.innerHTML = '';
+  for (var i = 0; i < 3; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'slot-dot ' + (i < usedCount ? 'used' : 'free');
+    slotsEl.appendChild(dot);
+  }
+  // Ajouter des points verts pour les achats
+  for (var j = 0; j < purchasedCount; j++) {
+    var pdot = document.createElement('div');
+    pdot.className = 'slot-dot purchased';
+    slotsEl.appendChild(pdot);
+  }
+}
+
+// ── Hook sur showPage pour appliquer les contrôles au bon moment ──
+var _origShowPageCourseRes = window.showPage;
+window.showPage = function(page) {
+  _origShowPageCourseRes(page);
+  if (page === 'classroom') {
+    setTimeout(applyClassroomAccessControl, 20);
+  }
+  if (page === 'resources') {
+    setTimeout(applyResourceAccessControl, 20);
+    setTimeout(updateInitieeMonthlyBanner, 20);
+  }
+};
+
+// ── Hook sur switchSubscriptionDemo pour recalculer ──
+var _origSwitchDemo = window.switchSubscriptionDemo;
+window.switchSubscriptionDemo = function(level) {
+  _origSwitchDemo(level);
+  applyClassroomAccessControl();
+  applyResourceAccessControl();
+  updateInitieeMonthlyBanner();
+};
+
+// ── Init au chargement ──
+document.addEventListener('DOMContentLoaded', function() {
+  applyClassroomAccessControl();
+  applyResourceAccessControl();
+  updateInitieeMonthlyBanner();
 });
 </script>
 <script defer src="assets/notebook-enhanced.js" data-notebook-enhanced></script>
