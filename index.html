@@ -3773,6 +3773,8 @@
       font-size: 14px;
     }
     .lp-prix-modal-list li { margin-bottom: 8px; }
+    .lp-prix-modal-list.lp-prix-modal-list-two-cols { columns: 2; column-gap: 26px; }
+    .lp-prix-modal-list.lp-prix-modal-list-two-cols li { break-inside: avoid; }
     .lp-prix-modal-actions {
       display: flex;
       gap: 10px;
@@ -3800,6 +3802,7 @@
       .lp-prix-modal-card { padding: 28px 22px 24px; }
       .lp-prix-modal-title { font-size: 28px; }
       .lp-prix-modal-price { font-size: 35px; }
+      .lp-prix-modal-list.lp-prix-modal-list-two-cols { columns: 1; }
     }
 
     /* ── BIBLIOTHÈQUE AMBITIEUSE ── */
@@ -11636,7 +11639,12 @@
       yearlySuffix: '/an',
       note: 'Le niveau idéal pour accélérer avec un accompagnement stratégique régulier.',
       items: [
-        '✅ Tous les avantages de l’Initiée',
+        '🎓 Accès à toutes les formations',
+        '📁 Accès à toutes les ressources business',
+        '🌸 Communauté privée d’ambitieuses',
+        '🥂 Événements en ligne (petit-déj, apéro business…)',
+        '📅 Session hebdo questions-réponses business',
+        '📍 La carte des entrepreneures (annuaire)',
         '🧭 Bilan mensuel stratégique avec Ana & Audrey',
         '🔍 Audit express sur un élément de ton business',
         '🎤 Masterclass expert chaque mois',
@@ -11683,7 +11691,9 @@
       ? (planData.yearly + '<small>' + planData.yearlySuffix + '</small>')
       : (planData.monthly + '<small>' + planData.monthlySuffix + '</small>');
     document.getElementById('lp-prix-modal-note').textContent = planData.note;
-    document.getElementById('lp-prix-modal-list').innerHTML = planData.items.map(function(item){
+    const modalList = document.getElementById('lp-prix-modal-list');
+    modalList.classList.toggle('lp-prix-modal-list-two-cols', plan === 'stratege');
+    modalList.innerHTML = planData.items.map(function(item){
       return '<li>' + item + '</li>';
     }).join('');
 
