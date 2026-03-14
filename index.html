@@ -3773,6 +3773,8 @@
       font-size: 14px;
     }
     .lp-prix-modal-list li { margin-bottom: 8px; }
+    .lp-prix-modal-list.lp-prix-modal-list-two-cols { columns: 2; column-gap: 26px; }
+    .lp-prix-modal-list.lp-prix-modal-list-two-cols li { break-inside: avoid; }
     .lp-prix-modal-actions {
       display: flex;
       gap: 10px;
@@ -3800,6 +3802,7 @@
       .lp-prix-modal-card { padding: 28px 22px 24px; }
       .lp-prix-modal-title { font-size: 28px; }
       .lp-prix-modal-price { font-size: 35px; }
+      .lp-prix-modal-list.lp-prix-modal-list-two-cols { columns: 1; }
     }
 
     /* ── BIBLIOTHÈQUE AMBITIEUSE ── */
@@ -11620,12 +11623,12 @@
       yearlySuffix: '/an',
       note: 'Parfait pour structurer ton business et ne plus avancer seule.',
       items: [
-        '📅 Session hebdo questions-réponses business',
-        '🥂 Événements en ligne (petit-déj, apéro business…)',
-        '🌸 Communauté privée d’ambitieuses',
-        '📍 La carte des entrepreneures (annuaire)',
-        '📁 Accès aux ressources business',
-        '🎓 Mini-formation mensuelle'
+        ‘🎓 Accès à la formation "Les bases d’un business solide"’,
+        ‘📁 Accès à 3 ressources business par mois’,
+        ‘🌸 Communauté privée d’ambitieuses’,
+        ‘🥂 Événements en ligne (petit-déj, apéro business…)’,
+        ‘📅 Session hebdo questions-réponses business’,
+        ‘📍 La carte des entrepreneures (annuaire)’
       ]
     },
     stratege: {
@@ -11636,8 +11639,13 @@
       yearlySuffix: '/an',
       note: 'Le niveau idéal pour accélérer avec un accompagnement stratégique régulier.',
       items: [
-        '✅ Tous les avantages de l’Initiée',
-        '🧭 Bilan mensuel stratégique avec Ana & Audrey',
+        ‘🎓 Accès à toutes les formations’,
+        ‘📁 Accès à toutes les ressources business’,
+        ‘🌸 Communauté privée d’ambitieuses’,
+        ‘🥂 Événements en ligne (petit-déj, apéro business…)’,
+        ‘📅 Session hebdo questions-réponses business’,
+        ‘📍 La carte des entrepreneures (annuaire)’,
+        ‘🧭 Bilan mensuel stratégique avec Ana & Audrey’,
         '🔍 Audit express sur un élément de ton business',
         '🎤 Masterclass expert chaque mois',
         '🤝 Business Accountability Buddy',
@@ -11652,12 +11660,20 @@
       yearlySuffix: '/an',
       note: 'Pour les entrepreneures qui veulent un accompagnement premium ultra-personnalisé.',
       items: [
-        '✅ Tous les avantages de la Stratège',
-        '🎯 1h de coaching mensuel 1-1 avec Ana et/ou Audrey',
-        '📞 Hotline Business — accès 7j/7 à nos réponses',
-        '🗺️ Plan d’action trimestriel personnalisé',
-        '🧘 Focus mindset (méditation, blocages psycho…)',
-        '🎬 Atelier interactif live mensuel'
+        ‘🎯 1h de coaching mensuel 1-1 avec Ana et/ou Audrey’,
+        ‘📞 Hotline Business — accès 7j/7 à nos réponses’,
+        ‘🗺️ Plan d’action trimestriel personnalisé’,
+        ‘🎓 Accès à toutes les formations’,
+        ‘📁 Accès à toutes les ressources business’,
+        ‘🧭 Bilan mensuel stratégique avec Ana & Audrey’,
+        ‘🔍 Audit express sur un élément de ton business’,
+        ‘🎤 Masterclass expert chaque mois’,
+        ‘🤝 Business Accountability Buddy’,
+        ‘🌟 Mise en avant d’une abonnée par mois’,
+        ‘🌸 Communauté privée d’ambitieuses’,
+        ‘🥂 Événements en ligne (petit-déj, apéro business…)’,
+        ‘📅 Session hebdo questions-réponses business’,
+        ‘📍 La carte des entrepreneures (annuaire)’
       ]
     }
   };
@@ -11683,7 +11699,9 @@
       ? (planData.yearly + '<small>' + planData.yearlySuffix + '</small>')
       : (planData.monthly + '<small>' + planData.monthlySuffix + '</small>');
     document.getElementById('lp-prix-modal-note').textContent = planData.note;
-    document.getElementById('lp-prix-modal-list').innerHTML = planData.items.map(function(item){
+    const modalList = document.getElementById('lp-prix-modal-list');
+    modalList.classList.toggle('lp-prix-modal-list-two-cols', plan === 'stratege' || plan === 'visionnaire');
+    modalList.innerHTML = planData.items.map(function(item){
       return '<li>' + item + '</li>';
     }).join('');
 
