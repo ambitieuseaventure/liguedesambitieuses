@@ -3639,11 +3639,26 @@
     .lp-prix-visionnaire .lp-prix-head { border-bottom-color: rgba(20,36,53,0.08); }
 
     .lp-prix-name { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 14px; font-weight: 700; }
-    .lp-prix-amount { line-height: 1; margin-bottom: 8px; }
+    .lp-prix-amount { line-height: 1; margin-bottom: 2px; }
     .lp-prix-amount strong { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; }
     .lp-prix-amount small { font-size: 16px; font-family: 'DM Sans', sans-serif; color: var(--text-light); }
     .lp-prix-stratege .lp-prix-amount small { color: rgba(255,255,255,0.5); }
     .lp-prix-sub { font-size: 12px; color: var(--text-light); }
+
+    .lp-prix-annual-compare {
+      display: none;
+      margin-top: 0;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: var(--text-light);
+      line-height: 1.4;
+    }
+    .lp-prix-annual-compare s {
+      text-decoration-thickness: 1px;
+      opacity: 0.9;
+    }
+    .lp-prix-stratege .lp-prix-annual-compare { color: rgba(255,255,255,0.62); }
+    .lp-prix-stratege .lp-prix-annual-compare s { opacity: 1; }
 
     .lp-prix-items { display: flex; flex-direction: column; gap: 11px; margin-bottom: 26px; }
     .lp-prix-item { font-size: 13.5px; line-height: 1.5; }
@@ -4656,6 +4671,7 @@
                 <span class="prix-m">&euro;<strong>25</strong><small>/mois</small></span>
                 <span class="prix-a" style="display:none">&euro;<strong>250</strong><small>/an</small></span>
               </div>
+              <div class="lp-prix-annual-compare">au lieu de <s>300&euro;/an</s></div>
               <div class="lp-prix-sub">Sans engagement &middot; R&eacute;siliation libre</div>
             </div>
             <div class="lp-prix-items">
@@ -4679,6 +4695,7 @@
                 <span class="prix-m">&euro;<strong>65</strong><small>/mois</small></span>
                 <span class="prix-a" style="display:none">&euro;<strong>650</strong><small>/an</small></span>
               </div>
+              <div class="lp-prix-annual-compare">au lieu de <s>780&euro;/an</s></div>
               <div class="lp-prix-sub">Sans engagement &middot; R&eacute;siliation libre</div>
             </div>
             <div class="lp-prix-items">
@@ -4701,6 +4718,7 @@
                 <span class="prix-m">&euro;<strong>555</strong><small>/mois</small></span>
                 <span class="prix-a" style="display:none">&euro;<strong>5&nbsp;550</strong><small>/an</small></span>
               </div>
+              <div class="lp-prix-annual-compare">au lieu de <s>6&nbsp;660&euro;/an</s></div>
               <div class="lp-prix-sub">Sans engagement &middot; R&eacute;siliation libre</div>
             </div>
             <div class="lp-prix-items">
@@ -11469,6 +11487,7 @@
     const toggled = document.querySelector('.prix-toggle').classList.toggle('toggled');
     document.querySelectorAll('.prix-m').forEach(el => el.style.display = toggled ? 'none' : '');
     document.querySelectorAll('.prix-a').forEach(el => el.style.display = toggled ? '' : 'none');
+    document.querySelectorAll('.lp-prix-annual-compare').forEach(el => el.style.display = toggled ? 'block' : 'none');
     document.getElementById('toggle-label-month').classList.toggle('toggle-active', !toggled);
     document.getElementById('toggle-label-year').classList.toggle('toggle-active', toggled);
   }
