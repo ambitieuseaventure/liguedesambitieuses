@@ -11660,12 +11660,20 @@
       yearlySuffix: '/an',
       note: 'Pour les entrepreneures qui veulent un accompagnement premium ultra-personnalisé.',
       items: [
-        '✅ Tous les avantages de la Stratège',
         '🎯 1h de coaching mensuel 1-1 avec Ana et/ou Audrey',
         '📞 Hotline Business — accès 7j/7 à nos réponses',
         '🗺️ Plan d’action trimestriel personnalisé',
-        '🧘 Focus mindset (méditation, blocages psycho…)',
-        '🎬 Atelier interactif live mensuel'
+        '🎓 Accès à toutes les formations',
+        '📁 Accès à toutes les ressources business',
+        '🧭 Bilan mensuel stratégique avec Ana & Audrey',
+        '🔍 Audit express sur un élément de ton business',
+        '🎤 Masterclass expert chaque mois',
+        '🤝 Business Accountability Buddy',
+        '🌟 Mise en avant d’une abonnée par mois',
+        '🌸 Communauté privée d’ambitieuses',
+        '🥂 Événements en ligne (petit-déj, apéro business…)',
+        '📅 Session hebdo questions-réponses business',
+        '📍 La carte des entrepreneures (annuaire)'
       ]
     }
   };
@@ -11692,7 +11700,7 @@
       : (planData.monthly + '<small>' + planData.monthlySuffix + '</small>');
     document.getElementById('lp-prix-modal-note').textContent = planData.note;
     const modalList = document.getElementById('lp-prix-modal-list');
-    modalList.classList.toggle('lp-prix-modal-list-two-cols', plan === 'stratege');
+    modalList.classList.toggle('lp-prix-modal-list-two-cols', plan === 'stratege' || plan === 'visionnaire');
     modalList.innerHTML = planData.items.map(function(item){
       return '<li>' + item + '</li>';
     }).join('');
