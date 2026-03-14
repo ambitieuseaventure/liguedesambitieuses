@@ -3590,6 +3590,7 @@
       border-radius: 20px; padding: 36px 32px;
       position: relative;
       transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
     }
     .lp-prix-card:hover { transform: translateY(-6px); }
 
@@ -3681,6 +3682,109 @@
 
     .lp-prix-reassurance { text-align: center; font-size: 11px; color: var(--text-light); }
 
+    .lp-prix-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 12000;
+      background: rgba(10,24,37,0.78);
+      backdrop-filter: blur(7px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lp-prix-modal-card {
+      width: 680px;
+      max-width: 95vw;
+      max-height: 92vh;
+      overflow-y: auto;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #fff, #f7f7f3);
+      border: 1px solid rgba(20,36,53,0.1);
+      box-shadow: 0 30px 70px rgba(10,24,37,0.28);
+      position: relative;
+      padding: 34px 32px 30px;
+    }
+    .lp-prix-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      background: rgba(20,36,53,0.08);
+      color: var(--text-mid);
+      font-size: 17px;
+    }
+    .lp-prix-modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 31px;
+      color: var(--navy-darkest);
+      margin-bottom: 8px;
+      padding-right: 38px;
+    }
+    .lp-prix-modal-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: var(--navy-darkest);
+      margin-bottom: 4px;
+    }
+    .lp-prix-modal-price small {
+      font-size: 17px;
+      color: var(--text-light);
+      font-family: 'DM Sans', sans-serif;
+      margin-left: 4px;
+    }
+    .lp-prix-modal-note {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 18px;
+    }
+    .lp-prix-modal-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      margin-right: 8px;
+      margin-bottom: 10px;
+      background: rgba(235,193,76,0.16);
+      color: var(--navy-darkest);
+      border: 1px solid rgba(235,193,76,0.35);
+      font-weight: 600;
+    }
+    .lp-prix-modal-subtitle {
+      margin-top: 10px;
+      margin-bottom: 12px;
+      font-weight: 700;
+      color: var(--navy-darkest);
+      font-size: 14px;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+    .lp-prix-modal-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text-mid);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+    .lp-prix-modal-list li { margin-bottom: 8px; }
+    .lp-prix-modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+    .lp-prix-modal-actions .btn-outline-gold,
+    .lp-prix-modal-actions .btn-primary {
+      flex: 1;
+      min-width: 220px;
+    }
+
     .lp-faq-center { max-width: 900px; margin: 0 auto; }
     .lp-faq-center h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--navy-darkest); margin-bottom: 28px; text-align: center; }
     .lp-faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -3693,6 +3797,9 @@
       .lp-prix-stratege { transform: none; }
       .lp-prix-stratege:hover { transform: translateY(-6px); }
       .lp-faq-grid { grid-template-columns: 1fr; }
+      .lp-prix-modal-card { padding: 28px 22px 24px; }
+      .lp-prix-modal-title { font-size: 28px; }
+      .lp-prix-modal-price { font-size: 35px; }
     }
 
     /* ── BIBLIOTHÈQUE AMBITIEUSE ── */
@@ -4666,7 +4773,7 @@
         <div class="lp-prix-grid">
 
           <!-- L'Initiée -->
-          <div class="lp-prix-card lp-prix-initiee">
+          <div class="lp-prix-card lp-prix-initiee" onclick="openPrixModal('initiee')" role="button" tabindex="0" onkeydown="prixCardKeydown(event, 'initiee')">
             <div class="lp-prix-head">
               <div class="lp-prix-name">L&rsquo;Initi&eacute;e</div>
               <div class="lp-prix-amount">
@@ -4684,12 +4791,12 @@
               <div class="lp-prix-item">📁 Acc&egrave;s aux ressources business</div>
               <div class="lp-prix-item">🎓 Mini-formation mensuelle</div>
             </div>
-            <button class="btn-outline-gold lp-prix-cta" onclick="showPage('dashboard')">Commencer en tant qu&rsquo;Initi&eacute;e</button>
+            <button class="btn-outline-gold lp-prix-cta" onclick="event.stopPropagation();openPrixModal('initiee')">Commencer en tant qu&rsquo;Initi&eacute;e</button>
             <p class="lp-prix-reassurance">🔒 Paiement s&eacute;curis&eacute; &middot; 7 jours d&rsquo;essai gratuit</p>
           </div>
 
           <!-- La Stratège -->
-          <div class="lp-prix-card lp-prix-stratege">
+          <div class="lp-prix-card lp-prix-stratege" onclick="openPrixModal('stratege')" role="button" tabindex="0" onkeydown="prixCardKeydown(event, 'stratege')">
             <div class="lp-prix-badge">⭐ Le plus populaire</div>
             <div class="lp-prix-head">
               <div class="lp-prix-name">La Strat&egrave;ge</div>
@@ -4708,12 +4815,12 @@
               <div class="lp-prix-item">🤝 Business Accountability Buddy</div>
               <div class="lp-prix-item">🌟 Mise en avant d&rsquo;une abonn&eacute;e par mois</div>
             </div>
-            <button class="btn-primary lp-prix-cta" onclick="showPage('dashboard')">Devenir Strat&egrave;ge</button>
+            <button class="btn-primary lp-prix-cta" onclick="event.stopPropagation();openPrixModal('stratege')">Devenir Strat&egrave;ge</button>
             <p class="lp-prix-reassurance">🔒 Paiement s&eacute;curis&eacute; &middot; 7 jours d&rsquo;essai gratuit</p>
           </div>
 
           <!-- La Visionnaire -->
-          <div class="lp-prix-card lp-prix-visionnaire">
+          <div class="lp-prix-card lp-prix-visionnaire" onclick="openPrixModal('visionnaire')" role="button" tabindex="0" onkeydown="prixCardKeydown(event, 'visionnaire')">
             <div class="lp-prix-head">
               <div class="lp-prix-name">La Visionnaire</div>
               <div class="lp-prix-amount">
@@ -4731,10 +4838,29 @@
               <div class="lp-prix-item">🧘 Focus mindset (m&eacute;ditation, blocages psycho…)</div>
               <div class="lp-prix-item">🎬 Atelier interactif live mensuel</div>
             </div>
-            <button class="btn-outline-gold lp-prix-cta" onclick="showPage('dashboard')">Passer Visionnaire</button>
+            <button class="btn-outline-gold lp-prix-cta" onclick="event.stopPropagation();openPrixModal('visionnaire')">Passer Visionnaire</button>
             <p class="lp-prix-reassurance">🔒 Paiement s&eacute;curis&eacute; &middot; 7 jours d&rsquo;essai gratuit</p>
           </div>
 
+        </div>
+
+        <div class="lp-prix-modal-overlay" id="lp-prix-modal-overlay" onclick="closePrixModal(event)">
+          <div class="lp-prix-modal-card" role="dialog" aria-modal="true" aria-labelledby="lp-prix-modal-title" onclick="event.stopPropagation()">
+            <button class="lp-prix-modal-close" onclick="closePrixModal()" aria-label="Fermer">✕</button>
+            <div class="lp-prix-modal-title" id="lp-prix-modal-title"></div>
+            <div class="lp-prix-modal-price" id="lp-prix-modal-price"></div>
+            <div class="lp-prix-modal-note" id="lp-prix-modal-note"></div>
+            <div>
+              <span class="lp-prix-modal-pill">✨ 7 jours d&rsquo;essai gratuit</span>
+              <span class="lp-prix-modal-pill">🔓 Sans engagement - R&eacute;silie quand tu veux</span>
+            </div>
+            <div class="lp-prix-modal-subtitle">Ce niveau inclut :</div>
+            <ul class="lp-prix-modal-list" id="lp-prix-modal-list"></ul>
+            <div class="lp-prix-modal-actions">
+              <button class="btn-outline-gold" onclick="closePrixModal()">Continuer ma visite</button>
+              <button class="btn-primary" onclick="goToPricingCheckout()">Continuer vers le paiement</button>
+            </div>
+          </div>
         </div>
 
         <!-- FAQ -->
@@ -11484,6 +11610,104 @@
   }
 
   showPage('dashboard');
+
+  const prixModalPlans = {
+    initiee: {
+      title: "L'Initiée",
+      monthly: '€25',
+      yearly: '€250',
+      monthlySuffix: '/mois',
+      yearlySuffix: '/an',
+      note: 'Parfait pour structurer ton business et ne plus avancer seule.',
+      items: [
+        '🎓 Accès à la formation "Les bases d’un business solide"',
+        '📁 Accès à 3 ressources business par mois',
+        '🌸 Communauté privée d’ambitieuses',
+        '🥂 Événements en ligne (petit-déj, apéro business…)',
+        '📅 Session hebdo questions-réponses business',
+        '📍 La carte des entrepreneures (annuaire)'
+      ]
+    },
+    stratege: {
+      title: 'La Stratège',
+      monthly: '€65',
+      yearly: '€650',
+      monthlySuffix: '/mois',
+      yearlySuffix: '/an',
+      note: 'Le niveau idéal pour accélérer avec un accompagnement stratégique régulier.',
+      items: [
+        '✅ Tous les avantages de l’Initiée',
+        '🧭 Bilan mensuel stratégique avec Ana & Audrey',
+        '🔍 Audit express sur un élément de ton business',
+        '🎤 Masterclass expert chaque mois',
+        '🤝 Business Accountability Buddy',
+        '🌟 Mise en avant d’une abonnée par mois'
+      ]
+    },
+    visionnaire: {
+      title: 'La Visionnaire',
+      monthly: '€555',
+      yearly: '€5 550',
+      monthlySuffix: '/mois',
+      yearlySuffix: '/an',
+      note: 'Pour les entrepreneures qui veulent un accompagnement premium ultra-personnalisé.',
+      items: [
+        '✅ Tous les avantages de la Stratège',
+        '🎯 1h de coaching mensuel 1-1 avec Ana et/ou Audrey',
+        '📞 Hotline Business — accès 7j/7 à nos réponses',
+        '🗺️ Plan d’action trimestriel personnalisé',
+        '🧘 Focus mindset (méditation, blocages psycho…)',
+        '🎬 Atelier interactif live mensuel'
+      ]
+    }
+  };
+  function isPrixAnnuel() {
+    const toggle = document.querySelector('.prix-toggle');
+    return !!(toggle && toggle.classList.contains('toggled'));
+  }
+
+  function prixCardKeydown(event, plan) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openPrixModal(plan);
+    }
+  }
+
+  function openPrixModal(plan) {
+    const planData = prixModalPlans[plan];
+    if (!planData) return;
+
+    const annual = isPrixAnnuel();
+    document.getElementById('lp-prix-modal-title').textContent = planData.title;
+    document.getElementById('lp-prix-modal-price').innerHTML = annual
+      ? (planData.yearly + '<small>' + planData.yearlySuffix + '</small>')
+      : (planData.monthly + '<small>' + planData.monthlySuffix + '</small>');
+    document.getElementById('lp-prix-modal-note').textContent = planData.note;
+    document.getElementById('lp-prix-modal-list').innerHTML = planData.items.map(function(item){
+      return '<li>' + item + '</li>';
+    }).join('');
+
+    const overlay = document.getElementById('lp-prix-modal-overlay');
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePrixModal(event) {
+    if (event && event.target && event.target !== event.currentTarget) return;
+    const overlay = document.getElementById('lp-prix-modal-overlay');
+    if (!overlay) return;
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function goToPricingCheckout() {
+    closePrixModal();
+    showPage('dashboard');
+  }
+
+  document.addEventListener('keydown', function(event){
+    if (event.key === 'Escape') closePrixModal();
+  });
 
   function togglePrix() {
     const toggled = document.querySelector('.prix-toggle').classList.toggle('toggled');
