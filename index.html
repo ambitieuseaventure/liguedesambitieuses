@@ -4667,6 +4667,14 @@
   #mobile-bottom-nav,
   #mobile-menu-overlay { display: none; }
 
+  /* Éléments exclusivement mobiles → invisibles sur desktop */
+  .topbar-avatar,
+  .topbar-spacer { display: none; }
+
+  /* Mode admin : masquer complètement la nav mobile */
+  body.admin-mode #mobile-bottom-nav,
+  body.admin-mode #mobile-menu-overlay { display: none !important; }
+
   @media (max-width: 900px) {
 
     /* ── 1. Masquer l'hamburger (remplacé par bottom nav) ── */
@@ -4728,7 +4736,73 @@
     .topbar-spacer {
       width: 34px;
       flex-shrink: 0;
+      display: block;
     }
+
+    /* ── Widget messagerie : au-dessus de la bottom nav ── */
+    body.member-page #member-widget {
+      bottom: calc(72px + env(safe-area-inset-bottom)) !important;
+      right: 14px !important;
+    }
+    #member-widget-panel { width: min(340px, calc(100vw - 28px)); }
+
+    /* ── Agenda : calendrier scrollable horizontalement ── */
+    .agenda-block { overflow: visible; }
+    .agenda-week-view {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .week-grid { min-width: 500px; }
+    #week-scroll-area { min-width: 500px; }
+
+    /* ── Dashboard : to-do list AVANT le calendrier ── */
+    .agenda-todo-row {
+      display: flex !important;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .todo-aside { order: -1; }
+    .agenda-block { order: 0; }
+
+    /* ── Bannière bienvenue : restructuration mobile ── */
+    .welcome-banner {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px 18px;
+      gap: 16px;
+      margin-bottom: 20px;
+      border-radius: 20px;
+    }
+    /* La rangée de badges */
+    .welcome-banner > div:last-child {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 10px;
+      width: auto !important;
+      align-self: stretch;
+    }
+    .welcome-badge {
+      flex: 0 0 auto;
+      padding: 10px 14px;
+      min-width: 0;
+    }
+    .welcome-palmares {
+      flex: 1;
+      min-width: 0;
+      padding: 11px 13px;
+    }
+    /* "Voir mon palmarès" : repositionné en bas, pas absolu */
+    .wp-link {
+      position: static !important;
+      display: block;
+      text-align: right;
+      margin-top: 8px;
+      font-size: 10px;
+      opacity: 0.55;
+    }
+    /* Points d'ambition : taille réduite sur mobile */
+    .wp-points-num { font-size: 18px; }
+    .wp-rang-titre { font-size: 13px; }
 
     /* ── 3. Contenu principal : dégager la bottom nav ── */
     body.member-page .main {
@@ -5320,6 +5394,11 @@
         <option value="stratege">⚡ La Stratège — 65 €/mois</option>
         <option value="visionnaire" selected>🔮 La Visionnaire — 555 €/mois</option>
       </select>
+    </div>
+
+    <!-- Accès administration -->
+    <div style="text-align:center;padding:12px 16px 4px;border-top:1px solid rgba(255,255,255,0.06);margin-top:8px;">
+      <button onclick="enterAdmin();closeMobileMenu();" style="background:none;border:none;color:rgba(255,255,255,0.25);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;padding:8px 16px;border-radius:8px;transition:color .2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.25)'">⚙ Administration</button>
     </div>
 
   </div>
@@ -12932,6 +13011,9 @@
     document.body.classList.remove('member-page');
     // Hide all member pages
     document.querySelectorAll('.page').forEach(p => { p.style.display='none'; p.classList.remove('active'); });
+    // Masquer la nav mobile
+    const bn = document.getElementById('mobile-bottom-nav');
+    if (bn) bn.style.display = 'none';
   }
 
   function exitAdmin() {
