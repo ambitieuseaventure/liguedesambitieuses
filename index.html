@@ -855,6 +855,7 @@
     border-radius:4px;
   }
 
+
   /* ── TO-DO LIST ── */
   .todo-section-label {
     font-size:11px; font-weight:700; text-transform:uppercase;
@@ -3267,21 +3268,16 @@
     .lp-demo-list { list-style:none;display:flex;flex-direction:column;gap:10px; }
     .lp-demo-list li { font-size:14px;color:var(--navy);font-weight:500; }
     .lp-demo-media { border-radius:20px;overflow:hidden;border:1px solid rgba(20,36,53,0.1);box-shadow:0 20px 36px rgba(20,36,53,0.12);background:#101f2e; }
-    .lp-demo-screen { position:relative;background:linear-gradient(180deg,#152536,#0f1f2f);padding:18px;min-height:350px; }
-    .lp-demo-topbar { display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;color:rgba(255,255,255,0.75);font-size:11px;letter-spacing:.08em;text-transform:uppercase; }
-    .lp-demo-dots { display:flex;gap:6px; }
-    .lp-demo-dots span { width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.26); }
-    .lp-demo-cards { display:grid;gap:10px; }
-    .lp-demo-card { border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);padding:13px;animation:lpPulse 6s ease-in-out infinite; }
-    .lp-demo-card:nth-child(2) { animation-delay:1.5s; }
-    .lp-demo-card:nth-child(3) { animation-delay:3s; }
-    .lp-demo-card strong { display:block;font-size:13px;color:var(--gold-light);margin-bottom:6px; }
-    .lp-demo-card p { font-size:12px;color:rgba(255,255,255,0.66);line-height:1.5; }
-    .lp-demo-progress { margin-top:12px;height:6px;border-radius:99px;background:rgba(255,255,255,0.12);overflow:hidden; }
-    .lp-demo-progress span { display:block;height:100%;width:65%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));animation:lpProgress 6s ease-in-out infinite; }
+    .lp-demo-head { display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.12); }
+    .lp-demo-head strong { color:var(--gold-light);font-size:12px;letter-spacing:.08em;text-transform:uppercase; }
+    .lp-demo-switch { display:flex;gap:8px;flex-wrap:wrap; }
+    .lp-demo-tab { border:1px solid rgba(255,255,255,0.24);background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.72);border-radius:999px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif; }
+    .lp-demo-tab.active { background:var(--gold-bright);border-color:var(--gold-bright);color:var(--navy-darkest); }
+    .lp-demo-live { position:relative;height:380px;background:#0f1f2f;overflow:hidden; }
+    .lp-demo-live-inner { position:absolute;left:0;top:0;width:166%;transform:scale(.6);transform-origin:top left;pointer-events:none; }
+    .lp-demo-live .page-content { padding:20px !important;background:var(--bg); }
+    .lp-demo-live .card, .lp-demo-live .welcome-banner, .lp-demo-live .agenda-block, .lp-demo-live .todo-aside { box-shadow:none !important; }
     .lp-demo-caption { display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 18px;background:rgba(20,36,53,0.92);color:rgba(255,255,255,0.76);font-size:12px; }
-    @keyframes lpPulse { 0%,100%{ transform:translateY(0);border-color:rgba(255,255,255,0.12);} 45%{ transform:translateY(-2px);border-color:rgba(252,186,51,0.45);} }
-    @keyframes lpProgress { 0%,100%{ width:38%; } 50%{ width:82%; } }
 
     .lp-offre { background:var(--bg); }
     .lp-prix-wrap { display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;max-width:880px;margin:0 auto; }
@@ -4801,37 +4797,27 @@
             <p>Dès ton abonnement activé, tu arrives dans un espace guidé : ton plan d'action, les formations à suivre dans l'ordre, et un accès direct à la communauté pour demander de l'aide quand tu bloques.</p>
             <ul class="lp-demo-list">
               <li>🧭 Dashboard priorisé pour savoir quoi faire cette semaine</li>
-              <li>🎓 Parcours de formations rangés par objectif business</li>
+              <li>🎓 Formations triées par thèmes pour progresser sans te disperser</li>
               <li>🤝 Espace communauté + annuaire pour trouver des partenaires</li>
               <li>📈 Outils de suivi pour mesurer tes progrès et rester régulière</li>
             </ul>
             <button class="btn-outline-gold" onclick="showPage('dashboard')">Explorer l'espace membre en direct →</button>
           </div>
           <div class="lp-demo-media">
-            <div class="lp-demo-screen" aria-label="Démo animée de l'espace membre">
-              <div class="lp-demo-topbar">
-                <span>Espace membre • aperçu</span>
-                <div class="lp-demo-dots"><span></span><span></span><span></span></div>
-              </div>
-              <div class="lp-demo-cards">
-                <div class="lp-demo-card">
-                  <strong>Dashboard prioritaire</strong>
-                  <p>Les 3 prochaines actions à exécuter pour faire avancer ton acquisition cette semaine.</p>
-                  <div class="lp-demo-progress"><span></span></div>
-                </div>
-                <div class="lp-demo-card">
-                  <strong>Formation du moment</strong>
-                  <p>Module “Positionnement premium” + checklist à appliquer immédiatement dans ton offre.</p>
-                </div>
-                <div class="lp-demo-card">
-                  <strong>Communauté active</strong>
-                  <p>Question posée à 9h12, réponses d'autres Ambitieuses + retour des fondatrices à 9h37.</p>
-                </div>
+            <div class=”lp-demo-head”>
+              <strong>Aperçu réel — Niveau Visionnaire</strong>
+              <div class=”lp-demo-switch”>
+                <button class=”lp-demo-tab active” data-demo-page=”dashboard” onclick=”renderLandingMemberPreview('dashboard', this)”>Dashboard</button>
+                <button class=”lp-demo-tab” data-demo-page=”classroom” onclick=”renderLandingMemberPreview('classroom', this)”>Formations</button>
+                <button class=”lp-demo-tab” data-demo-page=”community” onclick=”renderLandingMemberPreview('community', this)”>Communauté</button>
               </div>
             </div>
-            <div class="lp-demo-caption">
-              <span>Démo visuelle de ton expérience membre</span>
-              <span>Dashboard · Formations · Communauté</span>
+            <div class=”lp-demo-live”>
+              <div class=”lp-demo-live-inner” id=”lp-demo-live-inner”></div>
+            </div>
+            <div class=”lp-demo-caption”>
+              <span>Capture en direct du vrai espace membre</span>
+              <span>Version affichée : Visionnaire</span>
             </div>
           </div>
         </div>
@@ -11878,6 +11864,33 @@
       const el = document.getElementById(sectionId);
       if (el) el.scrollIntoView({behavior: 'smooth'});
     }));
+  }
+
+  function renderLandingMemberPreview(page, triggerBtn) {
+    var previewPage = page || 'dashboard';
+    var host = document.getElementById('lp-demo-live-inner');
+    if (!host) return;
+
+    // Démo demandée sur le niveau Visionnaire
+    if (typeof switchSubscriptionDemo === 'function' && getCurrentSubscription() !== 'visionnaire') {
+      switchSubscriptionDemo('visionnaire');
+    }
+
+    var source = document.querySelector('#page-' + previewPage + ' .page-content');
+    if (!source) return;
+
+    var clone = source.cloneNode(true);
+    clone.querySelectorAll('[id]').forEach(function(el){ el.removeAttribute('id'); });
+    host.innerHTML = '';
+    host.appendChild(clone);
+
+    var tabButtons = document.querySelectorAll('.lp-demo-tab');
+    tabButtons.forEach(function(btn){
+      var isActive = btn.getAttribute('data-demo-page') === previewPage;
+      btn.classList.toggle('active', isActive);
+    });
+
+    if (triggerBtn && typeof triggerBtn.blur === 'function') triggerBtn.blur();
   }
 
   /* ── TO-DO LIST ── */
@@ -20053,6 +20066,8 @@ function switchSubscriptionDemo(level) {
   if (document.querySelector('#page-profil.active')) {
     renderProfileSubscriptionTab();
   }
+
+  renderLandingMemberPreview('dashboard');
 }
 
 function renderProfileSubscriptionTab() {
@@ -20104,6 +20119,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   updateSidebarLockState();
   renderProfileSubscriptionTab();
+  renderLandingMemberPreview('dashboard');
 });
 </script>
 <script>
