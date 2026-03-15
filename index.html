@@ -3301,14 +3301,25 @@
     .ldm-course-row { display:flex;justify-content:space-between;font-size:9.5px;color:#21374c;margin-bottom:3px; }
     .ldm-course-row span { color:#fcba33;font-weight:700;flex-shrink:0;margin-left:4px; }
     .ldm-prog { height:5px;background:#e8edf2;border-radius:5px;overflow:hidden; }
-    .ldm-prog-fill { height:100%;border-radius:5px;background:linear-gradient(90deg,#24425b,#4f85a0);animation:ldmFill 1.4s cubic-bezier(.4,0,.2,1) both; }
-    .ldm-prog-fill.p90 { width:90%;animation-delay:.1s; }
-    .ldm-prog-fill.p68 { width:68%;animation-delay:.3s; }
-    .ldm-prog-fill.p42 { width:42%;animation-delay:.5s; }
-    @keyframes ldmFill { from{width:0} }
-    .ldm-focus-item { font-size:9.5px;color:#21374c;background:#f4f7fa;border-radius:6px;padding:5px 7px;margin-bottom:5px;display:flex;align-items:center;gap:5px; }
+    /* ── Progress bars : boucle 10s ── */
+    .ldm-prog-fill { height:100%;border-radius:5px;background:linear-gradient(90deg,#24425b,#4f85a0); }
+    .ldm-prog-fill.p90 { animation:ldmBar90 10s ease-in-out infinite; }
+    .ldm-prog-fill.p68 { animation:ldmBar68 10s ease-in-out infinite; }
+    .ldm-prog-fill.p42 { animation:ldmBar42 10s ease-in-out infinite; }
+    @keyframes ldmBar90 { 0%,5%{width:0} 25%,78%{width:90%} 90%,100%{width:0} }
+    @keyframes ldmBar68 { 0%,8%{width:0} 28%,78%{width:68%} 90%,100%{width:0} }
+    @keyframes ldmBar42 { 0%,11%{width:0} 31%,78%{width:42%} 90%,100%{width:0} }
+    /* ── Focus items : illumination en séquence ── */
+    .ldm-focus-item { font-size:9.5px;color:#21374c;border-radius:6px;padding:5px 7px;margin-bottom:5px;display:flex;align-items:center;gap:5px;transition:background .3s; }
+    .ldm-focus-item:nth-child(1) { animation:ldmFocus1 10s ease-in-out infinite; }
+    .ldm-focus-item:nth-child(2) { animation:ldmFocus2 10s ease-in-out infinite; }
+    .ldm-focus-item:nth-child(3) { animation:ldmFocus3 10s ease-in-out infinite; }
+    @keyframes ldmFocus1 { 0%,28%{background:#f4f7fa} 32%,42%{background:rgba(235,193,76,0.2)} 46%,100%{background:#f4f7fa} }
+    @keyframes ldmFocus2 { 0%,42%{background:#f4f7fa} 46%,56%{background:rgba(235,193,76,0.2)} 60%,100%{background:#f4f7fa} }
+    @keyframes ldmFocus3 { 0%,56%{background:#f4f7fa} 60%,70%{background:rgba(235,193,76,0.2)} 74%,100%{background:#f4f7fa} }
     .ldm-focus-item::before { content:'';width:5px;height:5px;border-radius:50%;background:#ebc14c;flex-shrink:0; }
     .ldm-quote { background:rgba(235,193,76,0.1);border-radius:6px;padding:6px 8px;font-size:9px;color:#7a5c00;font-style:italic;margin-top:auto; }
+    /* ── To-do : 2e case se coche et se décoche ── */
     .ldm-todo { background:#fff;border-radius:10px;border:1px solid rgba(20,36,53,0.07);padding:9px 12px;box-shadow:0 2px 8px rgba(20,36,53,0.05); }
     .ldm-todo-title { font-family:'Playfair Display',serif;font-size:11px;color:#142435;font-weight:700;margin-bottom:5px; }
     .ldm-todo-lbl { font-size:8.5px;font-weight:700;text-transform:uppercase;color:#4f85a0;letter-spacing:.06em;margin-bottom:3px; }
@@ -3316,6 +3327,16 @@
     .ldm-todo-item:last-child { border:none; }
     .ldm-check { width:13px;height:13px;border-radius:50%;border:1.5px solid rgba(20,36,53,0.22);flex-shrink:0; }
     .ldm-check.done { background:#fcba33;border-color:#fcba33;display:flex;align-items:center;justify-content:center;font-size:8px;color:#142435;font-weight:700; }
+    .ldm-check.anim { animation:ldmCheckAnim 10s ease-in-out infinite; }
+    @keyframes ldmCheckAnim {
+      0%,70%  { background:transparent;border-color:rgba(20,36,53,0.22);box-shadow:none;transform:scale(1); }
+      76%     { background:rgba(252,186,51,0.35);border-color:#fcba33;transform:scale(1.2); }
+      82%,94% { background:#fcba33;border-color:#fcba33;box-shadow:0 0 0 3px rgba(252,186,51,0.22);transform:scale(1); }
+      100%    { background:transparent;border-color:rgba(20,36,53,0.22);box-shadow:none;transform:scale(1); }
+    }
+    /* ── Badge num pulse ── */
+    .ldm-badge-num { font-family:'Playfair Display',serif;font-size:16px;color:#ebc14c;font-weight:700;line-height:1;animation:ldmNumPulse 10s ease-in-out infinite; }
+    @keyframes ldmNumPulse { 0%,18%,28%,100%{transform:scale(1)} 23%{transform:scale(1.15)} }
     .ldm-tag { font-size:8px;font-weight:700;padding:1px 5px;border-radius:10px;margin-left:auto;white-space:nowrap;flex-shrink:0; }
     .ldm-tag-f { background:rgba(79,133,160,.15);color:#4f85a0; }
     .ldm-tag-r { background:rgba(235,193,76,.2);color:#7a5c00; }
@@ -4911,7 +4932,7 @@
                       <span class="ldm-tag ldm-tag-f">Formation</span>
                     </div>
                     <div class="ldm-todo-item">
-                      <div class="ldm-check"></div>
+                      <div class="ldm-check anim"></div>
                       Répondre à Clara B.
                       <span class="ldm-tag ldm-tag-r">Réseau</span>
                     </div>
