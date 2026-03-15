@@ -1469,6 +1469,8 @@
   .notebook-kpi { background:linear-gradient(180deg,white,rgba(250,248,242,.95)); border:1px solid rgba(20,36,53,0.08); border-radius:12px; padding:12px; }
   .notebook-kpi-label { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-light); font-weight:700; }
   .notebook-kpi-value { font-size:22px; font-weight:700; color:var(--navy-darkest); margin-top:4px; }
+  .nb-empty-msg { font-size:13px; color:var(--text-light); text-align:center; padding:20px 10px; line-height:1.6; }
+  .notebook-action-item.done .notebook-action-text { text-decoration:line-through; color:var(--text-light); }
 
   /* ── HOTLINE VOCAL ── */
   @keyframes hlPulse {
@@ -12629,6 +12631,23 @@
     showPage(page);
   }
 
+  /* ═══════════════════════════════════════════════
+     NAVIGATION MOBILE — constantes (déclarées ici
+     pour éviter la Temporal Dead Zone quand
+     showPage() appelle syncMobileBottomNav())
+  ═══════════════════════════════════════════════ */
+  const MOB_NAV_TABS = {
+    dashboard:  'mob-nav-dashboard',
+    community:  'mob-nav-community',
+    messages:   'mob-nav-messages',
+    evenements: 'mob-nav-evenements',
+  };
+  const MOB_MORE_PAGES = new Set([
+    'hotline','qr','bilan','coaching','plan','notebook',
+    'mindset','classroom','resources','masterclass','palmares',
+    'annuaire','buddy','profil'
+  ]);
+
   showPage('dashboard');
 
   const prixModalPlans = {
@@ -12900,21 +12919,6 @@
   /* ═══════════════════════════════════════════════
      NAVIGATION MOBILE — BOTTOM BAR & MENU OVERLAY
   ═══════════════════════════════════════════════ */
-
-  /* Pages mappées sur les onglets de la bottom nav */
-  const MOB_NAV_TABS = {
-    dashboard:  'mob-nav-dashboard',
-    community:  'mob-nav-community',
-    messages:   'mob-nav-messages',
-    evenements: 'mob-nav-evenements',
-  };
-
-  /* Pages qui font apparaître l'onglet "Plus" en actif */
-  const MOB_MORE_PAGES = new Set([
-    'hotline','qr','bilan','coaching','plan','notebook',
-    'mindset','classroom','resources','masterclass','palmares',
-    'annuaire','buddy','profil'
-  ]);
 
   function syncMobileBottomNav(page) {
     /* Retirer toutes les classes active */
@@ -17199,43 +17203,187 @@
     }).join('');
   }
 
-  function renderNotebookPage() {
-    var list = document.getElementById('notebook-list');
-    var empty = document.getElementById('notebook-empty');
-    if (!list || !empty) return;
-    var store = getResourceNotesStore();
-    var notes = Object.values(store).filter(function(note) {
-      return note && note.userId === currentUserId && (note.retains || note.apply);
-    }).sort(function(a, b) {
-      return new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0);
-    });
+  /* ── Carnet de bord : stores ── */
+  var _nbFilter = 'tous';
+  var _nbSort   = 'recent';
+  var _NB_THEMES = ['finances','marketing','vente','mindset','gestion','autre'];
+  var _NB_LABELS = {finances:'💰 Finances',marketing:'📣 Marketing',vente:'🤝 Vente',mindset:'🧠 Mindset',gestion:'🗂️ Gestion',autre:'🏷️ Autre'};
 
-    list.innerHTML = '';
-    if (!notes.length) {
-      empty.style.display = 'block';
-      return;
-    }
-    empty.style.display = 'none';
-
-    notes.forEach(function(note) {
-      var item = document.createElement('div');
-      item.className = 'notebook-item';
-      item.innerHTML = ''
-        + '<div class="notebook-header"><div class="notebook-title">' + (note.resourceTitle || 'Ressource') + '</div><div class="notebook-date">Modifié le ' + formatNoteDate(note.updatedAt) + '</div></div>'
-        + '<label class="notes-field-label" for="notebook-retain-' + note.resourceId + '">Ce que je retiens</label>'
-        + '<textarea class="notes-field" id="notebook-retain-' + note.resourceId + '">' + (note.retains || '') + '</textarea>'
-        + '<label class="notes-field-label" for="notebook-apply-' + note.resourceId + '">Comment je vais l\'appliquer</label>'
-        + '<textarea class="notes-field" id="notebook-apply-' + note.resourceId + '">' + (note.apply || '') + '</textarea>'
-        + '<div style="display:flex;align-items:center;"><button class="dl-btn notebook-save-btn" data-resource-id="' + note.resourceId + '" data-resource-title="' + (note.resourceTitle || '') + '">Enregistrer</button><span class="notes-status" id="notebook-status-' + note.resourceId + '"></span></div>';
-      list.appendChild(item);
-    });
-
-    list.querySelectorAll('.notebook-save-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        saveNotebookNote(btn.dataset.resourceId, btn.dataset.resourceTitle || 'Ressource');
-      });
-    });
+  function _nbNorm(t) {
+    t = (t||'').toLowerCase();
+    if (t==='finance') return 'finances';
+    if (t==='organisation') return 'gestion';
+    if (t==='offre'||t==='clients') return 'vente';
+    return _NB_THEMES.includes(t) ? t : 'autre';
   }
+  function _nbActionsStore() {
+    try { var a=JSON.parse(localStorage.getItem('notebook_actions_db')||'{}'); return a[currentUserId]||[]; } catch(e){return[];}
+  }
+  function _nbSetActionsStore(items) {
+    try { var a=JSON.parse(localStorage.getItem('notebook_actions_db')||'{}'); a[currentUserId]=items; localStorage.setItem('notebook_actions_db',JSON.stringify(a)); } catch(e){}
+  }
+  function _nbIdeasStore() {
+    try { return JSON.parse(localStorage.getItem('notebook_ideas_status_db')||'{}'); } catch(e){return{};}
+  }
+  function _nbSetIdeasStore(v) { localStorage.setItem('notebook_ideas_status_db',JSON.stringify(v)); }
+
+  function renderNotebookPage() {
+    var store = getResourceNotesStore();
+    var allNotes = Object.values(store).filter(function(n){
+      return n && n.userId===currentUserId && (n.retains||n.apply);
+    }).map(function(n){ n.theme=_nbNorm(n.theme); n.themeLabel=_NB_LABELS[n.theme]; return n; });
+
+    var filtered = allNotes.filter(function(n){
+      return _nbFilter==='tous' || n.theme===_nbFilter;
+    }).sort(function(a,b){
+      return _nbSort==='oldest' ? new Date(a.updatedAt)-new Date(b.updatedAt) : new Date(b.updatedAt)-new Date(a.updatedAt);
+    });
+
+    var actions = _nbActionsStore();
+    var filteredActions = _nbFilter==='tous' ? actions : actions.filter(function(a){ return _nbNorm(a.theme)===_nbFilter; });
+
+    /* Theme filter tags */
+    var tagsEl = document.getElementById('notebook-theme-tags');
+    if (tagsEl) {
+      tagsEl.innerHTML = '';
+      ['tous'].concat(_NB_THEMES).forEach(function(t){
+        var b = document.createElement('button');
+        b.className = 'notebook-theme-tag' + (_nbFilter===t?' active':'');
+        b.textContent = t==='tous' ? 'Tous les thèmes' : _NB_LABELS[t];
+        b.onclick = function(){ _nbFilter=t; renderNotebookPage(); };
+        tagsEl.appendChild(b);
+      });
+    }
+
+    /* Déclics list */
+    var declicsEl = document.getElementById('notebook-declics-list');
+    if (declicsEl) {
+      declicsEl.innerHTML = '';
+      if (!filtered.length) {
+        declicsEl.innerHTML = '<div class="nb-empty-msg">Ajoute des pense-bêtes dans tes ressources ou formations !</div>';
+      } else {
+        filtered.forEach(function(n){
+          var el = document.createElement('div');
+          el.className = 'notebook-item';
+          el.innerHTML = '<div class="notebook-header"><div class="notebook-title">'+( n.resourceTitle||'Ressource')+'</div><div class="notebook-date">Modifié le '+formatNoteDate(n.updatedAt)+'</div></div>'
+            + '<span class="notebook-theme-chip">'+n.themeLabel+'</span>'
+            + '<label class="notes-field-label" for="notebook-retain-'+n.resourceId+'">Ce que je retiens</label>'
+            + '<textarea class="notes-field" id="notebook-retain-'+n.resourceId+'">'+(n.retains||'')+'</textarea>'
+            + '<label class="notes-field-label" for="notebook-apply-'+n.resourceId+'">Comment je vais l\'appliquer</label>'
+            + '<textarea class="notes-field" id="notebook-apply-'+n.resourceId+'">'+(n.apply||'')+'</textarea>'
+            + '<div style="display:flex;align-items:center;gap:8px;margin-top:8px;"><button class="dl-btn notebook-save-btn" data-resource-id="'+n.resourceId+'" data-resource-title="'+(n.resourceTitle||'')+'">Enregistrer</button><span class="notes-status" id="notebook-status-'+n.resourceId+'"></span></div>';
+          declicsEl.appendChild(el);
+        });
+        declicsEl.querySelectorAll('.notebook-save-btn').forEach(function(btn){
+          btn.onclick = function(){ saveNotebookNote(btn.dataset.resourceId, btn.dataset.resourceTitle||'Ressource'); };
+        });
+      }
+    }
+
+    /* Idées list */
+    var ideasEl = document.getElementById('notebook-ideas-list');
+    var ideas = _nbIdeasStore();
+    if (ideasEl) {
+      ideasEl.innerHTML = '';
+      var ideasFiltered = filtered.filter(function(n){ return (n.apply||'').trim(); });
+      if (!ideasFiltered.length) {
+        ideasEl.innerHTML = '<div class="nb-empty-msg">Note comment tu vas appliquer tes apprentissages — tes idées apparaîtront ici !</div>';
+      } else {
+        ideasFiltered.forEach(function(n){
+          var k = currentUserId+'::'+n.resourceId, st = ideas[k]||'a-tester';
+          var el = document.createElement('div');
+          el.className = 'notebook-idea-item';
+          el.innerHTML = '<div class="notebook-idea-row"><strong>'+(n.resourceTitle||'')+'</strong><span class="notebook-theme-chip">'+n.themeLabel+'</span></div>'
+            + '<div style="font-size:13px;color:var(--text-dark);margin:6px 0;">'+(n.apply||'')+'</div>'
+            + '<select data-idea="'+n.resourceId+'" class="notebook-idea-status">'
+            + '<option value="a-tester"'+(st==='a-tester'?' selected':'')+'>📋 À tester</option>'
+            + '<option value="en-cours"'+(st==='en-cours'?' selected':'')+'>⚡ En cours</option>'
+            + '<option value="teste"'+(st==='teste'?' selected':'')+'>✅ Testé !</option>'
+            + '</select>';
+          ideasEl.appendChild(el);
+        });
+        ideasEl.querySelectorAll('[data-idea]').forEach(function(sel){
+          sel.onchange = function(){
+            var st=_nbIdeasStore(); st[currentUserId+'::'+sel.dataset.idea]=sel.value; _nbSetIdeasStore(st);
+          };
+        });
+      }
+    }
+
+    /* Actions list */
+    var actionsEl = document.getElementById('notebook-actions-list');
+    if (actionsEl) {
+      actionsEl.innerHTML = '';
+      if (!filteredActions.length) {
+        actionsEl.innerHTML = '<div class="nb-empty-msg">Ajoute ta première action concrète ci-dessus !</div>';
+      } else {
+        filteredActions.forEach(function(a){
+          var el = document.createElement('div');
+          el.className = 'notebook-action-item' + (a.done?' done':'');
+          el.innerHTML = '<input type="checkbox"'+(a.done?' checked':'')+' data-tog="'+a.id+'" style="width:16px;height:16px;cursor:pointer;flex-shrink:0;">'
+            + '<span class="notebook-action-text" style="'+(a.done?'text-decoration:line-through;color:var(--text-light);':'')+'">'+a.text+'</span>'
+            + '<span class="notebook-theme-chip" style="flex-shrink:0;">'+(_NB_LABELS[_nbNorm(a.theme)]||a.theme)+'</span>'
+            + '<button data-del="'+a.id+'" class="notebook-action-del">✕</button>';
+          actionsEl.appendChild(el);
+        });
+        actionsEl.querySelectorAll('[data-tog]').forEach(function(e){
+          e.onchange = function(){
+            var arr=_nbActionsStore().map(function(a){if(a.id===e.dataset.tog){a.done=!a.done;a.updatedAt=new Date().toISOString();}return a;});
+            _nbSetActionsStore(arr); renderNotebookPage();
+          };
+        });
+        actionsEl.querySelectorAll('[data-del]').forEach(function(e){
+          e.onclick = function(){
+            _nbSetActionsStore(_nbActionsStore().filter(function(a){return a.id!==e.dataset.del;}));
+            renderNotebookPage();
+          };
+        });
+      }
+    }
+
+    /* Monthly summary */
+    var summaryEl = document.getElementById('notebook-monthly-summary');
+    if (summaryEl) {
+      var now = new Date();
+      var mNotes = allNotes.filter(function(n){ var d=new Date(n.updatedAt||0); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
+      var allActs = _nbActionsStore();
+      var mActs = allActs.filter(function(a){ var d=new Date(a.updatedAt||a.createdAt||0); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
+      var kpis=[['Notes créées',mNotes.length],['Actions réalisées',mActs.filter(function(a){return a.done;}).length],['Actions en cours',allActs.filter(function(a){return !a.done;}).length],['Ressources consultées',Object.keys(mNotes.reduce(function(o,n){o[n.resourceId]=1;return o;},{})).length]];
+      summaryEl.innerHTML = kpis.map(function(i){return '<div class="notebook-kpi"><div class="notebook-kpi-value">'+i[1]+'</div><div class="notebook-kpi-label">'+i[0]+'</div></div>';}).join('');
+    }
+
+    /* Empty state */
+    var emptyEl = document.getElementById('notebook-empty');
+    if (emptyEl) emptyEl.style.display = (!filtered.length && !filteredActions.length) ? 'block' : 'none';
+  }
+
+  function addNotebookAction() {
+    var inp = document.getElementById('notebook-action-input');
+    var th  = document.getElementById('notebook-action-theme');
+    if (!inp||!inp.value.trim()) return;
+    var arr = _nbActionsStore();
+    arr.unshift({id:'a_'+Date.now(),text:inp.value.trim(),theme:th?th.value:'autre',done:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+    _nbSetActionsStore(arr);
+    inp.value = '';
+    renderNotebookPage();
+  }
+
+  function setNotebookSort(value) {
+    _nbSort = value;
+    renderNotebookPage();
+  }
+
+  window.toggleNotebookActionById = function(id) {
+    var arr=_nbActionsStore().map(function(a){if(a.id===id){a.done=!a.done;a.updatedAt=new Date().toISOString();}return a;});
+    _nbSetActionsStore(arr); renderNotebookPage();
+  };
+
+  window.createActionFromJournal = function(text, theme) {
+    var arr=_nbActionsStore();
+    arr.unshift({id:'a_'+Date.now(),text:text,theme:theme||'mindset',done:false,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+    _nbSetActionsStore(arr);
+    if(window.showPage) window.showPage('notebook'); else renderNotebookPage();
+  };
 
   function saveNotebookNote(resourceId, resourceTitle) {
     var retainEl = document.getElementById('notebook-retain-' + resourceId);
