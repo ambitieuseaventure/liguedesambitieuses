@@ -3260,6 +3260,29 @@
     .lp-temo-author strong { display:block;font-size:13px;color:white; }
     .lp-temo-author span { font-size:12px;color:rgba(255,255,255,0.45); }
 
+    .lp-demo-space { background:white; }
+    .lp-demo-wrap { display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center; }
+    .lp-demo-copy { display:flex;flex-direction:column;gap:16px; }
+    .lp-demo-copy p { font-size:15px;color:var(--text-light);line-height:1.75; }
+    .lp-demo-list { list-style:none;display:flex;flex-direction:column;gap:10px; }
+    .lp-demo-list li { font-size:14px;color:var(--navy);font-weight:500; }
+    .lp-demo-media { border-radius:20px;overflow:hidden;border:1px solid rgba(20,36,53,0.1);box-shadow:0 20px 36px rgba(20,36,53,0.12);background:#101f2e; }
+    .lp-demo-screen { position:relative;background:linear-gradient(180deg,#152536,#0f1f2f);padding:18px;min-height:350px; }
+    .lp-demo-topbar { display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;color:rgba(255,255,255,0.75);font-size:11px;letter-spacing:.08em;text-transform:uppercase; }
+    .lp-demo-dots { display:flex;gap:6px; }
+    .lp-demo-dots span { width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.26); }
+    .lp-demo-cards { display:grid;gap:10px; }
+    .lp-demo-card { border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);padding:13px;animation:lpPulse 6s ease-in-out infinite; }
+    .lp-demo-card:nth-child(2) { animation-delay:1.5s; }
+    .lp-demo-card:nth-child(3) { animation-delay:3s; }
+    .lp-demo-card strong { display:block;font-size:13px;color:var(--gold-light);margin-bottom:6px; }
+    .lp-demo-card p { font-size:12px;color:rgba(255,255,255,0.66);line-height:1.5; }
+    .lp-demo-progress { margin-top:12px;height:6px;border-radius:99px;background:rgba(255,255,255,0.12);overflow:hidden; }
+    .lp-demo-progress span { display:block;height:100%;width:65%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));animation:lpProgress 6s ease-in-out infinite; }
+    .lp-demo-caption { display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 18px;background:rgba(20,36,53,0.92);color:rgba(255,255,255,0.76);font-size:12px; }
+    @keyframes lpPulse { 0%,100%{ transform:translateY(0);border-color:rgba(255,255,255,0.12);} 45%{ transform:translateY(-2px);border-color:rgba(252,186,51,0.45);} }
+    @keyframes lpProgress { 0%,100%{ width:38%; } 50%{ width:82%; } }
+
     .lp-offre { background:var(--bg); }
     .lp-prix-wrap { display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;max-width:880px;margin:0 auto; }
     .lp-prix-card { background:var(--navy-darkest);border-radius:20px;padding:38px;border:2px solid var(--gold);position:relative;box-shadow:0 20px 56px rgba(20,36,53,0.22); }
@@ -3382,6 +3405,7 @@
       .lp-temos { grid-template-columns:1fr; }
       .lp-temo-featured { transform:none; }
       .lp-prix-wrap { grid-template-columns:1fr; }
+      .lp-demo-wrap { grid-template-columns:1fr; }
       .blog-featured { grid-template-columns:1fr; }
       .blog-grid { grid-template-columns:1fr 1fr; }
       .blog-nl-inner { grid-template-columns:1fr; }
@@ -4586,6 +4610,7 @@
           <a href="javascript:void(0)" onclick="document.getElementById('pourquoi').scrollIntoView({behavior:'smooth'})">Pourquoi la Ligue ?</a>
           <a href="javascript:void(0)" onclick="document.getElementById('apropos').scrollIntoView({behavior:'smooth'})">Notre histoire</a>
           <a href="javascript:void(0)" onclick="document.getElementById('inclus').scrollIntoView({behavior:'smooth'})">Ce qui est inclus</a>
+          <a href="javascript:void(0)" onclick="document.getElementById('demo-espace-membre').scrollIntoView({behavior:'smooth'})">Démo membre</a>
           <a href="javascript:void(0)" onclick="document.getElementById('offre').scrollIntoView({behavior:'smooth'})">Tarifs</a>
           <a href="javascript:void(0)" onclick="showPage('blog')">Blog</a>
           <a href="javascript:void(0)" onclick="showPage('bibliotheque')">La Bibliothèque</a>
@@ -4763,6 +4788,53 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+
+    <section class="lp-section lp-demo-space" id="demo-espace-membre">
+      <div class="lp-section-inner">
+        <div class="lp-demo-wrap">
+          <div class="lp-demo-copy">
+            <div class="lp-tag-line">Un aperçu concret de ton quotidien dans la Ligue</div>
+            <h2 class="lp-h2">À l'intérieur de l'espace membre : <em>des actions claires</em>, pas de blabla</h2>
+            <p>Dès ton abonnement activé, tu arrives dans un espace guidé : ton plan d'action, les formations à suivre dans l'ordre, et un accès direct à la communauté pour demander de l'aide quand tu bloques.</p>
+            <ul class="lp-demo-list">
+              <li>🧭 Dashboard priorisé pour savoir quoi faire cette semaine</li>
+              <li>🎓 Parcours de formations rangés par objectif business</li>
+              <li>🤝 Espace communauté + annuaire pour trouver des partenaires</li>
+              <li>📈 Outils de suivi pour mesurer tes progrès et rester régulière</li>
+            </ul>
+            <button class="btn-outline-gold" onclick="showPage('dashboard')">Explorer l'espace membre en direct →</button>
+          </div>
+          <div class="lp-demo-media">
+            <div class="lp-demo-screen" aria-label="Démo animée de l'espace membre">
+              <div class="lp-demo-topbar">
+                <span>Espace membre • aperçu</span>
+                <div class="lp-demo-dots"><span></span><span></span><span></span></div>
+              </div>
+              <div class="lp-demo-cards">
+                <div class="lp-demo-card">
+                  <strong>Dashboard prioritaire</strong>
+                  <p>Les 3 prochaines actions à exécuter pour faire avancer ton acquisition cette semaine.</p>
+                  <div class="lp-demo-progress"><span></span></div>
+                </div>
+                <div class="lp-demo-card">
+                  <strong>Formation du moment</strong>
+                  <p>Module “Positionnement premium” + checklist à appliquer immédiatement dans ton offre.</p>
+                </div>
+                <div class="lp-demo-card">
+                  <strong>Communauté active</strong>
+                  <p>Question posée à 9h12, réponses d'autres Ambitieuses + retour des fondatrices à 9h37.</p>
+                </div>
+              </div>
+            </div>
+            <div class="lp-demo-caption">
+              <span>Démo visuelle de ton expérience membre</span>
+              <span>Dashboard · Formations · Communauté</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
