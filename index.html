@@ -4532,6 +4532,151 @@
     background: rgba(252,186,51,0.1); color: var(--gold-bright); border: 1px solid rgba(252,186,51,0.2);
   }
 
+  /* ── MOBILE APP EXPERIENCE : ESPACE MEMBRE ── */
+  .member-mobile-overlay,
+  .member-mobile-tabs { display:none; }
+
+  @media (max-width: 900px) {
+    body.member-page {
+      -webkit-tap-highlight-color: transparent;
+      padding-bottom: calc(86px + env(safe-area-inset-bottom));
+      background: #eef2f7;
+    }
+
+    body.member-page .sidebar {
+      width: min(88vw, 340px);
+      box-shadow: 16px 0 42px rgba(20,36,53,0.45);
+      z-index: 550;
+    }
+    body.member-page .member-mobile-overlay {
+      display:block;
+      position:fixed;
+      inset:0;
+      background:rgba(10,24,37,0.56);
+      z-index:540;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .2s ease;
+    }
+    body.member-page .member-mobile-overlay.open {
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    body.member-page .hamburger {
+      display:flex;
+      top:11px;
+      left:12px;
+      width:40px;
+      height:40px;
+      border-radius:11px;
+      background:var(--navy-darkest);
+      box-shadow:0 8px 22px rgba(20,36,53,0.24);
+      z-index:560;
+    }
+    body.member-page .topbar {
+      position:sticky;
+      top:0;
+      padding:10px 12px 10px 58px;
+      min-height:62px;
+      background:rgba(255,255,255,0.96);
+      backdrop-filter:blur(10px);
+      z-index:530;
+    }
+    body.member-page .topbar-title { font-size:17px; }
+
+    body.member-page .main { margin-left:0; }
+    body.member-page .page-content { padding:16px 12px; }
+    body.member-page .dashboard-grid,
+    body.member-page .two-col,
+    body.member-page .three-col,
+    body.member-page .agenda-todo-row,
+    body.member-page .resources-grid,
+    body.member-page .videos-grid,
+    body.member-page .community-layout,
+    body.member-page .profile-grid,
+    body.member-page #communityFeed {
+      grid-template-columns:1fr !important;
+      gap:12px;
+    }
+    body.member-page .card,
+    body.member-page .profile-card,
+    body.member-page .welcome-banner,
+    body.member-page .agenda-block,
+    body.member-page .messages-layout,
+    body.member-page .conversations-list,
+    body.member-page .conversation-panel {
+      border-radius:16px;
+      box-shadow:0 8px 22px rgba(20,36,53,0.06);
+    }
+    body.member-page .welcome-banner { padding:16px 14px; }
+    body.member-page .messages-layout { height:auto; min-height:calc(100dvh - 190px); }
+    body.member-page .chat-window { min-height:52dvh; }
+    body.member-page .agenda-header,
+    body.member-page .agenda-header-left,
+    body.member-page .agenda-nav,
+    body.member-page .agenda-legend { flex-wrap:wrap; gap:8px; }
+    body.member-page .search-bar,
+    body.member-page .notif-btn,
+    body.member-page .nav-item,
+    body.member-page .profile-tab-btn,
+    body.member-page .btn-primary,
+    body.member-page .btn-secondary,
+    body.member-page .chat-input-wrap,
+    body.member-page input,
+    body.member-page select,
+    body.member-page textarea,
+    body.member-page button { min-height:44px; }
+
+    body.member-page .member-mobile-tabs {
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:6px;
+      position:fixed;
+      left:10px;
+      right:10px;
+      bottom:calc(8px + env(safe-area-inset-bottom));
+      background:rgba(20,36,53,0.97);
+      border:1px solid rgba(252,186,51,0.22);
+      border-radius:18px;
+      padding:8px;
+      z-index:520;
+      box-shadow:0 16px 34px rgba(20,36,53,0.34);
+    }
+    .member-mobile-tab {
+      border:none;
+      background:transparent;
+      border-radius:12px;
+      color:rgba(255,255,255,0.62);
+      font-family:'DM Sans',sans-serif;
+      font-size:10px;
+      font-weight:600;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:3px;
+      min-height:56px;
+      cursor:pointer;
+      transition:all .15s ease;
+    }
+    .member-mobile-tab .icon { font-size:16px; }
+    .member-mobile-tab.active {
+      background:rgba(252,186,51,0.14);
+      color:var(--gold-bright);
+    }
+  }
+
+  @media (max-width: 600px) {
+    body.member-page .topbar-title { font-size:15px; }
+    body.member-page .page-content { padding:13px 10px; }
+    body.member-page .section-title,
+    body.member-page .welcome-banner h2,
+    body.member-page .profile-section-title { font-size:20px; }
+    body.member-page .member-mobile-tabs { left:8px; right:8px; }
+    .member-mobile-tab { font-size:9px; }
+  }
+
 
 
   </style>
@@ -4633,6 +4778,26 @@
     </div>
   </div>
 </aside>
+
+<div class="member-mobile-overlay" id="member-mobile-overlay" onclick="toggleSidebar(true)"></div>
+
+<nav class="member-mobile-tabs" id="member-mobile-tabs" aria-label="Navigation rapide membre">
+  <button class="member-mobile-tab" data-page="dashboard" onclick="memberMobileGo('dashboard', this)">
+    <span class="icon">🏠</span><span>Accueil</span>
+  </button>
+  <button class="member-mobile-tab" data-page="classroom" onclick="memberMobileGo('classroom', this)">
+    <span class="icon">📚</span><span>Formations</span>
+  </button>
+  <button class="member-mobile-tab" data-page="messages" onclick="memberMobileGo('messages', this)">
+    <span class="icon">💬</span><span>Messages</span>
+  </button>
+  <button class="member-mobile-tab" data-page="community" onclick="memberMobileGo('community', this)">
+    <span class="icon">🌸</span><span>Communauté</span>
+  </button>
+  <button class="member-mobile-tab" data-page="profil" onclick="memberMobileGo('profil', this)">
+    <span class="icon">👤</span><span>Profil</span>
+  </button>
+</nav>
 
 <!-- MAIN -->
 <div class="main">
@@ -12080,6 +12245,10 @@
       bibliotheque: 'La Bibliothèque Ambitieuse',
     };
     document.getElementById('topbar-title').textContent = titles[page] || '';
+    const activeKey = map[page] || page;
+    const activeNav = document.querySelector('.nav-item[data-page="' + activeKey + '"]');
+    if (activeNav) activeNav.classList.add('active');
+    updateMemberMobileTabs(activeKey);
 
     const topbar = document.getElementById('topbar');
     const sidebar = document.getElementById('sidebar');
@@ -12097,7 +12266,7 @@
       window.renderDashboardFocusDuJour();
     }
 
-    if (window.innerWidth <= 900) sidebar.classList.remove('open');
+    if (window.innerWidth <= 900) toggleSidebar(true);
   }
 
 
@@ -12110,9 +12279,34 @@
     });
   }
 
-  function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
+  function toggleSidebar(forceClose) {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('member-mobile-overlay');
+    if (!sidebar) return;
+    var isOpen = sidebar.classList.contains('open');
+    if (forceClose || isOpen) {
+      sidebar.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+    } else {
+      sidebar.classList.add('open');
+      if (overlay) overlay.classList.add('open');
+    }
   }
+
+  function memberMobileGo(page) {
+    showPage(page);
+    toggleSidebar(true);
+  }
+
+  function updateMemberMobileTabs(page) {
+    document.querySelectorAll('.member-mobile-tab').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-page') === page);
+    });
+  }
+
+  window.addEventListener('resize', function(){
+    if (window.innerWidth > 900) toggleSidebar(true);
+  });
 
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', function() {
