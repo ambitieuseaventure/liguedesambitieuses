@@ -4658,6 +4658,410 @@
   }
 
 
+  /* ══════════════════════════════════════════════════════
+     ESPACE MEMBRE — TRANSFORMATION APPLICATION MOBILE
+     S'applique uniquement sur mobile (≤ 900px)
+  ══════════════════════════════════════════════════════ */
+
+  /* La barre de navigation mobile est cachée par défaut (desktop) */
+  #mobile-bottom-nav,
+  #mobile-menu-overlay { display: none; }
+
+  @media (max-width: 900px) {
+
+    /* ── 1. Masquer l'hamburger (remplacé par bottom nav) ── */
+    .hamburger { display: none !important; }
+
+    /* ── 2. Topbar façon app ── */
+    .topbar {
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(20, 36, 53, 0.08);
+      padding: 0 16px;
+      height: 56px;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 1px 0 rgba(20, 36, 53, 0.07);
+    }
+    .topbar-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      flex: 1;
+      text-align: center;
+    }
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .search-bar { display: none !important; }
+    .notif-btn {
+      width: 36px; height: 36px;
+      border-radius: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ── Avatar profil dans le topbar (mobile) ── */
+    .topbar-avatar {
+      width: 34px; height: 34px;
+      border-radius: 17px;
+      background: var(--gold);
+      color: var(--navy-darkest);
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+      border: 2px solid rgba(235, 193, 76, 0.4);
+    }
+
+    /* Spacer à gauche pour centrer le titre */
+    .topbar-spacer {
+      width: 34px;
+      flex-shrink: 0;
+    }
+
+    /* ── 3. Contenu principal : dégager la bottom nav ── */
+    body.member-page .main {
+      padding-bottom: calc(72px + env(safe-area-inset-bottom));
+    }
+    .page-content {
+      padding: 16px 14px calc(16px + env(safe-area-inset-bottom)) 14px;
+    }
+
+    /* ── 4. Bottom Navigation Bar ── */
+    #mobile-bottom-nav {
+      display: flex;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(20, 36, 53, 0.98);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border-top: 1px solid rgba(235, 193, 76, 0.18);
+      padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+      justify-content: space-around;
+      align-items: stretch;
+    }
+    .mob-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 6px 4px 4px;
+      cursor: pointer;
+      border-radius: 14px;
+      flex: 1;
+      min-height: 52px;
+      transition: background 0.18s ease;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+      border: none;
+      background: none;
+      text-decoration: none;
+    }
+    .mob-nav-item:active { background: rgba(235, 193, 76, 0.1); }
+    .mob-nav-icon {
+      font-size: 22px;
+      line-height: 1;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: block;
+    }
+    .mob-nav-label {
+      font-size: 9.5px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.02em;
+      transition: color 0.18s ease, font-weight 0.18s ease;
+      white-space: nowrap;
+      display: block;
+    }
+    .mob-nav-item.active .mob-nav-label {
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .mob-nav-item.active .mob-nav-icon {
+      transform: translateY(-3px) scale(1.1);
+    }
+    .mob-nav-badge {
+      position: absolute;
+      top: 4px; right: 12px;
+      background: var(--gold-bright);
+      color: var(--navy-darkest);
+      font-size: 9px;
+      font-weight: 800;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      border: 2px solid rgba(20, 36, 53, 0.98);
+      line-height: 1;
+    }
+    /* Indicateur actif sous l'icône */
+    .mob-nav-item.active::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 28px; height: 3px;
+      background: var(--gold);
+      border-radius: 0 0 3px 3px;
+    }
+
+    /* ── 5. Overlay menu "Plus" ── */
+    #mobile-menu-overlay {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      flex-direction: column;
+      justify-content: flex-end;
+      transform: translateY(100%);
+      transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+      pointer-events: none;
+    }
+    #mobile-menu-overlay.open {
+      transform: translateY(0);
+      pointer-events: all;
+    }
+    .mob-menu-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(14, 24, 36, 0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      transition: opacity 0.38s ease;
+    }
+    .mob-menu-sheet {
+      position: relative;
+      background: var(--navy-darkest);
+      border-radius: 26px 26px 0 0;
+      padding-bottom: calc(24px + env(safe-area-inset-bottom));
+      max-height: 90vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      border-top: 1px solid rgba(235, 193, 76, 0.15);
+    }
+    .mob-menu-handle {
+      width: 40px; height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      margin: 14px auto 0;
+    }
+    .mob-menu-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .mob-menu-avatar {
+      width: 46px; height: 46px;
+      border-radius: 23px;
+      background: var(--gold);
+      color: var(--navy-darkest);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .mob-menu-user-info { flex: 1; }
+    .mob-menu-user-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: white;
+      display: block;
+      line-height: 1.2;
+    }
+    .mob-menu-user-plan {
+      font-size: 12px;
+      color: var(--gold);
+      display: block;
+      margin-top: 3px;
+    }
+    .mob-menu-close {
+      width: 38px; height: 38px;
+      border-radius: 19px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+    }
+    .mob-menu-close:active { background: rgba(255, 255, 255, 0.15); }
+
+    .mob-menu-section { padding: 14px 16px 6px; }
+    .mob-menu-section-label {
+      font-size: 10px;
+      font-family: 'DM Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: 700;
+      padding: 0 6px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .mob-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .mob-menu-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      padding: 14px 6px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 18px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .mob-menu-btn:active {
+      background: rgba(235, 193, 76, 0.12);
+      border-color: rgba(235, 193, 76, 0.3);
+      transform: scale(0.95);
+    }
+    .mob-menu-btn.active {
+      background: rgba(235, 193, 76, 0.1);
+      border-color: rgba(235, 193, 76, 0.3);
+    }
+    .mob-menu-btn.locked { opacity: 0.4; }
+    .mob-menu-btn-icon { font-size: 26px; line-height: 1; }
+    .mob-menu-btn-label {
+      font-size: 11px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.75);
+      text-align: center;
+      line-height: 1.25;
+    }
+    .mob-menu-btn.active .mob-menu-btn-label { color: var(--gold); }
+    .mob-menu-btn-badge {
+      position: absolute;
+      top: 8px; right: 8px;
+      background: var(--gold-bright);
+      color: var(--navy-darkest);
+      font-size: 9px;
+      font-weight: 800;
+      min-width: 16px; height: 16px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+    }
+    .mob-menu-lock-icon {
+      position: absolute;
+      top: 8px; right: 8px;
+      font-size: 12px;
+      opacity: 0.6;
+    }
+
+    /* ── Sélecteur d'abonnement dans le menu ── */
+    .mob-menu-sub-switcher {
+      margin: 14px 16px 4px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+    .mob-menu-sub-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.35);
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 8px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+    }
+    .mob-menu-sub-select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      color: white;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    /* ── 6. Transitions de page façon app ── */
+    .page.active {
+      animation: mobilePageIn 0.28s cubic-bezier(0.32, 0.72, 0, 1) both;
+    }
+    @keyframes mobilePageIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── 7. Welcome banner mobile ── */
+    .welcome-banner {
+      border-radius: 20px;
+      padding: 20px 18px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .welcome-banner > div:last-child {
+      flex-direction: row;
+      width: 100%;
+      gap: 10px;
+    }
+    .welcome-badge { flex: 1; padding: 10px 12px; }
+    .welcome-palmares { flex: 2; min-width: 0; padding: 12px 14px; }
+
+    /* ── 8. Cards mobile ── */
+    .card { border-radius: 18px; padding: 18px 16px; }
+
+    /* ── 9. Dashboard grid mobile ── */
+    .dashboard-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .two-col { grid-template-columns: 1fr !important; gap: 14px; }
+    .three-col { grid-template-columns: 1fr !important; gap: 14px; }
+
+  } /* fin @media 900px */
+
+  @media (max-width: 600px) {
+    /* Bottom nav encore plus compact */
+    .mob-nav-icon { font-size: 20px; }
+    .mob-nav-label { font-size: 9px; }
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .mob-menu-grid { grid-template-columns: repeat(3, 1fr); }
+    .welcome-banner > div:last-child { flex-direction: column; }
+    .welcome-badge, .welcome-palmares { flex: none; width: 100%; }
+  }
+
 
   </style>
 </head>
@@ -4759,14 +5163,179 @@
   </div>
 </aside>
 
+<!-- ═══════════════════════════════════════════════════
+     BOTTOM NAVIGATION — APPLICATION MOBILE
+     Visible uniquement sur mobile (≤ 900px via CSS)
+═══════════════════════════════════════════════════ -->
+<nav id="mobile-bottom-nav" role="navigation" aria-label="Navigation principale">
+
+  <button class="mob-nav-item active" id="mob-nav-dashboard" onclick="showPage('dashboard');closeMobileMenu();" aria-label="Accueil">
+    <span class="mob-nav-icon">🏡</span>
+    <span class="mob-nav-label">Accueil</span>
+  </button>
+
+  <button class="mob-nav-item" id="mob-nav-community" onclick="showPage('community');closeMobileMenu();" aria-label="Communauté">
+    <span class="mob-nav-icon">🌸</span>
+    <span class="mob-nav-label">Communauté</span>
+    <span class="mob-nav-badge">12</span>
+  </button>
+
+  <button class="mob-nav-item" id="mob-nav-messages" onclick="showPage('messages');closeMobileMenu();" aria-label="Messagerie">
+    <span class="mob-nav-icon">✉️</span>
+    <span class="mob-nav-label">Messages</span>
+    <span class="mob-nav-badge">3</span>
+  </button>
+
+  <button class="mob-nav-item" id="mob-nav-evenements" onclick="showPage('evenements');closeMobileMenu();" aria-label="Événements">
+    <span class="mob-nav-icon">📅</span>
+    <span class="mob-nav-label">Agenda</span>
+    <span class="mob-nav-badge">2</span>
+  </button>
+
+  <button class="mob-nav-item" id="mob-nav-more" onclick="toggleMobileMenu();" aria-label="Plus de navigation">
+    <span class="mob-nav-icon" id="mob-nav-more-icon">⋯</span>
+    <span class="mob-nav-label">Plus</span>
+  </button>
+
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     MENU MOBILE "PLUS" — FEUILLE GLISSANTE
+═══════════════════════════════════════════════════ -->
+<div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Menu de navigation">
+  <div class="mob-menu-backdrop" onclick="closeMobileMenu()"></div>
+  <div class="mob-menu-sheet">
+
+    <div class="mob-menu-handle"></div>
+
+    <!-- En-tête utilisatrice -->
+    <div class="mob-menu-header">
+      <div class="mob-menu-avatar">SA</div>
+      <div class="mob-menu-user-info">
+        <span class="mob-menu-user-name">Sophie A.</span>
+        <span class="mob-menu-user-plan" id="mob-menu-user-plan">🔮 La Visionnaire</span>
+      </div>
+      <button class="mob-menu-close" onclick="closeMobileMenu()" aria-label="Fermer">✕</button>
+    </div>
+
+    <!-- Accompagnement -->
+    <div class="mob-menu-section">
+      <span class="mob-menu-section-label">Accompagnement</span>
+      <div class="mob-menu-grid">
+
+        <button class="mob-menu-btn" data-mob-page="hotline" data-min-tier="visionnaire" onclick="showPage('hotline');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">⚡</span>
+          <span class="mob-menu-btn-label">Hotline Business</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="qr" onclick="showPage('qr');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">🎙️</span>
+          <span class="mob-menu-btn-label">Live Q&amp;R</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="bilan" data-min-tier="stratege" onclick="showPage('bilan');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">📊</span>
+          <span class="mob-menu-btn-label">Bilans &amp; Audits</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="coaching" data-min-tier="visionnaire" onclick="showPage('coaching');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">📞</span>
+          <span class="mob-menu-btn-label">Coaching 1-1</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="plan" data-min-tier="visionnaire" onclick="showPage('plan');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">🎯</span>
+          <span class="mob-menu-btn-label">Plan d'action</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="notebook" onclick="showPage('notebook');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">📓</span>
+          <span class="mob-menu-btn-label">Carnet de bord</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Transformation Personnelle -->
+    <div class="mob-menu-section">
+      <span class="mob-menu-section-label">Transformation Personnelle</span>
+      <div class="mob-menu-grid">
+
+        <button class="mob-menu-btn" data-mob-page="mindset" data-min-tier="stratege" onclick="showPage('mindset');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">🧘</span>
+          <span class="mob-menu-btn-label">Focus Mindset</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="classroom" onclick="showPage('classroom');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">📚</span>
+          <span class="mob-menu-btn-label">Formations</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="resources" onclick="showPage('resources');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">📁</span>
+          <span class="mob-menu-btn-label">Ressources</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="masterclass" data-min-tier="stratege" onclick="showPage('masterclass');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">🎬</span>
+          <span class="mob-menu-btn-label">Masterclass</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="palmares" onclick="showPage('palmares');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">🏆</span>
+          <span class="mob-menu-btn-label">Palmarès</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Réseau -->
+    <div class="mob-menu-section">
+      <span class="mob-menu-section-label">Réseau Ambitieux</span>
+      <div class="mob-menu-grid">
+
+        <button class="mob-menu-btn" data-mob-page="annuaire" onclick="showPage('annuaire');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">🗺️</span>
+          <span class="mob-menu-btn-label">Annuaire</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="buddy" data-min-tier="stratege" onclick="showPage('buddy');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">🤝</span>
+          <span class="mob-menu-btn-label">Buddy</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="profil" onclick="showPage('profil');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">👤</span>
+          <span class="mob-menu-btn-label">Mon profil</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Sélecteur d'abonnement -->
+    <div class="mob-menu-sub-switcher">
+      <span class="mob-menu-sub-label">Simuler un abonnement</span>
+      <select class="mob-menu-sub-select" onchange="switchSubscriptionDemo(this.value);syncMobMenuPlan();">
+        <option value="initiee">🌿 L'Initiée — 25 €/mois</option>
+        <option value="stratege">⚡ La Stratège — 65 €/mois</option>
+        <option value="visionnaire" selected>🔮 La Visionnaire — 555 €/mois</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
 <!-- MAIN -->
 <div class="main">
 
   <div class="topbar" id="topbar">
+    <!-- Spacer gauche (mobile : équilibre le titre centré) -->
+    <div class="topbar-spacer" aria-hidden="true"></div>
     <div class="topbar-title" id="topbar-title">Accueil</div>
     <div class="topbar-actions">
       <div class="search-bar">🔍 Rechercher...</div>
       <div class="notif-btn">🔔<div class="notif-dot"></div></div>
+      <div class="topbar-avatar" onclick="showPage('profil')" title="Mon profil" role="button" tabindex="0" onkeydown="if(event.key==='Enter'){showPage('profil')}">SA</div>
     </div>
   </div>
 
@@ -12223,6 +12792,16 @@
     }
 
     if (window.innerWidth <= 900) sidebar.classList.remove('open');
+
+    /* Synchroniser la navigation mobile */
+    if (typeof syncMobileBottomNav === 'function') syncMobileBottomNav(page);
+
+    /* Masquer/afficher la bottom nav selon la page */
+    const bottomNav = document.getElementById('mobile-bottom-nav');
+    if (bottomNav) {
+      const isPublicPage = (page === 'landing' || page === 'blog' || page === 'bibliotheque' || page === 'contact');
+      bottomNav.style.display = isPublicPage ? 'none' : '';
+    }
   }
 
 
@@ -12238,6 +12817,91 @@
   function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('open');
   }
+
+  /* ═══════════════════════════════════════════════
+     NAVIGATION MOBILE — BOTTOM BAR & MENU OVERLAY
+  ═══════════════════════════════════════════════ */
+
+  /* Pages mappées sur les onglets de la bottom nav */
+  const MOB_NAV_TABS = {
+    dashboard:  'mob-nav-dashboard',
+    community:  'mob-nav-community',
+    messages:   'mob-nav-messages',
+    evenements: 'mob-nav-evenements',
+  };
+
+  /* Pages qui font apparaître l'onglet "Plus" en actif */
+  const MOB_MORE_PAGES = new Set([
+    'hotline','qr','bilan','coaching','plan','notebook',
+    'mindset','classroom','resources','masterclass','palmares',
+    'annuaire','buddy','profil'
+  ]);
+
+  function syncMobileBottomNav(page) {
+    /* Retirer toutes les classes active */
+    document.querySelectorAll('.mob-nav-item').forEach(el => el.classList.remove('active'));
+    /* Activer le bon onglet */
+    const tabId = MOB_NAV_TABS[page];
+    if (tabId) {
+      const tab = document.getElementById(tabId);
+      if (tab) tab.classList.add('active');
+    } else if (MOB_MORE_PAGES.has(page)) {
+      const moreTab = document.getElementById('mob-nav-more');
+      if (moreTab) moreTab.classList.add('active');
+    }
+    /* Synchroniser le bouton actif dans le menu overlay */
+    document.querySelectorAll('.mob-menu-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-mob-page') === page);
+    });
+  }
+
+  function toggleMobileMenu() {
+    const overlay = document.getElementById('mobile-menu-overlay');
+    if (!overlay) return;
+    const isOpen = overlay.classList.contains('open');
+    if (isOpen) {
+      closeMobileMenu();
+    } else {
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      const moreIcon = document.getElementById('mob-nav-more-icon');
+      if (moreIcon) moreIcon.textContent = '✕';
+    }
+  }
+
+  function closeMobileMenu() {
+    const overlay = document.getElementById('mobile-menu-overlay');
+    if (!overlay) return;
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    const moreIcon = document.getElementById('mob-nav-more-icon');
+    if (moreIcon) moreIcon.textContent = '⋯';
+  }
+
+  function syncMobMenuPlan() {
+    /* Synchronise le plan affiché dans le menu mobile après changement d'abonnement */
+    const sidebarPlan = document.getElementById('sidebar-user-plan');
+    const mobPlan = document.getElementById('mob-menu-user-plan');
+    if (sidebarPlan && mobPlan) {
+      mobPlan.textContent = sidebarPlan.textContent;
+    }
+    /* Synchroniser la locked state des boutons du menu mobile */
+    const currentTierEl = document.querySelector('.sub-demo-select');
+    if (!currentTierEl) return;
+    const tier = currentTierEl.value;
+    const tiers = { initiee: 0, stratege: 1, visionnaire: 2 };
+    const rank = tiers[tier] ?? 0;
+    document.querySelectorAll('.mob-menu-btn[data-min-tier]').forEach(btn => {
+      const minTier = btn.getAttribute('data-min-tier');
+      const minRank = tiers[minTier] ?? 0;
+      btn.classList.toggle('locked', rank < minRank);
+    });
+  }
+
+  /* Fermer le menu sur touche Echap */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMobileMenu();
+  });
 
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -18058,6 +18722,14 @@
     bibRenderPublic();
   });
 
+  /* ── Initialisation mobile au chargement ── */
+  document.addEventListener('DOMContentLoaded', function() {
+    /* Synchroniser l'état initial de la bottom nav (dashboard par défaut) */
+    syncMobileBottomNav('dashboard');
+    /* Synchroniser les locks du menu mobile selon l'abonnement par défaut */
+    syncMobMenuPlan();
+  });
+
   // ══════════════════════════════════════════════════════
   //  ACTIVITÉ LIVE — données et fonctions
   // ══════════════════════════════════════════════════════
@@ -20290,6 +20962,9 @@ function switchSubscriptionDemo(level) {
   if (document.querySelector('#page-profil.active')) {
     renderProfileSubscriptionTab();
   }
+
+  // Synchroniser le menu mobile
+  if (typeof syncMobMenuPlan === 'function') syncMobMenuPlan();
 }
 
 function renderProfileSubscriptionTab() {
