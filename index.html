@@ -4610,12 +4610,151 @@
       box-shadow:0 8px 22px rgba(20,36,53,0.06);
     }
     body.member-page .welcome-banner { padding:16px 14px; }
+    body.member-page .welcome-banner {
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      gap:14px;
+      border-radius:18px;
+      padding:16px;
+    }
+    body.member-page .welcome-banner::after {
+      right:-50px;
+      top:-36px;
+      width:170px;
+      height:170px;
+      opacity:.9;
+    }
+    body.member-page .welcome-text h2 {
+      font-size:22px;
+      line-height:1.2;
+      margin-bottom:8px;
+    }
+    body.member-page .welcome-text p {
+      font-size:13px;
+      line-height:1.55;
+      max-width:100%;
+    }
+    body.member-page .welcome-banner > div:last-child {
+      width:100%;
+      display:grid !important;
+      grid-template-columns:1fr;
+      gap:10px !important;
+    }
+    body.member-page .welcome-badge,
+    body.member-page .welcome-palmares {
+      width:100%;
+      min-width:0;
+      border-radius:14px;
+    }
+    body.member-page .welcome-badge {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      text-align:left;
+      padding:12px 14px;
+    }
+    body.member-page .welcome-badge .num {
+      font-size:28px;
+      line-height:1;
+      margin-right:14px;
+    }
+    body.member-page .welcome-badge .label {
+      font-size:12px;
+      opacity:.86;
+      max-width:75%;
+    }
+    body.member-page .welcome-palmares { padding:13px 14px; }
+    body.member-page .wp-link { position:static; display:block; margin-bottom:8px; font-size:11px; opacity:.78; }
+
+    body.member-page .agenda-todo-row { display:flex; flex-direction:column; }
+    body.member-page .todo-aside { order:1; }
+    body.member-page .agenda-block { order:2; }
+
     body.member-page .messages-layout { height:auto; min-height:calc(100dvh - 190px); }
     body.member-page .chat-window { min-height:52dvh; }
     body.member-page .agenda-header,
     body.member-page .agenda-header-left,
     body.member-page .agenda-nav,
     body.member-page .agenda-legend { flex-wrap:wrap; gap:8px; }
+    body.member-page .agenda-header {
+      padding:14px 12px 12px;
+      align-items:flex-start;
+      gap:10px;
+    }
+    body.member-page .agenda-header-left {
+      width:100%;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:8px;
+    }
+    body.member-page .agenda-title { font-size:18px; }
+    body.member-page .agenda-nav { width:100%; gap:6px; flex-wrap:wrap; }
+    body.member-page .agenda-current-label {
+      order:-1;
+      width:100%;
+      text-align:left;
+      font-size:12px;
+      min-width:0;
+      padding:0;
+    }
+    body.member-page .agenda-nav-btn {
+      height:36px;
+      min-width:36px;
+      border-radius:9px;
+      font-size:15px;
+    }
+    body.member-page .agenda-view-toggle { width:100%; }
+    body.member-page .agenda-view-btn { flex:1; min-height:38px; font-size:12px; }
+    body.member-page .agenda-legend { gap:6px; }
+    body.member-page .legend-item {
+      font-size:10px;
+      background:#f7f9fc;
+      border:1px solid rgba(20,36,53,0.08);
+      border-radius:999px;
+      padding:4px 8px;
+    }
+
+    body.member-page .agenda-week-view {
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      padding-bottom:8px;
+    }
+    body.member-page .week-grid {
+      min-width:760px;
+      grid-template-columns:58px repeat(7,minmax(96px,1fr));
+    }
+    body.member-page .week-day-header { padding:10px 4px 8px; }
+    body.member-page .week-day-num { font-size:16px; }
+    body.member-page .week-time-slot,
+    body.member-page .week-slot-cell,
+    body.member-page .week-day-col { min-height:58px; height:58px; }
+    body.member-page .week-event {
+      left:4px;
+      right:4px;
+      border-radius:8px;
+      padding:6px 6px;
+      font-size:10px;
+      line-height:1.2;
+    }
+    body.member-page .week-event-time { font-size:9px; }
+
+    body.member-page .agenda-month-view { padding:0 8px 10px; }
+    body.member-page .month-grid-header,
+    body.member-page .month-grid {
+      min-width:640px;
+    }
+    body.member-page .agenda-month-view { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    body.member-page .month-day-name { font-size:9px; }
+    body.member-page .month-cell {
+      min-height:104px;
+      padding:8px 6px;
+    }
+    body.member-page .month-event-pill {
+      font-size:10px;
+      padding:3px 5px;
+      border-radius:6px;
+    }
     body.member-page .search-bar,
     body.member-page .notif-btn,
     body.member-page .nav-item,
@@ -4673,6 +4812,12 @@
     body.member-page .section-title,
     body.member-page .welcome-banner h2,
     body.member-page .profile-section-title { font-size:20px; }
+    body.member-page .welcome-banner { padding:14px 12px; }
+    body.member-page .welcome-badge .num { font-size:24px; }
+    body.member-page .welcome-badge .label { font-size:11px; }
+    body.member-page .agenda-header { padding:12px 10px 10px; }
+    body.member-page .agenda-title { font-size:17px; }
+    body.member-page .legend-item { font-size:9px; padding:3px 7px; }
     body.member-page .member-mobile-tabs { left:8px; right:8px; }
     .member-mobile-tab { font-size:9px; }
   }
@@ -12264,6 +12409,9 @@
     }
     if (page === 'dashboard' && typeof window.renderDashboardFocusDuJour === 'function') {
       window.renderDashboardFocusDuJour();
+      if (window.innerWidth <= 900 && typeof window.agendaSetView === 'function') {
+        setTimeout(function(){ window.agendaSetView('month'); }, 40);
+      }
     }
 
     if (window.innerWidth <= 900) toggleSidebar(true);
