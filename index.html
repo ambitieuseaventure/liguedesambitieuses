@@ -4532,6 +4532,131 @@
     background: rgba(252,186,51,0.1); color: var(--gold-bright); border: 1px solid rgba(252,186,51,0.2);
   }
 
+  /* ── MOBILE-FIRST POLISH (public + membre + admin) ── */
+  @media (max-width: 900px) {
+    html, body { font-size: 15px; }
+    body {
+      -webkit-tap-highlight-color: transparent;
+      padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    }
+
+    /* Espace membre */
+    .sidebar {
+      width: min(86vw, 320px);
+      box-shadow: 16px 0 36px rgba(20,36,53,0.42);
+    }
+    .page-content { padding: 18px 14px; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      padding: 10px 14px;
+      min-height: 58px;
+    }
+    .topbar-title { padding-left: 42px; }
+    .hamburger {
+      top: 9px;
+      left: 10px;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+    }
+    .card,
+    .profile-card,
+    .welcome-banner,
+    .agenda-block,
+    .todo-card,
+    .messages-layout,
+    .conversation-panel,
+    .conversations-list { border-radius: 14px; }
+    .welcome-banner { padding: 18px 16px; }
+    .agenda-todo-row { grid-template-columns: 1fr; gap: 16px; }
+    .agenda-header,
+    .agenda-header-left,
+    .agenda-nav,
+    .agenda-legend { flex-wrap: wrap; }
+    .agenda-nav { row-gap: 8px; }
+    .messages-layout { height: auto; }
+    .chat-window { min-height: 54vh; }
+    .chat-input-wrap,
+    .search-bar,
+    .notif-btn,
+    .nav-item,
+    .profile-tab-btn,
+    .btn-primary,
+    .btn-secondary { min-height: 44px; }
+
+    /* Espace admin */
+    .admin-main { overflow-x: hidden; }
+    .admin-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      min-height: 56px;
+      padding: 0 12px;
+    }
+    .admin-topbar-title { line-height: 1.25; }
+    .admin-panel { padding: 14px 12px; }
+    .admin-action-btn,
+    .admin-btn-gold,
+    .admin-btn-outline,
+    .admin-input,
+    .admin-select,
+    .admin-nav-item { min-height: 42px; }
+
+    /* Site public */
+    .pub-nav { top: 0; }
+    .pub-nav-inner { min-height: 58px; }
+    .pub-nav-hamburger,
+    .pub-nav-mobile-close,
+    .pub-nav-mobile-link,
+    .pub-nav-mobile-cta { min-height: 44px; }
+    .lp-hero,
+    .blog-wrap,
+    .blog-content,
+    .blog-newsletter,
+    .bib-catalog,
+    .contact-wrap { padding-left: 14px !important; padding-right: 14px !important; }
+    .lp-hero-inner,
+    .lp-trust,
+    .lp-section,
+    .blog-shell,
+    .blog-content,
+    .contact-inner,
+    .bib-catalog-inner,
+    .bib-usp-inner { max-width: 100%; }
+    .bib-member-banner,
+    .contact-form-card,
+    .blog-newsletter,
+    .blog-featured { border-radius: 14px; }
+  }
+
+  @media (max-width: 600px) {
+    body { padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+    .page-content { padding: 14px 10px; }
+    .topbar-title { font-size: 15px; }
+    .section-title { font-size: 21px; }
+    .welcome-banner h2,
+    .profile-section-title { font-size: 21px; }
+    .chat-window { min-height: 58vh; }
+    .pub-nav-logo img { width: 32px; height: 32px; }
+    .pub-brand { font-size: 8px; }
+    .pub-product { font-size: 11px; }
+    .lp-h1,
+    .blog-hero h1,
+    .bib-hero h1,
+    .contact-left h1 { line-height: 1.18; }
+    .lp-hero-ctas,
+    .bib-hero-ctas,
+    .blog-nl-form { gap: 8px; }
+    .lp-cta-main,
+    .btn-ghost-dark,
+    .contact-submit-btn,
+    .blog-card-cta,
+    .bib-card-btn,
+    .bib-card-download { width: 100%; justify-content: center; }
+    .contact-form-card { padding: 22px 14px; }
+  }
+
 
 
   </style>
