@@ -4594,108 +4594,127 @@
   body.demo-mode #topbar { top: 52px; }
 
 
-  /* ── DÉMO : Modale de bienvenue ── */
+  /* ── DÉMO GUIDÉE : composants UI ── */
+
+  /* Bouclier transparent (bloque les clics sur le contenu, invisible) */
+  #demo-shield {
+    display: none;
+    position: fixed;
+    top: 52px;          /* sous la barre démo */
+    left: 240px;        /* à droite du sidebar */
+    right: 0; bottom: 0;
+    z-index: 48;        /* sous topbar (z:50) et sidebar (z:100), sur le contenu */
+    cursor: default;
+    background: transparent;
+  }
+  body.demo-mode #demo-shield { display: block; }
+  @media(max-width:900px) { #demo-shield { left: 0; } }
+
+  /* Modale de bienvenue */
   #demo-welcome-modal {
-    display: none; position: fixed; inset: 0; z-index: 450;
-    background: rgba(20,36,53,0.78); backdrop-filter: blur(8px);
+    display: none;
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(20,36,53,0.80); backdrop-filter: blur(8px);
     align-items: center; justify-content: center; padding: 20px;
   }
-  #demo-welcome-modal.visible { display: flex; }
-  .demo-welcome-card {
+  #demo-welcome-modal.open { display: flex; }
+  .dwc {
     background: white; border-radius: 22px; padding: 40px 44px;
     max-width: 520px; width: 100%;
     box-shadow: 0 40px 100px rgba(20,36,53,0.4);
     text-align: center;
   }
-  .demo-welcome-badge {
+  .dwc-badge {
     display: inline-flex; align-items: center; gap: 6px;
     background: rgba(252,186,51,0.1); color: var(--gold-bright);
     border: 1px solid rgba(252,186,51,0.28); border-radius: 20px;
     padding: 5px 14px; font-size: 11.5px; font-weight: 700;
     font-family: 'DM Sans', sans-serif; margin-bottom: 18px;
   }
-  .demo-welcome-title {
-    font-family: 'Playfair Display', serif; font-size: 26px;
+  .dwc-title {
+    font-family: 'Playfair Display', serif; font-size: 25px;
     color: var(--navy-darkest); margin-bottom: 12px; line-height: 1.25;
   }
-  .demo-welcome-desc {
+  .dwc-desc {
     font-size: 14px; color: var(--text-mid); font-family: 'DM Sans', sans-serif;
-    line-height: 1.65; margin-bottom: 20px;
+    line-height: 1.65; margin-bottom: 18px;
   }
-  .demo-welcome-features {
+  .dwc-features {
     background: #f4f7fa; border-radius: 12px; padding: 14px 18px;
     margin-bottom: 18px; text-align: left; list-style: none;
   }
-  .demo-welcome-features li {
+  .dwc-features li {
     font-size: 13px; color: var(--text-dark); font-family: 'DM Sans', sans-serif;
-    padding: 5px 0; display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;
+    padding: 4px 0; display: flex; gap: 8px; line-height: 1.4;
   }
-  .demo-welcome-note {
+  .dwc-note {
     font-size: 12.5px; color: #6b7a8d; font-family: 'DM Sans', sans-serif;
     background: rgba(235,193,76,0.07); border: 1px solid rgba(235,193,76,0.22);
-    border-radius: 9px; padding: 10px 16px; margin-bottom: 26px; line-height: 1.5;
+    border-radius: 9px; padding: 10px 16px; margin-bottom: 24px; line-height: 1.5;
   }
-  .demo-welcome-actions { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-  .demo-welcome-btn-primary {
+  .dwc-actions { display: flex; flex-direction: column; gap: 10px; }
+  .dwc-btn-main {
     background: var(--gold-bright); color: var(--navy-darkest);
     border: none; border-radius: 11px; padding: 15px 32px;
     font-size: 15px; font-weight: 700; cursor: pointer;
     font-family: 'DM Sans', sans-serif; width: 100%; transition: opacity .2s;
   }
-  .demo-welcome-btn-primary:hover { opacity: .87; }
-  .demo-welcome-btn-skip {
+  .dwc-btn-main:hover { opacity: .87; }
+  .dwc-btn-skip {
     background: none; border: none; color: var(--text-light);
     font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif;
     text-decoration: underline; transition: color .15s; padding: 0;
   }
-  .demo-welcome-btn-skip:hover { color: var(--text-dark); }
+  .dwc-btn-skip:hover { color: var(--text-dark); }
 
-  /* ── DÉMO : Tooltip guidé ── */
+  /* Tooltip guidé */
   #demo-tooltip {
-    display: none; position: fixed; z-index: 400;
+    display: none;
+    position: fixed; z-index: 200;
     bottom: 28px; left: 264px;
     width: 330px;
     background: var(--navy-darkest); color: white;
     border-radius: 14px; padding: 18px 20px;
     box-shadow: 0 14px 44px rgba(20,36,53,0.45);
     border: 1px solid rgba(235,193,76,0.28);
+    pointer-events: auto;
   }
-  .demo-tooltip-header {
-    display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
-  }
-  .demo-tooltip-icon { font-size: 19px; flex-shrink: 0; }
-  .demo-tooltip-title {
+  #demo-tooltip.open { display: block; }
+  .dtt-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .dtt-icon { font-size: 19px; flex-shrink: 0; }
+  .dtt-title {
     font-family: 'Playfair Display', serif; font-size: 15px;
     color: var(--gold); font-weight: 600; flex: 1; line-height: 1.2;
   }
-  .demo-tooltip-close {
+  .dtt-close {
     width: 24px; height: 24px; border-radius: 50%;
     border: 1px solid rgba(255,255,255,0.2); background: transparent;
     color: rgba(255,255,255,0.5); font-size: 12px; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    transition: background .15s; flex-shrink: 0; line-height: 1;
+    transition: background .15s; flex-shrink: 0;
+    pointer-events: auto;
   }
-  .demo-tooltip-close:hover { background: rgba(255,255,255,0.12); color: white; }
-  .demo-tooltip-text {
+  .dtt-close:hover { background: rgba(255,255,255,0.12); color: white; }
+  .dtt-text {
     font-size: 13px; color: rgba(255,255,255,0.75); font-family: 'DM Sans', sans-serif;
     line-height: 1.55; margin-bottom: 14px;
   }
-  .demo-tooltip-footer { display: flex; align-items: center; justify-content: space-between; }
-  .demo-tooltip-progress {
-    font-size: 11px; color: rgba(255,255,255,0.38); font-family: 'DM Sans', sans-serif;
-  }
-  .demo-tooltip-next {
+  .dtt-footer { display: flex; align-items: center; justify-content: space-between; }
+  .dtt-progress { font-size: 11px; color: rgba(255,255,255,0.38); font-family: 'DM Sans', sans-serif; }
+  .dtt-next {
     background: var(--gold-bright); color: var(--navy-darkest);
     border: none; border-radius: 7px; padding: 7px 16px;
     font-size: 12px; font-weight: 700; cursor: pointer;
     font-family: 'DM Sans', sans-serif; transition: opacity .2s;
+    pointer-events: auto;
   }
-  .demo-tooltip-next:hover { opacity: .85; }
+  .dtt-next:hover { opacity: .85; }
 
-  /* ── DÉMO : Toast "action bloquée" ── */
-  #demo-block-toast {
-    display: none; position: fixed; z-index: 460;
-    bottom: 90px; left: 50%; transform: translateX(-50%);
+  /* Toast "action bloquée" */
+  #demo-toast {
+    display: none;
+    position: fixed; z-index: 300;
+    bottom: 100px; left: 50%; transform: translateX(-50%);
     background: var(--navy-darkest); color: white;
     border-radius: 10px; padding: 11px 22px;
     font-size: 13px; font-family: 'DM Sans', sans-serif;
@@ -4703,6 +4722,7 @@
     box-shadow: 0 8px 28px rgba(20,36,53,0.35);
     white-space: nowrap; pointer-events: none;
   }
+  #demo-toast.show { display: block; }
 
   </style>
 </head>
@@ -4723,43 +4743,46 @@
   <button class="demo-bar-cta" onclick="exitDemoMode();showPage('landing');setTimeout(function(){var el=document.getElementById('offre');if(el)el.scrollIntoView({behavior:'smooth'});},80)">Rejoindre La Ligue →</button>
 </div>
 
+<!-- ── BOUCLIER DÉMO (bloque les clics sur le contenu) ── -->
+<div id="demo-shield" onclick="demoShieldClick()"></div>
+
 <!-- ── MODALE DE BIENVENUE DÉMO ── -->
 <div id="demo-welcome-modal">
-  <div class="demo-welcome-card">
-    <div class="demo-welcome-badge">◆ Niveau Visionnaire · Mode démo</div>
-    <h2 class="demo-welcome-title">Bienvenue dans l'espace<br>membre Visionnaire ✦</h2>
-    <p class="demo-welcome-desc">Tu es sur le point d'explorer l'espace membre de La Ligue des Ambitieuses, tel qu'il apparaîtra après ton abonnement Visionnaire.</p>
-    <ul class="demo-welcome-features">
+  <div class="dwc">
+    <div class="dwc-badge">◆ Niveau Visionnaire · Mode démo</div>
+    <h2 class="dwc-title">Bienvenue dans l'espace<br>membre Visionnaire ✦</h2>
+    <p class="dwc-desc">Explore l'espace membre de La Ligue des Ambitieuses, tel qu'il apparaîtra après ton abonnement.</p>
+    <ul class="dwc-features">
       <li>🏠 Dashboard priorisé pour savoir quoi faire chaque semaine</li>
       <li>🎓 Formations complètes à suivre à ton rythme</li>
       <li>🤝 Communauté de 200+ entrepreneuses bienveillantes</li>
-      <li>📅 Masterclasses, sessions Q&amp;R live et événements</li>
-      <li>🎯 Coaching individuel et outils exclusifs Visionnaire</li>
+      <li>📅 Masterclasses, Q&amp;R live et événements</li>
+      <li>🎯 Coaching individuel &amp; outils exclusifs Visionnaire</li>
     </ul>
-    <p class="demo-welcome-note">💡 Cette démo est en mode lecture seule — aucune action n'est réalisable. Des infobulles guideront ta découverte page par page.</p>
-    <div class="demo-welcome-actions">
-      <button class="demo-welcome-btn-primary" onclick="startDemoTour()">Commencer la visite guidée →</button>
-      <button class="demo-welcome-btn-skip" onclick="skipDemoTour()">Explorer librement (sans guide)</button>
+    <p class="dwc-note">💡 La démo est en mode lecture seule — aucune action n'est réalisable. Des infobulles guideront ta découverte.</p>
+    <div class="dwc-actions">
+      <button class="dwc-btn-main" onclick="demoStartTour()">Commencer la visite guidée →</button>
+      <button class="dwc-btn-skip" onclick="demoSkipTour()">Explorer librement (sans guide)</button>
     </div>
   </div>
 </div>
 
 <!-- ── TOOLTIP GUIDÉ ── -->
 <div id="demo-tooltip">
-  <div class="demo-tooltip-header">
-    <span class="demo-tooltip-icon" id="demo-tt-icon">🏠</span>
-    <span class="demo-tooltip-title" id="demo-tt-title">Ton tableau de bord</span>
-    <button class="demo-tooltip-close" onclick="hideDemoTooltip()" title="Masquer le guide">✕</button>
+  <div class="dtt-header">
+    <span class="dtt-icon" id="dtt-icon">🏠</span>
+    <span class="dtt-title" id="dtt-title">Ton tableau de bord</span>
+    <button class="dtt-close" onclick="demoHideTooltip()" title="Fermer le guide">✕</button>
   </div>
-  <p class="demo-tooltip-text" id="demo-tt-text"></p>
-  <div class="demo-tooltip-footer">
-    <span class="demo-tooltip-progress" id="demo-tt-progress">Étape 1 / 8</span>
-    <button class="demo-tooltip-next" id="demo-tt-next" onclick="demoTooltipNext()">Page suivante →</button>
+  <p class="dtt-text" id="dtt-text"></p>
+  <div class="dtt-footer">
+    <span class="dtt-progress" id="dtt-progress">Étape 1 / 9</span>
+    <button class="dtt-next" id="dtt-next" onclick="demoNextPage()">Page suivante →</button>
   </div>
 </div>
 
 <!-- ── TOAST ACTION BLOQUÉE ── -->
-<div id="demo-block-toast">🔒 Cette fonctionnalité est disponible après abonnement</div>
+<div id="demo-toast">🔒 Cette fonctionnalité est disponible après abonnement</div>
 
 
 <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -12326,9 +12349,8 @@
     }
 
     if (window.innerWidth <= 900) sidebar.classList.remove('open');
-    // Demo mode: show contextual tooltip for this page
-    if (document.body.classList.contains('demo-mode') && demoTooltipsEnabled) {
-      setTimeout(function() { showDemoTooltip(page); }, 220);
+    if (document.body.classList.contains('demo-mode') && _demoGuided) {
+      setTimeout(function() { demoShowTooltip(page); }, 250);
     }
   }
 
@@ -12361,15 +12383,14 @@
       window.renderDashboardFocusDuJour();
     }
     if (window.innerWidth <= 900) sidebar.classList.remove('open');
-    // Force Visionnaire level for demo
+    // Force Visionnaire level
     if (typeof setCurrentSubscription === 'function') {
       setCurrentSubscription('visionnaire');
       if (typeof updateSidebarLockState === 'function') updateSidebarLockState();
     }
-    // Reset demo tooltip state
-    demoTooltipsEnabled = true;
-    demoTourCurrentIndex = 0;
-    // Show welcome modal
+    // Reset tour state and show welcome
+    _demoTourIdx = 0;
+    _demoGuided = true;
     openDemoWelcome();
   }
 
@@ -12379,82 +12400,79 @@
     if (bar) bar.style.display = 'none';
   }
 
-  // ── DONNÉES DES TOOLTIPS DE DÉMO ──
-  var demoTooltipsEnabled = true;
-  var demoTourCurrentIndex = 0;
-  var demoTourOrder = ['dashboard','classroom','community','resources','evenements','coaching','hotline','plan','profil'];
-  var demoPageTooltips = {
-    dashboard:  { icon:'🏠', title:'Ton tableau de bord',       text:'Chaque semaine commence ici : formations en cours, focus du jour, agenda et to-do list — tout en un seul endroit, priorisé pour toi.' },
-    classroom:  { icon:'🎓', title:'Tes formations',             text:'Des parcours guidés et complets pour avancer sur tes priorités. Tu progresses à ton rythme, dans l'ordre qui te convient.' },
-    community:  { icon:'🤝', title:'La communauté',              text:'200+ entrepreneuses qui avancent comme toi. Partage tes victoires, pose tes questions et trouve du soutien au quotidien.' },
-    resources:  { icon:'📚', title:'Les ressources',             text:'Templates, guides et outils à télécharger pour aller plus vite. Mis à jour régulièrement avec du contenu exclusif.' },
-    evenements: { icon:'📅', title:'Les événements',             text:'Masterclasses, sessions Q&R en live et ateliers pratiques — un calendrier riche pour ne jamais avancer seule.' },
-    coaching:   { icon:'🎯', title:'Coaching 1-1',               text:'Sessions individuelles avec Sarah Martin pour débloquer tes points de friction. Exclusif au niveau Visionnaire.' },
-    hotline:    { icon:'📞', title:'Hotline Business',           text:'Un appel rapide avec une experte pour débloquer une situation précise — en moins de 24h. Exclusif Visionnaire.' },
-    plan:       { icon:'📋', title:"Plan d’action",         text:"Tes objectifs traduits en actions concrètes semaine par semaine. Fini la question « par où je commence ? »" },
-    profil:     { icon:'👤', title:'Ton profil',                 text:'Personnalise ton espace, choisis tes domaines de focus et suis l'évolution de ta progression depuis ton profil.' }
+  // ── DÉMO GUIDÉE ──────────────────────────────────────────────────
+  var _demoTourIdx  = 0;
+  var _demoGuided   = true;
+  var _demoToastTmr = null;
+  var _demoTourPages = [
+    'dashboard','classroom','community','resources',
+    'evenements','coaching','hotline','plan','profil'
+  ];
+  var _demoTips = {
+    dashboard:  { icon:'🏠', title:'Ton tableau de bord',     text:'Chaque semaine commence ici\u00a0: formations en cours, focus du jour, agenda et to-do list — tout en un seul endroit, prioris\u00e9 pour toi.' },
+    classroom:  { icon:'🎓', title:'Tes formations',           text:'Des parcours guid\u00e9s et complets pour avancer sur tes priorit\u00e9s. Tu progresses \u00e0 ton rythme, dans l\'ordre qui te convient.' },
+    community:  { icon:'🤝', title:'La communaut\u00e9',       text:'200+ entrepreneuses qui avancent comme toi. Partage tes victoires, pose tes questions et trouve du soutien au quotidien.' },
+    resources:  { icon:'📚', title:'Les ressources',           text:'Templates, guides et outils \u00e0 t\u00e9l\u00e9charger pour aller plus vite. Mis \u00e0 jour r\u00e9guli\u00e8rement avec du contenu exclusif.' },
+    evenements: { icon:'📅', title:'Les \u00e9v\u00e9nements', text:'Masterclasses, sessions Q\u00a0&\u00a0R en live et ateliers pratiques\u00a0\u2014 un calendrier riche pour ne jamais avancer seule.' },
+    coaching:   { icon:'🎯', title:'Coaching 1-1',             text:'Sessions individuelles avec Sarah Martin pour d\u00e9bloquer tes points de friction. Exclusif au niveau Visionnaire.' },
+    hotline:    { icon:'📞', title:'Hotline Business',         text:'Un appel rapide avec une experte pour r\u00e9soudre une situation pr\u00e9cise\u00a0\u2014 en moins de 24\u00a0h. Exclusif Visionnaire.' },
+    plan:       { icon:'📋', title:"Plan d\u2019action",       text:"Tes objectifs traduits en actions concr\u00e8tes semaine par semaine. Fini la question \u00ab\u00a0par o\u00f9 je commence\u00a0?\u00a0\u00bb" },
+    profil:     { icon:'👤', title:'Ton profil',               text:'Personnalise ton espace, choisis tes domaines de focus et suis l\u2019\u00e9volution de ta progression.' }
   };
 
   function openDemoWelcome() {
-    var modal = document.getElementById('demo-welcome-modal');
-    if (modal) modal.classList.add('visible');
+    document.getElementById('demo-welcome-modal').classList.add('open');
   }
 
-  function startDemoTour() {
-    var modal = document.getElementById('demo-welcome-modal');
-    if (modal) modal.classList.remove('visible');
-    demoTooltipsEnabled = true;
-    demoTourCurrentIndex = 0;
-    showDemoTooltip('dashboard');
+  function demoStartTour() {
+    document.getElementById('demo-welcome-modal').classList.remove('open');
+    _demoGuided = true;
+    _demoTourIdx = 0;
+    demoShowTooltip('dashboard');
   }
 
-  function skipDemoTour() {
-    var modal = document.getElementById('demo-welcome-modal');
-    if (modal) modal.classList.remove('visible');
-    demoTooltipsEnabled = false;
-    var tt = document.getElementById('demo-tooltip');
-    if (tt) tt.style.display = 'none';
+  function demoSkipTour() {
+    document.getElementById('demo-welcome-modal').classList.remove('open');
+    _demoGuided = false;
+    document.getElementById('demo-tooltip').classList.remove('open');
   }
 
-  function showDemoTooltip(page) {
-    var info = demoPageTooltips[page];
-    var tt = document.getElementById('demo-tooltip');
-    if (!info || !tt) return;
-    var idx = demoTourOrder.indexOf(page);
-    if (idx >= 0) demoTourCurrentIndex = idx;
-    document.getElementById('demo-tt-icon').textContent  = info.icon;
-    document.getElementById('demo-tt-title').textContent = info.title;
-    document.getElementById('demo-tt-text').textContent  = info.text;
-    document.getElementById('demo-tt-progress').textContent = 'Étape ' + (demoTourCurrentIndex + 1) + ' / ' + demoTourOrder.length;
-    var nextBtn = document.getElementById('demo-tt-next');
-    if (demoTourCurrentIndex >= demoTourOrder.length - 1) {
-      nextBtn.textContent = 'Terminer la visite ✓';
-      nextBtn.onclick = function() { hideDemoTooltip(); };
+  function demoShowTooltip(page) {
+    var tip = _demoTips[page];
+    if (!tip) return;
+    var idx = _demoTourPages.indexOf(page);
+    if (idx >= 0) _demoTourIdx = idx;
+    document.getElementById('dtt-icon').textContent  = tip.icon;
+    document.getElementById('dtt-title').textContent = tip.title;
+    document.getElementById('dtt-text').textContent  = tip.text;
+    document.getElementById('dtt-progress').textContent =
+      'Étape ' + (_demoTourIdx + 1) + '\u00a0/\u00a0' + _demoTourPages.length;
+    var btn = document.getElementById('dtt-next');
+    if (_demoTourIdx >= _demoTourPages.length - 1) {
+      btn.textContent = 'Terminer la visite ✓';
+      btn.onclick = demoHideTooltip;
     } else {
-      nextBtn.textContent = 'Page suivante →';
-      nextBtn.onclick = demoTooltipNext;
+      btn.textContent = 'Page suivante →';
+      btn.onclick = demoNextPage;
     }
-    tt.style.display = 'block';
+    document.getElementById('demo-tooltip').classList.add('open');
   }
 
-  function hideDemoTooltip() {
-    var tt = document.getElementById('demo-tooltip');
-    if (tt) tt.style.display = 'none';
-    demoTooltipsEnabled = false;
+  function demoHideTooltip() {
+    document.getElementById('demo-tooltip').classList.remove('open');
+    _demoGuided = false;
   }
 
-  function demoTooltipNext() {
-    demoTourCurrentIndex = Math.min(demoTourCurrentIndex + 1, demoTourOrder.length - 1);
-    showPage(demoTourOrder[demoTourCurrentIndex]);
+  function demoNextPage() {
+    _demoTourIdx = Math.min(_demoTourIdx + 1, _demoTourPages.length - 1);
+    showPage(_demoTourPages[_demoTourIdx]);
   }
 
-  var _demoToastTimer = null;
-  function showDemoBlockToast() {
-    var toast = document.getElementById('demo-block-toast');
-    if (!toast) return;
-    toast.style.display = 'block';
-    clearTimeout(_demoToastTimer);
-    _demoToastTimer = setTimeout(function() { toast.style.display = 'none'; }, 2200);
+  function demoShieldClick() {
+    clearTimeout(_demoToastTmr);
+    var t = document.getElementById('demo-toast');
+    t.classList.add('show');
+    _demoToastTmr = setTimeout(function() { t.classList.remove('show'); }, 2200);
   }
 
 
@@ -21023,38 +21041,6 @@ document.addEventListener('DOMContentLoaded', function() {
   applyResourceAccessControl();
   updateInitieeMonthlyBanner();
 });
-</script>
-<script>
-// ── DÉMO : Intercepteur de clics (lecture seule) ──
-document.addEventListener('click', function(e) {
-  if (!document.body.classList.contains('demo-mode')) return;
-
-  // Toujours autoriser : barre démo, modale bienvenue, tooltip, toast
-  if (e.target.closest('#demo-pub-bar, #demo-welcome-modal, #demo-tooltip, #demo-block-toast')) return;
-
-  // Toujours autoriser : sidebar (navigation)
-  if (e.target.closest('#sidebar')) return;
-
-  // Toujours autoriser : tout clic qui appelle showPage() (navigation entre pages)
-  var navEl = e.target.closest('[onclick*="showPage"]');
-  if (navEl) return;
-
-  // Bloquer : éléments interactifs dans le contenu membre
-  var interactive = e.target.closest(
-    'button, input, textarea, select, a[download], ' +
-    '[onclick*="openAdd"], [onclick*="submit"], [onclick*="create"], ' +
-    '[onclick*="download"], [onclick*="upload"], [onclick*="start"], ' +
-    '[onclick*="save"], [onclick*="edit"], [onclick*="delete"], ' +
-    '[onclick*="openProfile"], [onclick*="sendMessage"], [onclick*="openTodo"], ' +
-    '[onclick*="toggleTodo"], [onclick*="agendaAdd"], [onclick*="openEvent"]'
-  );
-  if (interactive) {
-    e.preventDefault();
-    e.stopPropagation();
-    showDemoBlockToast();
-    return;
-  }
-}, true);
 </script>
 <script defer src="assets/notebook-enhanced.js" data-notebook-enhanced></script>
 <script defer src="assets/onboarding-tour.js" data-onboarding-tour></script>
