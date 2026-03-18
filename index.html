@@ -12348,14 +12348,14 @@
     <span class="mob-nav-label">Membres</span>
   </button>
 
-  <button class="mob-nav-item" id="admin-mob-nav-communaute" onclick="adminPage('communaute',null);" aria-label="Communauté">
-    <span class="mob-nav-icon">🌸</span>
-    <span class="mob-nav-label">Communauté</span>
+  <button class="mob-nav-item" id="admin-mob-nav-finances" onclick="adminPage('finances',null);" aria-label="Finances">
+    <span class="mob-nav-icon">💰</span>
+    <span class="mob-nav-label">Finances</span>
   </button>
 
-  <button class="mob-nav-item" id="admin-mob-nav-contact" onclick="adminPage('contact',null);" aria-label="Messages">
-    <span class="mob-nav-icon">✉️</span>
-    <span class="mob-nav-label">Messages</span>
+  <button class="mob-nav-item" id="admin-mob-nav-crm" onclick="adminPage('crm',null);" aria-label="CRM">
+    <span class="mob-nav-icon">🎯</span>
+    <span class="mob-nav-label">CRM</span>
   </button>
 
   <button class="mob-nav-item" id="admin-mob-nav-more" onclick="toggleAdminMobileMenu();" aria-label="Plus">
@@ -12403,6 +12403,25 @@
       </div>
     </div>
 
+    <!-- Membres & Communauté -->
+    <div class="mob-menu-section">
+      <span class="mob-menu-section-label">Membres &amp; Communauté</span>
+      <div class="mob-menu-grid">
+        <button class="mob-menu-btn" id="admin-mob-menu-communaute" onclick="adminPage('communaute',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">🌸</span>
+          <span class="mob-menu-btn-label">Communauté</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-contact" onclick="adminPage('contact',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">✉️</span>
+          <span class="mob-menu-btn-label">Messages</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-messagerie" onclick="adminPage('messagerie',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">💬</span>
+          <span class="mob-menu-btn-label">Messagerie</span>
+        </button>
+      </div>
+    </div>
+
     <!-- Communication -->
     <div class="mob-menu-section">
       <span class="mob-menu-section-label">Communication</span>
@@ -12414,10 +12433,6 @@
         <button class="mob-menu-btn" id="admin-mob-menu-annonces" onclick="adminPage('annonces',null);closeAdminMobileMenu();">
           <span class="mob-menu-btn-icon">📢</span>
           <span class="mob-menu-btn-label">Annonces</span>
-        </button>
-        <button class="mob-menu-btn" id="admin-mob-menu-messagerie" onclick="adminPage('messagerie',null);closeAdminMobileMenu();">
-          <span class="mob-menu-btn-icon">💬</span>
-          <span class="mob-menu-btn-label">Messagerie</span>
         </button>
       </div>
     </div>
@@ -13412,7 +13427,7 @@
   }
 
   // ── Admin Mobile Bottom Nav ──
-  var ADMIN_MOB_NAV_TABS = ['dashboard', 'membres', 'communaute', 'contact'];
+  var ADMIN_MOB_NAV_TABS = ['dashboard', 'membres', 'finances', 'crm'];
 
   function adminSyncMobileNav(key) {
     // Reset all bottom nav tabs
@@ -20703,6 +20718,13 @@
     align-items: center;
     justify-content: center;
     border: 2px solid #1a1825;
+  }
+  /* Remonter le widget au-dessus de la nav mobile admin */
+  @media (max-width: 900px) {
+    body.admin-mode #admin-widget {
+      bottom: calc(72px + env(safe-area-inset-bottom) + 12px);
+      right: 14px;
+    }
   }
 </style>
 
