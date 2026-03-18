@@ -5688,6 +5688,26 @@
   }
 
   /* ══════════════════════════════════════════
+     ADMIN COMMUNAUTÉ — Mobile optimization
+     ══════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    /* Layout canaux + fil : empilés sur mobile */
+    body.admin-mode #admin-panel-communaute div[style*="grid-template-columns:220px 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+    /* Canaux : 2 colonnes côte à côte */
+    body.admin-mode #admin-canal-list {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 4px !important;
+    }
+    /* Bouton "Créer un canal" pleine largeur */
+    body.admin-mode #admin-panel-communaute div[style*="grid-template-columns:220px 1fr"] > div:first-child {
+      width: 100%;
+    }
+  }
+
+  /* ══════════════════════════════════════════
      ADMIN CRM — Mobile optimization
      ══════════════════════════════════════════ */
   @media (max-width: 900px) {
