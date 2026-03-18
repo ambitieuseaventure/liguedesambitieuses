@@ -2136,6 +2136,15 @@
     #hl-card-delais { order:3; }
     #hl-card-echanges { order:4; }
   }
+  @media (max-width:600px) {
+    #qr-main-grid { display:flex !important; flex-direction:column; gap:14px; }
+    #qr-col-left, #qr-col-right { display:contents !important; }
+    #qr-card-prochaine { order:1; margin-bottom:0; }
+    #qr-card-soumettre { order:2; }
+    #qr-card-archive   { order:3; }
+    #qr-card-asavoir   { order:4; }
+    #qr-card-archives  { order:5; }
+  }
   .hotline-audio-play {
     width:28px; height:28px; border-radius:50%;
     border:1px solid rgba(255,255,255,0.15); background:transparent;
@@ -8090,11 +8099,11 @@
         <div class="section-title"><em>Sessions</em> Q&amp;R Business</div>
         <div class="section-sub">Chaque semaine, pose tes questions en live chat à Ana &amp; Audrey · Réservé aux Stratèges et Visionnaires</div>
       </div>
-      <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:24px;">
-        <div>
+      <div id="qr-main-grid" style="display:grid;grid-template-columns:1.5fr 1fr;gap:24px;">
+        <div id="qr-col-left">
 
           <!-- Prochaine session -->
-          <div class="card" style="background:linear-gradient(135deg,var(--navy-darkest),var(--navy));border:1px solid rgba(235,193,76,0.2);color:white;padding:28px;margin-bottom:18px;">
+          <div id="qr-card-prochaine" class="card" style="background:linear-gradient(135deg,var(--navy-darkest),var(--navy));border:1px solid rgba(235,193,76,0.2);color:white;padding:28px;margin-bottom:18px;">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
               <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);">Prochaine session · Mercredi 12 mars</div>
               <div style="display:flex;align-items:center;gap:6px;background:rgba(76,175,80,0.15);border:1px solid rgba(76,175,80,0.3);border-radius:20px;padding:4px 12px;">
@@ -8121,7 +8130,7 @@
           </div>
 
           <!-- Aperçu chat (session en cours simulée) -->
-          <div class="card" style="padding:0;overflow:hidden;">
+          <div id="qr-card-archive" class="card" style="padding:0;overflow:hidden;">
             <div style="background:var(--navy-darkest);padding:14px 18px;display:flex;align-items:center;gap:10px;">
               <div style="width:10px;height:10px;border-radius:50%;background:#4caf50;box-shadow:0 0 0 3px rgba(76,175,80,0.2);"></div>
               <span style="font-size:13px;font-weight:600;color:white;">Session du 5 mars · Archive</span>
@@ -8171,9 +8180,9 @@
         </div>
 
         <!-- Colonne droite -->
-        <div style="display:flex;flex-direction:column;gap:16px;">
+        <div id="qr-col-right" style="display:flex;flex-direction:column;gap:16px;">
           <!-- Soumettre une question -->
-          <div class="card" style="border:1px solid rgba(235,193,76,0.3);padding:0;overflow:hidden;">
+          <div id="qr-card-soumettre" class="card" style="border:1px solid rgba(235,193,76,0.3);padding:0;overflow:hidden;">
             <div style="padding:16px 18px 14px;border-bottom:1px solid rgba(20,36,53,0.07);">
               <div style="font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:2px;">✍️ Soumettre une question</div>
               <div style="font-size:12px;color:var(--text-light);">Avant ou pendant la session · traitée en live par Ana & Audrey</div>
@@ -8217,7 +8226,7 @@
           </div>
 
           <!-- À savoir -->
-          <div class="card" style="background:rgba(235,193,76,0.05);border:1px solid rgba(235,193,76,0.2);">
+          <div id="qr-card-asavoir" class="card" style="background:rgba(235,193,76,0.05);border:1px solid rgba(235,193,76,0.2);">
             <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:12px;">📌 À savoir</div>
             <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:var(--text-mid);">
               <div style="display:flex;gap:8px;"><span>🗓️</span><span>Tous les <strong>mercredis à 12h</strong></span></div>
@@ -8239,7 +8248,7 @@
           </div>
 
           <!-- Archives passées -->
-          <div class="card">
+          <div id="qr-card-archives" class="card">
             <div class="card-title" style="font-size:15px;">📁 Sessions archivées</div>
             <div style="display:flex;flex-direction:column;gap:8px;">
               <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:8px;cursor:pointer;">
