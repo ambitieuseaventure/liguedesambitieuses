@@ -4887,12 +4887,13 @@
       min-height: 0;
       display: flex;
       flex-direction: column;
-      padding: 14px 10px;
+      padding: 0;
       overflow: hidden;
     }
     #page-messages .section-header {
       flex-shrink: 0;
-      margin-bottom: 12px;
+      margin: 0;
+      padding: 10px 14px 8px;
     }
     #page-messages .messages-layout {
       flex: 1;
@@ -4900,9 +4901,58 @@
       display: flex !important;
       flex-direction: column;
       overflow: hidden;
+      border-radius: 0 !important;
+      border-left: none !important;
+      border-right: none !important;
+      border-bottom: none !important;
     }
+    /* Conversations → bande horizontale scrollable (format admin) */
     #page-messages .conversations-list {
       flex-shrink: 0;
+      border-right: none !important;
+      border-bottom: 1px solid rgba(20,36,53,0.1) !important;
+      display: flex !important;
+      flex-direction: row !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      padding: 8px 6px !important;
+      gap: 0;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      background: white;
+    }
+    #page-messages .conversations-list::-webkit-scrollbar { display: none; }
+    /* Masquer header (Messages + bouton +) et barre de recherche */
+    #page-messages .conv-header,
+    #page-messages .conv-search { display: none !important; }
+    /* Chaque conversation → carte verticale compacte */
+    #page-messages .conv-item {
+      flex-direction: column !important;
+      align-items: center !important;
+      flex-shrink: 0;
+      width: 66px;
+      padding: 6px 4px !important;
+      border-bottom: none !important;
+      border-left: none !important;
+      gap: 4px !important;
+    }
+    #page-messages .conv-item.active {
+      border-left: none !important;
+      background: rgba(36,66,91,0.07);
+      border-radius: 10px;
+    }
+    /* Masquer preview, time, badge — garder avatar + nom */
+    #page-messages .conv-info .conv-preview,
+    #page-messages .conv-time,
+    #page-messages .badge,
+    #page-messages .conv-item > div[style*="flex-direction:column"] { display: none !important; }
+    #page-messages .conv-info { flex: none !important; width: 100%; }
+    #page-messages .conv-name {
+      font-size: 9px !important;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     #page-messages .chat-area {
       flex: 1;
@@ -6173,15 +6223,14 @@
     <span class="mob-nav-label">Formations</span>
   </button>
 
-  <button class="mob-nav-item" id="mob-nav-resources" onclick="showPage('resources');closeMobileMenu();" aria-label="Ressources">
-    <span class="mob-nav-icon">📁</span>
-    <span class="mob-nav-label">Ressources</span>
+  <button class="mob-nav-item" id="mob-nav-messages" onclick="showPage('messages');closeMobileMenu();" aria-label="Messagerie">
+    <span class="mob-nav-icon">💬</span>
+    <span class="mob-nav-label">Messagerie</span>
   </button>
 
-  <button class="mob-nav-item" id="mob-nav-evenements" onclick="showPage('evenements');closeMobileMenu();" aria-label="Événements">
-    <span class="mob-nav-icon">📅</span>
-    <span class="mob-nav-label">Agenda</span>
-    <span class="mob-nav-badge">2</span>
+  <button class="mob-nav-item" id="mob-nav-community" onclick="showPage('community');closeMobileMenu();" aria-label="Communauté">
+    <span class="mob-nav-icon">🌸</span>
+    <span class="mob-nav-label">Communauté</span>
   </button>
 
   <button class="mob-nav-item" id="mob-nav-more" onclick="toggleMobileMenu();" aria-label="Plus de navigation">
@@ -6299,6 +6348,16 @@
         <button class="mob-menu-btn" data-mob-page="profil" onclick="showPage('profil');closeMobileMenu();">
           <span class="mob-menu-btn-icon">👤</span>
           <span class="mob-menu-btn-label">Mon profil</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="resources" onclick="showPage('resources');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">📁</span>
+          <span class="mob-menu-btn-label">Ressources</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="evenements" onclick="showPage('evenements');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">📅</span>
+          <span class="mob-menu-btn-label">Agenda</span>
         </button>
 
       </div>
@@ -13284,13 +13343,13 @@
   const MOB_NAV_TABS = {
     dashboard:  'mob-nav-dashboard',
     classroom:  'mob-nav-classroom',
-    resources:  'mob-nav-resources',
-    evenements: 'mob-nav-evenements',
+    messages:   'mob-nav-messages',
+    community:  'mob-nav-community',
   };
   const MOB_MORE_PAGES = new Set([
     'hotline','qr','bilan','coaching','plan','notebook',
     'mindset','masterclass','palmares',
-    'annuaire','buddy','profil','community','messages'
+    'annuaire','buddy','profil','resources','evenements'
   ]);
 
   showPage('dashboard');
