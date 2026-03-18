@@ -4930,12 +4930,14 @@
        ce qui force .agenda-week-view à déclencher son propre scrollbar
        horizontal interne. Le contenu est ainsi confiné au calendrier.
     */
-    .agenda-block { overflow: hidden; }
     .agenda-week-view {
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
-      /* Permet à la grille de header de scroller avec le body */
+      /* width:100% contraint la vue à la largeur du bloc parent,
+         ce qui force le overflow-x:auto à déclencher un scrollbar
+         interne (sans avoir besoin d'overflow:hidden sur le parent). */
+      width: 100%;
       display: flex;
       flex-direction: column;
     }
