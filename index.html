@@ -4743,7 +4743,7 @@
 
     /* ── Messagerie privée : layout chat mobile ── */
     #page-messages {
-      height: calc(100dvh - 58px);
+      height: calc(100dvh - 58px - 72px - env(safe-area-inset-bottom));
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -4765,8 +4765,7 @@
       min-height: 0;
       display: flex !important;
       flex-direction: column;
-      padding-bottom: calc(72px + env(safe-area-inset-bottom));
-      box-sizing: border-box;
+      overflow: hidden;
     }
     #page-messages .conversations-list {
       flex-shrink: 0;
