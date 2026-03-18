@@ -2166,6 +2166,15 @@
     #ms-videos-grid       { order:3; grid-template-columns:1fr 1fr 1fr !important; }
     #ms-card-citation     { order:4; }
   }
+  @media (max-width:600px) {
+    #buddy-main-grid { display:flex !important; flex-direction:column; gap:14px; }
+    #buddy-col-left, #buddy-col-right { display:contents !important; }
+    #buddy-card-profil  { order:1; }
+    #buddy-card-comment { order:2; margin-bottom:0; }
+    #buddy-steps-grid   { grid-template-columns:1fr !important; }
+    #buddy-card-liste   { order:3; }
+    #buddy-card-tips    { order:4; }
+  }
   .hotline-audio-play {
     width:28px; height:28px; border-radius:50%;
     border:1px solid rgba(255,255,255,0.15); background:transparent;
@@ -8487,18 +8496,18 @@
         <div class="section-title"><em>Accountability</em> Buddy</div>
         <div class="section-sub">Trouve ta partenaire d'ambition pour avancer ensemble · Stratèges et Visionnaires</div>
       </div>
-      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:24px;">
-        <div>
-          <div class="card" style="background:linear-gradient(135deg,var(--navy-darkest),var(--navy));border:1px solid rgba(235,193,76,0.2);color:white;padding:28px;margin-bottom:18px;">
+      <div id="buddy-main-grid" style="display:grid;grid-template-columns:1.4fr 1fr;gap:24px;">
+        <div id="buddy-col-left">
+          <div id="buddy-card-comment" class="card" style="background:linear-gradient(135deg,var(--navy-darkest),var(--navy));border:1px solid rgba(235,193,76,0.2);color:white;padding:28px;margin-bottom:18px;">
             <h3 style="font-family:Playfair Display,serif;font-size:20px;color:white;margin-bottom:8px;">🤝 Comment ça marche ?</h3>
             <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:20px;">L'Accountability Buddy, c'est trouver une ambitieuse complémentaire avec qui tu t'engages mutuellement à avancer. Pas de pression, juste de l'élan.</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+            <div id="buddy-steps-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
               <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:14px;text-align:center;"><div style="font-size:22px;margin-bottom:6px;">📝</div><div style="font-size:12px;color:rgba(255,255,255,0.7);">Complète ton profil</div></div>
               <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:14px;text-align:center;"><div style="font-size:22px;margin-bottom:6px;">🔗</div><div style="font-size:12px;color:rgba(255,255,255,0.7);">On te matche avec une ambitieuse</div></div>
               <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:14px;text-align:center;"><div style="font-size:22px;margin-bottom:6px;">🚀</div><div style="font-size:12px;color:rgba(255,255,255,0.7);">Avancez ensemble chaque semaine</div></div>
             </div>
           </div>
-          <div class="card">
+          <div id="buddy-card-liste" class="card">
             <div class="card-title">Ambitieuses disponibles pour un buddy</div>
             <div style="display:flex;flex-direction:column;gap:10px;">
               <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg);border-radius:10px;"><div class="user-avatar" style="width:44px;height:44px;font-size:16px;flex-shrink:0;">J</div><div style="flex:1;"><strong style="font-size:13px;color:var(--text-dark);">Julie M. · Coach de vie</strong><div style="font-size:12px;color:var(--text-light);">Objectif : 3 nouveaux clients en mars · Dispo le matin</div></div><button class="dl-btn" style="font-size:11px;padding:6px 12px;">Se connecter</button></div>
@@ -8507,14 +8516,14 @@
             </div>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div class="card" style="border:2px solid var(--gold);">
+        <div id="buddy-col-right" style="display:flex;flex-direction:column;gap:14px;">
+          <div id="buddy-card-profil" class="card" style="border:2px solid var(--gold);">
             <div class="card-title" style="font-size:15px;">✨ Mon profil Buddy</div>
             <textarea class="composer-input" placeholder="Décris ton objectif principal du moment…" rows="3" style="width:100%;margin-bottom:10px;"></textarea>
             <textarea class="composer-input" placeholder="Tes disponibilités (matin, soir, week-end…)" rows="2" style="width:100%;margin-bottom:14px;"></textarea>
             <button class="btn-primary" style="width:100%;padding:11px;">Me rendre visible ✨</button>
           </div>
-          <div class="card" style="background:rgba(235,193,76,0.06);border:1px solid rgba(235,193,76,0.2);">
+          <div id="buddy-card-tips" class="card" style="background:rgba(235,193,76,0.06);border:1px solid rgba(235,193,76,0.2);">
             <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:8px;">💡 Tips pour bien démarrer</div>
             <div style="font-size:13px;color:var(--text-mid);line-height:1.7;">Planifiez un check-in hebdomadaire de 20 min. Partagez un objectif précis et célébrez chaque victoire, même petite ! 🎉</div>
           </div>
