@@ -2158,6 +2158,14 @@
     #coaching-booking-card    { order:2; }
     #coaching-card-historique { order:3; }
   }
+  @media (max-width:600px) {
+    #ms-main-grid { display:flex !important; flex-direction:column; gap:14px; }
+    #ms-col-left, #ms-col-right { display:contents !important; }
+    #ms-card-une          { order:1; margin-bottom:0; }
+    #ms-atelier-journal-row { order:2; display:grid !important; grid-template-columns:1fr 1fr; gap:10px; align-items:start; }
+    #ms-videos-grid       { order:3; grid-template-columns:1fr 1fr 1fr !important; }
+    #ms-card-citation     { order:4; }
+  }
   .hotline-audio-play {
     width:28px; height:28px; border-radius:50%;
     border:1px solid rgba(255,255,255,0.15); background:transparent;
@@ -8773,16 +8781,16 @@
         <div class="section-title"><em>Focus</em> Mindset</div>
         <div class="section-sub">Méditation, blocages psychologiques, posture d'entrepreneuse · Réservé aux Visionnaires</div>
       </div>
-      <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:24px;">
-        <div>
-          <div class="card" style="background:linear-gradient(135deg,#1a2a3a,#2a4a5a);border:1px solid rgba(235,193,76,0.2);color:white;padding:30px;margin-bottom:18px;">
+      <div id="ms-main-grid" style="display:grid;grid-template-columns:1.5fr 1fr;gap:24px;">
+        <div id="ms-col-left">
+          <div id="ms-card-une" class="card" style="background:linear-gradient(135deg,#1a2a3a,#2a4a5a);border:1px solid rgba(235,193,76,0.2);color:white;padding:30px;margin-bottom:18px;">
             <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;">À la une ce mois-ci</div>
             <h2 style="font-family:Playfair Display,serif;font-size:22px;color:white;margin-bottom:10px;">🧘 Lever le syndrome de l'imposteur</h2>
             <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.65;margin-bottom:22px;">Une séance guidée de 20 minutes pour identifier tes croyances limitantes et les remplacer par une posture d'entrepreneuse qui s'assume pleinement.</p>
             <div style="display:flex;gap:18px;margin-bottom:22px;"><div><div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em;">Durée</div><div style="font-size:14px;font-weight:600;">20 min</div></div><div><div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em;">Format</div><div style="font-size:14px;font-weight:600;">Audio guidé</div></div></div>
             <button class="btn-primary">▶ Démarrer la séance</button>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+          <div id="ms-videos-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
             <div class="video-card"><div class="video-thumb" style="background:linear-gradient(135deg,rgba(235,193,76,0.12),rgba(20,36,53,0.06))">🧘<div class="video-duration">15 min</div></div><div class="video-body"><h4>Méditation du matin</h4><p>Ancrer sa journée avec intention</p></div></div>
             <div class="video-card"><div class="video-thumb" style="background:linear-gradient(135deg,rgba(79,133,160,0.12),rgba(36,66,91,0.06))">💭<div class="video-duration">25 min</div></div><div class="video-body"><h4>Travailler sa valeur</h4><p>Se sentir légitime à ses prix</p></div></div>
             <div class="video-card"><div class="video-thumb" style="background:linear-gradient(135deg,rgba(252,186,51,0.12),rgba(20,36,53,0.06))">🌿<div class="video-duration">30 min</div></div><div class="video-body"><h4>Décider sans douter</h4><p>Sortir de la procrastination</p></div></div>
@@ -8791,8 +8799,9 @@
             <div class="video-card"><div class="video-thumb" style="background:linear-gradient(135deg,rgba(79,133,160,0.1),rgba(20,36,53,0.06))">💫<div class="video-duration">20 min</div></div><div class="video-body"><h4>Visualisation de succès</h4><p>Programmer sa réussite</p></div></div>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div class="card" style="background:linear-gradient(135deg,rgba(235,193,76,0.08),rgba(252,186,51,0.04));border:1px solid rgba(235,193,76,0.25);"><div style="font-family:Playfair Display,serif;font-size:16px;color:var(--text-dark);margin-bottom:14px;">📅 Prochain atelier live</div><div style="font-size:22px;margin-bottom:8px;">🎭</div><strong style="font-size:15px;color:var(--text-dark);display:block;margin-bottom:6px;">Atelier : Gérer ses émotions en business</strong><div style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Vendredi 21 mars · 11h00 · 1h30<br>Interactif &amp; en live avec Audrey</div><button class="btn-primary" style="width:100%;padding:11px;">S'inscrire →</button></div>
+        <div id="ms-col-right" style="display:flex;flex-direction:column;gap:14px;">
+          <div id="ms-atelier-journal-row">
+          <div id="ms-card-atelier" class="card" style="background:linear-gradient(135deg,rgba(235,193,76,0.08),rgba(252,186,51,0.04));border:1px solid rgba(235,193,76,0.25);"><div style="font-family:Playfair Display,serif;font-size:16px;color:var(--text-dark);margin-bottom:14px;">📅 Prochain atelier live</div><div style="font-size:22px;margin-bottom:8px;">🎭</div><strong style="font-size:15px;color:var(--text-dark);display:block;margin-bottom:6px;">Atelier : Gérer ses émotions en business</strong><div style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Vendredi 21 mars · 11h00 · 1h30<br>Interactif &amp; en live avec Audrey</div><button class="btn-primary" style="width:100%;padding:11px;">S'inscrire →</button></div>
           <div class="card" id="journal-bord-card">
             <!-- En-tête -->
             <div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--text-dark);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">
@@ -8839,7 +8848,8 @@
               <div id="journal-history" style="display:none;margin-top:10px;"></div>
             </div>
           </div>
-          <div class="card" style="background:var(--navy-darkest);border:1px solid rgba(235,193,76,0.15);"><div style="font-size:13px;font-style:italic;color:var(--gold-light);line-height:1.8;text-align:center;">"Le succès commence dans la tête. Avant de changer ton business, change la façon dont tu te perçois."</div><div style="font-size:11px;color:rgba(255,255,255,0.35);text-align:center;margin-top:8px;">— Audrey, co-fondatrice</div></div>
+          </div><!-- /ms-atelier-journal-row -->
+          <div id="ms-card-citation" class="card" style="background:var(--navy-darkest);border:1px solid rgba(235,193,76,0.15);"><div style="font-size:13px;font-style:italic;color:var(--gold-light);line-height:1.8;text-align:center;">"Le succès commence dans la tête. Avant de changer ton business, change la façon dont tu te perçois."</div><div style="font-size:11px;color:rgba(255,255,255,0.35);text-align:center;margin-top:8px;">— Audrey, co-fondatrice</div></div>
         </div>
       </div>
     </div>
