@@ -4742,11 +4742,19 @@
     }
 
     /* ── Messagerie privée : layout chat mobile ── */
+    /* position:fixed ancre la page entre topbar et bottom-nav,
+       indépendamment du scroll du window et de display:block imposé par showPage() */
     #page-messages {
-      height: calc(100dvh - 58px - 72px - env(safe-area-inset-bottom));
-      overflow: hidden;
-      display: flex;
+      position: fixed !important;
+      top: 58px;
+      left: 0;
+      right: 0;
+      bottom: calc(72px + env(safe-area-inset-bottom));
+      display: flex !important;
       flex-direction: column;
+      overflow: hidden;
+      background: var(--bg-soft, #f5f6fa);
+      z-index: 10;
     }
     #page-messages .page-content {
       flex: 1;
