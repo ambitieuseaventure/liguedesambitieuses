@@ -2761,27 +2761,7 @@
     .admin-table { min-width:580px; }
 
     /* ── Dashboard admin mobile ── */
-    /* Stats : 4 cartes compactes sur une seule ligne */
-    #admin-panel-dashboard .admin-stats-row {
-      grid-template-columns: repeat(4, 1fr) !important;
-      gap: 6px;
-      margin-bottom: 14px;
-    }
-    #admin-panel-dashboard .admin-stat-card {
-      padding: 10px 8px;
-      border-radius: 12px;
-    }
-    #admin-panel-dashboard .admin-stat-val { font-size: 16px; }
-    #admin-panel-dashboard .admin-stat-val em { font-size: 16px; }
-    #admin-panel-dashboard .admin-stat-label { font-size: 9.5px; line-height: 1.3; }
-    #admin-panel-dashboard .admin-stat-delta { font-size: 9px; }
-    /* À faire + Activité récente : pleine largeur, À faire en premier */
-    .admin-dash-two-col {
-      grid-template-columns: 1fr !important;
-      gap: 14px;
-    }
-    .admin-dash-todos { order: 1; }
-    .admin-dash-activite { order: 2; }
+    /* (règles déplacées en fin de <style> pour priorité maximale) */
 
     /* ── Admin bottom nav mobile ── */
     .admin-hamburger { display:none !important; }
@@ -2845,11 +2825,6 @@
     .admin-stat-card { padding:14px; }
     .admin-stat-val { font-size:24px; }
     .admin-panel { padding:12px; }
-    /* Dashboard : maintenir les 4 stats en ligne même sur petits écrans */
-    #admin-panel-dashboard .admin-stats-row { grid-template-columns: repeat(4, 1fr) !important; }
-    #admin-panel-dashboard .admin-stat-card { padding: 8px 6px; }
-    #admin-panel-dashboard .admin-stat-val { font-size: 14px; }
-    #admin-panel-dashboard .admin-stat-val em { font-size: 14px; }
   }
 
   ::-webkit-scrollbar { width:5px; }
@@ -5349,6 +5324,54 @@
     .welcome-palmares { flex: 1; }
   }
 
+  /* ══════════════════════════════════════════════════════
+     ADMIN DASHBOARD — OPTIMISATION MOBILE (priorité haute)
+  ══════════════════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    /* Stats : 4 cartes compactes sur une seule ligne */
+    body.admin-mode #admin-panel-dashboard .admin-stats-row {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 6px !important;
+      margin-bottom: 14px !important;
+    }
+    body.admin-mode #admin-panel-dashboard .admin-stat-card {
+      padding: 10px 6px !important;
+      border-radius: 12px !important;
+    }
+    body.admin-mode #admin-panel-dashboard .admin-stat-val {
+      font-size: 15px !important;
+    }
+    body.admin-mode #admin-panel-dashboard .admin-stat-val em {
+      font-size: 15px !important;
+    }
+    body.admin-mode #admin-panel-dashboard .admin-stat-label {
+      font-size: 9px !important;
+      line-height: 1.3 !important;
+    }
+    body.admin-mode #admin-panel-dashboard .admin-stat-delta {
+      font-size: 8.5px !important;
+    }
+    /* À faire + Activité récente : pleine largeur, À faire en premier */
+    body.admin-mode .admin-dash-two-col {
+      grid-template-columns: 1fr !important;
+      gap: 14px !important;
+    }
+    body.admin-mode .admin-dash-todos { order: 1 !important; }
+    body.admin-mode .admin-dash-activite { order: 2 !important; }
+  }
+  @media (max-width: 600px) {
+    body.admin-mode #admin-panel-dashboard .admin-stats-row {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 4px !important;
+    }
+    body.admin-mode #admin-panel-dashboard .admin-stat-card {
+      padding: 8px 4px !important;
+    }
+    body.admin-mode #admin-panel-dashboard .admin-stat-val,
+    body.admin-mode #admin-panel-dashboard .admin-stat-val em {
+      font-size: 13px !important;
+    }
+  }
 
   </style>
 </head>
