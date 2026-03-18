@@ -4763,8 +4763,16 @@
       flex-direction: column;
       gap: 16px;
     }
-    .todo-aside { order: -1; }
+    .todo-aside { order: -1; width: 100%; }
     .agenda-block { order: 0; }
+    /* To-do : 2 colonnes côte à côte sur mobile */
+    .todo-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 12px;
+      align-items: start;
+    }
+    .todo-col .todo-item:last-child { border-bottom: none; }
 
     /* ── Bannière bienvenue : restructuration mobile ── */
     .welcome-banner {
@@ -6565,41 +6573,47 @@
         <!-- ── TO-DO LIST (à droite de l'agenda) ── -->
         <div class="card todo-aside">
           <div class="card-title">Ma to-do list <a onclick="openAddTodo()">+ Ajouter</a></div>
-          <div class="todo-section-label">Aujourd'hui</div>
-          <div class="todo-item" id="todo-1">
-            <button class="todo-check" onclick="toggleTodo('todo-1')" title="Marquer comme fait"></button>
-            <div class="todo-body">
-              <span class="todo-text">Finir le module 3 – Comptabilité</span>
-              <span class="todo-tag todo-tag-formation">Formation</span>
+          <div class="todo-cols">
+            <div class="todo-col">
+              <div class="todo-section-label">Aujourd'hui</div>
+              <div class="todo-item" id="todo-1">
+                <button class="todo-check" onclick="toggleTodo('todo-1')" title="Marquer comme fait"></button>
+                <div class="todo-body">
+                  <span class="todo-text">Finir le module 3 – Comptabilité</span>
+                  <span class="todo-tag todo-tag-formation">Formation</span>
+                </div>
+              </div>
+              <div class="todo-item" id="todo-2">
+                <button class="todo-check" onclick="toggleTodo('todo-2')" title="Marquer comme fait"></button>
+                <div class="todo-body">
+                  <span class="todo-text">Répondre à Clara B.</span>
+                  <span class="todo-tag todo-tag-reseau">Réseau</span>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="todo-item" id="todo-2">
-            <button class="todo-check" onclick="toggleTodo('todo-2')" title="Marquer comme fait"></button>
-            <div class="todo-body">
-              <span class="todo-text">Répondre à Clara B.</span>
-              <span class="todo-tag todo-tag-reseau">Réseau</span>
-            </div>
-          </div>
-          <div class="todo-section-label" style="margin-top:14px;">Cette semaine</div>
-          <div class="todo-item" id="todo-3">
-            <button class="todo-check" onclick="toggleTodo('todo-3')" title="Marquer comme fait"></button>
-            <div class="todo-body">
-              <span class="todo-text">Préparer la session Q&amp;R du jeudi</span>
-              <span class="todo-tag todo-tag-event">Événement</span>
-            </div>
-          </div>
-          <div class="todo-item" id="todo-4">
-            <button class="todo-check" onclick="toggleTodo('todo-4')" title="Marquer comme fait"></button>
-            <div class="todo-body">
-              <span class="todo-text">Publier dans la communauté</span>
-              <span class="todo-tag todo-tag-communaute">Communauté</span>
-            </div>
-          </div>
-          <div class="todo-item" id="todo-5">
-            <button class="todo-check" onclick="toggleTodo('todo-5')" title="Marquer comme fait"></button>
-            <div class="todo-body">
-              <span class="todo-text">Finaliser mon plan d'action mensuel</span>
-              <span class="todo-tag todo-tag-strategie">Stratégie</span>
+            <div class="todo-col">
+              <div class="todo-section-label">Cette semaine</div>
+              <div class="todo-item" id="todo-3">
+                <button class="todo-check" onclick="toggleTodo('todo-3')" title="Marquer comme fait"></button>
+                <div class="todo-body">
+                  <span class="todo-text">Préparer la session Q&amp;R du jeudi</span>
+                  <span class="todo-tag todo-tag-event">Événement</span>
+                </div>
+              </div>
+              <div class="todo-item" id="todo-4">
+                <button class="todo-check" onclick="toggleTodo('todo-4')" title="Marquer comme fait"></button>
+                <div class="todo-body">
+                  <span class="todo-text">Publier dans la communauté</span>
+                  <span class="todo-tag todo-tag-communaute">Communauté</span>
+                </div>
+              </div>
+              <div class="todo-item" id="todo-5">
+                <button class="todo-check" onclick="toggleTodo('todo-5')" title="Marquer comme fait"></button>
+                <div class="todo-body">
+                  <span class="todo-text">Finaliser mon plan d'action mensuel</span>
+                  <span class="todo-tag todo-tag-strategie">Stratégie</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
