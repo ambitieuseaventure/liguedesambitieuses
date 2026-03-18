@@ -4920,13 +4920,39 @@
     #member-widget-panel { width: min(340px, calc(100vw - 28px)); }
 
     /* ── Agenda : calendrier scrollable horizontalement ── */
-    .agenda-block { overflow: visible; }
+    /*
+       CORRECTIF : overflow:visible sur .agenda-block permettait au
+       week-grid (500px) de déborder HORS du bloc → c'est toute la
+       PAGE qui scrollait horizontalement.
+       overflow:hidden contraint le bloc à sa largeur (≈ 100vw - 28px),
+       ce qui force .agenda-week-view à déclencher son propre scrollbar
+       horizontal interne. Le contenu est ainsi confiné au calendrier.
+    */
+    .agenda-block { overflow: hidden; }
     .agenda-week-view {
       overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      /* Permet à la grille de header de scroller avec le body */
+      display: flex;
+      flex-direction: column;
+    }
+    /* Largeur min de la grille = 7 jours lisibles */
+    .week-grid { min-width: 480px; }
+    /* Hauteur réduite sur mobile : 380px est trop haut pour un écran de poche */
+    #week-scroll-area {
+      min-width: 480px;
+      max-height: 210px !important; /* Override l'inline style */
+      overflow-y: auto;
+      overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
     }
-    .week-grid { min-width: 500px; }
-    #week-scroll-area { min-width: 500px; }
+    /* En-tête agenda : masquer la légende couleurs pour gagner de la place */
+    .agenda-legend { display: none; }
+    /* Header agenda : padding réduit */
+    .agenda-header { padding: 12px 14px 10px; gap: 8px; }
+    /* Centrer le label de semaine, réduire le min-width */
+    .agenda-current-label { min-width: 110px; font-size: 12px; }
 
     /* ── Dashboard : to-do list AVANT le calendrier ── */
     .agenda-todo-row {
@@ -5015,9 +5041,11 @@
       backdrop-filter: blur(24px) saturate(200%);
       -webkit-backdrop-filter: blur(24px) saturate(200%);
       border-top: 1px solid rgba(235, 193, 76, 0.18);
-      padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+      /* Padding bottom inclut la safe area (Dynamic Island / encoche) */
+      padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
       justify-content: space-around;
       align-items: stretch;
+      box-sizing: border-box;
     }
     .mob-nav-item {
       display: flex;
@@ -5029,6 +5057,8 @@
       cursor: pointer;
       border-radius: 14px;
       flex: 1;
+      /* Éviter l'étirement excessif sur iPad/large écrans */
+      max-width: 100px;
       min-height: 52px;
       transition: background 0.18s ease;
       position: relative;
@@ -5349,6 +5379,25 @@
      will-change: transform crée un nouveau contexte de composition ce qui
      évite le scintillement / décalage de la bottom nav lors du rebond. */
   @media (max-width: 900px) {
+    /* ─────────────────────────────────────────────────────────────────
+       BUG iOS SAFARI CRITIQUE : body { overflow-x: hidden } crée un
+       nouveau scroll container → position:fixed est ancré au bas du
+       CONTENU (page entière) plutôt qu'au bas du VIEWPORT.
+       Résultat : la bottom nav n'est visible qu'après avoir scrollé
+       jusqu'en bas.
+       FIX : overflow-x:clip fait le même clipping visuel SANS créer
+       de scroll container → position:fixed retrouve le viewport.
+       overflow-x:clip est supporté depuis Safari 15.4 (iOS 15.4, 2022).
+       Pour les rares appareils < 15.4 on ajoute overflow-x:hidden sur
+       .main comme filet de sécurité contre le scroll horizontal.
+    ───────────────────────────────────────────────────────────────── */
+    body {
+      overflow-x: clip;
+    }
+    .main {
+      overflow-x: hidden; /* Fallback pour Safari < 15.4 */
+    }
+
     #mobile-bottom-nav {
       will-change: transform;
       -webkit-transform: translateZ(0);
