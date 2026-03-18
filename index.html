@@ -461,6 +461,8 @@
     font-weight: 700;
     box-shadow: 0 1px 4px rgba(20,36,53,0.1);
   }
+  /* Bouton "3 Jours" : uniquement sur mobile */
+  #btn-view-3day { display: none; }
 
   /* Légende */
   .agenda-legend {
@@ -4952,7 +4954,41 @@
     /* Header agenda : padding réduit */
     .agenda-header { padding: 12px 14px 10px; gap: 8px; }
     /* Centrer le label de semaine, réduire le min-width */
-    .agenda-current-label { min-width: 110px; font-size: 12px; }
+    .agenda-current-label { min-width: 100px; font-size: 12px; }
+
+    /* ── Vue 3 jours sur mobile ── */
+    /* Swap : "Semaine" disparaît, "3 Jours" apparaît */
+    #btn-view-week  { display: none; }
+    #btn-view-3day  { display: block; }
+
+    /* Quand la classe view-3day est active sur le conteneur :
+       - grille 3 colonnes (colonne horaire étroite + 3 jours égaux)
+       - suppression du min-width 480px → le calendrier rentre dans tout écran */
+    #agenda-week-view.view-3day .week-grid {
+      grid-template-columns: 36px repeat(3, 1fr);
+      min-width: 0;
+    }
+    #agenda-week-view.view-3day #week-scroll-area {
+      min-width: 0 !important;
+    }
+    /* Colonne horaire plus étroite */
+    #agenda-week-view.view-3day .week-time-col {
+      width: 36px;
+    }
+    #agenda-week-view.view-3day .week-time-slot {
+      font-size: 9px;
+      padding-right: 3px;
+      justify-content: flex-end;
+    }
+    /* Titres d'événements tronqués pour tenir dans les colonnes */
+    #agenda-week-view.view-3day .week-event {
+      font-size: 10px;
+      padding: 3px 4px;
+      line-height: 1.25;
+    }
+    #agenda-week-view.view-3day .week-event-time {
+      font-size: 9px;
+    }
 
     /* ── Dashboard : to-do list AVANT le calendrier ── */
     .agenda-todo-row {
@@ -7385,6 +7421,7 @@
               <div class="legend-item"><div class="legend-dot" style="background:#4a9e6a"></div>Q&amp;R Live</div>
             </div>
             <div class="agenda-view-toggle">
+              <button class="agenda-view-btn" id="btn-view-3day" onclick="agendaSetView('3day')">3 Jours</button>
               <button class="agenda-view-btn active" id="btn-view-week" onclick="agendaSetView('week')">Semaine</button>
               <button class="agenda-view-btn" id="btn-view-month" onclick="agendaSetView('month')">Mois</button>
             </div>
@@ -19130,53 +19167,49 @@
   // AGENDA
   // ══════════════════════════════════════
   (function() {
-    // Données fictives d'événements
     var today = new Date();
     today.setHours(0,0,0,0);
 
     function dateKey(y, m, d) { return y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0'); }
+    function addDays(base, n) { var d = new Date(base); d.setDate(d.getDate() + n); return d; }
 
-    // Référence : semaine courante (lundi)
     function getMonday(d) {
-      var day = d.getDay();
-      var diff = (day === 0 ? -6 : 1 - day);
       var mon = new Date(d);
-      mon.setDate(d.getDate() + diff);
+      mon.setDate(d.getDate() + (d.getDay() === 0 ? -6 : 1 - d.getDay()));
       mon.setHours(0,0,0,0);
       return mon;
     }
 
-    // Génère des événements relatifs à today
     function buildEvents() {
       var ev = [];
-      var addDays = function(base, n) { var d = new Date(base); d.setDate(d.getDate() + n); return d; };
       function mk(date, h, m, dur, type, title, detail) {
         ev.push({ date: date, h: h, m: m, dur: dur, type: type, title: title, detail: detail || '' });
       }
-      mk(today, 10, 0, 60, 'coaching', 'Coaching 1-1 · Ana', 'Séance mensuelle avec Ana — préparation stratégie Q2');
-      mk(addDays(today,1), 18, 0, 75, 'qr', 'Q&R Live Business', 'Session questions-réponses hebdomadaire avec la communauté');
-      mk(addDays(today,2), 9, 0, 30, 'deadline', 'Deadline : Plan d\'action Q2', 'Remettre ton plan d\'action trimestriel personnalisé');
-      mk(addDays(today,3), 14, 30, 90, 'masterclass', 'Masterclass : Fixer ses prix', 'Avec Camille Royer — inscription requise');
-      mk(addDays(today,4), 11, 0, 60, 'event', 'Petit-déj Business en ligne', 'Échange convivial entre membres · Lien Zoom envoyé');
-      mk(addDays(today,5), 16, 0, 45, 'coaching', 'Coaching collectif · Audrey', 'Focus : positionnement & offre');
-      mk(addDays(today,7), 9, 30, 30, 'deadline', 'Deadline : Défi Marketing', 'Soumettre ton défi Instagram 30 jours');
-      mk(addDays(today,-1), 18, 0, 60, 'event', 'Apéro Business virtuel', 'Networking décontracté entre Ambitieuses');
-      mk(addDays(today,10), 15, 0, 90, 'masterclass', 'Masterclass : LinkedIn Pro', 'Avec Julie Marchand — développer son réseau B2B');
-      mk(addDays(today,12), 10, 0, 60, 'coaching', 'Coaching 1-1 · Audrey', 'Suivi mensuel — résultats & ajustements');
-      mk(addDays(today,14), 11, 0, 30, 'deadline', 'Bilan mensuel à rendre', 'Auto-évaluation de tes objectifs du mois');
-      mk(addDays(today,16), 19, 0, 75, 'qr', 'Q&R Live Business', 'Session hebdomadaire');
-      mk(addDays(today,20), 14, 0, 60, 'event', 'Atelier live : Branding visuel', 'Atelier interactif avec l\'équipe · Places limitées');
+      mk(today,              10,  0, 60, 'coaching',    'Coaching 1-1 \u00b7 Ana',           'S\u00e9ance mensuelle avec Ana \u2014 pr\u00e9paration strat\u00e9gie Q2');
+      mk(addDays(today, 1),  18,  0, 75, 'qr',          'Q&R Live Business',            'Session questions-r\u00e9ponses hebdomadaire avec la communaut\u00e9');
+      mk(addDays(today, 2),   9,  0, 30, 'deadline',    'Deadline : Plan d\'action Q2', 'Remettre ton plan d\'action trimestriel personnalis\u00e9');
+      mk(addDays(today, 3),  14, 30, 90, 'masterclass', 'Masterclass : Fixer ses prix', 'Avec Camille Royer \u2014 inscription requise');
+      mk(addDays(today, 4),  11,  0, 60, 'event',       'Petit-d\u00e9j Business en ligne',  '\u00c9change convivial entre membres \u00b7 Lien Zoom envoy\u00e9');
+      mk(addDays(today, 5),  16,  0, 45, 'coaching',    'Coaching collectif \u00b7 Audrey',  'Focus : positionnement & offre');
+      mk(addDays(today, 7),   9, 30, 30, 'deadline',    'Deadline : D\u00e9fi Marketing',    'Soumettre ton d\u00e9fi Instagram 30 jours');
+      mk(addDays(today, -1), 18,  0, 60, 'event',       'Ap\u00e9ro Business virtuel',       'Networking d\u00e9contract\u00e9 entre Ambitieuses');
+      mk(addDays(today, 10), 15,  0, 90, 'masterclass', 'Masterclass : LinkedIn Pro',   'Avec Julie Marchand \u2014 d\u00e9velopper son r\u00e9seau B2B');
+      mk(addDays(today, 12), 10,  0, 60, 'coaching',    'Coaching 1-1 \u00b7 Audrey',        'Suivi mensuel \u2014 r\u00e9sultats & ajustements');
+      mk(addDays(today, 14), 11,  0, 30, 'deadline',    'Bilan mensuel \u00e0 rendre',       'Auto-\u00e9valuation de tes objectifs du mois');
+      mk(addDays(today, 16), 19,  0, 75, 'qr',          'Q&R Live Business',            'Session hebdomadaire');
+      mk(addDays(today, 20), 14,  0, 60, 'event',       'Atelier live : Branding visuel','Atelier interactif avec l\'équipe · Places limitées');
       return ev;
     }
 
-    var allEvents = buildEvents();
-    var currentView = 'week';
-    var currentWeekStart = getMonday(today);
-    var currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    var allEvents           = buildEvents();
+    var currentView         = 'week';
+    var currentWeekStart    = getMonday(today);
+    var currentThreeDayStart = addDays(today, -1); // hier \u2192 hier/aujourd\'hui/demain
+    var currentMonth        = new Date(today.getFullYear(), today.getMonth(), 1);
 
-    var DAYS_FR = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-    var MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-    var HOURS = [7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+    var DAYS_FR   = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+    var MONTHS_FR = ['Janvier','F\u00e9vrier','Mars','Avril','Mai','Juin','Juillet','A\u00fbt','Septembre','Octobre','Novembre','D\u00e9cembre'];
+    var HOURS     = [7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
     // Tooltip
     var tooltip = document.createElement('div');
@@ -19185,10 +19218,9 @@
     document.body.appendChild(tooltip);
 
     function showTooltip(e, ev) {
-      tooltip.querySelector('.agenda-tooltip-title').textContent = ev.title;
       var typeLabel = {event:'Événement',coaching:'Coaching',deadline:'Deadline',masterclass:'Masterclass',qr:'Q&R Live'}[ev.type] || ev.type;
-      var timeStr = String(ev.h).padStart(2,'0') + 'h' + String(ev.m).padStart(2,'0') + ' · ' + ev.dur + 'min';
-      tooltip.querySelector('.agenda-tooltip-meta').textContent = typeLabel + ' · ' + timeStr + (ev.detail ? '\n' + ev.detail : '');
+      tooltip.querySelector('.agenda-tooltip-title').textContent = ev.title;
+      tooltip.querySelector('.agenda-tooltip-meta').textContent  = typeLabel + ' \u00b7 ' + String(ev.h).padStart(2,'0') + 'h' + String(ev.m).padStart(2,'0') + ' \u00b7 ' + ev.dur + 'min' + (ev.detail ? '\n' + ev.detail : '');
       tooltip.classList.add('visible');
       moveTooltip(e);
     }
@@ -19196,7 +19228,7 @@
       var x = e.clientX + 14, y = e.clientY - 10;
       if (x + 230 > window.innerWidth) x = e.clientX - 240;
       tooltip.style.left = x + 'px';
-      tooltip.style.top = y + 'px';
+      tooltip.style.top  = y + 'px';
     }
     function hideTooltip() { tooltip.classList.remove('visible'); }
     document.addEventListener('mousemove', moveTooltip);
@@ -19204,57 +19236,46 @@
     function eventsForDate(d) {
       var key = dateKey(d.getFullYear(), d.getMonth(), d.getDate());
       return allEvents.filter(function(ev) {
-        var ek = dateKey(ev.date.getFullYear(), ev.date.getMonth(), ev.date.getDate());
-        return ek === key;
+        return dateKey(ev.date.getFullYear(), ev.date.getMonth(), ev.date.getDate()) === key;
       });
     }
-
     function sameDay(a, b) {
       return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
     }
 
-    // ── VUE SEMAINE ──
-    function renderWeek() {
+    // ── Rendu commun : N jours à partir de startDate ──
+    function renderDayGrid(startDate, numDays) {
       var headersEl = document.getElementById('week-headers');
-      var bodyEl = document.getElementById('week-body');
+      var bodyEl    = document.getElementById('week-body');
       if (!headersEl || !bodyEl) return;
 
-      // Headers
+      // En-têtes des jours
       var hHtml = '<div class="week-time-col week-day-header" style="border:none;"></div>';
-      for (var i=0; i<7; i++) {
-        var d = new Date(currentWeekStart);
-        d.setDate(d.getDate() + i);
-        var isToday = sameDay(d, today);
-        hHtml += '<div class="week-day-header' + (isToday?' today':'') + '">';
-        hHtml += '<div class="week-day-name">' + DAYS_FR[i] + '</div>';
-        hHtml += '<div class="week-day-num">' + d.getDate() + '</div>';
+      for (var i = 0; i < numDays; i++) {
+        var d = addDays(startDate, i);
+        var dowIdx = (d.getDay() + 6) % 7; // 0=Lun … 6=Dim
+        hHtml += '<div class="week-day-header' + (sameDay(d, today) ? ' today' : '') + '">';
+        hHtml += '<div class="week-day-name">' + DAYS_FR[dowIdx]  + '</div>';
+        hHtml += '<div class="week-day-num">'  + d.getDate()      + '</div>';
         hHtml += '</div>';
       }
       headersEl.innerHTML = hHtml;
 
-      // Body
-      var bHtml = '';
-      // Time col
-      bHtml += '<div class="week-time-col">';
-      HOURS.forEach(function(h) {
-        bHtml += '<div class="week-time-slot">' + h + 'h</div>';
-      });
+      // Corps (colonne horaire + colonnes jours)
+      var bHtml = '<div class="week-time-col">';
+      HOURS.forEach(function(h) { bHtml += '<div class="week-time-slot">' + h + 'h</div>'; });
       bHtml += '</div>';
 
-      // Day cols
-      for (var i=0; i<7; i++) {
-        var d = new Date(currentWeekStart);
-        d.setDate(d.getDate() + i);
+      for (var i = 0; i < numDays; i++) {
+        var d = addDays(startDate, i);
         var dayEvs = eventsForDate(d);
         bHtml += '<div class="week-day-col">';
         HOURS.forEach(function(h) {
           bHtml += '<div class="week-slot-cell">';
-          // Events starting at this hour
-          dayEvs.forEach(function(ev, idx) {
+          dayEvs.forEach(function(ev) {
             if (ev.h === h) {
-              var topPct = (ev.m / 60) * 52;
-              var heightPx = Math.max(28, (ev.dur / 60) * 52);
-              bHtml += '<div class="week-event ev-' + ev.type + '" style="top:' + topPct + 'px;height:' + heightPx + 'px;" '
+              bHtml += '<div class="week-event ev-' + ev.type + '" '
+                + 'style="top:' + (ev.m / 60 * 52) + 'px;height:' + Math.max(28, ev.dur / 60 * 52) + 'px;" '
                 + 'data-ev-idx="' + allEvents.indexOf(ev) + '" '
                 + 'onmouseenter="window._agendaHover(event,this)" onmouseleave="window._agendaLeave()">'
                 + ev.title
@@ -19268,119 +19289,122 @@
       }
       bodyEl.innerHTML = bHtml;
 
-      // Scroll to 8h
       setTimeout(function() {
-        var scroll = document.getElementById('week-scroll-area');
-        if (scroll) scroll.scrollTop = 52; // 1 slot = 8h
+        var s = document.getElementById('week-scroll-area');
+        if (s) s.scrollTop = 52; // défile jusqu'à 8h
       }, 50);
     }
+
+    // Vues semaine (7j) et 3 jours partagent le même renderDayGrid
+    function renderWeek()      { renderDayGrid(currentWeekStart,     7); }
+    function renderThreeDays() { renderDayGrid(currentThreeDayStart, 3); }
 
     // ── VUE MOIS ──
     function renderMonth() {
       var grid = document.getElementById('month-grid');
       if (!grid) return;
-
-      var year = currentMonth.getFullYear();
+      var year  = currentMonth.getFullYear();
       var month = currentMonth.getMonth();
-      var firstDay = new Date(year, month, 1);
-      var lastDay = new Date(year, month+1, 0);
-
-      // Start from previous Monday
-      var startDay = new Date(firstDay);
+      var lastDay  = new Date(year, month + 1, 0);
+      var startDay = new Date(year, month, 1);
       var dow = startDay.getDay();
-      var diff = dow === 0 ? -6 : 1 - dow;
-      startDay.setDate(startDay.getDate() + diff);
+      startDay.setDate(startDay.getDate() + (dow === 0 ? -6 : 1 - dow));
 
-      var html = '';
-      var cur = new Date(startDay);
-      var weeks = 0;
+      var html = '', cur = new Date(startDay), weeks = 0;
       while (cur <= lastDay || weeks < 5) {
-        for (var d=0; d<7; d++) {
+        for (var d = 0; d < 7; d++) {
           var isOther = cur.getMonth() !== month;
-          var isTod = sameDay(cur, today);
-          html += '<div class="month-cell' + (isOther?' other-month':'') + (isTod?' today':'') + '">';
+          var isTod   = sameDay(cur, today);
+          html += '<div class="month-cell' + (isOther ? ' other-month' : '') + (isTod ? ' today' : '') + '">';
           html += '<div class="month-cell-num">' + cur.getDate() + '</div>';
           var dayEvs = eventsForDate(cur);
-          var maxShow = 3;
-          dayEvs.slice(0, maxShow).forEach(function(ev) {
+          dayEvs.slice(0, 3).forEach(function(ev) {
             html += '<div class="month-event-pill ev-' + ev.type + '" '
               + 'data-ev-idx="' + allEvents.indexOf(ev) + '" '
               + 'onmouseenter="window._agendaHover(event,this)" onmouseleave="window._agendaLeave()">'
-              + ev.title.split('·')[0].trim().substring(0,22)
-              + '</div>';
+              + ev.title.split('\u00b7')[0].trim().substring(0, 22) + '</div>';
           });
-          if (dayEvs.length > maxShow) {
-            html += '<div class="month-more">+' + (dayEvs.length - maxShow) + ' de plus</div>';
-          }
+          if (dayEvs.length > 3) html += '<div class="month-more">+' + (dayEvs.length - 3) + ' de plus</div>';
           html += '</div>';
           cur.setDate(cur.getDate() + 1);
         }
-        weeks++;
-        if (weeks >= 6) break;
+        if (++weeks >= 6) break;
       }
       grid.innerHTML = html;
     }
 
-    // Tooltip hover
     window._agendaHover = function(e, el) {
       var idx = parseInt(el.dataset.evIdx);
       if (!isNaN(idx) && allEvents[idx]) showTooltip(e, allEvents[idx]);
     };
     window._agendaLeave = function() { hideTooltip(); };
 
-    // Label de navigation
+    // ── Label de navigation ──
     function updateLabel() {
       var label = document.getElementById('agenda-label');
       if (!label) return;
       if (currentView === 'week') {
-        var end = new Date(currentWeekStart);
-        end.setDate(end.getDate() + 6);
-        var s = currentWeekStart;
-        if (s.getMonth() === end.getMonth()) {
-          label.textContent = DAYS_FR[0] + ' ' + s.getDate() + ' – ' + DAYS_FR[6] + ' ' + end.getDate() + ' ' + MONTHS_FR[end.getMonth()];
-        } else {
-          label.textContent = s.getDate() + ' ' + MONTHS_FR[s.getMonth()] + ' – ' + end.getDate() + ' ' + MONTHS_FR[end.getMonth()];
-        }
+        var s = currentWeekStart, e = addDays(s, 6);
+        label.textContent = s.getMonth() === e.getMonth()
+          ? DAYS_FR[0] + ' ' + s.getDate() + ' \u2013 ' + DAYS_FR[6] + ' ' + e.getDate() + ' ' + MONTHS_FR[e.getMonth()]
+          : s.getDate() + ' ' + MONTHS_FR[s.getMonth()] + ' \u2013 ' + e.getDate() + ' ' + MONTHS_FR[e.getMonth()];
+      } else if (currentView === '3day') {
+        var s = currentThreeDayStart, e = addDays(s, 2);
+        var si = (s.getDay() + 6) % 7, ei = (e.getDay() + 6) % 7;
+        label.textContent = s.getMonth() === e.getMonth()
+          ? DAYS_FR[si] + ' ' + s.getDate() + ' \u2013 ' + DAYS_FR[ei] + ' ' + e.getDate() + ' ' + MONTHS_FR[e.getMonth()]
+          : s.getDate() + ' ' + MONTHS_FR[s.getMonth()] + ' \u2013 ' + e.getDate() + ' ' + MONTHS_FR[e.getMonth()];
       } else {
         label.textContent = MONTHS_FR[currentMonth.getMonth()] + ' ' + currentMonth.getFullYear();
       }
     }
 
-    // Navigation
+    // ── Navigation ──
     window.agendaNav = function(dir) {
-      if (currentView === 'week') {
-        currentWeekStart.setDate(currentWeekStart.getDate() + dir * 7);
-        renderWeek();
-      } else {
-        currentMonth.setMonth(currentMonth.getMonth() + dir);
-        renderMonth();
-      }
+      if      (currentView === 'week')  { currentWeekStart.setDate(currentWeekStart.getDate() + dir * 7); renderWeek(); }
+      else if (currentView === '3day')  { currentThreeDayStart = addDays(currentThreeDayStart, dir * 3);  renderThreeDays(); }
+      else                              { currentMonth.setMonth(currentMonth.getMonth() + dir);            renderMonth(); }
       updateLabel();
     };
 
     window.agendaGoToday = function() {
-      currentWeekStart = getMonday(today);
-      currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-      if (currentView === 'week') renderWeek();
-      else renderMonth();
+      currentWeekStart     = getMonday(today);
+      currentThreeDayStart = addDays(today, -1);
+      currentMonth         = new Date(today.getFullYear(), today.getMonth(), 1);
+      if      (currentView === 'week')  renderWeek();
+      else if (currentView === '3day')  renderThreeDays();
+      else                              renderMonth();
       updateLabel();
     };
 
     window.agendaSetView = function(view) {
       currentView = view;
-      document.getElementById('agenda-week-view').style.display = view === 'week' ? 'block' : 'none';
-      document.getElementById('agenda-month-view').style.display = view === 'month' ? 'block' : 'none';
-      document.getElementById('btn-view-week').classList.toggle('active', view === 'week');
-      document.getElementById('btn-view-month').classList.toggle('active', view === 'month');
-      if (view === 'week') renderWeek();
-      else renderMonth();
+      var weekEl  = document.getElementById('agenda-week-view');
+      var monthEl = document.getElementById('agenda-month-view');
+      // Les vues 'week' et '3day' réutilisent le même conteneur DOM
+      weekEl.style.display  = (view === 'week' || view === '3day') ? 'block' : 'none';
+      monthEl.style.display = view === 'month' ? 'block' : 'none';
+      // Classe CSS qui passe la grille de 7 colonnes à 3 colonnes
+      weekEl.classList.toggle('view-3day', view === '3day');
+      // Boutons actifs
+      ['3day', 'week', 'month'].forEach(function(v) {
+        var btn = document.getElementById('btn-view-' + v);
+        if (btn) btn.classList.toggle('active', v === view);
+      });
+      if      (view === 'week')  renderWeek();
+      else if (view === '3day')  renderThreeDays();
+      else                       renderMonth();
       updateLabel();
     };
 
-    // Init
+    // Init : vue 3 jours sur mobile (\u2264 900px), semaine sur desktop
     document.addEventListener('DOMContentLoaded', function() {
-      renderWeek();
-      updateLabel();
+      if (window.innerWidth <= 900) {
+        agendaSetView('3day');
+      } else {
+        renderWeek();
+        updateLabel();
+      }
     });
 
   })();
