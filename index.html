@@ -393,6 +393,10 @@
     border-bottom: 1px solid rgba(20,36,53,0.07);
     flex-wrap: wrap;
     gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: white;
   }
 
   .agenda-header-left {
@@ -604,6 +608,7 @@
     border-bottom: 1px solid rgba(20,36,53,0.07);
   }
   .month-day-name {
+    min-width: 0;   /* idem : évite que les noms de jours élargissent les colonnes */
     text-align: center;
     padding: 10px 4px;
     font-size: 10px;
@@ -619,6 +624,8 @@
   }
 
   .month-cell {
+    min-width: 0;        /* empêche la colonne de s'étirer sur le min-content des pills */
+    overflow: hidden;    /* coupe le contenu qui dépasse la cellule */
     min-height: 90px;
     border-right: 1px solid rgba(20,36,53,0.05);
     border-bottom: 1px solid rgba(20,36,53,0.05);
