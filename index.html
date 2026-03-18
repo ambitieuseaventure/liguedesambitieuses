@@ -4750,7 +4750,7 @@
       left: 0;
       right: 0;
       bottom: calc(72px + env(safe-area-inset-bottom));
-      display: flex !important;
+      display: flex;
       flex-direction: column;
       overflow: hidden;
       background: var(--bg-soft, #f5f6fa);
@@ -12916,7 +12916,7 @@
       p.style.display = 'none';
     });
     const target = document.getElementById('page-' + page);
-    if (target) { target.style.display = 'block'; target.classList.add('active'); window.scrollTo(0, 0); }
+    if (target) { target.style.display = (target.id === 'page-messages') ? 'flex' : 'block'; target.classList.add('active'); window.scrollTo(0, 0); }
 
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     const map = {
