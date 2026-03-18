@@ -2151,6 +2151,13 @@
     #bilan-mensuel-grid, #audit-express-grid { grid-template-columns:1fr !important; }
     #bilan-steps-grid { grid-template-columns:1fr !important; }
   }
+  @media (max-width:600px) {
+    #coaching-main-grid { display:flex !important; flex-direction:column; gap:14px; }
+    #coaching-col-left, #coaching-col-right { display:contents !important; }
+    #coaching-card-prochaine  { order:1; margin-bottom:0; }
+    #coaching-booking-card    { order:2; }
+    #coaching-card-historique { order:3; }
+  }
   .hotline-audio-play {
     width:28px; height:28px; border-radius:50%;
     border:1px solid rgba(255,255,255,0.15); background:transparent;
@@ -8515,9 +8522,9 @@
         <div class="section-title"><em>Coaching</em> 1-1 mensuel</div>
         <div class="section-sub">1h par mois avec Ana et/ou Audrey, rien que pour toi · Réservé aux Visionnaires</div>
       </div>
-      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:24px;">
-        <div>
-          <div class="card" style="background:linear-gradient(135deg,var(--navy-darkest),var(--navy));border:1px solid rgba(235,193,76,0.2);color:white;padding:28px;margin-bottom:18px;">
+      <div id="coaching-main-grid" style="display:grid;grid-template-columns:1.4fr 1fr;gap:24px;">
+        <div id="coaching-col-left">
+          <div id="coaching-card-prochaine" class="card" style="background:linear-gradient(135deg,var(--navy-darkest),var(--navy));border:1px solid rgba(235,193,76,0.2);color:white;padding:28px;margin-bottom:18px;">
             <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;">Prochaine séance · Mars 2025</div>
             <h2 style="font-family:Playfair Display,serif;font-size:22px;color:white;margin-bottom:8px;">📞 Coaching mensuel avec Audrey</h2>
             <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.65;margin-bottom:22px;">Une heure entière dédiée à toi, ta vision et tes défis du moment.</p>
@@ -8528,7 +8535,7 @@
             </div>
             <button class="btn-primary">Préparer ma séance →</button>
           </div>
-          <div class="card">
+          <div id="coaching-card-historique" class="card">
             <div class="card-title">Historique de mes séances</div>
             <div style="display:flex;flex-direction:column;gap:10px;">
               <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--bg);border-radius:10px;"><div style="font-size:22px;">📞</div><div style="flex:1;"><strong style="font-size:13px;color:var(--text-dark);">Coaching Février · avec Ana</strong><div style="font-size:12px;color:var(--text-light);">Focus : offre signature &amp; positionnement</div></div><button class="dl-btn" style="font-size:11px;padding:5px 10px;">Notes</button></div>
@@ -8536,7 +8543,7 @@
             </div>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
+        <div id="coaching-col-right" style="display:flex;flex-direction:column;gap:14px;">
 
           <!-- BLOC RÉSERVATION -->
           <div class="card" style="border:1px solid rgba(235,193,76,0.3);padding:0;overflow:hidden;" id="coaching-booking-card">
