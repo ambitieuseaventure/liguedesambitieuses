@@ -2760,6 +2760,29 @@
     }
     .admin-table { min-width:580px; }
 
+    /* ── Dashboard admin mobile ── */
+    /* Stats : 4 cartes compactes sur une seule ligne */
+    #admin-panel-dashboard .admin-stats-row {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    #admin-panel-dashboard .admin-stat-card {
+      padding: 10px 8px;
+      border-radius: 12px;
+    }
+    #admin-panel-dashboard .admin-stat-val { font-size: 16px; }
+    #admin-panel-dashboard .admin-stat-val em { font-size: 16px; }
+    #admin-panel-dashboard .admin-stat-label { font-size: 9.5px; line-height: 1.3; }
+    #admin-panel-dashboard .admin-stat-delta { font-size: 9px; }
+    /* À faire + Activité récente : pleine largeur, À faire en premier */
+    .admin-dash-two-col {
+      grid-template-columns: 1fr !important;
+      gap: 14px;
+    }
+    .admin-dash-todos { order: 1; }
+    .admin-dash-activite { order: 2; }
+
     /* ── Admin bottom nav mobile ── */
     .admin-hamburger { display:none !important; }
     body.admin-mode #admin-mobile-bottom-nav {
@@ -2822,6 +2845,11 @@
     .admin-stat-card { padding:14px; }
     .admin-stat-val { font-size:24px; }
     .admin-panel { padding:12px; }
+    /* Dashboard : maintenir les 4 stats en ligne même sur petits écrans */
+    #admin-panel-dashboard .admin-stats-row { grid-template-columns: repeat(4, 1fr) !important; }
+    #admin-panel-dashboard .admin-stat-card { padding: 8px 6px; }
+    #admin-panel-dashboard .admin-stat-val { font-size: 14px; }
+    #admin-panel-dashboard .admin-stat-val em { font-size: 14px; }
   }
 
   ::-webkit-scrollbar { width:5px; }
@@ -9369,10 +9397,10 @@
         </div>
 
         <!-- Deux colonnes -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="admin-dash-two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
 
           <!-- Activité récente -->
-          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;">
+          <div class="admin-dash-activite" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;">
             <div style="font-family:'Playfair Display',serif;font-size:15px;color:white;margin-bottom:16px;">Activité récente</div>
             <div class="activity-feed-item">
               <div class="activity-dot" style="background:#6ecf9e;"></div>
@@ -9393,7 +9421,7 @@
           </div>
 
           <!-- Tâches à faire -->
-          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;">
+          <div class="admin-dash-todos" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;">
             <div style="font-family:'Playfair Display',serif;font-size:15px;color:white;margin-bottom:12px;">À faire <span id="admin-todos-count" style="font-size:12px;font-family:'DM Sans',sans-serif;color:rgba(255,255,255,0.3);font-style:normal;">(3 en attente)</span></div>
             <div id="admin-todos-filters" style="margin-bottom:12px;"></div>
             <div id="admin-todos-list" style="display:flex;flex-direction:column;gap:10px;"></div>
