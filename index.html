@@ -5688,6 +5688,87 @@
   }
 
   /* ══════════════════════════════════════════
+     ADMIN MESSAGERIE — Mobile optimization
+     ══════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    /* Conteneur principal : stack vertical, hauteur auto */
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] {
+      grid-template-columns: 1fr !important;
+      height: auto !important;
+    }
+
+    /* Liste des conversations → bande horizontale scrollable */
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] > div:first-child {
+      border-right: none !important;
+      border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+      display: flex !important;
+      flex-direction: row !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      padding: 10px 6px !important;
+      gap: 0;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] > div:first-child::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Header "Conversations" : masqué en mode horizontal */
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] > div:first-child > div:first-child {
+      display: none !important;
+    }
+
+    /* Chaque item : carte verticale compacte */
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] > div:first-child > div:not(:first-child) {
+      flex-shrink: 0;
+      width: 66px;
+      padding: 6px 4px !important;
+      border-bottom: none !important;
+      border-left: none !important;
+      background: transparent !important;
+    }
+
+    /* Rangée interne → colonne centrée */
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] > div:first-child > div:not(:first-child) > div {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 4px !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* Bloc nom+preview → pas de flex stretch */
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] > div:first-child > div:not(:first-child) > div > div[style*="flex:1"] {
+      flex: none !important;
+      width: 100%;
+    }
+
+    /* Nom : taille réduite, centré, tronqué */
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] > div:first-child > div:not(:first-child) > div > div[style*="flex:1"] > div:first-child {
+      font-size: 9px !important;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Preview masqué */
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] > div:first-child > div:not(:first-child) > div > div[style*="flex:1"] > div:last-child {
+      display: none !important;
+    }
+
+    /* Heure masquée (dot non-lu reste visible) */
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] > div:first-child > div:not(:first-child) > div > div[style*="font-size:10px"] {
+      display: none !important;
+    }
+
+    /* Fil de conversation : pleine largeur, hauteur adaptée */
+    body.admin-mode #admin-panel-messagerie > div[style*="grid-template-columns:280px 1fr"] > div:last-child {
+      height: 450px;
+    }
+  }
+
+  /* ══════════════════════════════════════════
      ADMIN COMMUNAUTÉ — Mobile optimization
      ══════════════════════════════════════════ */
   @media (max-width: 900px) {
