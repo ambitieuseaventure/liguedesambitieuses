@@ -5687,6 +5687,80 @@
     }
   }
 
+  /* ══════════════════════════════════════════
+     ADMIN CRM — Mobile optimization
+     ══════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    /* Stats : 4 cartes sur une ligne */
+    body.admin-mode #admin-panel-crm .admin-stats-row {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 6px !important;
+      margin-bottom: 14px !important;
+    }
+    body.admin-mode #admin-panel-crm .admin-stat-card { padding: 10px 6px !important; }
+    body.admin-mode #admin-panel-crm .admin-stat-val { font-size: 15px !important; }
+    body.admin-mode #admin-panel-crm .admin-stat-label { font-size: 9px !important; }
+    body.admin-mode #admin-panel-crm .admin-stat-delta { font-size: 8.5px !important; }
+
+    /* Pipeline : 2 colonnes × 2 lignes */
+    body.admin-mode #admin-panel-crm div[style*="grid-template-columns:repeat(4,1fr)"] {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* Tableau contacts → carte layout */
+    body.admin-mode #admin-panel-crm div:has(> .admin-table) {
+      overflow: visible !important;
+      border-radius: 0 !important;
+      background: none !important;
+      border: none !important;
+    }
+    body.admin-mode #admin-panel-crm .admin-table { min-width: 0 !important; width: 100%; }
+    body.admin-mode #admin-panel-crm .admin-table thead { display: none; }
+    body.admin-mode #admin-panel-crm .admin-table tbody { display: flex; flex-direction: column; gap: 8px; }
+    body.admin-mode #admin-panel-crm .admin-table tr {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 6px 8px; padding: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;
+    }
+    body.admin-mode #admin-panel-crm .admin-table td { display: flex; align-items: center; padding: 0; border: none; }
+    /* Col 1 : Contact — pleine largeur */
+    body.admin-mode #admin-panel-crm .admin-table td:nth-child(1) {
+      flex: 0 0 100%; order: 1;
+      padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    /* Col 2 : Source — inline avec Statut */
+    body.admin-mode #admin-panel-crm .admin-table td:nth-child(2) {
+      flex: 0 0 auto; order: 2; font-size: 12px; color: rgba(255,255,255,0.5);
+    }
+    /* Col 3 : Statut — inline avec Source */
+    body.admin-mode #admin-panel-crm .admin-table td:nth-child(3) { flex: 0 0 auto; order: 3; }
+    /* Col 4 : Dernière interaction — pleine largeur, discret */
+    body.admin-mode #admin-panel-crm .admin-table td:nth-child(4) {
+      order: 4; flex: 0 0 100%; font-size: 11px; color: rgba(255,255,255,0.3);
+    }
+    /* Col 5 : Actions — pleine largeur */
+    body.admin-mode #admin-panel-crm .admin-table td:nth-child(5) {
+      order: 5; flex: 0 0 100%;
+      padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    body.admin-mode #admin-panel-crm .admin-table td:nth-child(5) > div {
+      width: 100%; display: flex !important; gap: 8px;
+    }
+    body.admin-mode #admin-panel-crm .admin-table td:nth-child(5) .admin-action-btn {
+      flex: 1; justify-content: center;
+    }
+  }
+  @media (max-width: 600px) {
+    body.admin-mode #admin-panel-crm .admin-stats-row {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 4px !important;
+    }
+    body.admin-mode #admin-panel-crm .admin-stat-card { padding: 8px 4px !important; }
+    body.admin-mode #admin-panel-crm .admin-stat-val,
+    body.admin-mode #admin-panel-crm .admin-stat-val em { font-size: 13px !important; }
+  }
+
   </style>
 </head>
 <body>
