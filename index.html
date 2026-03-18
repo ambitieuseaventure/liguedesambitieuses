@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>La Ligue des Ambitieuses – Ambitieuse Aventure</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -29,13 +29,15 @@
     background-color: var(--bg);
     color: var(--text-dark);
     overflow-x: hidden;
+    /* Prevent iOS Safari rubber-band scroll from shifting fixed elements */
+    overscroll-behavior-y: none;
   }
 
   /* ── SIDEBAR ── */
   .sidebar {
     position: fixed;
     left:0; top:0;
-    width:240px; height:100vh;
+    width:240px; height:100vh; height:100dvh;
     background: var(--navy-darkest);
     display:flex; flex-direction:column;
     padding:0;
@@ -81,6 +83,7 @@
     flex:1;
     padding: 20px 0;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .nav-section-label {
@@ -176,7 +179,7 @@
 
 
   /* ── MAIN ── */
-  .main { margin-left:240px; min-height:100vh; }
+  .main { margin-left:240px; min-height:100vh; min-height:100dvh; }
 
   /* ── TOPBAR ── */
   .topbar {
@@ -184,7 +187,7 @@
     border-bottom: 1px solid rgba(20,36,53,0.1);
     padding: 14px 36px;
     display:flex; align-items:center; justify-content:space-between;
-    position:sticky; top:0; z-index:50;
+    position:-webkit-sticky; position:sticky; top:0; z-index:50;
     box-shadow: 0 2px 12px rgba(20,36,53,0.06);
   }
 
@@ -236,7 +239,7 @@
   #page-contact { margin-left:-240px; width:100vw; }
 
   .landing-hero {
-    min-height:100vh;
+    min-height:100vh; min-height:100dvh;
     background: linear-gradient(135deg, var(--navy-darkest) 0%, var(--navy-dark) 55%, var(--navy) 100%);
     display:grid; grid-template-columns:1fr 1fr;
     position:relative; overflow:hidden;
@@ -1763,7 +1766,7 @@
   /* Shell admin */
   #admin-shell {
     display:none;
-    height:100vh;
+    height:100vh; height:100dvh;
     width:100%;
     font-family:'DM Sans',sans-serif;
     background:#0f1f30;
@@ -1780,6 +1783,7 @@
     display:flex;
     flex-direction:column;
     overflow-y:auto;
+    -webkit-overflow-scrolling: touch;
   }
   .admin-logo {
     padding:24px 22px 20px;
@@ -2567,7 +2571,7 @@
     display:grid; grid-template-columns:290px 1fr;
     background:white; border:1px solid rgba(20,36,53,0.08);
     border-radius:14px; overflow:hidden;
-    height:calc(100vh - 190px); min-height:480px;
+    height:calc(100vh - 190px); height:calc(100dvh - 190px); min-height:480px;
     box-shadow:0 2px 12px rgba(20,36,53,0.07);
   }
 
@@ -5324,6 +5328,70 @@
     .welcome-banner > div:last-child { flex-direction: row; }
     .welcome-badge { flex: 0 0 auto; }
     .welcome-palmares { flex: 1; }
+  }
+
+  /* ══════════════════════════════════════════════════════
+     SAFARI / iOS — CORRECTIFS SPÉCIFIQUES
+     Appliqués à tous les navigateurs mobiles via
+     media queries, mais utiles surtout pour iOS Safari.
+  ══════════════════════════════════════════════════════ */
+
+  /* Fallback gap → margin pour Safari < 14.1 (flexbox gap non supporté) */
+  @supports not (gap: 1px) {
+    .topbar-actions > * + * { margin-left: 8px; }
+    .mob-nav-item + .mob-nav-item { margin-left: 0; } /* space-around gère l'espacement */
+    .mob-menu-header > * + * { margin-left: 14px; }
+    .mob-menu-grid > * { margin: 4px; }
+    .todo-cols > * + * { margin-left: 12px; }
+  }
+
+  /* iOS Safari : fix pour les éléments fixed dans un contexte de scroll bounce.
+     will-change: transform crée un nouveau contexte de composition ce qui
+     évite le scintillement / décalage de la bottom nav lors du rebond. */
+  @media (max-width: 900px) {
+    #mobile-bottom-nav {
+      will-change: transform;
+      -webkit-transform: translateZ(0);
+              transform: translateZ(0);
+    }
+    #mobile-menu-overlay {
+      will-change: transform;
+      -webkit-transform: translateY(100%);
+              transform: translateY(100%);
+    }
+    #mobile-menu-overlay.open {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+    /* Scrollable content dans l'espace membre : momentum scroll iOS */
+    .page-content {
+      -webkit-overflow-scrolling: touch;
+    }
+    /* Éviter que le rebond iOS fasse sauter la page de messages */
+    #page-messages {
+      overscroll-behavior: none;
+    }
+    /* touch-action pour supprimer le délai 300ms sur les éléments interactifs */
+    .mob-nav-item,
+    .mob-menu-btn,
+    .mob-menu-close,
+    .topbar-avatar {
+      touch-action: manipulation;
+    }
+    /* Fix select natif iOS Safari : police héritée */
+    select {
+      font-family: inherit;
+    }
+    /* Fix input type=text sur iOS qui zoom automatiquement si font-size < 16px */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="url"],
+    textarea {
+      font-size: 16px;
+    }
   }
 
   /* ══════════════════════════════════════════════════════
