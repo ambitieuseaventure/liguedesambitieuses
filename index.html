@@ -2167,6 +2167,15 @@
     #ms-card-citation     { order:4; }
   }
   @media (max-width:600px) {
+    /* Annuaire */
+    #members-grid { grid-template-columns:1fr !important; }
+    #spotlight-grid { display:flex !important; flex-direction:column; }
+    #spotlight-grid > div:first-child { display:none; } /* badge vertical caché */
+    #spotlight-grid > div:last-child { border-left:none !important; border-top:1px solid rgba(255,255,255,0.07); flex-direction:row; justify-content:center; padding:16px 20px !important; gap:10px; }
+    #spotlight-stats { gap:16px; }
+    #annuaire-filters { width:100%; flex-shrink:0; }
+  }
+  @media (max-width:600px) {
     #buddy-main-grid { display:flex !important; flex-direction:column; gap:14px; }
     #buddy-col-left, #buddy-col-right { display:contents !important; }
     #buddy-card-profil  { order:1; }
@@ -7706,12 +7715,12 @@
       </div>
 
       <!-- ✦ ENTREPRENEUSE DU MOIS ✦ -->
-      <div style="background:linear-gradient(135deg,var(--navy-darkest) 0%,#1e3a52 50%,#0e1e2e 100%);border-radius:20px;padding:0;overflow:hidden;margin-bottom:32px;position:relative;">
+      <div id="spotlight-block" style="background:linear-gradient(135deg,var(--navy-darkest) 0%,#1e3a52 50%,#0e1e2e 100%);border-radius:20px;padding:0;overflow:hidden;margin-bottom:32px;position:relative;">
         <!-- Cercles décoratifs -->
         <div style="position:absolute;top:-40px;right:-40px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(252,186,51,0.18),transparent 70%);pointer-events:none;"></div>
         <div style="position:absolute;bottom:-60px;left:200px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(79,133,160,0.12),transparent 70%);pointer-events:none;"></div>
 
-        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:0;align-items:stretch;">
+        <div id="spotlight-grid" style="display:grid;grid-template-columns:auto 1fr auto;gap:0;align-items:stretch;">
 
           <!-- Colonne gauche : badge mois -->
           <div style="background:rgba(255,255,255,0.04);border-right:1px solid rgba(255,255,255,0.07);padding:32px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-width:100px;">
@@ -7745,7 +7754,7 @@
             </div>
 
             <!-- Stats / infos -->
-            <div style="display:flex;gap:28px;">
+            <div id="spotlight-stats" style="display:flex;gap:28px;flex-wrap:wrap;">
               <div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Membre depuis</div><div style="font-size:13px;color:white;font-weight:600;">Octobre 2023</div></div>
               <div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Spécialité</div><div style="font-size:13px;color:white;font-weight:600;">Branding & identité visuelle</div></div>
               <div><div style="font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Disponible pour</div><div style="font-size:13px;color:white;font-weight:600;">Collaborations &amp; conseils</div></div>
@@ -7768,7 +7777,7 @@
           <input type="text" placeholder="Rechercher une ambitieuse, un secteur, une ville…" oninput="searchMembers(this.value)" style="border:none;outline:none;font-size:13px;color:var(--text-dark);width:100%;font-family:'DM Sans',sans-serif;background:transparent;" />
         </div>
         <!-- Filtre secteur compact -->
-        <div style="display:flex;align-items:center;gap:6px;background:white;border:1px solid rgba(20,36,53,0.1);border-radius:30px;padding:5px 8px;box-shadow:0 2px 8px rgba(20,36,53,0.06);">
+        <div id="annuaire-filters" style="display:flex;align-items:center;gap:6px;background:white;border:1px solid rgba(20,36,53,0.1);border-radius:30px;padding:5px 8px;box-shadow:0 2px 8px rgba(20,36,53,0.06);overflow-x:auto;">
           <span style="font-size:11px;color:var(--text-light);padding:0 4px;">Secteur :</span>
           <button onclick="filterMembers('tous',this)" class="mem-pill active" style="padding:5px 13px;border-radius:20px;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;background:var(--navy-darkest);color:white;">Toutes</button>
           <button onclick="filterMembers('creatif',this)" class="mem-pill" style="padding:5px 13px;border-radius:20px;border:none;cursor:pointer;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;background:transparent;color:var(--text-light);">🎨 Créatif</button>
