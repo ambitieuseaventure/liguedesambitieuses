@@ -2170,7 +2170,9 @@
     /* Annuaire */
     #members-grid { grid-template-columns:1fr !important; }
     #spotlight-grid { display:flex !important; flex-direction:column; }
-    #spotlight-grid > div:first-child { display:none; } /* badge vertical caché */
+    #spotlight-grid > div:first-child { flex-direction:row !important; border-right:none !important; border-bottom:1px solid rgba(255,255,255,0.07); padding:14px 20px !important; min-width:auto !important; gap:10px !important; }
+    #spotlight-grid > div:first-child div { writing-mode:horizontal-tb !important; transform:none !important; }
+    #spotlight-grid > div:first-child div:last-child { font-size:20px !important; }
     #spotlight-grid > div:last-child { border-left:none !important; border-top:1px solid rgba(255,255,255,0.07); flex-direction:row; justify-content:center; padding:16px 20px !important; gap:10px; }
     #spotlight-stats { gap:16px; }
     #annuaire-filters { width:100%; flex-shrink:0; }
@@ -5973,16 +5975,14 @@
     <span class="mob-nav-label">Accueil</span>
   </button>
 
-  <button class="mob-nav-item" id="mob-nav-community" onclick="showPage('community');closeMobileMenu();" aria-label="Communauté">
-    <span class="mob-nav-icon">🌸</span>
-    <span class="mob-nav-label">Communauté</span>
-    <span class="mob-nav-badge">12</span>
+  <button class="mob-nav-item" id="mob-nav-classroom" onclick="showPage('classroom');closeMobileMenu();" aria-label="Formations">
+    <span class="mob-nav-icon">📚</span>
+    <span class="mob-nav-label">Formations</span>
   </button>
 
-  <button class="mob-nav-item" id="mob-nav-messages" onclick="showPage('messages');closeMobileMenu();" aria-label="Messagerie">
-    <span class="mob-nav-icon">✉️</span>
-    <span class="mob-nav-label">Messages</span>
-    <span class="mob-nav-badge">3</span>
+  <button class="mob-nav-item" id="mob-nav-resources" onclick="showPage('resources');closeMobileMenu();" aria-label="Ressources">
+    <span class="mob-nav-icon">📁</span>
+    <span class="mob-nav-label">Ressources</span>
   </button>
 
   <button class="mob-nav-item" id="mob-nav-evenements" onclick="showPage('evenements');closeMobileMenu();" aria-label="Événements">
@@ -13522,14 +13522,14 @@
   ═══════════════════════════════════════════════ */
   const MOB_NAV_TABS = {
     dashboard:  'mob-nav-dashboard',
-    community:  'mob-nav-community',
-    messages:   'mob-nav-messages',
+    classroom:  'mob-nav-classroom',
+    resources:  'mob-nav-resources',
     evenements: 'mob-nav-evenements',
   };
   const MOB_MORE_PAGES = new Set([
     'hotline','qr','bilan','coaching','plan','notebook',
-    'mindset','classroom','resources','masterclass','palmares',
-    'annuaire','buddy','profil'
+    'mindset','masterclass','palmares',
+    'annuaire','buddy','profil','community','messages'
   ]);
 
   showPage('dashboard');
