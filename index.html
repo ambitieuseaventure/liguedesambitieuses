@@ -2759,6 +2759,54 @@
       -webkit-overflow-scrolling:touch;
     }
     .admin-table { min-width:580px; }
+
+    /* ── Admin bottom nav mobile ── */
+    .admin-hamburger { display:none !important; }
+    body.admin-mode #admin-mobile-bottom-nav {
+      display: flex;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 600;
+      background: rgba(10, 22, 36, 0.98);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border-top: 1px solid rgba(235, 193, 76, 0.18);
+      padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+      justify-content: space-around;
+      align-items: stretch;
+    }
+    body.admin-mode .admin-main {
+      padding-bottom: calc(72px + env(safe-area-inset-bottom));
+    }
+    body.admin-mode .admin-topbar {
+      padding: 0 16px;
+      gap: 10px;
+    }
+    body.admin-mode .admin-topbar-title {
+      flex: 1;
+      text-align: center;
+      font-size: 15px;
+    }
+    /* Masquer le texte "Brevo connecté" sur mobile */
+    body.admin-mode .admin-topbar > div > div:first-child {
+      display: none;
+    }
+    /* Admin "Plus" overlay */
+    body.admin-mode #admin-mobile-menu-overlay {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      z-index: 700;
+      flex-direction: column;
+      justify-content: flex-end;
+      transform: translateY(100%);
+      transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+      pointer-events: none;
+    }
+    body.admin-mode #admin-mobile-menu-overlay.open {
+      transform: translateY(0);
+      pointer-events: all;
+    }
   }
 
   @media(max-width:600px){
@@ -4729,9 +4777,13 @@
   .topbar-avatar,
   .topbar-spacer { display: none; }
 
-  /* Mode admin : masquer complètement la nav mobile */
+  /* Mode admin : masquer complètement la nav mobile membre */
   body.admin-mode #mobile-bottom-nav,
   body.admin-mode #mobile-menu-overlay { display: none !important; }
+
+  /* Nav mobile admin cachée par défaut (desktop et hors admin-mode) */
+  #admin-mobile-bottom-nav,
+  #admin-mobile-menu-overlay { display: none; }
 
   @media (max-width: 900px) {
 
@@ -12281,6 +12333,144 @@
     </div><!-- fin admin-main -->
   </div><!-- fin admin-shell -->
 
+<!-- ═══════════════════════════════════════════════════
+     ADMIN — BOTTOM NAV MOBILE
+═══════════════════════════════════════════════════ -->
+<nav id="admin-mobile-bottom-nav" role="navigation" aria-label="Navigation admin">
+
+  <button class="mob-nav-item active" id="admin-mob-nav-dashboard" onclick="adminPage('dashboard',null);" aria-label="Tableau de bord">
+    <span class="mob-nav-icon">🏠</span>
+    <span class="mob-nav-label">Tableau de bord</span>
+  </button>
+
+  <button class="mob-nav-item" id="admin-mob-nav-membres" onclick="adminPage('membres',null);" aria-label="Membres">
+    <span class="mob-nav-icon">👥</span>
+    <span class="mob-nav-label">Membres</span>
+  </button>
+
+  <button class="mob-nav-item" id="admin-mob-nav-communaute" onclick="adminPage('communaute',null);" aria-label="Communauté">
+    <span class="mob-nav-icon">🌸</span>
+    <span class="mob-nav-label">Communauté</span>
+  </button>
+
+  <button class="mob-nav-item" id="admin-mob-nav-contact" onclick="adminPage('contact',null);" aria-label="Messages">
+    <span class="mob-nav-icon">✉️</span>
+    <span class="mob-nav-label">Messages</span>
+  </button>
+
+  <button class="mob-nav-item" id="admin-mob-nav-more" onclick="toggleAdminMobileMenu();" aria-label="Plus">
+    <span class="mob-nav-icon">⋯</span>
+    <span class="mob-nav-label">Plus</span>
+  </button>
+
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     ADMIN — MENU MOBILE "PLUS" — FEUILLE GLISSANTE
+═══════════════════════════════════════════════════ -->
+<div id="admin-mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Menu administration">
+  <div class="mob-menu-backdrop" onclick="closeAdminMobileMenu()"></div>
+  <div class="mob-menu-sheet">
+
+    <div class="mob-menu-handle"></div>
+
+    <!-- En-tête admin -->
+    <div class="mob-menu-header">
+      <div class="mob-menu-avatar" style="background:rgba(235,193,76,0.15);color:var(--gold);font-size:20px;">⚙</div>
+      <div class="mob-menu-user-info">
+        <span class="mob-menu-user-name">Administration</span>
+        <span class="mob-menu-user-plan" style="color:rgba(255,255,255,0.35);">Super Admin · Ana</span>
+      </div>
+      <button class="mob-menu-close" onclick="closeAdminMobileMenu()" aria-label="Fermer">✕</button>
+    </div>
+
+    <!-- Pilotage -->
+    <div class="mob-menu-section">
+      <span class="mob-menu-section-label">Pilotage</span>
+      <div class="mob-menu-grid">
+        <button class="mob-menu-btn" id="admin-mob-menu-activite" onclick="adminPage('activite',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">📊</span>
+          <span class="mob-menu-btn-label">Activité</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-finances" onclick="adminPage('finances',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">💰</span>
+          <span class="mob-menu-btn-label">Finances</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-crm" onclick="adminPage('crm',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">🎯</span>
+          <span class="mob-menu-btn-label">CRM</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Communication -->
+    <div class="mob-menu-section">
+      <span class="mob-menu-section-label">Communication</span>
+      <div class="mob-menu-grid">
+        <button class="mob-menu-btn" id="admin-mob-menu-emailing" onclick="adminPage('emailing',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">📧</span>
+          <span class="mob-menu-btn-label">Emailing</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-annonces" onclick="adminPage('annonces',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">📢</span>
+          <span class="mob-menu-btn-label">Annonces</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-messagerie" onclick="adminPage('messagerie',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">💬</span>
+          <span class="mob-menu-btn-label">Messagerie</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Programme & Contenus -->
+    <div class="mob-menu-section">
+      <span class="mob-menu-section-label">Programme &amp; Contenus</span>
+      <div class="mob-menu-grid">
+        <button class="mob-menu-btn" id="admin-mob-menu-formations" onclick="adminPage('formations',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">🎓</span>
+          <span class="mob-menu-btn-label">Formations</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-masterclass" onclick="adminPage('masterclass',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">🎬</span>
+          <span class="mob-menu-btn-label">Masterclass</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-ressources" onclick="adminPage('ressources',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">📚</span>
+          <span class="mob-menu-btn-label">Ressources</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-bibliotheque" onclick="adminPage('bibliotheque',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">🏛️</span>
+          <span class="mob-menu-btn-label">Bibliothèque</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-blog-admin" onclick="adminPage('blog-admin',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">✍️</span>
+          <span class="mob-menu-btn-label">Blog</span>
+        </button>
+        <button class="mob-menu-btn" id="admin-mob-menu-evenements" onclick="adminPage('evenements',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">📅</span>
+          <span class="mob-menu-btn-label">Événements</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Admin -->
+    <div class="mob-menu-section">
+      <span class="mob-menu-section-label">Administration</span>
+      <div class="mob-menu-grid">
+        <button class="mob-menu-btn" id="admin-mob-menu-equipe" onclick="adminPage('equipe',null);closeAdminMobileMenu();">
+          <span class="mob-menu-btn-icon">🔐</span>
+          <span class="mob-menu-btn-label">Accès &amp; Rôles</span>
+        </button>
+        <button class="mob-menu-btn" onclick="exitAdmin();closeAdminMobileMenu();" style="border-color:rgba(235,193,76,0.2);">
+          <span class="mob-menu-btn-icon">←</span>
+          <span class="mob-menu-btn-label">Espace membre</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
   <!-- ── MESSAGES ── -->
   <div class="page" id="page-messages">
     <div class="page-content">
@@ -13154,12 +13344,15 @@
     document.body.classList.remove('member-page');
     // Hide all member pages
     document.querySelectorAll('.page').forEach(p => { p.style.display='none'; p.classList.remove('active'); });
-    // Masquer la nav mobile
+    // Masquer la nav mobile membre
     const bn = document.getElementById('mobile-bottom-nav');
     if (bn) bn.style.display = 'none';
+    // Réinitialiser la nav mobile admin sur le dashboard
+    if (window.innerWidth <= 900) adminSyncMobileNav('dashboard');
   }
 
   function exitAdmin() {
+    closeAdminMobileMenu();
     document.body.classList.remove('admin-mode');
     showPage('dashboard');
   }
@@ -13212,7 +13405,46 @@
     if (key === 'bibliotheque') { setTimeout(bibRenderTable, 50); }
     if (key === 'activite') { setTimeout(activiteInit, 50); }
     /* Fermer la sidebar sur mobile après navigation */
-    if (window.innerWidth <= 900) adminToggleSidebar(true);
+    if (window.innerWidth <= 900) {
+      adminToggleSidebar(true);
+      adminSyncMobileNav(key);
+    }
+  }
+
+  // ── Admin Mobile Bottom Nav ──
+  var ADMIN_MOB_NAV_TABS = ['dashboard', 'membres', 'communaute', 'contact'];
+
+  function adminSyncMobileNav(key) {
+    // Reset all bottom nav tabs
+    document.querySelectorAll('#admin-mobile-bottom-nav .mob-nav-item').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    // Reset all plus-sheet buttons
+    document.querySelectorAll('#admin-mobile-menu-overlay .mob-menu-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    var tab = document.getElementById('admin-mob-nav-' + key);
+    if (tab) {
+      tab.classList.add('active');
+    } else {
+      // C'est une section "Plus" — activer l'onglet Plus
+      var more = document.getElementById('admin-mob-nav-more');
+      if (more) more.classList.add('active');
+      // Mettre en surbrillance le bouton correspondant dans le sheet
+      var menuBtn = document.getElementById('admin-mob-menu-' + key);
+      if (menuBtn) menuBtn.classList.add('active');
+    }
+  }
+
+  function toggleAdminMobileMenu() {
+    var overlay = document.getElementById('admin-mobile-menu-overlay');
+    if (!overlay) return;
+    overlay.classList.toggle('open');
+  }
+
+  function closeAdminMobileMenu() {
+    var overlay = document.getElementById('admin-mobile-menu-overlay');
+    if (overlay) overlay.classList.remove('open');
   }
 
   function emailTab(tab, btn) {
