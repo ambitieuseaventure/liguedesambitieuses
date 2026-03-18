@@ -4915,11 +4915,14 @@
       flex-direction: row !important;
       overflow-x: auto !important;
       overflow-y: hidden !important;
-      padding: 8px 6px !important;
+      padding: 6px 4px !important;
       gap: 0;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
       background: white;
+      /* Hauteur fixe = avatar (28px) + label (12px) + padding (12px) */
+      height: 58px;
+      align-items: center;
     }
     #page-messages .conversations-list::-webkit-scrollbar { display: none; }
     /* Masquer header (Messages + bouton +) et barre de recherche */
@@ -4930,16 +4933,23 @@
       flex-direction: column !important;
       align-items: center !important;
       flex-shrink: 0;
-      width: 66px;
-      padding: 6px 4px !important;
+      width: 58px;
+      padding: 4px 2px !important;
       border-bottom: none !important;
       border-left: none !important;
-      gap: 4px !important;
+      gap: 3px !important;
     }
     #page-messages .conv-item.active {
       border-left: none !important;
       background: rgba(36,66,91,0.07);
-      border-radius: 10px;
+      border-radius: 8px;
+    }
+    /* Avatar réduit dans la bande */
+    #page-messages .conversations-list .activity-avatar {
+      width: 28px !important;
+      height: 28px !important;
+      font-size: 11px !important;
+      flex-shrink: 0;
     }
     /* Masquer preview, time, badge — garder avatar + nom */
     #page-messages .conv-info .conv-preview,
@@ -4966,9 +4976,11 @@
       min-height: 0;
       overflow-y: auto;
     }
+    /* Padding-right pour ne pas être caché par le widget FAB (52px + 14px margin) */
     #page-messages .chat-input-area {
       flex-shrink: 0;
       background: white;
+      padding-right: 74px !important;
     }
 
     /* ── Widget messagerie : au-dessus de la bottom nav ── */
@@ -6223,14 +6235,15 @@
     <span class="mob-nav-label">Formations</span>
   </button>
 
-  <button class="mob-nav-item" id="mob-nav-messages" onclick="showPage('messages');closeMobileMenu();" aria-label="Messagerie">
-    <span class="mob-nav-icon">💬</span>
-    <span class="mob-nav-label">Messagerie</span>
+  <button class="mob-nav-item" id="mob-nav-resources" onclick="showPage('resources');closeMobileMenu();" aria-label="Ressources">
+    <span class="mob-nav-icon">📁</span>
+    <span class="mob-nav-label">Ressources</span>
   </button>
 
-  <button class="mob-nav-item" id="mob-nav-community" onclick="showPage('community');closeMobileMenu();" aria-label="Communauté">
-    <span class="mob-nav-icon">🌸</span>
-    <span class="mob-nav-label">Communauté</span>
+  <button class="mob-nav-item" id="mob-nav-evenements" onclick="showPage('evenements');closeMobileMenu();" aria-label="Événements">
+    <span class="mob-nav-icon">📅</span>
+    <span class="mob-nav-label">Agenda</span>
+    <span class="mob-nav-badge">2</span>
   </button>
 
   <button class="mob-nav-item" id="mob-nav-more" onclick="toggleMobileMenu();" aria-label="Plus de navigation">
@@ -6335,6 +6348,16 @@
       <span class="mob-menu-section-label">Réseau Ambitieux</span>
       <div class="mob-menu-grid">
 
+        <button class="mob-menu-btn" data-mob-page="messages" onclick="showPage('messages');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">💬</span>
+          <span class="mob-menu-btn-label">Messagerie</span>
+        </button>
+
+        <button class="mob-menu-btn" data-mob-page="community" onclick="showPage('community');closeMobileMenu();">
+          <span class="mob-menu-btn-icon">🌸</span>
+          <span class="mob-menu-btn-label">Communauté</span>
+        </button>
+
         <button class="mob-menu-btn" data-mob-page="annuaire" onclick="showPage('annuaire');closeMobileMenu();">
           <span class="mob-menu-btn-icon">🗺️</span>
           <span class="mob-menu-btn-label">Annuaire</span>
@@ -6348,16 +6371,6 @@
         <button class="mob-menu-btn" data-mob-page="profil" onclick="showPage('profil');closeMobileMenu();">
           <span class="mob-menu-btn-icon">👤</span>
           <span class="mob-menu-btn-label">Mon profil</span>
-        </button>
-
-        <button class="mob-menu-btn" data-mob-page="resources" onclick="showPage('resources');closeMobileMenu();">
-          <span class="mob-menu-btn-icon">📁</span>
-          <span class="mob-menu-btn-label">Ressources</span>
-        </button>
-
-        <button class="mob-menu-btn" data-mob-page="evenements" onclick="showPage('evenements');closeMobileMenu();">
-          <span class="mob-menu-btn-icon">📅</span>
-          <span class="mob-menu-btn-label">Agenda</span>
         </button>
 
       </div>
@@ -13343,13 +13356,13 @@
   const MOB_NAV_TABS = {
     dashboard:  'mob-nav-dashboard',
     classroom:  'mob-nav-classroom',
-    messages:   'mob-nav-messages',
-    community:  'mob-nav-community',
+    resources:  'mob-nav-resources',
+    evenements: 'mob-nav-evenements',
   };
   const MOB_MORE_PAGES = new Set([
     'hotline','qr','bilan','coaching','plan','notebook',
     'mindset','masterclass','palmares',
-    'annuaire','buddy','profil','resources','evenements'
+    'annuaire','buddy','profil','community','messages'
   ]);
 
   showPage('dashboard');
