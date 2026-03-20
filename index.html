@@ -176,6 +176,18 @@
   .billing-table { width:100%; border-collapse:collapse; font-size:12px; }
   .billing-table th,.billing-table td { text-align:left; padding:10px 8px; border-bottom:1px solid rgba(20,36,53,0.08); }
   .billing-table th { color:var(--text-light); font-size:11px; text-transform:uppercase; letter-spacing:.07em; }
+  /* Coordonnées */
+  .coordonnees-info-grid { display:flex; flex-direction:column; gap:0; }
+  .coordonnees-info-row { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; padding:11px 0; border-bottom:1px solid rgba(20,36,53,0.07); }
+  .coordonnees-label { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:700; color:var(--text-light); text-transform:uppercase; letter-spacing:.06em; flex-shrink:0; padding-top:1px; }
+  .coordonnees-value { font-family:'DM Sans',sans-serif; font-size:14px; color:var(--navy-darkest); text-align:right; line-height:1.5; }
+  .coordonnees-form-field { margin-bottom:13px; }
+  .coordonnees-form-field label { display:block; font-family:'DM Sans',sans-serif; font-size:11px; font-weight:700; color:var(--text-light); text-transform:uppercase; letter-spacing:.07em; margin-bottom:6px; }
+  .coordonnees-form-field input { width:100%; padding:10px 14px; border:1px solid rgba(20,36,53,0.15); border-radius:9px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--navy-darkest); outline:none; background:rgba(20,36,53,0.02); transition:border-color .2s; box-sizing:border-box; }
+  .coordonnees-form-field input:focus { border-color:var(--steel); background:white; }
+  .coordonnees-save-btn { margin-top:4px; padding:10px 20px; background:var(--navy-darkest); color:white; border:none; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:opacity .2s; }
+  .coordonnees-save-btn:hover { opacity:.82; }
+  .coordonnees-msg { font-family:'DM Sans',sans-serif; font-size:13px; min-height:18px; margin-bottom:8px; }
 
 
   /* ── MAIN ── */
@@ -7667,6 +7679,7 @@
           <div class="profile-tabs">
             <button class="profile-tab-btn active" data-profile-tab="overview" onclick="profileSwitchTab('overview',this)">Profil, activité & achats</button>
             <button class="profile-tab-btn" data-profile-tab="abonnement" onclick="profileSwitchTab('abonnement',this)">Mon abonnement</button>
+            <button class="profile-tab-btn" data-profile-tab="coordonnees" onclick="profileSwitchTab('coordonnees',this)">🔒 Mes coordonnées</button>
           </div>
           <div style="font-size:12px;color:var(--text-light);">Dernière connexion : aujourd'hui · 08:42</div>
         </div>
@@ -7805,6 +7818,109 @@
             </div>
             <button onclick="document.getElementById('profile-upgrade-section').style.display='none';document.getElementById('profile-change-plan-btn').style.display='';" style="margin-top:14px;background:none;border:none;font-size:12px;color:var(--text-light);cursor:pointer;text-decoration:underline;font-family:'DM Sans',sans-serif;">Annuler</button>
           </div>
+        </div>
+
+        <!-- ── ONGLET : MES COORDONNÉES ── -->
+        <div class="profile-tab-pane" data-profile-pane="coordonnees">
+
+          <!-- Bandeau confidentialité -->
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(235,193,76,0.07);border:1px solid rgba(235,193,76,0.2);border-radius:12px;margin-bottom:20px;">
+            <span style="font-size:18px;">🔒</span>
+            <span style="font-family:'DM Sans',sans-serif;font-size:13px;color:rgba(20,36,53,0.7);">Ces informations sont <strong>strictement confidentielles</strong> — elles ne sont jamais visibles par les autres membres et sont accessibles uniquement par toi et l'équipe d'administration.</span>
+          </div>
+
+          <div class="profile-grid">
+            <!-- Infos personnelles en lecture -->
+            <div class="profile-card">
+              <div class="profile-section-title">Mes informations personnelles</div>
+              <div class="coordonnees-info-grid">
+                <div class="coordonnees-info-row">
+                  <span class="coordonnees-label">Adresse e-mail</span>
+                  <span class="coordonnees-value" id="profile-coord-email">sophie@laligue.co</span>
+                </div>
+                <div class="coordonnees-info-row">
+                  <span class="coordonnees-label">Téléphone</span>
+                  <span class="coordonnees-value" id="profile-coord-phone">+33 6 12 34 56 78</span>
+                </div>
+                <div class="coordonnees-info-row">
+                  <span class="coordonnees-label">Date de naissance</span>
+                  <span class="coordonnees-value" id="profile-coord-dob">14 avril 1990</span>
+                </div>
+                <div class="coordonnees-info-row" style="border-bottom:none;">
+                  <span class="coordonnees-label">Adresse postale</span>
+                  <span class="coordonnees-value" id="profile-coord-address">12 rue de la République<br>75011 Paris</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modifier mot de passe -->
+            <div class="profile-card">
+              <div class="profile-section-title">Modifier mon mot de passe</div>
+              <form onsubmit="saveProfilePassword(event)">
+                <div class="coordonnees-form-field">
+                  <label>Mot de passe actuel</label>
+                  <input type="password" id="coord-pwd-current" placeholder="••••••••" autocomplete="current-password">
+                </div>
+                <div class="coordonnees-form-field">
+                  <label>Nouveau mot de passe</label>
+                  <input type="password" id="coord-pwd-new" placeholder="Au moins 8 caractères" autocomplete="new-password">
+                </div>
+                <div class="coordonnees-form-field">
+                  <label>Confirmer le nouveau mot de passe</label>
+                  <input type="password" id="coord-pwd-confirm" placeholder="Répète le nouveau mot de passe" autocomplete="new-password">
+                </div>
+                <div class="coordonnees-msg" id="coord-pwd-msg"></div>
+                <button type="submit" class="coordonnees-save-btn">Mettre à jour le mot de passe</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="profile-grid">
+            <!-- Modifier e-mail -->
+            <div class="profile-card">
+              <div class="profile-section-title">Modifier mon adresse e-mail</div>
+              <form onsubmit="saveProfileEmail(event)">
+                <div class="coordonnees-form-field">
+                  <label>Nouvelle adresse e-mail</label>
+                  <input type="email" id="coord-email-new" placeholder="nouvelle@adresse.fr" autocomplete="email">
+                </div>
+                <div class="coordonnees-form-field">
+                  <label>Confirmer l'adresse e-mail</label>
+                  <input type="email" id="coord-email-confirm" placeholder="Répète ton adresse e-mail" autocomplete="email">
+                </div>
+                <div class="coordonnees-msg" id="coord-email-msg"></div>
+                <button type="submit" class="coordonnees-save-btn">Mettre à jour l'e-mail</button>
+              </form>
+            </div>
+
+            <!-- Modifier téléphone + adresse -->
+            <div class="profile-card">
+              <div class="profile-section-title">Modifier mes coordonnées</div>
+              <form onsubmit="saveProfileCoordonnees(event)">
+                <div class="coordonnees-form-field">
+                  <label>Téléphone</label>
+                  <input type="tel" id="coord-phone" placeholder="+33 6 00 00 00 00" autocomplete="tel">
+                </div>
+                <div class="coordonnees-form-field">
+                  <label>Adresse (rue)</label>
+                  <input type="text" id="coord-adresse" placeholder="12 rue de la Réussite" autocomplete="street-address">
+                </div>
+                <div style="display:grid;grid-template-columns:120px 1fr;gap:10px;">
+                  <div class="coordonnees-form-field">
+                    <label>Code postal</label>
+                    <input type="text" id="coord-cp" placeholder="75001" autocomplete="postal-code">
+                  </div>
+                  <div class="coordonnees-form-field">
+                    <label>Ville</label>
+                    <input type="text" id="coord-ville" placeholder="Paris" autocomplete="address-level2">
+                  </div>
+                </div>
+                <div class="coordonnees-msg" id="coord-coord-msg"></div>
+                <button type="submit" class="coordonnees-save-btn">Enregistrer les modifications</button>
+              </form>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -20661,6 +20777,7 @@
         <button class="mf-tab-btn" onclick="mfTab('rdv',this)" style="padding:8px 16px;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.45);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;">📅 Rendez-vous</button>
         <button class="mf-tab-btn" onclick="mfTab('bilans',this)" style="padding:8px 16px;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.45);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;">📋 Bilans & Audits</button>
         <button class="mf-tab-btn" onclick="mfTab('ia',this)" style="padding:8px 16px;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.45);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:all .2s;"><span style="background:linear-gradient(135deg,#fcba33,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;">✦ IA</span> Préparer le RDV</button>
+        <button class="mf-tab-btn" onclick="mfTab('coordonnees',this)" style="padding:8px 16px;border:none;border-bottom:2px solid transparent;background:transparent;color:rgba(255,255,255,0.45);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;">🔒 Coordonnées</button>
       </div>
 
       <!-- ── CONTENU ONGLETS ── -->
@@ -20706,11 +20823,36 @@
           <div id="mf-ia-result" style="display:none;"></div>
         </div>
 
+        <!-- Coordonnées privées -->
+        <div id="mf-tab-coordonnees" style="display:none;">
+          <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(235,193,76,0.06);border:1px solid rgba(235,193,76,0.18);border-radius:10px;margin-bottom:18px;">
+            <span style="font-size:15px;">🔒</span>
+            <span style="font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(255,255,255,0.55);">Informations confidentielles — visibles uniquement par l'administration.</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px 18px;">
+              <div style="font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Contact</div>
+              <div class="mf-coord-row"><span class="mf-coord-label">E-mail</span><span class="mf-coord-val" id="mf-coord-email">—</span></div>
+              <div class="mf-coord-row"><span class="mf-coord-label">Téléphone</span><span class="mf-coord-val" id="mf-coord-phone">—</span></div>
+              <div class="mf-coord-row" style="border:none;"><span class="mf-coord-label">Date de naissance</span><span class="mf-coord-val" id="mf-coord-dob">—</span></div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px 18px;">
+              <div style="font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Adresse postale</div>
+              <div class="mf-coord-row"><span class="mf-coord-label">Rue</span><span class="mf-coord-val" id="mf-coord-adresse">—</span></div>
+              <div class="mf-coord-row"><span class="mf-coord-label">Code postal</span><span class="mf-coord-val" id="mf-coord-cp">—</span></div>
+              <div class="mf-coord-row" style="border:none;"><span class="mf-coord-label">Ville</span><span class="mf-coord-val" id="mf-coord-ville">—</span></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 
   <style>
+    .mf-coord-row { display:flex; justify-content:space-between; align-items:baseline; gap:10px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .mf-coord-label { font-family:'DM Sans',sans-serif; font-size:11px; color:rgba(255,255,255,0.35); flex-shrink:0; }
+    .mf-coord-val { font-family:'DM Sans',sans-serif; font-size:13px; color:rgba(255,255,255,0.85); text-align:right; word-break:break-all; }
     .mf-ia-spinner {
       width: 36px; height: 36px;
       border: 3px solid rgba(252,186,51,0.15);
@@ -20733,6 +20875,7 @@
       avatarBg:'linear-gradient(135deg,#ebc14c,#fcba33)',
       rang:'🔮 Visionnaire', rangBg:'rgba(167,139,250,0.15)', rangColor:'#a78bfa', rangBorder:'rgba(167,139,250,0.3)',
       email:'sophie@laligue.co', profession:'Consultante stratégie digitale', ville:'Paris',
+      phone:'+33 6 12 34 56 78', dateNaissance:'14 avril 1990', adressePostale:'12 rue de la République', codePostal:'75011', villePostale:'Paris',
       inscription:'Oct. 2023', points:1240,
       bio:'Spécialiste en transformation digitale pour PME. 8 ans d\'expérience, fondatrice de son agence.',
       formations:'4/5 complétées (80%)',
@@ -20775,6 +20918,7 @@
       avatarBg:'linear-gradient(135deg,#b0c4d8,#8aafc4)',
       rang:'⚡ Stratège', rangBg:'rgba(139,180,248,0.12)', rangColor:'#8ab4f8', rangBorder:'rgba(139,180,248,0.3)',
       email:'lea@laligue.co', profession:'Coach bien-être & nutrition', ville:'Lyon',
+      phone:'+33 6 78 90 12 34', dateNaissance:'3 septembre 1987', adressePostale:'5 place Bellecour', codePostal:'69002', villePostale:'Lyon',
       inscription:'Jan. 2024', points:980,
       bio:'Accompagne les femmes entrepreneurs vers plus d\'énergie et de sérénité dans leur quotidien professionnel.',
       formations:'3/5 complétées (60%)',
@@ -20812,6 +20956,7 @@
       avatarBg:'linear-gradient(135deg,#c8a87a,#b8956a)',
       rang:'⚡ Stratège', rangBg:'rgba(139,180,248,0.12)', rangColor:'#8ab4f8', rangBorder:'rgba(139,180,248,0.3)',
       email:'clara@laligue.co', profession:'Graphiste & directrice artistique', ville:'Bordeaux',
+      phone:'+33 6 45 67 89 01', dateNaissance:'22 juin 1992', adressePostale:'8 rue du Port de la Lune', codePostal:'33000', villePostale:'Bordeaux',
       inscription:'Fév. 2024', points:870,
       bio:'Crée des identités visuelles qui racontent une histoire. Spécialisée dans les marques féminines et créatives.',
       formations:'2/5 complétées (40%)',
@@ -20849,6 +20994,7 @@
       avatarBg:'linear-gradient(135deg,#a8d4b0,#7ebf8a)',
       rang:'⚡ Stratège', rangBg:'rgba(139,180,248,0.12)', rangColor:'#8ab4f8', rangBorder:'rgba(139,180,248,0.3)',
       email:'emma@laligue.co', profession:'Formatrice en communication', ville:'Nantes',
+      phone:'+33 6 23 45 67 89', dateNaissance:'8 novembre 1989', adressePostale:'17 quai de la Fosse', codePostal:'44000', villePostale:'Nantes',
       inscription:'Mars 2026', points:430,
       bio:'Aide les entrepreneurs à communiquer avec impact et authenticité. Formatrice certifiée.',
       formations:'1/5 complétée (20%)',
@@ -20884,6 +21030,7 @@
       avatarBg:'linear-gradient(135deg,#d4a8c8,#c490b8)',
       rang:'🌿 Initiée', rangBg:'rgba(110,207,158,0.12)', rangColor:'#6ecf9e', rangBorder:'rgba(110,207,158,0.3)',
       email:'alice@laligue.co', profession:'Consultante RH indépendante', ville:'Paris',
+      phone:'+33 6 56 78 90 12', dateNaissance:'19 mars 1993', adressePostale:'34 avenue de l\'Opéra', codePostal:'75001', villePostale:'Paris',
       inscription:'Mars 2026', points:120,
       bio:'Accompagne les TPE et startups dans la structuration de leurs ressources humaines.',
       formations:'0/5 complétée (0%)',
@@ -20950,7 +21097,7 @@
   }
 
   function mfTab(tab, btn) {
-    var tabs = ['activite','rdv','bilans','ia'];
+    var tabs = ['activite','rdv','bilans','ia','coordonnees'];
     tabs.forEach(function(t) {
       var el = document.getElementById('mf-tab-' + t);
       if (el) el.style.display = 'none';
@@ -20966,9 +21113,10 @@
     var m = mfCurrentMember;
     if (!m) return;
 
-    if (tab === 'activite') mfRenderActivite(m);
-    if (tab === 'rdv')      mfRenderRdv(m);
-    if (tab === 'bilans')   mfRenderBilans(m);
+    if (tab === 'activite')     mfRenderActivite(m);
+    if (tab === 'rdv')          mfRenderRdv(m);
+    if (tab === 'bilans')       mfRenderBilans(m);
+    if (tab === 'coordonnees')  mfRenderCoordonnees(m);
   }
 
   var typeColors = {
@@ -23816,4 +23964,151 @@ document.addEventListener('keydown', function(e) {
     }
   }
 });
+
+// ══════════════════════════════════════════════════════════════════
+// PROFIL — ONGLET "MES COORDONNÉES"
+// ══════════════════════════════════════════════════════════════════
+
+// Membre courant (Sophie en démo) — clé dans membersDB
+var CURRENT_MEMBER_KEY = 'sophie';
+
+// Peuplement de l'onglet Coordonnées quand il devient actif
+document.addEventListener('DOMContentLoaded', function() {
+  // Charger les coordonnées dès que le profil est affiché
+  var profilePage = document.getElementById('page-profil');
+  if (!profilePage) return;
+  var observer = new MutationObserver(function() {
+    if (profilePage.classList.contains('active') || profilePage.style.display === 'block') {
+      loadProfileCoordonnees();
+    }
+  });
+  observer.observe(profilePage, { attributes: true, attributeFilter: ['class', 'style'] });
+});
+
+function loadProfileCoordonnees() {
+  var m = membersDB[CURRENT_MEMBER_KEY];
+  if (!m) return;
+  var set = function(id, val) { var el = document.getElementById(id); if (el) el.textContent = val || '—'; };
+  set('profile-coord-email',   m.email);
+  set('profile-coord-phone',   m.phone);
+  set('profile-coord-dob',     m.dateNaissance);
+  var adresse = m.adressePostale ? (m.adressePostale + '\n' + (m.codePostal || '') + ' ' + (m.villePostale || '')) : '—';
+  var addrEl = document.getElementById('profile-coord-address');
+  if (addrEl) addrEl.innerHTML = m.adressePostale
+    ? (m.adressePostale + '<br>' + (m.codePostal || '') + ' ' + (m.villePostale || ''))
+    : '—';
+  // Pré-remplir les formulaires
+  _setVal('coord-phone',  m.phone);
+  _setVal('coord-adresse', m.adressePostale);
+  _setVal('coord-cp',     m.codePostal);
+  _setVal('coord-ville',  m.villePostale);
+}
+
+function _setVal(id, val) {
+  var el = document.getElementById(id);
+  if (el && val) el.value = val;
+}
+
+function _showMsg(id, text, isError) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.style.color = isError ? '#e05252' : '#2d7d57';
+  setTimeout(function() { el.textContent = ''; }, 4000);
+}
+
+// ── Changer le mot de passe ───────────────────────────────────────
+function saveProfilePassword(e) {
+  e.preventDefault();
+  var current  = document.getElementById('coord-pwd-current').value;
+  var newPwd   = document.getElementById('coord-pwd-new').value;
+  var confirm  = document.getElementById('coord-pwd-confirm').value;
+
+  if (!current) { _showMsg('coord-pwd-msg', 'Merci d\'indiquer ton mot de passe actuel.', true); return; }
+  if (newPwd.length < 8) { _showMsg('coord-pwd-msg', 'Le nouveau mot de passe doit contenir au moins 8 caractères.', true); return; }
+  if (newPwd !== confirm) { _showMsg('coord-pwd-msg', 'Les mots de passe ne correspondent pas.', true); return; }
+
+  // [BACKEND] Envoyer { currentPassword, newPassword } au serveur pour mise à jour sécurisée.
+  // Mettre à jour en démo (stockage local uniquement)
+  document.getElementById('coord-pwd-current').value = '';
+  document.getElementById('coord-pwd-new').value     = '';
+  document.getElementById('coord-pwd-confirm').value = '';
+  _showMsg('coord-pwd-msg', '✓ Mot de passe mis à jour avec succès.', false);
+  _syncMemberToAdmin(CURRENT_MEMBER_KEY);
+}
+
+// ── Changer l'adresse e-mail ──────────────────────────────────────
+function saveProfileEmail(e) {
+  e.preventDefault();
+  var newEmail  = document.getElementById('coord-email-new').value.trim();
+  var confEmail = document.getElementById('coord-email-confirm').value.trim();
+
+  if (!newEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) {
+    _showMsg('coord-email-msg', 'Merci d\'indiquer une adresse e-mail valide.', true); return;
+  }
+  if (newEmail !== confEmail) {
+    _showMsg('coord-email-msg', 'Les adresses e-mail ne correspondent pas.', true); return;
+  }
+
+  // [BACKEND] Envoyer { newEmail } au serveur — envoyer un lien de confirmation.
+  membersDB[CURRENT_MEMBER_KEY].email = newEmail;
+  loadProfileCoordonnees();
+  document.getElementById('coord-email-new').value     = '';
+  document.getElementById('coord-email-confirm').value = '';
+  _showMsg('coord-email-msg', '✓ Adresse e-mail mise à jour.', false);
+  _syncMemberToAdmin(CURRENT_MEMBER_KEY);
+}
+
+// ── Changer téléphone et adresse postale ──────────────────────────
+function saveProfileCoordonnees(e) {
+  e.preventDefault();
+  var phone   = document.getElementById('coord-phone').value.trim();
+  var adresse = document.getElementById('coord-adresse').value.trim();
+  var cp      = document.getElementById('coord-cp').value.trim();
+  var ville   = document.getElementById('coord-ville').value.trim();
+
+  var m = membersDB[CURRENT_MEMBER_KEY];
+  if (!m) return;
+  if (phone)   m.phone          = phone;
+  if (adresse) m.adressePostale = adresse;
+  if (cp)      m.codePostal     = cp;
+  if (ville)   m.villePostale   = ville;
+
+  // [BACKEND] Envoyer les nouvelles coordonnées au serveur.
+  loadProfileCoordonnees();
+  _showMsg('coord-coord-msg', '✓ Coordonnées enregistrées.', false);
+  _syncMemberToAdmin(CURRENT_MEMBER_KEY);
+}
+
+// ── Synchronisation vers la fiche admin ──────────────────────────
+function _syncMemberToAdmin(key) {
+  // Met à jour la ligne du tableau membres si elle est affichée
+  var m = membersDB[key];
+  if (!m) return;
+  var rows = document.querySelectorAll('#admin-membres-table tbody tr');
+  rows.forEach(function(row) {
+    var nameEl = row.querySelector('div > div > div:first-child');
+    if (nameEl && nameEl.textContent.trim() === m.name) {
+      var emailEl = row.querySelector('div > div > div:last-child');
+      if (emailEl) emailEl.textContent = m.email;
+    }
+  });
+  // Si la fiche est ouverte pour ce membre, rafraîchir les coordonnées
+  if (mfCurrentMember && mfCurrentMember.id === key) {
+    mfRenderCoordonnees(m);
+    document.getElementById('mf-meta').textContent =
+      m.email + '  ·  ' + m.profession + '  ·  ' + m.ville + '  ·  Inscrite ' + m.inscription;
+  }
+}
+
+// ── Affichage onglet Coordonnées dans la fiche admin ─────────────
+function mfRenderCoordonnees(m) {
+  var set = function(id, val) { var el = document.getElementById(id); if (el) el.textContent = val || '—'; };
+  set('mf-coord-email',   m.email);
+  set('mf-coord-phone',   m.phone);
+  set('mf-coord-dob',     m.dateNaissance);
+  set('mf-coord-adresse', m.adressePostale);
+  set('mf-coord-cp',      m.codePostal);
+  set('mf-coord-ville',   m.villePostale);
+}
 </script>
