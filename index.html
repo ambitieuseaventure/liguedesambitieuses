@@ -9758,13 +9758,37 @@
           <!-- 1. Coordonnées -->
           <div class="checkout-card">
             <div class="checkout-section-title">1 · Tes coordonnées</div>
-            <div class="checkout-form-field">
-              <label>Prénom</label>
-              <input type="text" id="checkout-prenom" placeholder="Marie" autocomplete="given-name">
+            <div class="checkout-form-row">
+              <div class="checkout-form-field">
+                <label>Prénom</label>
+                <input type="text" id="checkout-prenom" placeholder="Marie" autocomplete="given-name">
+              </div>
+              <div class="checkout-form-field">
+                <label>Nom de famille</label>
+                <input type="text" id="checkout-nom" placeholder="Dupont" autocomplete="family-name">
+              </div>
             </div>
             <div class="checkout-form-field">
               <label>Adresse e-mail <span style="color:#ff6b6b;">*</span></label>
               <input type="email" id="checkout-email" placeholder="marie@exemple.fr" autocomplete="email" required>
+            </div>
+            <div class="checkout-form-field">
+              <label>Numéro de téléphone</label>
+              <input type="tel" id="checkout-tel" placeholder="+33 6 00 00 00 00" autocomplete="tel">
+            </div>
+            <div class="checkout-form-field">
+              <label>Adresse postale</label>
+              <input type="text" id="checkout-adresse" placeholder="12 rue de la Réussite" autocomplete="street-address" style="margin-bottom:8px;">
+            </div>
+            <div class="checkout-form-row">
+              <div class="checkout-form-field">
+                <label>Code postal</label>
+                <input type="text" id="checkout-cp" placeholder="75001" autocomplete="postal-code">
+              </div>
+              <div class="checkout-form-field">
+                <label>Ville</label>
+                <input type="text" id="checkout-ville" placeholder="Paris" autocomplete="address-level2">
+              </div>
             </div>
           </div>
 
