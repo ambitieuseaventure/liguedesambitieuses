@@ -249,6 +249,8 @@
   #page-blog { margin-left:-240px; width:100vw; }
   #page-bibliotheque { margin-left:-240px; width:100vw; }
   #page-contact { margin-left:-240px; width:100vw; }
+  #page-paiement { margin-left:-240px; width:100vw; }
+  #page-premier-login { margin-left:-240px; width:100vw; }
 
   .landing-hero {
     min-height:100vh; min-height:100dvh;
@@ -9873,37 +9875,37 @@
         <div>
           <!-- 1. Coordonnées -->
           <div class="checkout-card">
-            <div class="checkout-section-title">1 · Tes coordonnées</div>
+            <div class="checkout-section-title">1 · Tes coordonnées <span style="font-size:10px;color:rgba(255,255,255,0.3);font-weight:400;text-transform:none;letter-spacing:0;">* champs obligatoires</span></div>
             <div class="checkout-form-row">
               <div class="checkout-form-field">
-                <label>Prénom</label>
-                <input type="text" id="checkout-prenom" placeholder="Marie" autocomplete="given-name">
+                <label>Prénom <span class="req-star">*</span></label>
+                <input type="text" id="checkout-prenom" placeholder="Marie" autocomplete="given-name" required>
               </div>
               <div class="checkout-form-field">
-                <label>Nom de famille</label>
-                <input type="text" id="checkout-nom" placeholder="Dupont" autocomplete="family-name">
+                <label>Nom de famille <span class="req-star">*</span></label>
+                <input type="text" id="checkout-nom" placeholder="Dupont" autocomplete="family-name" required>
               </div>
             </div>
             <div class="checkout-form-field">
-              <label>Adresse e-mail <span style="color:#ff6b6b;">*</span></label>
+              <label>Adresse e-mail <span class="req-star">*</span></label>
               <input type="email" id="checkout-email" placeholder="marie@exemple.fr" autocomplete="email" required>
             </div>
             <div class="checkout-form-field">
-              <label>Numéro de téléphone</label>
-              <input type="tel" id="checkout-tel" placeholder="+33 6 00 00 00 00" autocomplete="tel">
+              <label>Numéro de téléphone <span class="req-star">*</span></label>
+              <input type="tel" id="checkout-tel" placeholder="+33 6 00 00 00 00" autocomplete="tel" required>
             </div>
             <div class="checkout-form-field">
-              <label>Adresse postale</label>
-              <input type="text" id="checkout-adresse" placeholder="12 rue de la Réussite" autocomplete="street-address" style="margin-bottom:8px;">
+              <label>Adresse postale <span class="req-star">*</span></label>
+              <input type="text" id="checkout-adresse" placeholder="12 rue de la Réussite" autocomplete="street-address" required>
             </div>
             <div class="checkout-form-row">
               <div class="checkout-form-field">
-                <label>Code postal</label>
-                <input type="text" id="checkout-cp" placeholder="75001" autocomplete="postal-code">
+                <label>Code postal <span class="req-star">*</span></label>
+                <input type="text" id="checkout-cp" placeholder="75001" autocomplete="postal-code" required>
               </div>
               <div class="checkout-form-field">
-                <label>Ville</label>
-                <input type="text" id="checkout-ville" placeholder="Paris" autocomplete="address-level2">
+                <label>Ville <span class="req-star">*</span></label>
+                <input type="text" id="checkout-ville" placeholder="Paris" autocomplete="address-level2" required>
               </div>
             </div>
           </div>
@@ -9948,15 +9950,18 @@
             <!-- Bouton PayPal (placeholder — à remplacer par SDK PayPal) -->
             <!-- [PAYPAL] Charger : <script src="https://www.paypal.com/sdk/js?client-id=VOTRE_CLIENT_ID&currency=EUR"></script> -->
             <!-- [PAYPAL] Monter le bouton via paypal.Buttons({...}).render('#paypal-button-container') -->
-            <button class="checkout-paypal-btn" onclick="handlePaypalClick()" type="button">
+            <button class="checkout-paypal-btn" id="checkout-paypal-btn" onclick="selectPaymentMethod('paypal')" type="button">
               <!-- [PAYPAL] Remplacer ce bouton par : <div id="paypal-button-container"></div> -->
               Pay<span>Pal</span>
             </button>
 
+            <!-- Indicateur méthode sélectionnée -->
+            <div id="checkout-method-indicator" style="display:none;font-family:'DM Sans',sans-serif;font-size:12px;color:#6fcf97;text-align:center;margin-top:10px;"></div>
+
             <div id="checkout-form-error" style="font-family:'DM Sans',sans-serif;font-size:13px;color:#ff6b6b;margin-top:12px;min-height:18px;text-align:center;"></div>
 
             <!-- Bouton principal (simulé en démo) -->
-            <button class="checkout-submit-btn" onclick="simulatePayment()" type="button">
+            <button class="checkout-submit-btn" onclick="simulatePayment()" type="button" id="checkout-pay-btn">
               🔒&nbsp; Commencer mon essai gratuit de 7 jours
             </button>
             <div class="checkout-secure">🔐 Crypté SSL &middot; Sans engagement &middot; Résiliation libre à tout moment</div>
@@ -22018,6 +22023,8 @@
   }
   .checkout-submit-btn:hover { opacity: .9; transform: translateY(-1px); }
   .checkout-submit-btn:active { transform: translateY(0); }
+  .req-star { color: #ff6b6b; font-size: 12px; }
+  .checkout-paypal-btn.method-selected { outline: 2px solid #6fcf97; outline-offset: 2px; }
   .checkout-secure {
     margin-top: 12px;
     text-align: center;
@@ -23593,7 +23600,8 @@ var checkoutState = {
   plan: 'stratege',
   isAnnual: false,
   email: '',
-  prenom: ''
+  prenom: '',
+  paymentMethod: 'card' // 'card' | 'paypal'
 };
 
 // Données d'affichage des plans pour la page paiement
@@ -23716,39 +23724,97 @@ function setCheckoutBilling(annual) {
   _updateCheckoutPrice();
 }
 
-// Bouton PayPal (placeholder)
-function handlePaypalClick() {
-  // [PAYPAL] Remplacer par l'intégration du SDK PayPal :
-  // paypal.Buttons({ createOrder: ..., onApprove: ... }).render('#paypal-button-container');
-  // Documentation : https://developer.paypal.com/sdk/js/
-  alert('Intégration PayPal à connecter lors du déploiement.\n\nDoc : https://developer.paypal.com/sdk/js/');
+// Sélection de la méthode de paiement (carte ou PayPal)
+function selectPaymentMethod(method) {
+  checkoutState.paymentMethod = method;
+
+  var paypalBtn   = document.getElementById('checkout-paypal-btn');
+  var cardSection = document.getElementById('stripe-card-number');
+  var indicator   = document.getElementById('checkout-method-indicator');
+  var payBtn      = document.getElementById('checkout-pay-btn');
+
+  if (method === 'paypal') {
+    if (paypalBtn)  paypalBtn.classList.add('method-selected');
+    if (indicator)  { indicator.style.display = 'block'; indicator.textContent = '✓ PayPal sélectionné — cliquez sur le bouton ci-dessous pour finaliser.'; }
+    if (payBtn)     payBtn.textContent = '🔒 Continuer avec PayPal';
+    // Rendre les champs carte optionnels visuellement
+    ['stripe-card-number','stripe-card-expiry','stripe-card-cvc'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.style.opacity = '0.4';
+    });
+    // [PAYPAL] Remplacer par : paypal.Buttons({ createOrder: ..., onApprove: ... }).render('#paypal-button-container');
+    // Documentation : https://developer.paypal.com/sdk/js/
+    // En démo, on valide les coordonnées et on procède
+    simulatePayment();
+  } else {
+    if (paypalBtn)  paypalBtn.classList.remove('method-selected');
+    if (indicator)  indicator.style.display = 'none';
+    if (payBtn)     payBtn.textContent = '🔒 Commencer mon essai gratuit de 7 jours';
+    ['stripe-card-number','stripe-card-expiry','stripe-card-cvc'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.style.opacity = '1';
+    });
+  }
 }
 
 // Validation et simulation du paiement
 function simulatePayment() {
-  var prenomEl = document.getElementById('checkout-prenom');
-  var emailEl  = document.getElementById('checkout-email');
-  var errorEl  = document.getElementById('checkout-form-error');
-
-  var prenom = prenomEl ? prenomEl.value.trim() : '';
-  var email  = emailEl  ? emailEl.value.trim()  : '';
-
+  var errorEl = document.getElementById('checkout-form-error');
   if (errorEl) errorEl.textContent = '';
 
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    if (errorEl) errorEl.textContent = 'Merci d\'indiquer une adresse e-mail valide.';
-    if (emailEl) { emailEl.classList.add('input-error'); emailEl.focus(); }
+  // ── Validation des coordonnées (obligatoires quelle que soit la méthode) ──
+  var required = [
+    { id: 'checkout-prenom',  label: 'Prénom' },
+    { id: 'checkout-nom',     label: 'Nom de famille' },
+    { id: 'checkout-email',   label: 'Adresse e-mail' },
+    { id: 'checkout-tel',     label: 'Téléphone' },
+    { id: 'checkout-adresse', label: 'Adresse postale' },
+    { id: 'checkout-cp',      label: 'Code postal' },
+    { id: 'checkout-ville',   label: 'Ville' }
+  ];
+
+  var firstInvalid = null;
+  required.forEach(function(f) {
+    var el = document.getElementById(f.id);
+    if (!el) return;
+    var val = el.value.trim();
+    if (!val) {
+      el.classList.add('input-error');
+      if (!firstInvalid) firstInvalid = { el: el, label: f.label };
+    } else {
+      el.classList.remove('input-error');
+    }
+  });
+
+  // Validation spécifique e-mail
+  var emailEl = document.getElementById('checkout-email');
+  if (emailEl && emailEl.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) {
+    emailEl.classList.add('input-error');
+    if (!firstInvalid) firstInvalid = { el: emailEl, label: 'Adresse e-mail (format invalide)' };
+  }
+
+  if (firstInvalid) {
+    if (errorEl) errorEl.textContent = 'Champ obligatoire manquant : ' + firstInvalid.label + '.';
+    firstInvalid.el.focus();
     return;
   }
-  if (emailEl) emailEl.classList.remove('input-error');
 
-  checkoutState.email  = email;
-  checkoutState.prenom = prenom;
+  // ── Validation carte (uniquement si méthode = carte) ──
+  if (checkoutState.paymentMethod !== 'paypal') {
+    // [STRIPE] Ici, vérifier que les éléments Stripe sont complets :
+    //   if (!cardNumberElement._complete) { errorEl.textContent = 'Merci de compléter les informations de carte.'; return; }
+    // En mode démo, on passe directement.
+  }
 
-  // [STRIPE] Remplacer simulatePayment() par :
+  // Sauvegarder les infos
+  checkoutState.email  = document.getElementById('checkout-email').value.trim();
+  checkoutState.prenom = document.getElementById('checkout-prenom').value.trim();
+
+  // [STRIPE] Remplacer la ligne goToFirstLogin() par :
   //   stripe.confirmCardPayment(clientSecret, { payment_method: { card: cardNumberElement } })
   //     .then(function(result) {
-  //       if (result.error) { afficher l'erreur } else { goToFirstLogin(); }
+  //       if (result.error) { errorEl.textContent = result.error.message; }
+  //       else { goToFirstLogin(); }
   //     });
   // Documentation : https://stripe.com/docs/payments/accept-a-payment
 
