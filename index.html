@@ -9735,6 +9735,166 @@
     </div>
   </div>
 
+  <!-- ══════════════════════════════════════
+       PAGE PAIEMENT
+  ══════════════════════════════════════ -->
+  <div class="page" id="page-paiement">
+    <div class="checkout-wrap">
+      <!-- Barre supérieure -->
+      <div class="checkout-top-bar">
+        <div class="checkout-logo-area">
+          <img src="assets/image-1.png" alt="Logo">
+          <div>
+            <div class="checkout-logo-sub">Ambitieuse Aventure</div>
+            <div class="checkout-logo-name">La Ligue des Ambitieuses</div>
+          </div>
+        </div>
+        <button class="checkout-back-btn" onclick="showPage('landing');setTimeout(function(){document.getElementById('offre').scrollIntoView({behavior:'smooth'})},80)">← Retour aux offres</button>
+      </div>
+
+      <div class="checkout-grid">
+        <!-- Colonne gauche : formulaire -->
+        <div>
+          <!-- 1. Coordonnées -->
+          <div class="checkout-card">
+            <div class="checkout-section-title">1 · Tes coordonnées</div>
+            <div class="checkout-form-field">
+              <label>Prénom</label>
+              <input type="text" id="checkout-prenom" placeholder="Marie" autocomplete="given-name">
+            </div>
+            <div class="checkout-form-field">
+              <label>Adresse e-mail <span style="color:#ff6b6b;">*</span></label>
+              <input type="email" id="checkout-email" placeholder="marie@exemple.fr" autocomplete="email" required>
+            </div>
+          </div>
+
+          <!-- 2. Paiement -->
+          <div class="checkout-card">
+            <div class="checkout-section-title">2 · Paiement sécurisé</div>
+
+            <!-- Champs Stripe (placeholders — à remplacer par les éléments Stripe.js) -->
+            <!-- [STRIPE] Étape 1 : charger Stripe.js dans le <head> -->
+            <!-- <script src="https://js.stripe.com/v3/"></script> -->
+            <!-- [STRIPE] Étape 2 : var stripe = Stripe('pk_live_VOTRE_CLE'); -->
+            <!-- [STRIPE] Étape 3 : var elements = stripe.elements(); -->
+            <!-- [STRIPE] Étape 4 : monter cardNumber, cardExpiry, cardCvc dans les divs ci-dessous -->
+
+            <div class="checkout-form-field">
+              <label>Numéro de carte</label>
+              <!-- [STRIPE] Remplacer la div ci-dessous par : <div id="stripe-card-number"></div> -->
+              <div class="stripe-field-placeholder" id="stripe-card-number">
+                🔒&nbsp; Champ Stripe — à connecter lors du déploiement
+              </div>
+            </div>
+            <div class="checkout-form-row">
+              <div class="checkout-form-field">
+                <label>Expiration</label>
+                <!-- [STRIPE] Remplacer par : <div id="stripe-card-expiry"></div> -->
+                <div class="stripe-field-placeholder" id="stripe-card-expiry">MM / AA</div>
+              </div>
+              <div class="checkout-form-field">
+                <label>CVC</label>
+                <!-- [STRIPE] Remplacer par : <div id="stripe-card-cvc"></div> -->
+                <div class="stripe-field-placeholder" id="stripe-card-cvc">CVC</div>
+              </div>
+            </div>
+            <div class="checkout-stripe-note">
+              🔒&nbsp; Paiement sécurisé SSL · Données bancaires chiffrées par Stripe
+            </div>
+
+            <!-- Séparateur OU PayPal -->
+            <div class="checkout-or-divider">ou</div>
+
+            <!-- Bouton PayPal (placeholder — à remplacer par SDK PayPal) -->
+            <!-- [PAYPAL] Charger : <script src="https://www.paypal.com/sdk/js?client-id=VOTRE_CLIENT_ID&currency=EUR"></script> -->
+            <!-- [PAYPAL] Monter le bouton via paypal.Buttons({...}).render('#paypal-button-container') -->
+            <button class="checkout-paypal-btn" onclick="handlePaypalClick()" type="button">
+              <!-- [PAYPAL] Remplacer ce bouton par : <div id="paypal-button-container"></div> -->
+              Pay<span>Pal</span>
+            </button>
+
+            <div id="checkout-form-error" style="font-family:'DM Sans',sans-serif;font-size:13px;color:#ff6b6b;margin-top:12px;min-height:18px;text-align:center;"></div>
+
+            <!-- Bouton principal (simulé en démo) -->
+            <button class="checkout-submit-btn" onclick="simulatePayment()" type="button">
+              🔒&nbsp; Commencer mon essai gratuit de 7 jours
+            </button>
+            <div class="checkout-secure">🔐 Crypté SSL &middot; Sans engagement &middot; Résiliation libre à tout moment</div>
+          </div>
+        </div>
+
+        <!-- Colonne droite : récapitulatif abonnement -->
+        <div>
+          <div class="checkout-card" style="position:sticky;top:24px;">
+            <div class="checkout-section-title">Ton abonnement</div>
+            <div class="checkout-plan-name" id="checkout-plan-name">⚡ La Stratège</div>
+
+            <!-- Toggle mensuel / annuel -->
+            <div class="checkout-billing-toggle">
+              <span class="toggle-label active" id="checkout-toggle-month" onclick="setCheckoutBilling(false)">Mensuel</span>
+              <button class="checkout-toggle-switch" id="checkout-billing-toggle" onclick="toggleCheckoutBilling()" aria-label="Basculer facturation annuelle" type="button"></button>
+              <span class="toggle-label" id="checkout-toggle-year" onclick="setCheckoutBilling(true)">Annuel&nbsp;<span style="color:#6fcf97;font-size:11px;font-weight:700;">−17%</span></span>
+            </div>
+
+            <div class="checkout-price-display" id="checkout-price-display">€65<small>/mois</small></div>
+            <div class="checkout-price-saving" id="checkout-price-saving"></div>
+
+            <ul class="checkout-features" id="checkout-features-list"></ul>
+
+            <div class="checkout-trial-badge">
+              ✨ 7 jours d'essai gratuit · Aucun débit avant la fin de l'essai
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       PAGE PREMIER LOGIN (création mot de passe)
+  ══════════════════════════════════════ -->
+  <div class="page" id="page-premier-login">
+    <div class="first-login-wrap">
+      <div class="first-login-card">
+        <div class="first-login-icon">🎉</div>
+        <div class="first-login-title">Bienvenue dans La Ligue !</div>
+        <div class="first-login-sub">
+          Ton paiement a bien été traité.<br>
+          Crée maintenant ton mot de passe pour accéder à ton espace personnel.
+        </div>
+        <div class="first-login-email-chip" id="first-login-email-display">ton@email.fr</div>
+        <form class="first-login-form" onsubmit="handleFirstLogin(event)">
+          <div class="checkout-form-field">
+            <label>Choisis ton mot de passe</label>
+            <input type="password" id="first-login-pwd" placeholder="Au moins 8 caractères" autocomplete="new-password" required minlength="8">
+          </div>
+          <div class="checkout-form-field">
+            <label>Confirme ton mot de passe</label>
+            <input type="password" id="first-login-pwd2" placeholder="Répète ton mot de passe" autocomplete="new-password" required minlength="8">
+          </div>
+          <div class="first-login-error" id="first-login-error"></div>
+          <button type="submit" class="first-login-submit">Accéder à mon espace →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TUTORIEL DE BIENVENUE
+  ══════════════════════════════════════ -->
+  <div id="welcome-tutorial-overlay">
+    <div class="welcome-tutorial-card">
+      <div class="tutorial-step-dots" id="tutorial-dots"></div>
+      <div class="tutorial-icon" id="tutorial-icon"></div>
+      <div class="tutorial-title" id="tutorial-title"></div>
+      <div class="tutorial-body" id="tutorial-body"></div>
+      <div class="tutorial-actions">
+        <button class="tutorial-btn-skip" onclick="closeTutorial()">Passer</button>
+        <button class="tutorial-btn-next" id="tutorial-btn-next" onclick="tutorialNext()">Continuer →</button>
+      </div>
+    </div>
+  </div>
+
   <div class="pub-nav-mobile-overlay" id="pub-nav-mobile-overlay" onclick="pubNavClose()"></div>
   <div class="pub-nav-mobile-menu" id="pub-nav-mobile-menu">
     <div class="pub-nav-mobile-header">
@@ -13479,6 +13639,7 @@
   }
 
   function openPrixModal(plan) {
+    window._currentPrixModalPlan = plan; // retenir le plan sélectionné pour le checkout
     const planData = prixModalPlans[plan];
     if (!planData) return;
 
@@ -13508,8 +13669,10 @@
   }
 
   function goToPricingCheckout() {
+    var plan = window._currentPrixModalPlan || 'stratege';
     closePrixModal();
-    showPage('dashboard');
+    if (typeof initCheckoutPage === 'function') initCheckoutPage(plan);
+    showPage('paiement');
   }
 
   document.addEventListener('keydown', function(event){
@@ -13628,7 +13791,7 @@
 
     const topbar = document.getElementById('topbar');
     const sidebar = document.getElementById('sidebar');
-    if (page === 'landing' || page === 'blog' || page === 'bibliotheque' || page === 'contact') {
+    if (page === 'landing' || page === 'blog' || page === 'bibliotheque' || page === 'contact' || page === 'paiement' || page === 'premier-login') {
       topbar.style.display = 'none';
       sidebar.style.display = 'none';
       document.body.classList.remove('member-page');
@@ -13650,7 +13813,7 @@
     /* Masquer/afficher la bottom nav selon la page */
     const bottomNav = document.getElementById('mobile-bottom-nav');
     if (bottomNav) {
-      const isPublicPage = (page === 'landing' || page === 'blog' || page === 'bibliotheque' || page === 'contact');
+      const isPublicPage = (page === 'landing' || page === 'blog' || page === 'bibliotheque' || page === 'contact' || page === 'paiement' || page === 'premier-login');
       bottomNav.style.display = isPublicPage ? 'none' : '';
     }
   }
@@ -21394,6 +21557,487 @@
     }
     #login-modal .login-title { font-size: 20px; }
   }
+
+  /* ════════════════════════════════════════════════
+     PAGE PAIEMENT
+  ════════════════════════════════════════════════ */
+  #page-paiement, #page-premier-login {
+    background: var(--navy-darkest, #050816);
+    min-height: 100vh;
+  }
+  .checkout-wrap {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+  .checkout-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 36px;
+  }
+  .checkout-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .checkout-logo-area img { height: 38px; }
+  .checkout-logo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+  }
+  .checkout-logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .checkout-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255,255,255,0.4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: color .2s, background .2s;
+  }
+  .checkout-back-btn:hover {
+    color: white;
+    background: rgba(255,255,255,0.06);
+  }
+  .checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 24px;
+    align-items: start;
+  }
+  .checkout-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .checkout-card:last-child { margin-bottom: 0; }
+  .checkout-section-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-bottom: 20px;
+  }
+  /* Récap plan */
+  .checkout-plan-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 18px;
+  }
+  .checkout-billing-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .checkout-billing-toggle .toggle-label {
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: color .2s;
+    user-select: none;
+  }
+  .checkout-billing-toggle .toggle-label.active { color: white; font-weight: 600; }
+  .checkout-toggle-switch {
+    width: 42px;
+    height: 24px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: background .2s;
+    border: none;
+    flex-shrink: 0;
+  }
+  .checkout-toggle-switch.on { background: var(--gold-bright, #fcba33); }
+  .checkout-toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    transition: transform .2s;
+  }
+  .checkout-toggle-switch.on::after { transform: translateX(18px); }
+  .checkout-price-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .checkout-price-display small {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.45);
+  }
+  .checkout-price-saving {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: #6fcf97;
+    font-weight: 600;
+    min-height: 18px;
+    margin-bottom: 18px;
+  }
+  .checkout-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px;
+  }
+  .checkout-features li {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .checkout-features li:last-child { border-bottom: none; }
+  .checkout-trial-badge {
+    padding: 11px 14px;
+    background: rgba(111,207,151,0.07);
+    border: 1px solid rgba(111,207,151,0.18);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: #6fcf97;
+    text-align: center;
+  }
+  /* Formulaire */
+  .checkout-form-field { margin-bottom: 16px; }
+  .checkout-form-field label {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 8px;
+  }
+  .checkout-form-field input {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color .2s, background .2s;
+    box-sizing: border-box;
+  }
+  .checkout-form-field input:focus {
+    border-color: rgba(235,193,76,0.5);
+    background: rgba(255,255,255,0.08);
+  }
+  .checkout-form-field input::placeholder { color: rgba(255,255,255,0.18); }
+  .checkout-form-field input.input-error { border-color: #ff6b6b; }
+  .checkout-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  /* Stripe placeholder */
+  .stripe-field-placeholder {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 46px;
+    box-sizing: border-box;
+  }
+  /* [STRIPE] Remplacer .stripe-field-placeholder par les éléments montés par Stripe.js */
+  .checkout-stripe-note {
+    margin-top: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.22);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .checkout-or-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+  }
+  .checkout-or-divider::before, .checkout-or-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+  }
+  .checkout-paypal-btn {
+    width: 100%;
+    padding: 13px;
+    background: #FFC43A;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity .2s;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: #003087;
+    letter-spacing: -.01em;
+  }
+  .checkout-paypal-btn:hover { opacity: .88; }
+  .checkout-paypal-btn span { color: #009cde; }
+  .checkout-submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--gold-bright, #fcba33);
+    color: var(--navy-darkest, #050816);
+    border: none;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 18px;
+    transition: opacity .2s, transform .15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .checkout-submit-btn:hover { opacity: .9; transform: translateY(-1px); }
+  .checkout-submit-btn:active { transform: translateY(0); }
+  .checkout-secure {
+    margin-top: 12px;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  @media (max-width: 820px) {
+    .checkout-grid { grid-template-columns: 1fr; }
+    .checkout-grid > div:first-child { order: 2; }
+    .checkout-grid > div:last-child { order: 1; }
+  }
+  @media (max-width: 480px) {
+    .checkout-form-row { grid-template-columns: 1fr; }
+    .checkout-price-display { font-size: 32px; }
+    .checkout-card { padding: 22px 18px; }
+  }
+
+  /* ════════════════════════════════════════════════
+     PAGE PREMIER LOGIN (création de mot de passe)
+  ════════════════════════════════════════════════ */
+  .first-login-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .first-login-card {
+    background: var(--navy-dark, #0d1635);
+    border: 1px solid rgba(235,193,76,0.18);
+    border-radius: 20px;
+    padding: 52px 44px 44px;
+    width: 100%;
+    max-width: 460px;
+    text-align: center;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+  .first-login-icon { font-size: 44px; margin-bottom: 16px; line-height: 1; }
+  .first-login-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 10px;
+  }
+  .first-login-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.48);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+  .first-login-email-chip {
+    display: inline-block;
+    background: rgba(235,193,76,0.1);
+    border: 1px solid rgba(235,193,76,0.22);
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold-bright, #fcba33);
+    margin-bottom: 30px;
+  }
+  .first-login-form { text-align: left; }
+  .first-login-error {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: #ff6b6b;
+    text-align: center;
+    min-height: 18px;
+    margin-bottom: 10px;
+  }
+  .first-login-submit {
+    width: 100%;
+    padding: 15px;
+    background: var(--gold-bright, #fcba33);
+    color: var(--navy-darkest, #050816);
+    border: none;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: opacity .2s, transform .15s;
+  }
+  .first-login-submit:hover { opacity: .88; transform: translateY(-1px); }
+  @media (max-width: 520px) {
+    .first-login-card { padding: 36px 22px 28px; }
+    .first-login-title { font-size: 22px; }
+  }
+
+  /* ════════════════════════════════════════════════
+     TUTORIEL DE BIENVENUE
+  ════════════════════════════════════════════════ */
+  #welcome-tutorial-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5,8,22,0.88);
+    backdrop-filter: blur(8px);
+    z-index: 99998;
+    align-items: center;
+    justify-content: center;
+  }
+  #welcome-tutorial-overlay.open { display: flex; }
+  .welcome-tutorial-card {
+    background: var(--navy-dark, #0d1635);
+    border: 1px solid rgba(235,193,76,0.2);
+    border-radius: 24px;
+    padding: 48px 44px 40px;
+    width: 100%;
+    max-width: 520px;
+    margin: 16px;
+    text-align: center;
+    box-shadow: 0 32px 100px rgba(0,0,0,0.6);
+  }
+  .tutorial-step-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 32px;
+  }
+  .tutorial-dot {
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transition: all .3s;
+  }
+  .tutorial-dot.active {
+    background: var(--gold-bright, #fcba33);
+    width: 22px;
+    border-radius: 4px;
+  }
+  .tutorial-icon { font-size: 52px; line-height: 1; margin-bottom: 20px; }
+  .tutorial-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 12px;
+  }
+  .tutorial-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.58);
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+  .tutorial-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+  }
+  .tutorial-btn-skip {
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.28);
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: color .2s;
+  }
+  .tutorial-btn-skip:hover { color: rgba(255,255,255,0.55); }
+  .tutorial-btn-next {
+    padding: 13px 34px;
+    background: var(--gold-bright, #fcba33);
+    color: var(--navy-darkest, #050816);
+    border: none;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity .2s, transform .15s;
+  }
+  .tutorial-btn-next:hover { opacity: .88; transform: translateY(-1px); }
+  @media (max-width: 560px) {
+    .welcome-tutorial-card { padding: 36px 22px 28px; }
+    .tutorial-title { font-size: 20px; }
+    .tutorial-icon { font-size: 40px; }
+  }
 </style>
 
 <div id="admin-widget">
@@ -22767,6 +23411,293 @@ document.addEventListener('DOMContentLoaded', function() {
   applyResourceAccessControl();
   updateInitieeMonthlyBanner();
 });
+
+// ══════════════════════════════════════════════════════════════════
+// TUNNEL D'ABONNEMENT — PAIEMENT · PREMIER LOGIN · TUTORIEL
+// ══════════════════════════════════════════════════════════════════
+
+// État du checkout en cours
+var checkoutState = {
+  plan: 'stratege',
+  isAnnual: false,
+  email: '',
+  prenom: ''
+};
+
+// Données d'affichage des plans pour la page paiement
+var CHECKOUT_PLANS = {
+  initiee: {
+    name: "L'Initiée",
+    emoji: '🌿',
+    priceMonthly: 25,
+    priceAnnual: 250,
+    savingsAnnual: 50,
+    features: [
+      '📅 Session hebdo questions-réponses business',
+      '🥂 Événements en ligne (petit-déj, apéro business…)',
+      '🌸 Communauté privée d\'ambitieuses',
+      '📍 Annuaire des entrepreneures',
+      '📁 Accès à 3 ressources business par mois',
+      '🎓 Mini-formation mensuelle'
+    ]
+  },
+  stratege: {
+    name: 'La Stratège',
+    emoji: '⚡',
+    priceMonthly: 65,
+    priceAnnual: 650,
+    savingsAnnual: 130,
+    features: [
+      '✅ Tous les avantages de l\'Initiée',
+      '🧭 Bilan mensuel stratégique avec Ana & Audrey',
+      '🔍 Audit express sur un élément de ton business',
+      '🎤 Masterclass expert chaque mois',
+      '🤝 Business Accountability Buddy',
+      '🌟 Mise en avant mensuelle dans l\'annuaire',
+      '🎓 Accès à toutes les formations',
+      '📁 Accès à toutes les ressources business'
+    ]
+  },
+  visionnaire: {
+    name: 'La Visionnaire',
+    emoji: '🔮',
+    priceMonthly: 555,
+    priceAnnual: 5550,
+    savingsAnnual: 1110,
+    features: [
+      '✅ Tous les avantages de la Stratège',
+      '🎯 1h de coaching mensuel 1-1 avec Ana et/ou Audrey',
+      '📞 Hotline Business — accès 7j/7',
+      '🗺️ Plan d\'action trimestriel personnalisé',
+      '🧘 Focus Mindset complet & ateliers interactifs',
+      '🎬 Atelier interactif live mensuel'
+    ]
+  }
+};
+
+// Initialise la page paiement avec le plan choisi
+function initCheckoutPage(plan) {
+  checkoutState.plan = plan || 'stratege';
+  // Synchroniser le toggle mensuel/annuel avec celui de la landing
+  checkoutState.isAnnual = (typeof isPrixAnnuel === 'function') ? isPrixAnnuel() : false;
+  _renderCheckoutRecap();
+}
+
+// Met à jour l'affichage du récapitulatif
+function _renderCheckoutRecap() {
+  var plan = CHECKOUT_PLANS[checkoutState.plan];
+  if (!plan) return;
+
+  var planNameEl = document.getElementById('checkout-plan-name');
+  if (planNameEl) planNameEl.textContent = plan.emoji + ' ' + plan.name;
+
+  var toggle = document.getElementById('checkout-billing-toggle');
+  if (toggle) toggle.classList.toggle('on', checkoutState.isAnnual);
+
+  var lMonth = document.getElementById('checkout-toggle-month');
+  var lYear  = document.getElementById('checkout-toggle-year');
+  if (lMonth) lMonth.classList.toggle('active', !checkoutState.isAnnual);
+  if (lYear)  lYear.classList.toggle('active', checkoutState.isAnnual);
+
+  _updateCheckoutPrice();
+
+  var featEl = document.getElementById('checkout-features-list');
+  if (featEl) {
+    featEl.innerHTML = plan.features.map(function(f) {
+      return '<li>' + f + '</li>';
+    }).join('');
+  }
+
+  // Pré-remplir l'email si déjà saisi
+  if (checkoutState.email) {
+    var emailEl = document.getElementById('checkout-email');
+    if (emailEl && !emailEl.value) emailEl.value = checkoutState.email;
+  }
+}
+
+function _updateCheckoutPrice() {
+  var plan = CHECKOUT_PLANS[checkoutState.plan];
+  if (!plan) return;
+  var priceEl  = document.getElementById('checkout-price-display');
+  var savingEl = document.getElementById('checkout-price-saving');
+  if (checkoutState.isAnnual) {
+    if (priceEl)  priceEl.innerHTML  = '€' + plan.priceAnnual.toLocaleString('fr-FR') + '<small>/an</small>';
+    if (savingEl) savingEl.textContent = '✔ Tu économises ' + plan.savingsAnnual.toLocaleString('fr-FR') + ' € par an';
+  } else {
+    if (priceEl)  priceEl.innerHTML  = '€' + plan.priceMonthly + '<small>/mois</small>';
+    if (savingEl) savingEl.textContent = '';
+  }
+}
+
+function toggleCheckoutBilling() {
+  setCheckoutBilling(!checkoutState.isAnnual);
+}
+
+function setCheckoutBilling(annual) {
+  checkoutState.isAnnual = !!annual;
+  var toggle = document.getElementById('checkout-billing-toggle');
+  if (toggle) toggle.classList.toggle('on', checkoutState.isAnnual);
+  var lMonth = document.getElementById('checkout-toggle-month');
+  var lYear  = document.getElementById('checkout-toggle-year');
+  if (lMonth) lMonth.classList.toggle('active', !checkoutState.isAnnual);
+  if (lYear)  lYear.classList.toggle('active', checkoutState.isAnnual);
+  _updateCheckoutPrice();
+}
+
+// Bouton PayPal (placeholder)
+function handlePaypalClick() {
+  // [PAYPAL] Remplacer par l'intégration du SDK PayPal :
+  // paypal.Buttons({ createOrder: ..., onApprove: ... }).render('#paypal-button-container');
+  // Documentation : https://developer.paypal.com/sdk/js/
+  alert('Intégration PayPal à connecter lors du déploiement.\n\nDoc : https://developer.paypal.com/sdk/js/');
+}
+
+// Validation et simulation du paiement
+function simulatePayment() {
+  var prenomEl = document.getElementById('checkout-prenom');
+  var emailEl  = document.getElementById('checkout-email');
+  var errorEl  = document.getElementById('checkout-form-error');
+
+  var prenom = prenomEl ? prenomEl.value.trim() : '';
+  var email  = emailEl  ? emailEl.value.trim()  : '';
+
+  if (errorEl) errorEl.textContent = '';
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (errorEl) errorEl.textContent = 'Merci d\'indiquer une adresse e-mail valide.';
+    if (emailEl) { emailEl.classList.add('input-error'); emailEl.focus(); }
+    return;
+  }
+  if (emailEl) emailEl.classList.remove('input-error');
+
+  checkoutState.email  = email;
+  checkoutState.prenom = prenom;
+
+  // [STRIPE] Remplacer simulatePayment() par :
+  //   stripe.confirmCardPayment(clientSecret, { payment_method: { card: cardNumberElement } })
+  //     .then(function(result) {
+  //       if (result.error) { afficher l'erreur } else { goToFirstLogin(); }
+  //     });
+  // Documentation : https://stripe.com/docs/payments/accept-a-payment
+
+  goToFirstLogin();
+}
+
+// ── Page "Premier login" ───────────────────────────────────────────
+
+function goToFirstLogin() {
+  var emailDisplay = document.getElementById('first-login-email-display');
+  if (emailDisplay) emailDisplay.textContent = checkoutState.email;
+  showPage('premier-login');
+  setTimeout(function() {
+    var pwdEl = document.getElementById('first-login-pwd');
+    if (pwdEl) pwdEl.focus();
+  }, 100);
+}
+
+function handleFirstLogin(e) {
+  e.preventDefault();
+  var pwd    = document.getElementById('first-login-pwd').value;
+  var pwd2   = document.getElementById('first-login-pwd2').value;
+  var errorEl = document.getElementById('first-login-error');
+  errorEl.textContent = '';
+
+  if (pwd.length < 8) {
+    errorEl.textContent = 'Le mot de passe doit contenir au moins 8 caractères.';
+    return;
+  }
+  if (pwd !== pwd2) {
+    errorEl.textContent = 'Les mots de passe ne correspondent pas.';
+    document.getElementById('first-login-pwd2').value = '';
+    document.getElementById('first-login-pwd2').focus();
+    return;
+  }
+
+  // [BACKEND] Envoyer { email, password, plan } au serveur pour créer le compte
+  // et retourner un token de session.
+
+  // Appliquer le niveau d'abonnement (démo)
+  var plan = checkoutState.plan || 'initiee';
+  if (typeof setCurrentSubscription === 'function') setCurrentSubscription(plan);
+  if (typeof switchSubscriptionDemo === 'function') switchSubscriptionDemo(plan);
+
+  // Aller au dashboard et lancer le tutoriel
+  showPage('dashboard');
+  setTimeout(function() { showWelcomeTutorial(); }, 350);
+}
+
+// ── Tutoriel de bienvenue ─────────────────────────────────────────
+
+var TUTORIAL_STEPS = [
+  {
+    icon: '🎉',
+    title: 'Bienvenue dans La Ligue !',
+    body: 'Tu fais maintenant partie d\'une communauté de femmes entrepreneures ambitieuses. Prête à transformer ton business ? On te fait faire le tour de ton nouvel espace.'
+  },
+  {
+    icon: '🏠',
+    title: 'Ton tableau de bord',
+    body: 'C\'est ici que tu retrouves tout en un coup d\'œil : tes formations en cours, ton agenda, tes tâches et le focus du jour. Un espace conçu pour que tu avances chaque jour.'
+  },
+  {
+    icon: '🌸',
+    title: 'La communauté',
+    body: 'Dans l\'espace Communauté, tu peux échanger avec les autres membres, poser tes questions et célébrer tes victoires. Tu n\'es plus seule dans cette aventure.'
+  },
+  {
+    icon: '🎓',
+    title: 'Tes formations',
+    body: 'Accède à des formations pratiques conçues par des entrepreneures. Chaque module est court, dense et directement applicable à ton business — à ton rythme.'
+  },
+  {
+    icon: '✦',
+    title: 'C\'est parti !',
+    body: 'Ton essai de 7 jours commence maintenant. Explore à ton rythme et n\'hésite pas à poser tes questions à la communauté ou lors des sessions Q&R live. On est là pour toi !'
+  }
+];
+
+var _tutorialStep = 0;
+
+function showWelcomeTutorial() {
+  _tutorialStep = 0;
+  _renderTutorialStep();
+  var overlay = document.getElementById('welcome-tutorial-overlay');
+  if (overlay) { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+
+function closeTutorial() {
+  var overlay = document.getElementById('welcome-tutorial-overlay');
+  if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function tutorialNext() {
+  if (_tutorialStep < TUTORIAL_STEPS.length - 1) {
+    _tutorialStep++;
+    _renderTutorialStep();
+  } else {
+    closeTutorial();
+  }
+}
+
+function _renderTutorialStep() {
+  var step   = TUTORIAL_STEPS[_tutorialStep];
+  var isLast = _tutorialStep === TUTORIAL_STEPS.length - 1;
+
+  document.getElementById('tutorial-icon').textContent  = step.icon;
+  document.getElementById('tutorial-title').textContent = step.title;
+  document.getElementById('tutorial-body').textContent  = step.body;
+
+  var nextBtn = document.getElementById('tutorial-btn-next');
+  if (nextBtn) nextBtn.textContent = isLast ? 'Commencer ✦' : 'Continuer →';
+
+  var dotsEl = document.getElementById('tutorial-dots');
+  if (dotsEl) {
+    dotsEl.innerHTML = TUTORIAL_STEPS.map(function(_, i) {
+      return '<div class="tutorial-dot' + (i === _tutorialStep ? ' active' : '') + '"></div>';
+    }).join('');
+  }
+}
 
 // ══════════════════════════════════════════════════════════════════
 // SYSTÈME DE CONNEXION
