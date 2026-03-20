@@ -7792,7 +7792,7 @@
                   <li>3 ressources business/mois</li>
                   <li>1 formation</li>
                 </ul>
-                <button onclick="switchSubscriptionDemo('initiee');document.getElementById('profile-upgrade-section').style.display='none';document.getElementById('profile-change-plan-btn').style.display='';" style="width:100%;padding:10px;background:rgba(79,133,160,0.1);border:1px solid rgba(79,133,160,0.25);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--steel);cursor:pointer;">Choisir L'Initiée</button>
+                <button onclick="changePlanCheckout('initiee')" style="width:100%;padding:10px;background:rgba(79,133,160,0.1);border:1px solid rgba(79,133,160,0.25);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--steel);cursor:pointer;">Choisir L'Initiée</button>
               </div>
               <div style="background:white;border:2px solid rgba(79,133,160,0.35);border-radius:16px;padding:20px;position:relative;">
                 <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--steel);color:white;font-size:10px;font-weight:700;padding:3px 12px;border-radius:20px;white-space:nowrap;">⭐ Le plus populaire</div>
@@ -7804,7 +7804,7 @@
                   <li>Accountability Buddy</li>
                   <li>Toutes les ressources & formations</li>
                 </ul>
-                <button onclick="switchSubscriptionDemo('stratege');document.getElementById('profile-upgrade-section').style.display='none';document.getElementById('profile-change-plan-btn').style.display='';" style="width:100%;padding:10px;background:var(--navy-darkest);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--gold-bright);cursor:pointer;">Choisir La Stratège</button>
+                <button onclick="changePlanCheckout('stratege')" style="width:100%;padding:10px;background:var(--navy-darkest);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--gold-bright);cursor:pointer;">Choisir La Stratège</button>
               </div>
               <div style="background:linear-gradient(135deg,var(--navy-darkest),#223f58);border:2px solid rgba(235,193,76,0.3);border-radius:16px;padding:20px;color:white;">
                 <div style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px;">🔮 La Visionnaire</div>
@@ -7815,7 +7815,7 @@
                   <li>Hotline Business 7j/7</li>
                   <li>Plan d'action trimestriel</li>
                 </ul>
-                <button onclick="switchSubscriptionDemo('visionnaire');document.getElementById('profile-upgrade-section').style.display='none';document.getElementById('profile-change-plan-btn').style.display='';" style="width:100%;padding:10px;background:var(--gold-bright);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--navy-darkest);cursor:pointer;">Choisir La Visionnaire</button>
+                <button onclick="changePlanCheckout('visionnaire')" style="width:100%;padding:10px;background:var(--gold-bright);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--navy-darkest);cursor:pointer;">Choisir La Visionnaire</button>
               </div>
             </div>
             <button onclick="document.getElementById('profile-upgrade-section').style.display='none';document.getElementById('profile-change-plan-btn').style.display='';" style="margin-top:14px;background:none;border:none;font-size:12px;color:var(--text-light);cursor:pointer;text-decoration:underline;font-family:'DM Sans',sans-serif;">Annuler</button>
@@ -9867,7 +9867,7 @@
             <div class="checkout-logo-name">La Ligue des Ambitieuses</div>
           </div>
         </div>
-        <button class="checkout-back-btn" onclick="showPage('landing');setTimeout(function(){document.getElementById('offre').scrollIntoView({behavior:'smooth'})},80)">← Retour aux offres</button>
+        <button class="checkout-back-btn" onclick="checkoutState.isUpgrade ? showPage('profil') : (showPage('landing'),setTimeout(function(){document.getElementById('offre').scrollIntoView({behavior:'smooth'})},80))">← Retour</button>
       </div>
 
       <div class="checkout-grid">
@@ -13816,7 +13816,7 @@
   function goToPricingCheckout() {
     var plan = window._currentPrixModalPlan || 'stratege';
     closePrixModal();
-    if (typeof initCheckoutPage === 'function') initCheckoutPage(plan);
+    if (typeof initCheckoutPage === 'function') initCheckoutPage(plan, false);
     showPage('paiement');
   }
 
@@ -23656,11 +23656,33 @@ var CHECKOUT_PLANS = {
 };
 
 // Initialise la page paiement avec le plan choisi
-function initCheckoutPage(plan) {
+function initCheckoutPage(plan, isUpgrade) {
   checkoutState.plan = plan || 'stratege';
-  // Synchroniser le toggle mensuel/annuel avec celui de la landing
   checkoutState.isAnnual = (typeof isPrixAnnuel === 'function') ? isPrixAnnuel() : false;
+  checkoutState.isUpgrade = !!isUpgrade;
+  checkoutState.paymentMethod = 'card';
+
+  // Pré-remplir l'email depuis les données du membre connecté
+  var m = membersDB[CURRENT_MEMBER_KEY];
+  if (m && m.email) {
+    checkoutState.email = m.email;
+    var emailEl = document.getElementById('checkout-email');
+    if (emailEl) emailEl.value = m.email;
+  }
+
   _renderCheckoutRecap();
+
+  // Adapter l'UI selon le contexte (nouvel abonnement vs changement)
+  var payBtn   = document.getElementById('checkout-pay-btn');
+  var trialBadge = document.querySelector('#page-paiement .checkout-trial-badge');
+  var sectionTitle = document.querySelector('#page-paiement .checkout-section-title');
+  if (isUpgrade) {
+    if (payBtn)     payBtn.textContent = '🔒 Confirmer le changement d\'abonnement';
+    if (trialBadge) trialBadge.style.display = 'none';
+  } else {
+    if (payBtn)     payBtn.textContent = '🔒 Commencer mon essai gratuit de 7 jours';
+    if (trialBadge) trialBadge.style.display = '';
+  }
 }
 
 // Met à jour l'affichage du récapitulatif
@@ -23823,7 +23845,39 @@ function simulatePayment() {
 
 // ── Page "Premier login" ───────────────────────────────────────────
 
+// Appelé depuis le profil membre ("Changer mon niveau")
+function changePlanCheckout(plan) {
+  document.getElementById('profile-upgrade-section').style.display = 'none';
+  document.getElementById('profile-change-plan-btn').style.display = '';
+  if (typeof initCheckoutPage === 'function') initCheckoutPage(plan, true);
+  showPage('paiement');
+}
+
 function goToFirstLogin() {
+  // Mode changement de plan : pas besoin de créer un compte, retour direct au profil
+  if (checkoutState.isUpgrade) {
+    var plan = checkoutState.plan || 'initiee';
+    if (typeof setCurrentSubscription === 'function') setCurrentSubscription(plan);
+    if (typeof switchSubscriptionDemo  === 'function') switchSubscriptionDemo(plan);
+    // [BACKEND] Envoyer la mise à jour du plan au serveur (pas de création de compte)
+    showPage('profil');
+    // Afficher une confirmation brève
+    setTimeout(function() {
+      var btn = document.getElementById('profile-change-plan-btn');
+      if (btn) {
+        var planData = CHECKOUT_PLANS[plan];
+        var label = planData ? (planData.emoji + ' ' + planData.name) : plan;
+        var msg = document.createElement('div');
+        msg.style.cssText = 'font-family:\'DM Sans\',sans-serif;font-size:13px;color:#2d7d57;margin-top:8px;';
+        msg.textContent = '✓ Abonnement mis à jour : ' + label;
+        btn.parentNode.insertBefore(msg, btn.nextSibling);
+        setTimeout(function() { if (msg.parentNode) msg.parentNode.removeChild(msg); }, 5000);
+      }
+    }, 300);
+    return;
+  }
+
+  // Mode nouveau compte : écran de création de mot de passe
   var emailDisplay = document.getElementById('first-login-email-display');
   if (emailDisplay) emailDisplay.textContent = checkoutState.email;
   showPage('premier-login');
