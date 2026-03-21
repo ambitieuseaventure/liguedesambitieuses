@@ -9833,23 +9833,79 @@
       <div class="login-logo">
         <img src="assets/image-1.png" alt="La Ligue des Ambitieuses">
       </div>
-      <div class="login-title" id="login-modal-title">Connexion</div>
-      <div class="login-subtitle">Accédez à votre espace personnel</div>
-      <form id="login-form" onsubmit="handleLogin(event)">
-        <div class="login-field">
-          <label for="login-email">Adresse e-mail</label>
-          <input type="email" id="login-email" name="email" placeholder="vous@exemple.fr" autocomplete="email" required>
-        </div>
-        <div class="login-field">
-          <label for="login-password">Mot de passe</label>
-          <input type="password" id="login-password" name="password" placeholder="••••••••" autocomplete="current-password" required>
-        </div>
-        <div class="login-error" id="login-error"></div>
-        <button type="submit" class="login-btn">Se connecter →</button>
-      </form>
-      <div class="login-footer">
-        <a onclick="showPage('contact');hideLoginModal()">Mot de passe oublié ? Contactez-nous</a>
+
+      <!-- Onglets Connexion / Inscription -->
+      <div id="login-tabs" style="display:flex;gap:0;margin-bottom:18px;border-bottom:1.5px solid rgba(20,36,53,0.1);">
+        <button id="tab-login-btn" onclick="loginSwitchTab('login')" style="flex:1;padding:9px 0;background:none;border:none;border-bottom:2.5px solid var(--gold-bright);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:700;color:var(--navy-darkest);cursor:pointer;margin-bottom:-1.5px;">Connexion</button>
+        <button id="tab-register-btn" onclick="loginSwitchTab('register')" style="flex:1;padding:9px 0;background:none;border:none;border-bottom:2.5px solid transparent;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--text-light);cursor:pointer;margin-bottom:-1.5px;">Inscription</button>
       </div>
+
+      <!-- Panneau Connexion -->
+      <div id="login-panel">
+        <form id="login-form" onsubmit="handleLogin(event)">
+          <div class="login-field">
+            <label for="login-email">Adresse e-mail</label>
+            <input type="email" id="login-email" name="email" placeholder="vous@exemple.fr" autocomplete="email" required>
+          </div>
+          <div class="login-field">
+            <label for="login-password">Mot de passe</label>
+            <input type="password" id="login-password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+          </div>
+          <div class="login-error" id="login-error"></div>
+          <button type="submit" id="login-submit-btn" class="login-btn">Se connecter →</button>
+        </form>
+        <div class="login-footer">
+          <a href="javascript:void(0)" onclick="showForgotPassword()">Mot de passe oublié ?</a>
+        </div>
+      </div>
+
+      <!-- Panneau Inscription -->
+      <div id="register-panel" style="display:none;">
+        <form id="register-form" onsubmit="handleRegister(event)">
+          <div style="display:flex;gap:10px;">
+            <div class="login-field" style="flex:1;">
+              <label for="reg-prenom">Prénom <span style="color:#e05252">*</span></label>
+              <input type="text" id="reg-prenom" placeholder="Marie" autocomplete="given-name" required>
+            </div>
+            <div class="login-field" style="flex:1;">
+              <label for="reg-nom">Nom <span style="color:#e05252">*</span></label>
+              <input type="text" id="reg-nom" placeholder="Dupont" autocomplete="family-name" required>
+            </div>
+          </div>
+          <div class="login-field">
+            <label for="reg-email">E-mail <span style="color:#e05252">*</span></label>
+            <input type="email" id="reg-email" placeholder="vous@exemple.fr" autocomplete="email" required>
+          </div>
+          <div class="login-field">
+            <label for="reg-password">Mot de passe <span style="color:#e05252">*</span> <span style="font-size:11px;color:var(--text-light);font-weight:400;">(8 caractères min.)</span></label>
+            <input type="password" id="reg-password" placeholder="••••••••" autocomplete="new-password" required>
+          </div>
+          <div class="login-error" id="register-error"></div>
+          <button type="submit" id="register-submit-btn" class="login-btn">Créer mon compte →</button>
+        </form>
+        <div class="login-footer" style="font-size:11px;color:var(--text-light);margin-top:10px;">
+          En créant un compte, vous acceptez nos <a href="javascript:void(0)" onclick="showPage('contact');hideLoginModal()">conditions d'utilisation</a>.
+        </div>
+      </div>
+
+      <!-- Panneau Mot de passe oublié -->
+      <div id="forgot-panel" style="display:none;">
+        <div class="login-title" style="font-size:16px;margin-bottom:8px;">Réinitialiser mon mot de passe</div>
+        <div class="login-subtitle" style="margin-bottom:16px;">Saisis ton adresse e-mail pour recevoir un lien de réinitialisation.</div>
+        <form id="forgot-form" onsubmit="handleForgotPassword(event)">
+          <div class="login-field">
+            <label for="forgot-email">Adresse e-mail</label>
+            <input type="email" id="forgot-email" placeholder="vous@exemple.fr" required>
+          </div>
+          <div class="login-error" id="forgot-error"></div>
+          <div id="forgot-success" style="display:none;color:#2d7d57;font-size:13px;margin-bottom:12px;padding:10px;background:rgba(45,125,87,0.08);border-radius:8px;"></div>
+          <button type="submit" id="forgot-submit-btn" class="login-btn">Envoyer le lien →</button>
+        </form>
+        <div class="login-footer">
+          <a href="javascript:void(0)" onclick="loginSwitchTab('login')">← Retour à la connexion</a>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -24591,3 +24647,674 @@ function mfRenderCoordonnees(m) {
   set('mf-coord-ville',   m.villePostale);
 }
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     API CLIENT & FONCTIONNALITÉS RÉELLES
+     Ce bloc remplace les fonctions demo par de vraies API calls
+════════════════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+// ══════════════════════════════════════════════════════════════
+// CONFIG API
+// ══════════════════════════════════════════════════════════════
+var API_BASE = '/api';
+
+// ══════════════════════════════════════════════════════════════
+// SESSION — stockage du token JWT
+// ══════════════════════════════════════════════════════════════
+var APP_SESSION = {
+  token: null,
+  user: null,
+
+  load: function() {
+    try {
+      var stored = localStorage.getItem('lda_session');
+      if (stored) {
+        var data = JSON.parse(stored);
+        this.token = data.token || null;
+        this.user = data.user || null;
+      }
+    } catch(e) {}
+  },
+
+  save: function() {
+    try {
+      localStorage.setItem('lda_session', JSON.stringify({ token: this.token, user: this.user }));
+    } catch(e) {}
+  },
+
+  clear: function() {
+    this.token = null;
+    this.user = null;
+    localStorage.removeItem('lda_session');
+  },
+
+  isLoggedIn: function() {
+    return !!this.token && !!this.user;
+  }
+};
+
+// ══════════════════════════════════════════════════════════════
+// APPEL API GÉNÉRIQUE
+// ══════════════════════════════════════════════════════════════
+function apiCall(method, path, body, opts) {
+  opts = opts || {};
+  var headers = { 'Content-Type': 'application/json' };
+  if (APP_SESSION.token) {
+    headers['Authorization'] = 'Bearer ' + APP_SESSION.token;
+  }
+
+  var fetchOpts = {
+    method: method,
+    headers: headers
+  };
+
+  if (body && method !== 'GET') {
+    fetchOpts.body = JSON.stringify(body);
+  }
+
+  return fetch(API_BASE + path, fetchOpts).then(function(res) {
+    if (res.status === 401) {
+      // Token expiré — déconnecter
+      APP_SESSION.clear();
+      if (typeof showLoginModal === 'function') showLoginModal();
+      throw new Error('Session expirée, veuillez vous reconnecter.');
+    }
+    return res.json().then(function(data) {
+      if (!res.ok) {
+        throw new Error(data.error || 'Erreur serveur');
+      }
+      return data;
+    });
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+// GESTION DES ONGLETS LOGIN / REGISTER / FORGOT
+// ══════════════════════════════════════════════════════════════
+function loginSwitchTab(tab) {
+  var loginPanel    = document.getElementById('login-panel');
+  var registerPanel = document.getElementById('register-panel');
+  var forgotPanel   = document.getElementById('forgot-panel');
+  var tabLoginBtn   = document.getElementById('tab-login-btn');
+  var tabRegisterBtn = document.getElementById('tab-register-btn');
+  var tabs          = document.getElementById('login-tabs');
+
+  if (loginPanel)    loginPanel.style.display    = 'none';
+  if (registerPanel) registerPanel.style.display = 'none';
+  if (forgotPanel)   forgotPanel.style.display   = 'none';
+
+  if (tab === 'login') {
+    if (loginPanel) loginPanel.style.display = 'block';
+    if (tabLoginBtn) { tabLoginBtn.style.borderBottomColor = 'var(--gold-bright)'; tabLoginBtn.style.color = 'var(--navy-darkest)'; tabLoginBtn.style.fontWeight = '700'; }
+    if (tabRegisterBtn) { tabRegisterBtn.style.borderBottomColor = 'transparent'; tabRegisterBtn.style.color = 'var(--text-light)'; tabRegisterBtn.style.fontWeight = '600'; }
+    if (tabs) tabs.style.display = 'flex';
+  } else if (tab === 'register') {
+    if (registerPanel) registerPanel.style.display = 'block';
+    if (tabLoginBtn) { tabLoginBtn.style.borderBottomColor = 'transparent'; tabLoginBtn.style.color = 'var(--text-light)'; tabLoginBtn.style.fontWeight = '600'; }
+    if (tabRegisterBtn) { tabRegisterBtn.style.borderBottomColor = 'var(--gold-bright)'; tabRegisterBtn.style.color = 'var(--navy-darkest)'; tabRegisterBtn.style.fontWeight = '700'; }
+    if (tabs) tabs.style.display = 'flex';
+  } else if (tab === 'forgot') {
+    if (forgotPanel) forgotPanel.style.display = 'block';
+    if (tabs) tabs.style.display = 'none';
+  }
+}
+
+function showForgotPassword() {
+  loginSwitchTab('forgot');
+}
+
+// ══════════════════════════════════════════════════════════════
+// CONNEXION RÉELLE (remplace handleLogin)
+// ══════════════════════════════════════════════════════════════
+function handleLogin(e) {
+  e.preventDefault();
+  var email    = document.getElementById('login-email').value.trim().toLowerCase();
+  var password = document.getElementById('login-password').value;
+  var errorEl  = document.getElementById('login-error');
+  var submitBtn = document.getElementById('login-submit-btn');
+  errorEl.textContent = '';
+
+  if (!email || !password) {
+    errorEl.textContent = 'Veuillez remplir tous les champs.';
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Connexion…';
+
+  apiCall('POST', '/auth/login', { email: email, password: password })
+    .then(function(data) {
+      APP_SESSION.token = data.token;
+      APP_SESSION.user = data.user;
+      APP_SESSION.save();
+
+      hideLoginModal();
+      applySession(data.user);
+    })
+    .catch(function(err) {
+      errorEl.textContent = err.message || 'Identifiants incorrects.';
+      document.getElementById('login-password').value = '';
+      document.getElementById('login-password').focus();
+    })
+    .finally(function() {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Se connecter →';
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+// INSCRIPTION RÉELLE
+// ══════════════════════════════════════════════════════════════
+function handleRegister(e) {
+  e.preventDefault();
+  var firstName = document.getElementById('reg-prenom').value.trim();
+  var lastName  = document.getElementById('reg-nom').value.trim();
+  var email     = document.getElementById('reg-email').value.trim().toLowerCase();
+  var password  = document.getElementById('reg-password').value;
+  var errorEl   = document.getElementById('register-error');
+  var submitBtn = document.getElementById('register-submit-btn');
+  errorEl.textContent = '';
+
+  if (!firstName || !lastName || !email || !password) {
+    errorEl.textContent = 'Tous les champs sont obligatoires.';
+    return;
+  }
+  if (password.length < 8) {
+    errorEl.textContent = 'Le mot de passe doit contenir au moins 8 caractères.';
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Création du compte…';
+
+  apiCall('POST', '/auth/register', { email: email, password: password, firstName: firstName, lastName: lastName })
+    .then(function(data) {
+      APP_SESSION.token = data.token;
+      APP_SESSION.user = data.user;
+      APP_SESSION.save();
+
+      hideLoginModal();
+      if (typeof showPage === 'function') showPage('premier-login');
+    })
+    .catch(function(err) {
+      errorEl.textContent = err.message || 'Erreur lors de l\'inscription.';
+    })
+    .finally(function() {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Créer mon compte →';
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+// MOT DE PASSE OUBLIÉ RÉEL
+// ══════════════════════════════════════════════════════════════
+function handleForgotPassword(e) {
+  e.preventDefault();
+  var email     = document.getElementById('forgot-email').value.trim();
+  var errorEl   = document.getElementById('forgot-error');
+  var successEl = document.getElementById('forgot-success');
+  var submitBtn = document.getElementById('forgot-submit-btn');
+  errorEl.textContent = '';
+  if (successEl) successEl.style.display = 'none';
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Envoi…';
+
+  apiCall('POST', '/auth/forgot-password', { email: email })
+    .then(function(data) {
+      if (successEl) {
+        successEl.textContent = data.message || 'Si cette adresse existe, un lien a été envoyé.';
+        successEl.style.display = 'block';
+      }
+      document.getElementById('forgot-email').value = '';
+    })
+    .catch(function(err) {
+      errorEl.textContent = err.message || 'Erreur lors de l\'envoi.';
+    })
+    .finally(function() {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Envoyer le lien →';
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+// APPLIQUER LA SESSION (mise à jour UI après connexion)
+// ══════════════════════════════════════════════════════════════
+function applySession(user) {
+  if (!user) return;
+
+  // Mettre à jour le tier d'abonnement
+  var tier = user.tier || 'initiee';
+  if (typeof setCurrentSubscription === 'function') setCurrentSubscription(tier);
+  if (typeof switchSubscriptionDemo === 'function') switchSubscriptionDemo(tier);
+
+  // Mettre à jour l'affichage du nom/initiales dans la sidebar
+  var initials = (user.firstName ? user.firstName[0] : '') + (user.lastName ? user.lastName[0] : '');
+  initials = initials.toUpperCase() || 'M';
+  var fullName = (user.firstName || '') + ' ' + (user.lastName || '');
+
+  document.querySelectorAll('.user-avatar, .topbar-avatar').forEach(function(el) {
+    el.textContent = initials;
+    if (user.avatarColor) el.style.background = user.avatarColor;
+  });
+  document.querySelectorAll('.user-name').forEach(function(el) {
+    el.textContent = fullName.trim() || user.email;
+  });
+  document.querySelectorAll('.user-role').forEach(function(el) {
+    var labels = { initiee: 'Initiée', stratege: 'Stratège', visionnaire: 'Visionnaire' };
+    el.textContent = labels[tier] || tier;
+  });
+
+  // Naviguer
+  if (user.role === 'admin') {
+    if (typeof enterAdmin === 'function') enterAdmin();
+  } else {
+    if (typeof showPage === 'function') showPage('dashboard');
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// DÉCONNEXION RÉELLE
+// ══════════════════════════════════════════════════════════════
+function handleLogout() {
+  APP_SESSION.clear();
+  if (typeof showPage === 'function') showPage('landing');
+  // Rafraîchir la page pour nettoyer l'état
+  setTimeout(function() { window.location.reload(); }, 100);
+}
+
+// ══════════════════════════════════════════════════════════════
+// FORMULAIRE DE CONTACT RÉEL (remplace contactSubmit)
+// ══════════════════════════════════════════════════════════════
+var _originalContactSubmit = typeof contactSubmit === 'function' ? contactSubmit : null;
+
+function contactSubmit() {
+  var prenom  = document.getElementById('contact-prenom') ? document.getElementById('contact-prenom').value.trim() : '';
+  var nom     = document.getElementById('contact-nom') ? document.getElementById('contact-nom').value.trim() : '';
+  var email   = document.getElementById('contact-email') ? document.getElementById('contact-email').value.trim() : '';
+  var sujet   = document.getElementById('contact-sujet') ? document.getElementById('contact-sujet').value : '';
+  var message = document.getElementById('contact-message') ? document.getElementById('contact-message').value.trim() : '';
+  var errEl   = document.getElementById('contact-error');
+
+  if (!prenom) { if(errEl){errEl.textContent='Merci de renseigner votre prénom.';errEl.style.display='block';} return; }
+  if (!email || email.indexOf('@') === -1) { if(errEl){errEl.textContent='Email invalide.';errEl.style.display='block';} return; }
+  if (!message) { if(errEl){errEl.textContent='Merci d\'écrire un message.';errEl.style.display='block';} return; }
+  if (errEl) errEl.style.display = 'none';
+
+  var submitBtn = document.querySelector('.contact-submit-btn');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Envoi…'; }
+
+  apiCall('POST', '/support/contact', {
+    name: prenom + (nom ? ' ' + nom : ''),
+    email: email,
+    subject: sujet || 'Message depuis le site',
+    message: message
+  })
+  .then(function() {
+    var wrap = document.getElementById('contact-form-wrap');
+    var success = document.getElementById('contact-success');
+    if (wrap) wrap.style.display = 'none';
+    if (success) success.style.display = 'block';
+  })
+  .catch(function(err) {
+    if (errEl) { errEl.textContent = err.message || 'Erreur lors de l\'envoi.'; errEl.style.display = 'block'; }
+  })
+  .finally(function() {
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Envoyer le message →'; }
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+// PROFIL — SAUVEGARDER LES COORDONNÉES (remplace saveProfileCoordonnees)
+// ══════════════════════════════════════════════════════════════
+function saveProfileCoordonnees(e) {
+  e.preventDefault();
+  var phone   = document.getElementById('coord-phone') ? document.getElementById('coord-phone').value.trim() : '';
+  var adresse = document.getElementById('coord-adresse') ? document.getElementById('coord-adresse').value.trim() : '';
+  var cp      = document.getElementById('coord-cp') ? document.getElementById('coord-cp').value.trim() : '';
+  var ville   = document.getElementById('coord-ville') ? document.getElementById('coord-ville').value.trim() : '';
+
+  apiCall('PUT', '/users/me', { phone: phone, address: adresse, postalCode: cp, city: ville })
+    .then(function() {
+      _showMsg('coord-coord-msg', '✓ Coordonnées enregistrées.', false);
+      // Mettre à jour la session locale
+      if (APP_SESSION.user) {
+        APP_SESSION.user.phone = phone;
+        APP_SESSION.save();
+      }
+    })
+    .catch(function(err) {
+      _showMsg('coord-coord-msg', err.message || 'Erreur lors de la sauvegarde.', true);
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+// PROFIL — CHANGER LE MOT DE PASSE (remplace saveProfilePassword)
+// ══════════════════════════════════════════════════════════════
+function saveProfilePassword(e) {
+  e.preventDefault();
+  var current = document.getElementById('coord-pwd-current') ? document.getElementById('coord-pwd-current').value : '';
+  var newPwd  = document.getElementById('coord-pwd-new') ? document.getElementById('coord-pwd-new').value : '';
+  var confirm = document.getElementById('coord-pwd-confirm') ? document.getElementById('coord-pwd-confirm').value : '';
+
+  if (!current) { _showMsg('coord-pwd-msg', 'Mot de passe actuel requis.', true); return; }
+  if (newPwd.length < 8) { _showMsg('coord-pwd-msg', 'Au moins 8 caractères.', true); return; }
+  if (newPwd !== confirm) { _showMsg('coord-pwd-msg', 'Les mots de passe ne correspondent pas.', true); return; }
+
+  apiCall('POST', '/auth/change-password', { currentPassword: current, newPassword: newPwd })
+    .then(function() {
+      document.getElementById('coord-pwd-current').value = '';
+      document.getElementById('coord-pwd-new').value     = '';
+      document.getElementById('coord-pwd-confirm').value = '';
+      _showMsg('coord-pwd-msg', '✓ Mot de passe mis à jour.', false);
+    })
+    .catch(function(err) {
+      _showMsg('coord-pwd-msg', err.message || 'Erreur.', true);
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+// PROFIL — CHANGER L'EMAIL (remplace saveProfileEmail)
+// ══════════════════════════════════════════════════════════════
+function saveProfileEmail(e) {
+  e.preventDefault();
+  var newEmail  = document.getElementById('coord-email-new') ? document.getElementById('coord-email-new').value.trim() : '';
+  var confEmail = document.getElementById('coord-email-confirm') ? document.getElementById('coord-email-confirm').value.trim() : '';
+
+  if (!newEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) {
+    _showMsg('coord-email-msg', 'Email invalide.', true); return;
+  }
+  if (newEmail !== confEmail) {
+    _showMsg('coord-email-msg', 'Les emails ne correspondent pas.', true); return;
+  }
+
+  apiCall('PUT', '/users/me/email', { newEmail: newEmail, confirmEmail: confEmail })
+    .then(function() {
+      if (APP_SESSION.user) { APP_SESSION.user.email = newEmail; APP_SESSION.save(); }
+      document.getElementById('coord-email-new').value     = '';
+      document.getElementById('coord-email-confirm').value = '';
+      _showMsg('coord-email-msg', '✓ Email mis à jour.', false);
+      if (typeof loadProfileCoordonnees === 'function') loadProfileCoordonnees();
+    })
+    .catch(function(err) {
+      _showMsg('coord-email-msg', err.message || 'Erreur.', true);
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+// COMMUNAUTÉ — Chargement depuis l'API
+// ══════════════════════════════════════════════════════════════
+var _communityApiLoaded = false;
+var _communityPage = 1;
+
+function loadCommunityFromAPI(page) {
+  page = page || 1;
+  if (!APP_SESSION.isLoggedIn()) return;
+
+  apiCall('GET', '/community/posts?page=' + page + '&limit=20')
+    .then(function(data) {
+      if (!data.posts || data.posts.length === 0) return;
+
+      // Convertir les posts API au format attendu par le rendu existant
+      var apiPosts = data.posts.map(function(p) {
+        var author = p.author || {};
+        return {
+          id: p.id,
+          author: (author.firstName || '') + ' ' + (author.lastName || ''),
+          role: author.businessName || '',
+          since: '',
+          initials: author.initials || 'M',
+          grad: author.avatarColor ? author.avatarColor + ',' + author.avatarColor : '#4f85a0,#4f85a0',
+          time: formatRelativeTime(p.createdAt),
+          ts: (p.createdAt || 0) * 1000,
+          tag: 'partage',
+          channel: 'general',
+          likes: p.likesCount || 0,
+          liked: p.isLiked || false,
+          saved: false,
+          expanded: false,
+          text: p.content || '',
+          attachments: [],
+          replies: [],
+          _apiId: p.id, // garder l'ID API pour les actions
+          _isPinned: p.isPinned || false
+        };
+      });
+
+      // Remplacer ou ajouter selon la page
+      if (page === 1) {
+        communityPosts = apiPosts;
+        _communityApiLoaded = true;
+      } else {
+        communityPosts = communityPosts.concat(apiPosts);
+      }
+
+      if (typeof renderCommunityFeed === 'function') renderCommunityFeed();
+    })
+    .catch(function(err) {
+      console.warn('Community load error:', err.message);
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+// COMMUNAUTÉ — Publier un post via l'API
+// ══════════════════════════════════════════════════════════════
+var _originalCommunitySubmit = typeof communitySubmitPost === 'function' ? communitySubmitPost : null;
+
+function communitySubmitPostAPI() {
+  var textarea = document.getElementById('community-post-textarea') ||
+                 document.querySelector('#community-compose-area textarea') ||
+                 document.querySelector('.community-compose-textarea');
+  var content = textarea ? textarea.value.trim() : '';
+
+  if (!content) return;
+  if (!APP_SESSION.isLoggedIn()) { showLoginModal(); return; }
+
+  apiCall('POST', '/community/posts', { content: content })
+    .then(function(newPost) {
+      if (textarea) textarea.value = '';
+      // Recharger les posts
+      loadCommunityFromAPI(1);
+    })
+    .catch(function(err) {
+      alert(err.message || 'Erreur lors de la publication.');
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+// COMMUNAUTÉ — Liker un post via l'API
+// ══════════════════════════════════════════════════════════════
+var _originalCommunityLike = typeof communityLike === 'function' ? communityLike : null;
+
+function communityLike(postId) {
+  var post = communityPosts.find(function(p) { return p.id === postId || p._apiId === postId; });
+  if (!post) return;
+
+  // Si le post vient de l'API (a un _apiId ou id qui est un UUID)
+  if (APP_SESSION.isLoggedIn() && (post._apiId || typeof postId === 'string')) {
+    var apiId = post._apiId || postId;
+    apiCall('POST', '/community/posts/' + apiId + '/like')
+      .then(function(data) {
+        post.likes = data.likesCount;
+        post.liked = data.liked;
+        if (typeof renderCommunityFeed === 'function') renderCommunityFeed();
+      })
+      .catch(function() {
+        // Fallback : toggle local
+        post.liked = !post.liked;
+        post.likes += post.liked ? 1 : -1;
+        if (typeof renderCommunityFeed === 'function') renderCommunityFeed();
+      });
+    return;
+  }
+
+  // Fallback demo
+  post.liked = !post.liked;
+  post.likes += post.liked ? 1 : -1;
+  if (typeof renderCommunityFeed === 'function') renderCommunityFeed();
+}
+
+// ══════════════════════════════════════════════════════════════
+// PAIEMENT — Redirection vers Stripe Checkout
+// ══════════════════════════════════════════════════════════════
+function initiateStripeCheckout(tier, billingCycle) {
+  if (!APP_SESSION.isLoggedIn()) {
+    showLoginModal();
+    return;
+  }
+
+  apiCall('POST', '/payment/stripe/checkout', { tier: tier, billingCycle: billingCycle || 'monthly' })
+    .then(function(data) {
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert('Erreur lors de la redirection vers le paiement.');
+      }
+    })
+    .catch(function(err) {
+      // Si Stripe n'est pas encore configuré
+      if (err.message.includes('non configuré')) {
+        alert('Le paiement n\'est pas encore activé. Pour configurer Stripe, ajoutez STRIPE_SECRET_KEY dans le fichier .env.');
+      } else {
+        alert(err.message || 'Erreur lors du paiement.');
+      }
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+// UTILITAIRE — Format de temps relatif
+// ══════════════════════════════════════════════════════════════
+function formatRelativeTime(unixTimestamp) {
+  if (!unixTimestamp) return '';
+  var diff = Math.floor(Date.now() / 1000) - unixTimestamp;
+  if (diff < 60) return 'À l\'instant';
+  if (diff < 3600) return 'Il y a ' + Math.floor(diff / 60) + ' min';
+  if (diff < 86400) return 'Il y a ' + Math.floor(diff / 3600) + 'h';
+  if (diff < 604800) return 'Il y a ' + Math.floor(diff / 86400) + ' j';
+  return new Date(unixTimestamp * 1000).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+}
+
+// ══════════════════════════════════════════════════════════════
+// NOTIFICATIONS — Chargement depuis l'API
+// ══════════════════════════════════════════════════════════════
+function loadNotificationsFromAPI() {
+  if (!APP_SESSION.isLoggedIn()) return;
+  apiCall('GET', '/notifications')
+    .then(function(data) {
+      var unread = data.filter(function(n) { return !n.is_read; }).length;
+      // Mettre à jour les badges
+      document.querySelectorAll('.notif-badge, [data-notif-count]').forEach(function(el) {
+        el.textContent = unread > 0 ? unread : '';
+        el.style.display = unread > 0 ? 'flex' : 'none';
+      });
+    })
+    .catch(function() {});
+}
+
+// ══════════════════════════════════════════════════════════════
+// RÉINITIALISATION MOT DE PASSE — détecter le token dans l'URL
+// ══════════════════════════════════════════════════════════════
+function checkResetToken() {
+  var params = new URLSearchParams(window.location.search);
+  var resetToken = params.get('reset');
+  if (!resetToken) return;
+
+  // Afficher la modal de reset
+  var newPassword = prompt('Entrez votre nouveau mot de passe (8 caractères minimum) :');
+  if (!newPassword || newPassword.length < 8) {
+    alert('Mot de passe trop court (8 caractères minimum).');
+    return;
+  }
+
+  apiCall('POST', '/auth/reset-password', { token: resetToken, password: newPassword })
+    .then(function(data) {
+      alert(data.message || 'Mot de passe réinitialisé. Vous pouvez vous connecter.');
+      // Nettoyer l'URL
+      window.history.replaceState({}, document.title, '/');
+      showLoginModal();
+    })
+    .catch(function(err) {
+      alert(err.message || 'Lien invalide ou expiré.');
+      window.history.replaceState({}, document.title, '/');
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+// VÉRIFICATION PAIEMENT — retour Stripe/PayPal
+// ══════════════════════════════════════════════════════════════
+function checkPaymentReturn() {
+  var params = new URLSearchParams(window.location.search);
+  var paymentStatus = params.get('payment');
+  if (!paymentStatus) return;
+
+  window.history.replaceState({}, document.title, '/');
+
+  if (paymentStatus === 'success') {
+    // Rafraîchir les infos utilisateur
+    if (APP_SESSION.isLoggedIn()) {
+      apiCall('GET', '/auth/me').then(function(user) {
+        APP_SESSION.user = user;
+        APP_SESSION.save();
+        if (typeof setCurrentSubscription === 'function') setCurrentSubscription(user.tier);
+        if (typeof switchSubscriptionDemo === 'function') switchSubscriptionDemo(user.tier);
+        if (typeof showPage === 'function') showPage('dashboard');
+        // Afficher une notification de succès
+        setTimeout(function() {
+          var banner = document.createElement('div');
+          banner.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#2d7d57;color:white;padding:14px 24px;border-radius:12px;font-weight:600;font-size:14px;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,0.2);';
+          banner.textContent = '✓ Paiement confirmé ! Bienvenue dans ton nouveau plan.';
+          document.body.appendChild(banner);
+          setTimeout(function() { banner.remove(); }, 5000);
+        }, 500);
+      }).catch(function() {});
+    }
+  } else if (paymentStatus === 'cancelled') {
+    if (typeof showPage === 'function') showPage('paiement');
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// INITIALISATION AU CHARGEMENT DE LA PAGE
+// ══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+  // Charger la session depuis le stockage
+  APP_SESSION.load();
+
+  // Vérifier les paramètres URL
+  checkResetToken();
+  checkPaymentReturn();
+
+  // Si l'utilisateur est déjà connecté
+  if (APP_SESSION.isLoggedIn()) {
+    // Vérifier que le token est encore valide
+    apiCall('GET', '/auth/me')
+      .then(function(user) {
+        APP_SESSION.user = user;
+        APP_SESSION.save();
+        applySession(user);
+        // Charger les données dynamiques
+        loadCommunityFromAPI(1);
+        loadNotificationsFromAPI();
+      })
+      .catch(function() {
+        // Token expiré — vider la session
+        APP_SESSION.clear();
+      });
+  }
+
+  // Mettre à jour les liens de logout pour utiliser handleLogout
+  document.querySelectorAll('[onclick*="logout"], [data-action="logout"]').forEach(function(el) {
+    el.setAttribute('onclick', 'handleLogout()');
+  });
+
+  // Mise à jour périodique des notifications (toutes les 2 minutes)
+  setInterval(function() {
+    if (APP_SESSION.isLoggedIn()) {
+      loadNotificationsFromAPI();
+    }
+  }, 120000);
+});
+</script>
+
