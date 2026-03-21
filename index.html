@@ -9867,7 +9867,7 @@
             <div class="checkout-logo-name">La Ligue des Ambitieuses</div>
           </div>
         </div>
-        <button class="checkout-back-btn" onclick="checkoutState.isUpgrade ? showPage('profil') : (showPage('landing'),setTimeout(function(){document.getElementById('offre').scrollIntoView({behavior:'smooth'})},80))">← Retour</button>
+        <button class="checkout-back-btn" onclick="checkoutGoBack()">← Retour</button>
       </div>
 
       <div class="checkout-grid">
@@ -9968,14 +9968,17 @@
           </div>
         </div>
 
-        <!-- Colonne droite : récapitulatif abonnement -->
+        <!-- Colonne droite : récapitulatif abonnement / ressource -->
         <div>
           <div class="checkout-card" style="position:sticky;top:24px;">
-            <div class="checkout-section-title">Ton abonnement</div>
+            <div class="checkout-section-title" id="checkout-recap-title">Ton abonnement</div>
             <div class="checkout-plan-name" id="checkout-plan-name">⚡ La Stratège</div>
 
+            <!-- Recap ressource(s) — masqué par défaut, affiché pour achats de ressources -->
+            <div id="checkout-resource-items" style="display:none;margin-bottom:12px;"></div>
+
             <!-- Toggle mensuel / annuel -->
-            <div class="checkout-billing-toggle">
+            <div id="checkout-billing-wrap" class="checkout-billing-toggle">
               <span class="toggle-label active" id="checkout-toggle-month" onclick="setCheckoutBilling(false)">Mensuel</span>
               <button class="checkout-toggle-switch" id="checkout-billing-toggle" onclick="toggleCheckoutBilling()" aria-label="Basculer facturation annuelle" type="button"></button>
               <span class="toggle-label" id="checkout-toggle-year" onclick="setCheckoutBilling(true)">Annuel&nbsp;<span style="color:#6fcf97;font-size:11px;font-weight:700;">−17%</span></span>
@@ -9986,7 +9989,7 @@
 
             <ul class="checkout-features" id="checkout-features-list"></ul>
 
-            <div class="checkout-trial-badge">
+            <div class="checkout-trial-badge" id="checkout-trial-badge">
               ✨ 7 jours d'essai gratuit · Aucun débit avant la fin de l'essai
             </div>
           </div>
@@ -12817,7 +12820,7 @@
         <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;">
           <table class="admin-table">
             <thead><tr><th>Contact</th><th>Source</th><th>Statut</th><th>Dernière interaction</th><th>Actions</th></tr></thead>
-            <tbody>
+            <tbody id="crm-tbody">
               <tr><td><div><div style="font-size:13px;font-weight:600;color:white;">Lucie Bernard</div><div style="font-size:11px;color:rgba(255,255,255,0.35);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6e021b0d070b400c2e0b030f0702400d0103">[email&#160;protected]</a></div></div></td><td>📱 Instagram</td><td><span class="admin-pill" style="background:rgba(252,186,51,0.12);color:var(--gold-bright);">🔥 Chaud</span></td><td>A cliqué sur le mail · il y a 1j</td><td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Écrire</button><button class="admin-action-btn admin-action-btn-ghost">Profil</button></div></td></tr>
               <tr><td><div><div style="font-size:13px;font-weight:600;color:white;">Anne-Sophie Petit</div><div style="font-size:11px;color:rgba(255,255,255,0.35);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="22434c4c47514d524a4b4762474f434b4e0c414d4f">[email&#160;protected]</a></div></div></td><td>🌐 Site web</td><td><span class="admin-pill" style="background:rgba(252,186,51,0.12);color:var(--gold-bright);">🔥 Chaud</span></td><td>Formulaire rempli · il y a 2j</td><td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Écrire</button><button class="admin-action-btn admin-action-btn-ghost">Profil</button></div></td></tr>
               <tr><td><div><div style="font-size:13px;font-weight:600;color:white;">Pauline Renard</div><div style="font-size:11px;color:rgba(255,255,255,0.35);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bdcddcc8d1d4d3d893cffdd8d0dcd4d193ded2d0">[email&#160;protected]</a></div></div></td><td>👥 Bouche à oreille</td><td><span class="admin-pill admin-pill-pending">Email envoyé</span></td><td>Mail ouvert · il y a 4j</td><td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Relancer</button><button class="admin-action-btn admin-action-btn-ghost">Profil</button></div></td></tr>
@@ -19922,7 +19925,10 @@
   function bibAcheter(id) {
     var b = ressourcesData.find(function(x){ return x.id===id; });
     if (!b) return;
-    alert('Achat de "'+b.title+'" ('+b.publicPrice+'€)\n\nFonctionnalité de paiement à connecter (Stripe, PayPlug…)');
+    bibCloseDetail();
+    var item = { id: b.id, title: b.title, price: b.publicPrice };
+    if (typeof initCheckoutPageResource === 'function') initCheckoutPageResource([item]);
+    showPage('paiement');
   }
 
   // ──────────────────────────────────────────────
@@ -20006,8 +20012,10 @@
 
   function bibCartCheckout() {
     if (bibCart.length === 0) return;
-    var total = bibCart.reduce(function(s, x){ return s + x.price; }, 0);
-    alert('Commande de '+bibCart.length+' ressource(s) — Total : '+total+'€\n\nConnexion paiement (Stripe, PayPlug…) à intégrer.');
+    bibCloseCart();
+    var items = bibCart.map(function(x){ return { id: x.id, title: x.title, price: x.price }; });
+    if (typeof initCheckoutPageResource === 'function') initCheckoutPageResource(items);
+    showPage('paiement');
   }
 
   function bibShowCartToast(msg, icon) {
@@ -23601,7 +23609,10 @@ var checkoutState = {
   isAnnual: false,
   email: '',
   prenom: '',
-  paymentMethod: 'card' // 'card' | 'paypal'
+  paymentMethod: 'card', // 'card' | 'paypal'
+  isUpgrade: false,
+  purchaseType: 'subscription', // 'subscription' | 'resource'
+  resourceItems: [] // [{ id, title, price }] pour les achats de ressources
 };
 
 // Données d'affichage des plans pour la page paiement
@@ -23672,16 +23683,218 @@ function initCheckoutPage(plan, isUpgrade) {
 
   _renderCheckoutRecap();
 
+  // Restaurer l'UI abonnement (au cas où on vient d'un achat ressource)
+  checkoutState.purchaseType = 'subscription';
+  checkoutState.resourceItems = [];
+  var recapTitle = document.getElementById('checkout-recap-title');
+  var planName   = document.getElementById('checkout-plan-name');
+  var billingWrap = document.getElementById('checkout-billing-wrap');
+  var resItems   = document.getElementById('checkout-resource-items');
+  var featEl     = document.getElementById('checkout-features-list');
+  if (recapTitle)  recapTitle.textContent = 'Ton abonnement';
+  if (planName)    planName.style.display = '';
+  if (billingWrap) billingWrap.style.display = '';
+  if (resItems)    resItems.style.display = 'none';
+  if (featEl)      featEl.style.display = '';
+
   // Adapter l'UI selon le contexte (nouvel abonnement vs changement)
-  var payBtn   = document.getElementById('checkout-pay-btn');
-  var trialBadge = document.querySelector('#page-paiement .checkout-trial-badge');
-  var sectionTitle = document.querySelector('#page-paiement .checkout-section-title');
+  var payBtn     = document.getElementById('checkout-pay-btn');
+  var trialBadge = document.getElementById('checkout-trial-badge');
   if (isUpgrade) {
     if (payBtn)     payBtn.textContent = '🔒 Confirmer le changement d\'abonnement';
     if (trialBadge) trialBadge.style.display = 'none';
   } else {
     if (payBtn)     payBtn.textContent = '🔒 Commencer mon essai gratuit de 7 jours';
     if (trialBadge) trialBadge.style.display = '';
+  }
+}
+
+// Initialise la page paiement pour un achat de ressource(s)
+function initCheckoutPageResource(items) {
+  checkoutState.purchaseType = 'resource';
+  checkoutState.resourceItems = items;
+  checkoutState.isUpgrade = false;
+  checkoutState.paymentMethod = 'card';
+  var total = items.reduce(function(s, x) { return s + x.price; }, 0);
+
+  // Adapter la colonne droite pour les ressources
+  var recapTitle  = document.getElementById('checkout-recap-title');
+  var planName    = document.getElementById('checkout-plan-name');
+  var billingWrap = document.getElementById('checkout-billing-wrap');
+  var priceEl     = document.getElementById('checkout-price-display');
+  var savingEl    = document.getElementById('checkout-price-saving');
+  var resItems    = document.getElementById('checkout-resource-items');
+  var featEl      = document.getElementById('checkout-features-list');
+  var trialBadge  = document.getElementById('checkout-trial-badge');
+  var payBtn      = document.getElementById('checkout-pay-btn');
+
+  if (recapTitle)  recapTitle.textContent = 'Ton achat';
+  if (planName)    planName.style.display = 'none';
+  if (billingWrap) billingWrap.style.display = 'none';
+  if (savingEl)    savingEl.textContent = '';
+  if (trialBadge)  trialBadge.style.display = 'none';
+  if (featEl)      featEl.style.display = 'none';
+  if (priceEl)     priceEl.innerHTML = '€' + total + '<small> TTC</small>';
+  if (payBtn)      payBtn.textContent = '🔒 Payer ' + total + '€';
+
+  // Afficher la liste des ressources
+  if (resItems) {
+    resItems.style.display = 'block';
+    resItems.innerHTML = items.map(function(item) {
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-family:\'DM Sans\',sans-serif;">'
+        + '<span style="font-size:13px;color:rgba(255,255,255,0.85);flex:1;padding-right:12px;">' + item.title + '</span>'
+        + '<span style="font-size:14px;color:#6ecf9e;font-weight:700;flex-shrink:0;">' + item.price + '€</span>'
+        + '</div>';
+    }).join('') + (items.length > 1
+      ? '<div style="display:flex;justify-content:space-between;padding:10px 0 0;font-family:\'DM Sans\',sans-serif;font-weight:700;">'
+        + '<span style="font-size:13px;color:white;">Total</span>'
+        + '<span style="font-size:15px;color:#6ecf9e;">' + total + '€</span></div>'
+      : '');
+  }
+
+  // Pré-remplir l'email si membre connecté
+  var m = membersDB[CURRENT_MEMBER_KEY];
+  if (m && m.email) {
+    checkoutState.email = m.email;
+    var emailEl = document.getElementById('checkout-email');
+    if (emailEl) emailEl.value = m.email;
+  }
+}
+
+// Bouton retour de la page paiement
+function checkoutGoBack() {
+  if (checkoutState.purchaseType === 'resource') {
+    showPage('bibliotheque');
+  } else if (checkoutState.isUpgrade) {
+    showPage('profil');
+  } else {
+    showPage('landing');
+    setTimeout(function() {
+      var el = document.getElementById('offre');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 80);
+  }
+}
+
+// ── Utilitaire date en français ──
+function _frenchDate() {
+  var months = ['jan.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  var d = new Date();
+  return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+}
+function _frenchDateSortKey() {
+  var d = new Date();
+  return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+}
+
+// ══════════════════════════════════════════════════════
+//  CRM PROSPECTS — données dynamiques
+// ══════════════════════════════════════════════════════
+var crmData = []; // { name, email, source, statut, note, date }
+
+function crmAddProspect(prospect) {
+  crmData.unshift(prospect);
+  var tbody = document.getElementById('crm-tbody');
+  if (!tbody) return;
+  var tr = document.createElement('tr');
+  tr.style.background = 'rgba(110,207,158,0.04)';
+  tr.innerHTML =
+    '<td><div><div style="font-size:13px;font-weight:600;color:white;">' + prospect.name + '</div>'
+    + '<div style="font-size:11px;color:rgba(255,255,255,0.35);">' + prospect.email + '</div></div></td>'
+    + '<td>🛍 Bibliothèque</td>'
+    + '<td><span class="admin-pill" style="background:rgba(110,207,158,0.12);color:#6ecf9e;">Achat Ressource</span></td>'
+    + '<td style="font-size:12px;color:rgba(255,255,255,0.5);">' + prospect.note + ' · ' + prospect.date + '</td>'
+    + '<td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Écrire</button></div></td>';
+  tbody.insertBefore(tr, tbody.firstChild);
+}
+
+// ══════════════════════════════════════════════════════
+//  ENREGISTREMENT D'UN ACHAT — synchronisation admin
+// ══════════════════════════════════════════════════════
+function recordPurchase(type, data) {
+  var dateStr   = _frenchDate();
+  var sortKey   = _frenchDateSortKey();
+  var now       = new Date();
+
+  if (type === 'resource') {
+    // data : { buyerName, buyerEmail, items: [{id, title, price}], isMember }
+    var items    = data.items || [];
+    var total    = items.reduce(function(s, x) { return s + x.price; }, 0);
+    var resNames = items.map(function(x) { return x.title; }).join(', ');
+
+    // 1. Finances — onglet Ressources
+    items.forEach(function(item) {
+      var saleId = 'rs' + Date.now() + Math.random().toString(36).slice(2, 6);
+      finResourceSales.unshift({ id: saleId, buyer: data.buyerName, resource: item.title, price: item.price, date: dateStr });
+    });
+    if (typeof finRenderResourceSales === 'function') finRenderResourceSales();
+    if (typeof finCalcResourceRevenue  === 'function') finCalcResourceRevenue();
+
+    // 2. Finances — onglet Toutes les ventes
+    var txId = 'tx' + Date.now();
+    finSubsTx.unshift({ name: data.buyerName, detail: resNames.length > 40 ? resNames.slice(0,38)+'…' : resNames, amount: total, date: dateStr, sortKey: sortKey, ok: true, type: 'ressource' });
+    if (typeof finRenderAllSales === 'function') finRenderAllSales(finVentesFilter);
+
+    // 3. Activité live
+    var initial  = (data.buyerName || 'A').charAt(0).toUpperCase();
+    var avatarBg = 'linear-gradient(135deg,#6ecf9e,#3db77a)';
+    var actId    = 'a_' + Date.now();
+    activiteLog.unshift({ id: actId, member: data.buyerName, initial: initial, bg: avatarBg, type: 'ressource', action: 'a acheté', detail: '"' + (items.length === 1 ? items[0].title : items.length + ' ressources') + '"', ts: now });
+    if (typeof activiteRender === 'function') activiteRender();
+
+    // 4. CRM Prospects (non-membres uniquement)
+    if (!data.isMember) {
+      crmAddProspect({ name: data.buyerName, email: data.buyerEmail, source: 'Bibliothèque', statut: 'Achat Ressource', note: resNames, date: dateStr });
+    }
+
+  } else if (type === 'subscription') {
+    // data : { name, email, plan, isAnnual, prenom }
+    var planKey   = data.plan || 'initiee';
+    var planInfo  = CHECKOUT_PLANS[planKey] || {};
+    var price     = data.isAnnual ? (planInfo.priceAnnual || 0) : (planInfo.priceMonthly || 0);
+    var planLabel = (planInfo.emoji || '') + ' ' + (planInfo.name || planKey);
+    var period    = data.isAnnual ? '/an' : '/mois';
+    var initial   = (data.name || 'N').charAt(0).toUpperCase();
+    var avatarBg  = 'linear-gradient(135deg,#a78bfa,#7c3aed)';
+
+    // 1. Finances — Toutes les ventes
+    finSubsTx.unshift({ name: data.name, detail: planLabel, amount: price, date: dateStr, sortKey: sortKey, ok: true, type: 'abonnement' });
+    if (typeof finRenderAllSales === 'function') finRenderAllSales(finVentesFilter);
+
+    // 2. Finances — Abonnements actifs
+    var fsId = 'fs_' + Date.now();
+    var echeance = (function() {
+      var d = new Date(); d.setMonth(d.getMonth() + 1);
+      var months = ['jan.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+      return d.getDate() + ' ' + months[d.getMonth()];
+    })();
+    finSubsData.unshift({ id: fsId, name: data.name, initial: initial, avatarBg: avatarBg, plan: planLabel, amount: price + '€' + period, amountVal: price, echeance: echeance, status: 'actif', relances: 0, relancesDates: [] });
+    if (typeof finRenderSubs === 'function') finRenderSubs();
+
+    // 3. Activité live
+    var actId2 = 'a_' + Date.now() + '1';
+    activiteLog.unshift({ id: actId2, member: data.name, initial: initial, bg: avatarBg, type: 'abonnement', action: 's\'est abonnée', detail: planLabel + ' — Bienvenue dans la Ligue !', ts: new Date() });
+    if (typeof activiteRender === 'function') activiteRender();
+
+    // 4. Gestion des membres — ajouter une ligne dans le tableau
+    var membresTable = document.getElementById('admin-membres-table');
+    if (membresTable) {
+      var tbody = membresTable.querySelector('tbody');
+      if (tbody) {
+        var planPillMap = { initiee: '🌿 Initiée', stratege: '⚡ Stratège', visionnaire: '🔮 Visionnaire' };
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td><div class="member-cell"><div class="member-avatar" style="background:' + avatarBg + ';">' + initial + '</div>'
+          + '<div><div style="font-size:13px;font-weight:600;color:white;">' + data.name + '</div>'
+          + '<div style="font-size:11px;color:rgba(255,255,255,0.35);">' + data.email + '</div></div></div></td>'
+          + '<td><span class="admin-pill admin-pill-rang">' + (planPillMap[planKey] || planLabel) + '</span></td>'
+          + '<td style="color:var(--gold-bright);font-weight:700;">0</td>'
+          + '<td>' + (function(){ var months=['jan.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.']; var d=new Date(); return d.toLocaleString('fr-FR',{month:'short'}).replace('.','.')+' '+d.getFullYear(); })() + '</td>'
+          + '<td><span class="admin-pill admin-pill-active">Active</span></td>'
+          + '<td><div style="display:flex;gap:6px;"><button class="admin-action-btn admin-action-btn-ghost">✉️ Contacter</button></div></td>';
+        tbody.insertBefore(tr, tbody.firstChild);
+      }
+    }
   }
 }
 
@@ -23854,14 +24067,49 @@ function changePlanCheckout(plan) {
 }
 
 function goToFirstLogin() {
-  // Mode changement de plan : pas besoin de créer un compte, retour direct au profil
+  var prenom = (document.getElementById('checkout-prenom') || {}).value || checkoutState.prenom || '';
+  var nom    = (document.getElementById('checkout-nom')    || {}).value || '';
+  var fullName = (prenom + ' ' + nom).trim() || 'Nouvelle cliente';
+  var email  = checkoutState.email || '';
+
+  // ── Achat de ressource(s) ──
+  if (checkoutState.purchaseType === 'resource') {
+    var isMember = !!(membersDB && membersDB[CURRENT_MEMBER_KEY]);
+    recordPurchase('resource', {
+      buyerName:  fullName,
+      buyerEmail: email,
+      items:      checkoutState.resourceItems || [],
+      isMember:   isMember
+    });
+    // Vider le panier si c'était un achat panier
+    if (typeof bibCart !== 'undefined') {
+      bibCart = [];
+      if (typeof bibUpdateCartBadge === 'function') bibUpdateCartBadge();
+    }
+    // Rediriger vers la bibliothèque avec un toast de confirmation
+    showPage('bibliotheque');
+    setTimeout(function() {
+      if (typeof bibShowCartToast === 'function') {
+        bibShowCartToast('Achat confirmé ! Retrouve ta ressource dans ta bibliothèque.', '✅');
+      }
+    }, 200);
+    return;
+  }
+
+  // ── Changement de plan (membre existant) ──
   if (checkoutState.isUpgrade) {
     var plan = checkoutState.plan || 'initiee';
     if (typeof setCurrentSubscription === 'function') setCurrentSubscription(plan);
     if (typeof switchSubscriptionDemo  === 'function') switchSubscriptionDemo(plan);
-    // [BACKEND] Envoyer la mise à jour du plan au serveur (pas de création de compte)
+    // Sync finances & activité pour le changement de plan
+    recordPurchase('subscription', {
+      name:     fullName,
+      email:    email,
+      plan:     plan,
+      isAnnual: checkoutState.isAnnual
+    });
+    // [BACKEND] Envoyer la mise à jour du plan au serveur
     showPage('profil');
-    // Afficher une confirmation brève
     setTimeout(function() {
       var btn = document.getElementById('profile-change-plan-btn');
       if (btn) {
@@ -23877,9 +24125,9 @@ function goToFirstLogin() {
     return;
   }
 
-  // Mode nouveau compte : écran de création de mot de passe
+  // ── Nouvel abonnement : écran de création de mot de passe ──
   var emailDisplay = document.getElementById('first-login-email-display');
-  if (emailDisplay) emailDisplay.textContent = checkoutState.email;
+  if (emailDisplay) emailDisplay.textContent = email;
   showPage('premier-login');
   setTimeout(function() {
     var pwdEl = document.getElementById('first-login-pwd');
@@ -23912,6 +24160,17 @@ function handleFirstLogin(e) {
   var plan = checkoutState.plan || 'initiee';
   if (typeof setCurrentSubscription === 'function') setCurrentSubscription(plan);
   if (typeof switchSubscriptionDemo === 'function') switchSubscriptionDemo(plan);
+
+  // Enregistrer le nouvel abonnement dans l'espace admin
+  var prenom   = checkoutState.prenom || '';
+  var nom      = (document.getElementById('checkout-nom') || {}).value || '';
+  var fullName = (prenom + ' ' + nom).trim() || 'Nouvelle membre';
+  recordPurchase('subscription', {
+    name:     fullName,
+    email:    checkoutState.email,
+    plan:     plan,
+    isAnnual: checkoutState.isAnnual
+  });
 
   // Aller au dashboard et lancer le tutoriel
   showPage('dashboard');
