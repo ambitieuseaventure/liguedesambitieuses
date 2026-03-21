@@ -12814,7 +12814,7 @@
         <!-- Table contacts -->
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;">
           <input type="text" class="admin-input" placeholder="🔍 Rechercher un contact..." style="max-width:260px;margin-bottom:0;">
-          <select class="admin-select"><option>Tous les statuts</option><option>Nouveau</option><option>Email envoyé</option><option>Chaud</option><option>Converti</option></select>
+          <select class="admin-select"><option>Tous les statuts</option><option>Nouveau</option><option>Email envoyé</option><option>Chaud</option><option>Converti</option><option>Achat Ressource</option></select>
           <select class="admin-select"><option>Toutes les sources</option><option>Instagram</option><option>Newsletter</option><option>Bouche à oreille</option><option>Site web</option></select>
         </div>
         <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;">
@@ -23196,23 +23196,27 @@ function markResourceUsed(resAdminId) {
 }
 function purchaseResource(resAdminId) {
   var r = (typeof ressourcesData !== 'undefined') ? ressourcesData.find(function(x){ return x.id === resAdminId; }) : null;
-  var price = r ? r.unitPrice : 0;
-  // Simulation d'achat
-  if (!confirm('Acheter l\'accès à cette ressource pour ' + price + ' € ?')) return;
-  var store = getInitieeResStore();
-  if (store.purchased.indexOf(resAdminId) === -1) store.purchased.push(resAdminId);
-  setInitieeResStore(store);
-  applyResourceAccessControl();
-  updateInitieeMonthlyBanner();
-  finToast && finToast('✓ Accès débloqué ! Bonne lecture 🎉', '#6ecf9e');
+  if (!r) return;
+  // Stocker l'ID de la ressource en attente de paiement
+  checkoutState.pendingMemberResourceId = resAdminId;
+  checkoutState.isMemberPurchase = true;
+  var price = r.unitPrice || 7;
+  var item = { id: r.id, title: r.title, price: price };
+  if (typeof initCheckoutPageResource === 'function') initCheckoutPageResource([item]);
+  showPage('paiement');
 }
 function purchaseCourse(courseId) {
   var f = (typeof formationsData !== 'undefined') ? formationsData.find(function(x){ return x.courseId === courseId; }) : null;
-  var price = f ? f.unitPrice : 29;
-  if (!confirm('Acheter l\'accès à cette formation pour ' + price + ' € ?')) return;
-  addCoursePurchase(courseId);
-  applyClassroomAccessControl();
-  finToast && finToast('✓ Formation débloquée ! Bonne formation 🎓', '#6ecf9e');
+  if (!f) return;
+  var price = f.unitPrice || 29;
+  // Stocker la formation en attente de paiement
+  checkoutState.pendingCourseId = courseId;
+  checkoutState.isMemberPurchase = true;
+  checkoutState.purchaseType = 'formation';
+  // Adapter la page paiement
+  var item = { id: courseId, title: f.title || 'Formation', price: price };
+  if (typeof initCheckoutPageResource === 'function') initCheckoutPageResource([item]);
+  showPage('paiement');
 }
 
 // ── Formation Detail Modal ──
@@ -23763,8 +23767,12 @@ function initCheckoutPageResource(items) {
 
 // Bouton retour de la page paiement
 function checkoutGoBack() {
-  if (checkoutState.purchaseType === 'resource') {
-    showPage('bibliotheque');
+  if (checkoutState.purchaseType === 'resource' || checkoutState.purchaseType === 'formation') {
+    if (checkoutState.isMemberPurchase) {
+      showPage('dashboard');
+    } else {
+      showPage('bibliotheque');
+    }
   } else if (checkoutState.isUpgrade) {
     showPage('profil');
   } else {
@@ -24058,6 +24066,47 @@ function simulatePayment() {
 
 // ── Page "Premier login" ───────────────────────────────────────────
 
+// ── Modal de confirmation d'achat pour les non-membres (lien de téléchargement) ──
+function bibShowPurchaseConfirmModal(items) {
+  var existing = document.getElementById('bib-purchase-confirm-modal');
+  if (existing) existing.parentNode.removeChild(existing);
+
+  var links = items.map(function(item) {
+    var r = (typeof ressourcesData !== 'undefined') ? ressourcesData.find(function(x){ return x.id === item.id; }) : null;
+    var dlBtn = '';
+    if (r && r.fileUrl) {
+      dlBtn = '<a href="' + r.fileUrl + '" '
+        + (r.fileUrl.startsWith('data:') ? 'download="' + (r.fileName || item.title) + '"' : 'target="_blank"')
+        + ' style="display:inline-block;margin-top:6px;padding:8px 18px;background:#6ecf9e;color:#0a121c;'
+        + 'border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;font-family:\'DM Sans\',sans-serif;">⬇ Télécharger</a>';
+    } else {
+      dlBtn = '<div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px;">'
+        + 'Un lien de téléchargement te sera envoyé par e-mail.</div>';
+    }
+    return '<div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);">'
+      + '<div style="font-size:13px;font-weight:600;color:white;margin-bottom:2px;">' + item.title + '</div>'
+      + dlBtn + '</div>';
+  }).join('');
+
+  var overlay = document.createElement('div');
+  overlay.id = 'bib-purchase-confirm-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,18,28,0.88);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;';
+  overlay.innerHTML =
+    '<div style="background:#0f1f33;border:1px solid rgba(255,255,255,0.08);border-radius:20px;width:500px;max-width:96vw;padding:36px 32px;box-shadow:0 40px 100px rgba(0,0,0,0.5);">'
+    + '<div style="font-size:40px;text-align:center;margin-bottom:14px;">✅</div>'
+    + '<div style="font-family:\'Playfair Display\',serif;font-size:22px;color:white;text-align:center;margin-bottom:6px;">Achat confirmé !</div>'
+    + '<div style="font-size:13px;color:rgba(255,255,255,0.5);text-align:center;margin-bottom:24px;line-height:1.6;">'
+    + 'Merci pour ta confiance. Retrouve tes ressources ci-dessous.</div>'
+    + '<div style="margin-bottom:20px;">' + links + '</div>'
+    + '<div style="font-size:11px;color:rgba(255,255,255,0.3);text-align:center;margin-bottom:20px;">'
+    + 'Un récapitulatif a été envoyé à ' + (checkoutState.email || 'ton adresse e-mail') + '</div>'
+    + '<button onclick="document.getElementById(\'bib-purchase-confirm-modal\').remove()" '
+    + 'style="width:100%;padding:13px;background:#fcba33;color:#0a121c;border:none;border-radius:10px;'
+    + 'font-size:14px;font-weight:700;cursor:pointer;font-family:\'DM Sans\',sans-serif;">Fermer</button>'
+    + '</div>';
+  document.body.appendChild(overlay);
+}
+
 // Appelé depuis le profil membre ("Changer mon niveau")
 function changePlanCheckout(plan) {
   document.getElementById('profile-upgrade-section').style.display = 'none';
@@ -24072,26 +24121,77 @@ function goToFirstLogin() {
   var fullName = (prenom + ' ' + nom).trim() || 'Nouvelle cliente';
   var email  = checkoutState.email || '';
 
-  // ── Achat de ressource(s) ──
-  if (checkoutState.purchaseType === 'resource') {
-    var isMember = !!(membersDB && membersDB[CURRENT_MEMBER_KEY]);
+  // ── Achat de ressource(s) côté membre ──
+  if (checkoutState.purchaseType === 'resource' && checkoutState.isMemberPurchase) {
+    var rid = checkoutState.pendingMemberResourceId;
+    // Débloquer dans le quota localStorage
+    if (rid) {
+      var store = getInitieeResStore();
+      if (store.purchased.indexOf(rid) === -1) store.purchased.push(rid);
+      setInitieeResStore(store);
+      if (typeof applyResourceAccessControl === 'function') applyResourceAccessControl();
+      if (typeof updateInitieeMonthlyBanner === 'function') updateInitieeMonthlyBanner();
+    }
+    // Sync admin
     recordPurchase('resource', {
       buyerName:  fullName,
       buyerEmail: email,
       items:      checkoutState.resourceItems || [],
-      isMember:   isMember
+      isMember:   true
     });
-    // Vider le panier si c'était un achat panier
+    checkoutState.pendingMemberResourceId = null;
+    checkoutState.isMemberPurchase = false;
+    showPage('dashboard');
+    setTimeout(function() {
+      if (typeof finToast === 'function') finToast('✓ Ressource débloquée ! Bonne lecture 🎉', '#6ecf9e');
+    }, 200);
+    return;
+  }
+
+  // ── Achat de ressource(s) côté public non-membre ──
+  if (checkoutState.purchaseType === 'resource') {
+    var purchasedItems = checkoutState.resourceItems || [];
+    // Sync admin + CRM
+    recordPurchase('resource', {
+      buyerName:  fullName,
+      buyerEmail: email,
+      items:      purchasedItems,
+      isMember:   false
+    });
+    // Vider le panier
     if (typeof bibCart !== 'undefined') {
       bibCart = [];
       if (typeof bibUpdateCartBadge === 'function') bibUpdateCartBadge();
     }
-    // Rediriger vers la bibliothèque avec un toast de confirmation
+    // Afficher la modal de téléchargement (non-membres n'ont pas de compte)
     showPage('bibliotheque');
     setTimeout(function() {
-      if (typeof bibShowCartToast === 'function') {
-        bibShowCartToast('Achat confirmé ! Retrouve ta ressource dans ta bibliothèque.', '✅');
-      }
+      bibShowPurchaseConfirmModal(purchasedItems);
+    }, 150);
+    return;
+  }
+
+  // ── Achat de formation côté membre ──
+  if (checkoutState.purchaseType === 'formation' && checkoutState.isMemberPurchase) {
+    var cid = checkoutState.pendingCourseId;
+    if (cid) {
+      if (typeof addCoursePurchase === 'function') addCoursePurchase(cid);
+      if (typeof applyClassroomAccessControl === 'function') applyClassroomAccessControl();
+    }
+    // Sync admin
+    var f = (typeof formationsData !== 'undefined') ? formationsData.find(function(x){ return x.courseId === cid; }) : null;
+    var formItems = checkoutState.resourceItems || (f ? [{ id: cid, title: f.title || 'Formation', price: f.unitPrice || 29 }] : []);
+    recordPurchase('resource', {
+      buyerName:  fullName,
+      buyerEmail: email,
+      items:      formItems,
+      isMember:   true
+    });
+    checkoutState.pendingCourseId = null;
+    checkoutState.isMemberPurchase = false;
+    showPage('dashboard');
+    setTimeout(function() {
+      if (typeof finToast === 'function') finToast('✓ Formation débloquée ! Bonne formation 🎓', '#6ecf9e');
     }, 200);
     return;
   }
