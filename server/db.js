@@ -478,6 +478,93 @@ CREATE TABLE IF NOT EXISTS email_campaigns (
   created_at  INTEGER NOT NULL DEFAULT (unixepoch())
 );
 
+-- ══════════════════════════════════════════════════════════════
+-- FOCUS MINDSET
+-- ══════════════════════════════════════════════════════════════
+
+-- Méditations pré-enregistrées
+CREATE TABLE IF NOT EXISTS mindset_meditations (
+  id            TEXT PRIMARY KEY,
+  title         TEXT NOT NULL,
+  description   TEXT DEFAULT '',
+  duration_min  INTEGER DEFAULT 0,
+  category      TEXT DEFAULT 'meditation' CHECK(category IN ('meditation','visualisation','respiration','journal_guide','autre')),
+  audio_url     TEXT DEFAULT '',
+  cover_emoji   TEXT DEFAULT '🧘',
+  tier_required TEXT DEFAULT NULL CHECK(tier_required IS NULL OR tier_required = 'visionnaire'),
+  status        TEXT DEFAULT 'brouillon' CHECK(status IN ('brouillon','publie','archive')),
+  sort_order    INTEGER DEFAULT 0,
+  created_at    INTEGER NOT NULL DEFAULT (unixepoch()),
+  updated_at    INTEGER NOT NULL DEFAULT (unixepoch())
+);
+
+-- Articles privés Focus Mindset (non visibles sur le blog public)
+CREATE TABLE IF NOT EXISTS mindset_articles (
+  id            TEXT PRIMARY KEY,
+  title         TEXT NOT NULL,
+  slug          TEXT UNIQUE NOT NULL,
+  excerpt       TEXT DEFAULT '',
+  content       TEXT DEFAULT '',
+  cover_emoji   TEXT DEFAULT '📖',
+  category      TEXT DEFAULT 'mindset',
+  read_time_min INTEGER DEFAULT 5,
+  author        TEXT DEFAULT '',
+  tier_required TEXT DEFAULT NULL CHECK(tier_required IS NULL OR tier_required = 'visionnaire'),
+  status        TEXT DEFAULT 'brouillon' CHECK(status IN ('brouillon','publie','archive')),
+  published_at  INTEGER,
+  created_at    INTEGER NOT NULL DEFAULT (unixepoch()),
+  updated_at    INTEGER NOT NULL DEFAULT (unixepoch())
+);
+
+-- Ateliers mindset
+CREATE TABLE IF NOT EXISTS mindset_workshops (
+  id            TEXT PRIMARY KEY,
+  title         TEXT NOT NULL,
+  description   TEXT DEFAULT '',
+  facilitator   TEXT DEFAULT '',
+  date          TEXT NOT NULL,
+  time_start    TEXT DEFAULT '',
+  duration_min  INTEGER DEFAULT 60,
+  format        TEXT DEFAULT 'live' CHECK(format IN ('live','replay','presentiel')),
+  replay_url    TEXT DEFAULT '',
+  cover_emoji   TEXT DEFAULT '🎭',
+  max_attendees INTEGER DEFAULT 0,
+  tier_required TEXT DEFAULT NULL CHECK(tier_required IS NULL OR tier_required = 'visionnaire'),
+  status        TEXT DEFAULT 'a-venir' CHECK(status IN ('a-venir','en-cours','termine','annule')),
+  created_at    INTEGER NOT NULL DEFAULT (unixepoch()),
+  updated_at    INTEGER NOT NULL DEFAULT (unixepoch())
+);
+
+-- Favoris (méditations uniquement pour l'instant, extensible)
+CREATE TABLE IF NOT EXISTS mindset_favorites (
+  id            TEXT PRIMARY KEY,
+  user_id       TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  item_type     TEXT NOT NULL CHECK(item_type IN ('meditation','article','workshop')),
+  item_id       TEXT NOT NULL,
+  created_at    INTEGER NOT NULL DEFAULT (unixepoch()),
+  UNIQUE(user_id, item_type, item_id)
+);
+
+-- Inscriptions aux ateliers
+CREATE TABLE IF NOT EXISTS mindset_registrations (
+  id            TEXT PRIMARY KEY,
+  user_id       TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  workshop_id   TEXT NOT NULL REFERENCES mindset_workshops(id) ON DELETE CASCADE,
+  created_at    INTEGER NOT NULL DEFAULT (unixepoch()),
+  UNIQUE(user_id, workshop_id)
+);
+
+-- Vues / écoutes (stats)
+CREATE TABLE IF NOT EXISTS mindset_views (
+  id            TEXT PRIMARY KEY,
+  user_id       TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  item_type     TEXT NOT NULL CHECK(item_type IN ('meditation','article')),
+  item_id       TEXT NOT NULL,
+  duration_sec  INTEGER DEFAULT 0,
+  completed     INTEGER DEFAULT 0,
+  created_at    INTEGER NOT NULL DEFAULT (unixepoch())
+);
+
 -- Index pour les performances
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_community_posts_user ON community_posts(user_id);

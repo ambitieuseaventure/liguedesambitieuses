@@ -1713,6 +1713,50 @@
   .video-body p { font-size:12px; color:var(--text-light); }
 
   /* ── JOURNAL DE BORD ── */
+  /* ── Focus Mindset ── */
+  .ms-tab {
+    padding:9px 18px; border-radius:20px; border:1px solid rgba(20,36,53,0.12);
+    background:transparent; cursor:pointer; font-size:13px; font-weight:500;
+    font-family:'DM Sans',sans-serif; color:var(--text-mid); transition:all .2s;
+  }
+  .ms-tab:hover { background:rgba(20,36,53,0.05); border-color:rgba(20,36,53,0.2); }
+  .ms-tab.active { background:var(--navy-darkest); color:white; border-color:var(--navy-darkest); font-weight:600; }
+  .ms-med-card {
+    background:white; border:1px solid rgba(20,36,53,0.08); border-radius:16px;
+    overflow:hidden; cursor:pointer; transition:all .25s;
+  }
+  .ms-med-card:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(20,36,53,0.12); border-color:rgba(235,193,76,0.3); }
+  .ms-med-thumb {
+    height:100px; display:flex; align-items:center; justify-content:center;
+    font-size:36px; position:relative;
+  }
+  .ms-med-dur {
+    position:absolute; bottom:8px; right:10px; font-size:11px; font-weight:700;
+    background:rgba(0,0,0,0.45); color:white; padding:2px 8px; border-radius:20px;
+    font-family:'DM Sans',sans-serif;
+  }
+  .ms-fav-btn {
+    position:absolute; top:8px; right:10px; background:none; border:none;
+    font-size:16px; cursor:pointer; opacity:0.7; transition:opacity .2s; padding:0;
+  }
+  .ms-fav-btn:hover { opacity:1; }
+  .ms-lock-badge {
+    position:absolute; inset:0; background:rgba(20,36,53,0.6); display:flex;
+    align-items:center; justify-content:center; border-radius:0; font-size:22px;
+  }
+  .ms-art-card {
+    background:white; border:1px solid rgba(20,36,53,0.08); border-radius:14px;
+    padding:20px; display:flex; gap:16px; align-items:flex-start; cursor:pointer; transition:all .2s;
+  }
+  .ms-art-card:hover { border-color:rgba(235,193,76,0.35); box-shadow:0 8px 30px rgba(20,36,53,0.1); }
+  .ms-wk-card {
+    background:white; border:1px solid rgba(20,36,53,0.08); border-radius:14px; padding:20px; transition:all .2s;
+  }
+  .ms-wk-card:hover { border-color:rgba(235,193,76,0.3); }
+  .ms-badge-vis { display:inline-block; padding:2px 10px; background:rgba(180,140,220,0.15); color:#8a5fb0; border-radius:20px; font-size:10px; font-weight:700; letter-spacing:0.05em; }
+  .ms-badge-str { display:inline-block; padding:2px 10px; background:rgba(79,133,160,0.12); color:var(--navy); border-radius:20px; font-size:10px; font-weight:700; letter-spacing:0.05em; }
+  /* ── /Focus Mindset ── */
+
   .jmode-btn {
     font-size:11px; padding:5px 11px; border-radius:20px;
     border:1px solid rgba(20,36,53,0.12); background:white;
@@ -9618,81 +9662,89 @@
   <!-- ── FOCUS MINDSET ── -->
   <div class="page" id="page-mindset">
     <div class="page-content">
-      <div class="section-header">
-        <div class="section-title"><em>Focus</em> Mindset</div>
-        <div class="section-sub">Méditation, blocages psychologiques, posture d'entrepreneuse · Réservé aux Visionnaires</div>
-      </div>
-      <div id="ms-main-grid" style="display:grid;grid-template-columns:1.5fr 1fr;gap:24px;">
-        <div id="ms-col-left">
-          <div id="ms-card-une" class="card" style="background:linear-gradient(135deg,#1a2a3a,#2a4a5a);border:1px solid rgba(235,193,76,0.2);color:white;padding:30px;margin-bottom:18px;">
-            <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;">À la une ce mois-ci</div>
-            <h2 style="font-family:Playfair Display,serif;font-size:22px;color:white;margin-bottom:10px;">🧘 Lever le syndrome de l'imposteur</h2>
-            <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.65;margin-bottom:22px;">Une séance guidée de 20 minutes pour identifier tes croyances limitantes et les remplacer par une posture d'entrepreneuse qui s'assume pleinement.</p>
-            <div style="display:flex;gap:18px;margin-bottom:22px;"><div><div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em;">Durée</div><div style="font-size:14px;font-weight:600;">20 min</div></div><div><div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em;">Format</div><div style="font-size:14px;font-weight:600;">Audio guidé</div></div></div>
-            <button class="btn-primary">▶ Démarrer la séance</button>
-          </div>
-          <div id="ms-videos-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
-            <div class="video-card"><div class="video-thumb" style="background:linear-gradient(135deg,rgba(235,193,76,0.12),rgba(20,36,53,0.06))">🧘<div class="video-duration">15 min</div></div><div class="video-body"><h4>Méditation du matin</h4><p>Ancrer sa journée avec intention</p></div></div>
-            <div class="video-card"><div class="video-thumb" style="background:linear-gradient(135deg,rgba(79,133,160,0.12),rgba(36,66,91,0.06))">💭<div class="video-duration">25 min</div></div><div class="video-body"><h4>Travailler sa valeur</h4><p>Se sentir légitime à ses prix</p></div></div>
-            <div class="video-card"><div class="video-thumb" style="background:linear-gradient(135deg,rgba(252,186,51,0.12),rgba(20,36,53,0.06))">🌿<div class="video-duration">30 min</div></div><div class="video-body"><h4>Décider sans douter</h4><p>Sortir de la procrastination</p></div></div>
-            <div class="video-card"><div class="video-thumb" style="background:linear-gradient(135deg,rgba(20,36,53,0.1),rgba(79,133,160,0.08))">🔥<div class="video-duration">18 min</div></div><div class="video-body"><h4>Reprendre confiance</h4><p>Après un échec ou un refus</p></div></div>
-            <div class="video-card"><div class="video-thumb" style="background:linear-gradient(135deg,rgba(235,193,76,0.1),rgba(252,186,51,0.06))">🌙<div class="video-duration">12 min</div></div><div class="video-body"><h4>Lâcher prise le soir</h4><p>Déconnecter du business</p></div></div>
-            <div class="video-card"><div class="video-thumb" style="background:linear-gradient(135deg,rgba(79,133,160,0.1),rgba(20,36,53,0.06))">💫<div class="video-duration">20 min</div></div><div class="video-body"><h4>Visualisation de succès</h4><p>Programmer sa réussite</p></div></div>
-          </div>
+      <div class="section-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div class="section-title"><em>Focus</em> Mindset</div>
+          <div class="section-sub">Méditation, posture d'entrepreneuse, articles & ateliers exclusifs</div>
         </div>
-        <div id="ms-col-right" style="display:flex;flex-direction:column;gap:14px;">
-          <div id="ms-atelier-journal-row">
-          <div id="ms-card-atelier" class="card" style="background:linear-gradient(135deg,rgba(235,193,76,0.08),rgba(252,186,51,0.04));border:1px solid rgba(235,193,76,0.25);"><div style="font-family:Playfair Display,serif;font-size:16px;color:var(--text-dark);margin-bottom:14px;">📅 Prochain atelier live</div><div style="font-size:22px;margin-bottom:8px;">🎭</div><strong style="font-size:15px;color:var(--text-dark);display:block;margin-bottom:6px;">Atelier : Gérer ses émotions en business</strong><div style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Vendredi 21 mars · 11h00 · 1h30<br>Interactif &amp; en live avec Audrey</div><button class="btn-primary" style="width:100%;padding:11px;">S'inscrire →</button></div>
-          <div class="card" id="journal-bord-card">
-            <!-- En-tête -->
-            <div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--text-dark);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">
-              📓 Mon journal de bord
-              <span id="journal-streak" style="font-size:11px;background:rgba(235,193,76,0.12);color:var(--gold);padding:3px 10px;border-radius:20px;font-family:'DM Sans',sans-serif;display:none;font-weight:600;"></span>
-            </div>
-            <!-- Sélecteur de mode -->
-            <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;">
-              <button onclick="setJournalMode('matin')" id="jmode-matin" class="jmode-btn jmode-active">🌅 Matin</button>
-              <button onclick="setJournalMode('soir')" id="jmode-soir" class="jmode-btn">🌙 Soir</button>
-              <button onclick="setJournalMode('victoire')" id="jmode-victoire" class="jmode-btn">🏆 Victoire</button>
-              <button onclick="setJournalMode('blocage')" id="jmode-blocage" class="jmode-btn">🔓 Blocage</button>
-            </div>
-            <!-- Énergie du moment -->
-            <div style="margin-bottom:13px;">
-              <div style="font-size:10px;color:var(--text-light);margin-bottom:7px;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;">Mon énergie du moment</div>
-              <div style="display:flex;gap:7px;align-items:center;">
-                <button onclick="setJournalMood(1)" id="jmood-1" class="jmood-btn" title="Épuisée">😔</button>
-                <button onclick="setJournalMood(2)" id="jmood-2" class="jmood-btn" title="Bof...">😐</button>
-                <button onclick="setJournalMood(3)" id="jmood-3" class="jmood-btn" title="Ça va">🙂</button>
-                <button onclick="setJournalMood(4)" id="jmood-4" class="jmood-btn" title="En forme">😊</button>
-                <button onclick="setJournalMood(5)" id="jmood-5" class="jmood-btn" title="En feu !">🔥</button>
-                <span id="journal-mood-label" style="font-size:11px;color:var(--text-light);margin-left:4px;font-style:italic;"></span>
-              </div>
-            </div>
-            <!-- Prompt guidé -->
-            <div id="journal-prompt" style="font-size:12px;color:var(--gold);font-style:italic;margin-bottom:10px;padding:8px 12px;background:rgba(235,193,76,0.06);border-left:2px solid rgba(235,193,76,0.5);border-radius:0 6px 6px 0;line-height:1.55;"></div>
-            <!-- Zone de texte -->
-            <textarea class="composer-input" id="journal-text" rows="4" style="width:100%;margin-bottom:10px;"></textarea>
-            <!-- Tags rapides -->
-            <div style="margin-bottom:13px;">
-              <div style="font-size:10px;color:var(--text-light);margin-bottom:7px;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;">Tags</div>
-              <div style="display:flex;flex-wrap:wrap;gap:5px;" id="journal-tags"></div>
-            </div>
-            <!-- Bouton enregistrer -->
-            <button onclick="saveJournalEntry()" class="dl-btn" style="width:100%;padding:9px;text-align:center;">Enregistrer ✦</button>
-            <div id="journal-save-status" style="text-align:center;font-size:11px;margin-top:6px;min-height:16px;"></div>
-            <!-- Historique -->
-            <div style="margin-top:14px;border-top:1px solid rgba(20,36,53,0.07);padding-top:12px;">
-              <button onclick="toggleJournalHistory()" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--text-light);display:flex;align-items:center;gap:6px;width:100%;justify-content:space-between;padding:0;font-family:'DM Sans',sans-serif;">
-                <span>📋 Mes entrées récentes</span>
-                <span id="journal-history-arrow" style="font-size:16px;line-height:1;">›</span>
-              </button>
-              <div id="journal-history" style="display:none;margin-top:10px;"></div>
-            </div>
-          </div>
-          </div><!-- /ms-atelier-journal-row -->
-          <div id="ms-card-citation" class="card" style="background:var(--navy-darkest);border:1px solid rgba(235,193,76,0.15);"><div style="font-size:13px;font-style:italic;color:var(--gold-light);line-height:1.8;text-align:center;">"Le succès commence dans la tête. Avant de changer ton business, change la façon dont tu te perçois."</div><div style="font-size:11px;color:rgba(255,255,255,0.35);text-align:center;margin-top:8px;">— Audrey, co-fondatrice</div></div>
+        <button onclick="msMeditationsTab('favoris',this)" id="ms-fav-shortcut" style="display:none;padding:8px 16px;border-radius:20px;border:1px solid rgba(235,193,76,0.4);background:rgba(235,193,76,0.08);color:var(--gold);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">❤️ Mes favoris</button>
+      </div>
+
+      <!-- Onglets principaux -->
+      <div style="display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap;">
+        <button class="ms-tab active" id="ms-tab-meditations" onclick="msMeditationsTab('meditations',this)">🧘 Méditations</button>
+        <button class="ms-tab" id="ms-tab-articles" onclick="msMeditationsTab('articles',this)">📖 Articles</button>
+        <button class="ms-tab" id="ms-tab-ateliers" onclick="msMeditationsTab('ateliers',this)">🎭 Ateliers</button>
+        <button class="ms-tab" id="ms-tab-favoris" onclick="msMeditationsTab('favoris',this)">❤️ Favoris</button>
+      </div>
+
+      <!-- Panneau Méditations -->
+      <div id="ms-pane-meditations">
+        <div id="ms-med-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+          <div style="text-align:center;padding:40px;color:var(--text-light);font-size:13px;grid-column:1/-1;">Chargement…</div>
         </div>
       </div>
+
+      <!-- Panneau Articles -->
+      <div id="ms-pane-articles" style="display:none;">
+        <div id="ms-art-list" style="display:flex;flex-direction:column;gap:14px;">
+          <div style="text-align:center;padding:40px;color:var(--text-light);font-size:13px;">Chargement…</div>
+        </div>
+      </div>
+
+      <!-- Panneau Ateliers -->
+      <div id="ms-pane-ateliers" style="display:none;">
+        <div id="ms-wk-list" style="display:flex;flex-direction:column;gap:14px;">
+          <div style="text-align:center;padding:40px;color:var(--text-light);font-size:13px;">Chargement…</div>
+        </div>
+      </div>
+
+      <!-- Panneau Favoris -->
+      <div id="ms-pane-favoris" style="display:none;">
+        <div id="ms-fav-content">
+          <div style="text-align:center;padding:40px;color:var(--text-light);font-size:13px;">Chargement…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Lecteur de méditation -->
+  <div id="ms-player-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+    <div style="background:linear-gradient(135deg,#0f1e2d,#1a3040);border:1px solid rgba(235,193,76,0.2);border-radius:24px;width:520px;max-width:96vw;padding:32px;box-shadow:0 40px 100px rgba(0,0,0,0.9);position:relative;">
+      <button onclick="msMeditationClose()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-size:18px;line-height:1;">×</button>
+      <div style="text-align:center;margin-bottom:24px;">
+        <div id="ms-player-emoji" style="font-size:52px;margin-bottom:12px;">🧘</div>
+        <div id="ms-player-cat" style="font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(--gold);margin-bottom:8px;"></div>
+        <div id="ms-player-title" style="font-family:'Playfair Display',serif;font-size:20px;color:white;margin-bottom:8px;"></div>
+        <div id="ms-player-dur" style="font-size:12px;color:rgba(255,255,255,0.4);"></div>
+      </div>
+      <div id="ms-player-desc" style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;text-align:center;margin-bottom:28px;"></div>
+      <!-- Audio player ou message -->
+      <div id="ms-player-audio-wrap" style="margin-bottom:24px;text-align:center;"></div>
+      <!-- Progress & actions -->
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button id="ms-player-fav-btn" onclick="msMeditationToggleFav()" style="padding:10px 20px;border-radius:20px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;transition:all .2s;">❤️ Ajouter aux favoris</button>
+        <button id="ms-player-done-btn" onclick="msMeditationComplete()" style="padding:10px 20px;border-radius:20px;border:none;background:rgba(110,207,158,0.15);color:#6ecf9e;cursor:pointer;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;">✓ Séance terminée</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Lecteur d'article -->
+  <div id="ms-article-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+    <div style="background:white;border-radius:20px;width:720px;max-width:96vw;margin:auto;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.9);">
+      <div id="ms-article-hero" style="background:linear-gradient(135deg,#0f1e2d,#1a3040);padding:32px;text-align:center;position:relative;">
+        <button onclick="msArticleClose()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);background:transparent;color:white;cursor:pointer;font-size:18px;line-height:1;">×</button>
+        <div id="ms-article-emoji" style="font-size:48px;margin-bottom:12px;"></div>
+        <div id="ms-article-title" style="font-family:'Playfair Display',serif;font-size:22px;color:white;margin-bottom:10px;"></div>
+        <div style="display:flex;gap:16px;justify-content:center;font-size:12px;color:rgba(255,255,255,0.4);">
+          <span id="ms-article-author"></span>
+          <span id="ms-article-read"></span>
+        </div>
+      </div>
+      <div style="padding:28px 36px;display:flex;justify-content:flex-end;gap:10px;border-bottom:1px solid rgba(0,0,0,0.06);">
+        <button id="ms-article-fav-btn" onclick="msArticleToggleFav()" style="padding:8px 16px;border-radius:20px;border:1px solid rgba(20,36,53,0.15);background:transparent;color:var(--text-dark);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;">❤️ Favori</button>
+      </div>
+      <div id="ms-article-body" style="padding:28px 36px;font-size:15px;line-height:1.8;color:var(--text-dark);"></div>
     </div>
   </div>
 
@@ -10350,6 +10402,9 @@
           </div>
           <div class="admin-nav-item" onclick="adminPage('blog-admin',this)">
             <span class="nav-icon">✍️</span> Blog
+          </div>
+          <div class="admin-nav-item" onclick="adminPage('mindset-admin',this)">
+            <span class="nav-icon">🧘</span> Focus Mindset
           </div>
         </div>
 
@@ -11898,6 +11953,76 @@
         </div>
       </div>
 
+
+      <!-- ══ FOCUS MINDSET ADMIN ══ -->
+      <div class="admin-panel" id="admin-panel-mindset-admin">
+        <div style="max-width:960px;margin:0 auto;">
+
+          <!-- En-tête -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px;">
+            <div>
+              <div style="font-family:'Playfair Display',serif;font-size:17px;color:white;">Focus <span style="color:var(--gold-bright);">Mindset</span></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:3px;">Gérer les méditations, articles privés et ateliers</div>
+            </div>
+            <button class="admin-btn-gold" id="msa-add-btn" onclick="msAdminOpenModal()">+ Ajouter</button>
+          </div>
+
+          <!-- Sous-onglets -->
+          <div style="display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;" id="msa-tabs">
+            <button class="admin-tab active" id="msa-tab-med" onclick="msAdminTab('med',this)">🧘 Méditations</button>
+            <button class="admin-tab" id="msa-tab-art" onclick="msAdminTab('art',this)">📖 Articles</button>
+            <button class="admin-tab" id="msa-tab-wk" onclick="msAdminTab('wk',this)">🎭 Ateliers</button>
+            <button class="admin-tab" id="msa-tab-stats" onclick="msAdminTab('stats',this)">📊 Statistiques</button>
+          </div>
+
+          <!-- Panneau Méditations -->
+          <div id="msa-pane-med">
+            <div id="msa-med-list" style="display:flex;flex-direction:column;gap:8px;">
+              <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">Chargement…</div>
+            </div>
+          </div>
+
+          <!-- Panneau Articles -->
+          <div id="msa-pane-art" style="display:none;">
+            <div id="msa-art-list" style="display:flex;flex-direction:column;gap:8px;">
+              <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">Chargement…</div>
+            </div>
+          </div>
+
+          <!-- Panneau Ateliers -->
+          <div id="msa-pane-wk" style="display:none;">
+            <div id="msa-wk-list" style="display:flex;flex-direction:column;gap:8px;">
+              <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">Chargement…</div>
+            </div>
+          </div>
+
+          <!-- Panneau Stats -->
+          <div id="msa-pane-stats" style="display:none;">
+            <div id="msa-stats-content">
+              <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">Chargement…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MODALE FOCUS MINDSET ADMIN ── -->
+      <div id="msa-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+        <div style="background:#111f2e;border:1px solid rgba(255,255,255,0.1);border-radius:20px;width:680px;max-width:96vw;box-shadow:0 40px 100px rgba(0,0,0,0.9);margin:auto;">
+          <div style="padding:20px 26px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:14px;">
+            <div id="msa-modal-icon" style="width:42px;height:42px;border-radius:12px;background:rgba(252,186,51,0.1);border:1px solid rgba(252,186,51,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🧘</div>
+            <div style="flex:1;">
+              <div style="font-family:'Playfair Display',serif;font-size:17px;color:white;" id="msa-modal-title">Nouvelle méditation</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;" id="msa-modal-sub">Focus Mindset</div>
+            </div>
+            <button onclick="msAdminCloseModal()" style="width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);cursor:pointer;font-size:18px;line-height:1;">×</button>
+          </div>
+          <div style="padding:22px 26px;" id="msa-modal-body"></div>
+          <div style="padding:16px 26px;border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:flex-end;gap:10px;">
+            <button onclick="msAdminCloseModal()" style="padding:10px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;">Annuler</button>
+            <button onclick="msAdminSave()" class="admin-btn-gold" id="msa-modal-save">Enregistrer</button>
+          </div>
+        </div>
+      </div>
 
       <!-- ── MESSAGERIE ADMIN ── -->
       <div class="admin-panel" id="admin-panel-messagerie">
@@ -14314,6 +14439,9 @@
     finances:    'Finances & <span>abonnements</span>',
     crm:         'CRM <span>prospects</span>',
     bibliotheque: 'Bibliothèque <span>Ambitieuse</span>',
+    'mindset-admin': 'Focus <span>Mindset</span>',
+    'blog-admin':  'Blog <span>Carnet</span>',
+    contact:       'Messages <span>Contact</span>',
   };
 
   function adminToggleSidebar(forceClose) {
@@ -14340,6 +14468,7 @@
     if (t) t.innerHTML = adminTitles[key] || key;
     if (key === 'communaute') { setTimeout(adminRenderPosts, 50); }
     if (key === 'activite') { setTimeout(activiteInit, 50); }
+    if (key === 'mindset-admin') { setTimeout(msAdminInit, 50); }
     /* Fermer la sidebar sur mobile après navigation */
     if (window.innerWidth <= 900) {
       adminToggleSidebar(true);
@@ -23806,6 +23935,404 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ══════════════════════════════════════════════════════════════════
+// FOCUS MINDSET — Page membre
+// ══════════════════════════════════════════════════════════════════
+
+var msState = {
+  tab: 'meditations',
+  meditations: [],
+  articles: [],
+  workshops: [],
+  favorites: { meditations: [], articles: [], workshops: [] },
+  currentMeditation: null,
+  currentArticle: null,
+  loaded: false
+};
+
+var msCatLabels = {
+  meditation: '🧘 Méditation', visualisation: '💫 Visualisation',
+  respiration: '🌬 Respiration', journal_guide: '📓 Journal guidé', autre: '✨ Autre'
+};
+var msGradients = [
+  'linear-gradient(135deg,rgba(235,193,76,0.12),rgba(20,36,53,0.06))',
+  'linear-gradient(135deg,rgba(79,133,160,0.12),rgba(36,66,91,0.06))',
+  'linear-gradient(135deg,rgba(110,207,158,0.1),rgba(20,36,53,0.06))',
+  'linear-gradient(135deg,rgba(180,140,220,0.12),rgba(20,36,53,0.06))',
+  'linear-gradient(135deg,rgba(252,186,51,0.12),rgba(20,36,53,0.06))'
+];
+
+function msMeditationsTab(tab, btn) {
+  msState.tab = tab;
+  document.querySelectorAll('.ms-tab').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  else {
+    var t = document.getElementById('ms-tab-' + tab);
+    if (t) t.classList.add('active');
+  }
+  document.querySelectorAll('[id^="ms-pane-"]').forEach(function(p){ p.style.display = 'none'; });
+  var pane = document.getElementById('ms-pane-' + tab);
+  if (pane) pane.style.display = 'block';
+
+  if (!msState.loaded) {
+    msLoadAll();
+  } else {
+    if (tab === 'meditations') msRenderMeditations();
+    else if (tab === 'articles') msRenderArticles();
+    else if (tab === 'ateliers') msRenderWorkshops();
+    else if (tab === 'favoris') msRenderFavorites();
+  }
+}
+
+function msLoadAll() {
+  if (!APP_SESSION.token) return;
+  Promise.all([
+    apiCall('GET', '/api/mindset/meditations').catch(function(){ return []; }),
+    apiCall('GET', '/api/mindset/articles').catch(function(){ return []; }),
+    apiCall('GET', '/api/mindset/workshops').catch(function(){ return []; }),
+    apiCall('GET', '/api/mindset/favorites').catch(function(){ return { meditations:[], articles:[], workshops:[] }; })
+  ]).then(function(results) {
+    msState.meditations = results[0] || [];
+    msState.articles    = results[1] || [];
+    msState.workshops   = results[2] || [];
+    msState.favorites   = results[3] || { meditations:[], articles:[], workshops:[] };
+    msState.loaded = true;
+
+    // Afficher bouton favoris si des favoris existent
+    var hasFavs = (msState.favorites.meditations.length + msState.favorites.articles.length + msState.favorites.workshops.length) > 0;
+    var favBtn = document.getElementById('ms-fav-shortcut');
+    if (favBtn) favBtn.style.display = hasFavs ? 'block' : 'none';
+
+    if (msState.tab === 'meditations') msRenderMeditations();
+    else if (msState.tab === 'articles') msRenderArticles();
+    else if (msState.tab === 'ateliers') msRenderWorkshops();
+    else if (msState.tab === 'favoris') msRenderFavorites();
+  });
+}
+
+function msRenderMeditations() {
+  var grid = document.getElementById('ms-med-grid');
+  if (!grid) return;
+  if (!msState.meditations.length) {
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-light);font-size:13px;grid-column:1/-1;">Aucune méditation disponible pour le moment.</div>';
+    return;
+  }
+  grid.innerHTML = msState.meditations.map(function(m, i) {
+    var grad = msGradients[i % msGradients.length];
+    var cat  = msCatLabels[m.category] || m.category;
+    var favIcon = m.is_favorite ? '❤️' : '🤍';
+    var locked  = m.is_locked;
+    return '<div class="ms-med-card" onclick="' + (locked ? 'msShowLockMsg()' : 'msOpenMeditation(' + JSON.stringify(m.id) + ')') + '">' +
+      '<div class="ms-med-thumb" style="background:' + grad + '">' +
+      '<span style="position:relative;z-index:1;">' + (m.cover_emoji || '🧘') + '</span>' +
+      (locked ? '<div class="ms-lock-badge">🔒<span style="font-size:11px;color:white;margin-left:6px;font-family:DM Sans,sans-serif;">Visionnaire</span></div>' : '') +
+      '<div class="ms-med-dur">' + m.duration_min + ' min</div>' +
+      (!locked ? '<button class="ms-fav-btn" onclick="event.stopPropagation();msToggleFav(\'meditation\',' + JSON.stringify(m.id) + ',this)" title="' + (m.is_favorite ? 'Retirer des favoris' : 'Ajouter aux favoris') + '">' + favIcon + '</button>' : '') +
+      '</div>' +
+      '<div style="padding:14px 16px;">' +
+      '<div style="font-size:10px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;">' + cat + '</div>' +
+      '<h4 style="font-size:13px;color:var(--text-dark);font-weight:600;line-height:1.4;margin:0 0 5px;">' + msEsc(m.title) + '</h4>' +
+      (m.play_count ? '<div style="font-size:11px;color:var(--text-light);">▶ ' + m.play_count + ' écoute' + (m.play_count > 1 ? 's' : '') + '</div>' : '') +
+      '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function msRenderArticles() {
+  var list = document.getElementById('ms-art-list');
+  if (!list) return;
+  if (!msState.articles.length) {
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-light);font-size:13px;">Aucun article disponible pour le moment.</div>';
+    return;
+  }
+  list.innerHTML = msState.articles.map(function(a) {
+    var locked = a.is_locked;
+    var favIcon = a.is_favorite ? '❤️' : '🤍';
+    return '<div class="ms-art-card" onclick="' + (locked ? 'msShowLockMsg()' : 'msOpenArticle(' + JSON.stringify(a.id) + ')') + '">' +
+      '<div style="font-size:36px;flex-shrink:0;' + (locked ? 'filter:grayscale(1);opacity:0.5;' : '') + '">' + (a.cover_emoji || '📖') + '</div>' +
+      '<div style="flex:1;min-width:0;">' +
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">' +
+      '<h4 style="font-size:14px;color:var(--text-dark);font-weight:600;margin:0 0 5px;line-height:1.4;">' + msEsc(a.title) + '</h4>' +
+      (locked ? '<span class="ms-badge-vis">🔒 Visionnaire</span>' : '<button onclick="event.stopPropagation();msToggleFav(\'article\',' + JSON.stringify(a.id) + ',this)" style="background:none;border:none;font-size:16px;cursor:pointer;padding:0;flex-shrink:0;">' + favIcon + '</button>') +
+      '</div>' +
+      '<p style="font-size:13px;color:var(--text-light);line-height:1.55;margin:0 0 10px;">' + msEsc(a.excerpt || '') + '</p>' +
+      '<div style="display:flex;gap:12px;font-size:11px;color:var(--text-light);">' +
+      (a.author ? '<span>✍️ ' + msEsc(a.author) + '</span>' : '') +
+      '<span>⏱ ' + (a.read_time_min || 5) + ' min</span>' +
+      (a.read_count ? '<span>👁 ' + a.read_count + ' lecture' + (a.read_count > 1 ? 's' : '') + '</span>' : '') +
+      '</div>' +
+      '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function msRenderWorkshops() {
+  var list = document.getElementById('ms-wk-list');
+  if (!list) return;
+  if (!msState.workshops.length) {
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-light);font-size:13px;">Aucun atelier planifié pour le moment.</div>';
+    return;
+  }
+  var statusLabels = { 'a-venir': 'À venir', 'en-cours': 'En cours', 'termine': 'Terminé' };
+  var formatLabels = { live: '🎙 Live', replay: '🎬 Replay', presentiel: '📍 Présentiel' };
+  list.innerHTML = msState.workshops.map(function(w) {
+    var locked = w.is_locked;
+    var reg = w.is_registered;
+    var date = w.date ? new Date(w.date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' }) : '';
+    var statusColor = w.status === 'a-venir' ? 'rgba(110,207,158,0.15)' : (w.status === 'en-cours' ? 'rgba(235,193,76,0.15)' : 'rgba(20,36,53,0.06)');
+    var statusText = w.status === 'a-venir' ? '#2a7a4a' : (w.status === 'en-cours' ? 'var(--gold)' : 'var(--text-light)');
+    return '<div class="ms-wk-card">' +
+      '<div style="display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;">' +
+      '<div style="font-size:36px;">' + (w.cover_emoji || '🎭') + '</div>' +
+      '<div style="flex:1;min-width:200px;">' +
+      '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">' +
+      '<h4 style="font-size:15px;color:var(--text-dark);font-weight:600;margin:0;">' + msEsc(w.title) + '</h4>' +
+      (locked ? '<span class="ms-badge-vis">🔒 Visionnaire</span>' : '') +
+      '<span style="padding:2px 10px;border-radius:20px;background:' + statusColor + ';color:' + statusText + ';font-size:11px;font-weight:600;">' + (statusLabels[w.status] || w.status) + '</span>' +
+      '</div>' +
+      '<p style="font-size:13px;color:var(--text-light);margin:0 0 10px;line-height:1.55;">' + msEsc(w.description || '') + '</p>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--text-mid);">' +
+      '<span>📅 ' + (date || w.date) + (w.time_start ? ' · ' + w.time_start : '') + '</span>' +
+      '<span>⏱ ' + w.duration_min + ' min</span>' +
+      (w.facilitator ? '<span>👤 ' + msEsc(w.facilitator) + '</span>' : '') +
+      '<span>' + (formatLabels[w.format] || w.format) + '</span>' +
+      (w.max_attendees > 0 ? '<span>👥 ' + (w.attendee_count || 0) + '/' + w.max_attendees + '</span>' : '') +
+      '</div>' +
+      '</div>' +
+      (!locked && w.status !== 'termine' ? '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;">' +
+        '<button onclick="msToggleWorkshopReg(' + JSON.stringify(w.id) + ',this)" style="padding:10px 18px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;transition:all .2s;background:' + (reg ? 'rgba(20,36,53,0.06)' : 'var(--navy-darkest)') + ';color:' + (reg ? 'var(--text-mid)' : 'white') + ';">' + (reg ? '✓ Inscrite' : 'S\'inscrire →') + '</button>' +
+        (w.format === 'replay' && w.replay_url ? '<a href="' + msEsc(w.replay_url) + '" target="_blank" style="font-size:12px;color:var(--gold);text-decoration:none;">▶ Replay</a>' : '') +
+        '</div>' : '') +
+      '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function msRenderFavorites() {
+  var cont = document.getElementById('ms-fav-content');
+  if (!cont) return;
+  var favs = msState.favorites;
+  var total = (favs.meditations || []).length + (favs.articles || []).length + (favs.workshops || []).length;
+  if (!total) {
+    cont.innerHTML = '<div style="text-align:center;padding:60px 20px;">' +
+      '<div style="font-size:40px;margin-bottom:14px;">❤️</div>' +
+      '<div style="font-size:15px;color:var(--text-dark);font-weight:600;margin-bottom:8px;">Pas encore de favoris</div>' +
+      '<div style="font-size:13px;color:var(--text-light);">Clique sur le cœur sur une méditation ou un article pour le retrouver ici.</div>' +
+      '</div>';
+    return;
+  }
+  var html = '';
+  if ((favs.meditations || []).length) {
+    html += '<div style="font-family:Playfair Display,serif;font-size:15px;color:var(--text-dark);margin-bottom:12px;">🧘 Méditations favorites</div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:24px;">';
+    html += (favs.meditations || []).map(function(m, i) {
+      var grad = msGradients[i % msGradients.length];
+      return '<div class="ms-med-card" onclick="msOpenMeditation(' + JSON.stringify(m.id) + ')">' +
+        '<div class="ms-med-thumb" style="background:' + grad + '">' +
+        '<span>' + (m.cover_emoji || '🧘') + '</span>' +
+        '<div class="ms-med-dur">' + m.duration_min + ' min</div>' +
+        '<button class="ms-fav-btn" onclick="event.stopPropagation();msToggleFav(\'meditation\',' + JSON.stringify(m.id) + ',this)">❤️</button>' +
+        '</div>' +
+        '<div style="padding:12px 14px;"><h4 style="font-size:13px;font-weight:600;color:var(--text-dark);margin:0;">' + msEsc(m.title) + '</h4></div>' +
+        '</div>';
+    }).join('');
+    html += '</div>';
+  }
+  if ((favs.articles || []).length) {
+    html += '<div style="font-family:Playfair Display,serif;font-size:15px;color:var(--text-dark);margin-bottom:12px;">📖 Articles favoris</div>';
+    html += '<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">';
+    html += (favs.articles || []).map(function(a) {
+      return '<div class="ms-art-card" onclick="msOpenArticle(' + JSON.stringify(a.id) + ')">' +
+        '<div style="font-size:32px;flex-shrink:0;">' + (a.cover_emoji || '📖') + '</div>' +
+        '<div style="flex:1;"><h4 style="font-size:14px;font-weight:600;color:var(--text-dark);margin:0 0 4px;">' + msEsc(a.title) + '</h4>' +
+        '<div style="font-size:12px;color:var(--text-light);">⏱ ' + a.read_time_min + ' min</div></div>' +
+        '<button onclick="event.stopPropagation();msToggleFav(\'article\',' + JSON.stringify(a.id) + ',this)" style="background:none;border:none;font-size:16px;cursor:pointer;">❤️</button>' +
+        '</div>';
+    }).join('');
+    html += '</div>';
+  }
+  cont.innerHTML = html || '<div style="padding:40px;text-align:center;color:var(--text-light);">Aucun favori</div>';
+}
+
+function msOpenMeditation(id) {
+  var m = msState.meditations.find(function(x){ return x.id === id; });
+  if (!m) return;
+  msState.currentMeditation = m;
+  document.getElementById('ms-player-emoji').textContent  = m.cover_emoji || '🧘';
+  document.getElementById('ms-player-cat').textContent    = msCatLabels[m.category] || m.category;
+  document.getElementById('ms-player-title').textContent  = m.title;
+  document.getElementById('ms-player-dur').textContent    = m.duration_min + ' minutes';
+  document.getElementById('ms-player-desc').textContent   = m.description || '';
+
+  var favBtn = document.getElementById('ms-player-fav-btn');
+  favBtn.textContent = m.is_favorite ? '❤️ Retirer des favoris' : '🤍 Ajouter aux favoris';
+
+  var audioWrap = document.getElementById('ms-player-audio-wrap');
+  if (m.audio_url) {
+    audioWrap.innerHTML = '<audio controls style="width:100%;border-radius:10px;outline:none;" src="' + msEsc(m.audio_url) + '"></audio>';
+  } else {
+    audioWrap.innerHTML = '<div style="background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.12);border-radius:12px;padding:20px;font-size:13px;color:rgba(255,255,255,0.4);text-align:center;">🎧 Fichier audio à venir · Séance en cours de production</div>';
+  }
+
+  var modal = document.getElementById('ms-player-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  // Tracker l'écoute
+  apiCall('POST', '/api/mindset/meditations/' + id + '/play', { duration_sec: 0, completed: false }).catch(function(){});
+}
+
+function msMeditationClose() {
+  document.getElementById('ms-player-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function msMeditationComplete() {
+  if (!msState.currentMeditation) return;
+  var id = msState.currentMeditation.id;
+  apiCall('POST', '/api/mindset/meditations/' + id + '/play', { duration_sec: msState.currentMeditation.duration_min * 60, completed: true }).catch(function(){});
+  var btn = document.getElementById('ms-player-done-btn');
+  btn.textContent = '✅ Bravo ! +5 pts';
+  btn.disabled = true;
+  // Update play count in state
+  var m = msState.meditations.find(function(x){ return x.id === id; });
+  if (m) m.play_count = (m.play_count || 0) + 1;
+}
+
+function msMeditationToggleFav() {
+  if (!msState.currentMeditation) return;
+  var id = msState.currentMeditation.id;
+  msToggleFavCore('meditation', id, function(favorited) {
+    var m = msState.meditations.find(function(x){ return x.id === id; });
+    if (m) m.is_favorite = favorited;
+    msState.currentMeditation.is_favorite = favorited;
+    document.getElementById('ms-player-fav-btn').textContent = favorited ? '❤️ Retirer des favoris' : '🤍 Ajouter aux favoris';
+  });
+}
+
+function msToggleFav(type, id, btn) {
+  msToggleFavCore(type, id, function(favorited) {
+    if (btn) btn.textContent = favorited ? '❤️' : '🤍';
+    // Refresh state
+    if (type === 'meditation') {
+      var m = msState.meditations.find(function(x){ return x.id === id; });
+      if (m) m.is_favorite = favorited;
+    } else if (type === 'article') {
+      var a = msState.articles.find(function(x){ return x.id === id; });
+      if (a) a.is_favorite = favorited;
+    }
+    // Reload favorites tab data
+    apiCall('GET', '/api/mindset/favorites').then(function(favs) {
+      msState.favorites = favs;
+      var hasFavs = (favs.meditations.length + favs.articles.length + favs.workshops.length) > 0;
+      var favShortcut = document.getElementById('ms-fav-shortcut');
+      if (favShortcut) favShortcut.style.display = hasFavs ? 'block' : 'none';
+      if (msState.tab === 'favoris') msRenderFavorites();
+    }).catch(function(){});
+  });
+}
+
+function msToggleFavCore(type, id, cb) {
+  apiCall('POST', '/api/mindset/favorites/' + type + '/' + id)
+    .then(function(r) { if (cb) cb(r.favorited); })
+    .catch(function(e) { console.error('Fav error', e); });
+}
+
+function msOpenArticle(id) {
+  var a = msState.articles.find(function(x){ return x.id === id; });
+  if (!a) {
+    // Fetch full content
+    apiCall('GET', '/api/mindset/articles/' + id).then(function(full) {
+      msState.currentArticle = full;
+      msShowArticleModal(full);
+      var idx = msState.articles.findIndex(function(x){ return x.id === id; });
+      if (idx >= 0) msState.articles[idx].read_count = (msState.articles[idx].read_count || 0) + 1;
+    }).catch(function(e){ alert(e.message || 'Erreur'); });
+    return;
+  }
+  apiCall('GET', '/api/mindset/articles/' + id).then(function(full) {
+    msState.currentArticle = full;
+    var idx = msState.articles.findIndex(function(x){ return x.id === id; });
+    if (idx >= 0) { msState.articles[idx].is_favorite = full.is_favorite; msState.articles[idx].read_count = (msState.articles[idx].read_count || 0) + 1; }
+    msShowArticleModal(full);
+  }).catch(function(e){ alert(e.message || 'Erreur'); });
+}
+
+function msShowArticleModal(a) {
+  document.getElementById('ms-article-emoji').textContent  = a.cover_emoji || '📖';
+  document.getElementById('ms-article-title').textContent  = a.title;
+  document.getElementById('ms-article-author').textContent = a.author ? '✍️ ' + a.author : '';
+  document.getElementById('ms-article-read').textContent   = '⏱ ' + (a.read_time_min || 5) + ' min de lecture';
+  document.getElementById('ms-article-body').innerHTML     = a.content || '';
+  var favBtn = document.getElementById('ms-article-fav-btn');
+  favBtn.textContent = a.is_favorite ? '❤️ Dans vos favoris' : '🤍 Favori';
+  var modal = document.getElementById('ms-article-modal');
+  modal.style.display = 'flex';
+  modal.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function msArticleClose() {
+  document.getElementById('ms-article-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function msArticleToggleFav() {
+  if (!msState.currentArticle) return;
+  var id = msState.currentArticle.id;
+  msToggleFavCore('article', id, function(favorited) {
+    msState.currentArticle.is_favorite = favorited;
+    var a = msState.articles.find(function(x){ return x.id === id; });
+    if (a) a.is_favorite = favorited;
+    document.getElementById('ms-article-fav-btn').textContent = favorited ? '❤️ Dans vos favoris' : '🤍 Favori';
+    apiCall('GET', '/api/mindset/favorites').then(function(favs){ msState.favorites = favs; }).catch(function(){});
+  });
+}
+
+function msToggleWorkshopReg(id, btn) {
+  apiCall('POST', '/api/mindset/workshops/' + id + '/register').then(function(r) {
+    var w = msState.workshops.find(function(x){ return x.id === id; });
+    if (w) {
+      w.is_registered = r.registered;
+      w.attendee_count = (w.attendee_count || 0) + (r.registered ? 1 : -1);
+    }
+    msRenderWorkshops();
+  }).catch(function(e){ alert(e.message || 'Erreur'); });
+}
+
+function msShowLockMsg() {
+  alert('Ce contenu est réservé aux abonnées Visionnaire. Upgrade ton abonnement pour y accéder !');
+}
+
+function msEsc(str) {
+  return (str || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Hook showPage pour charger les données mindset
+(function() {
+  var _prev = window.showPage;
+  window.showPage = function(page) {
+    _prev(page);
+    if (page === 'mindset') {
+      msState.tab = 'meditations';
+      msState.loaded = false;
+      document.querySelectorAll('.ms-tab').forEach(function(b){ b.classList.remove('active'); });
+      var defaultTab = document.getElementById('ms-tab-meditations');
+      if (defaultTab) defaultTab.classList.add('active');
+      document.querySelectorAll('[id^="ms-pane-"]').forEach(function(p){ p.style.display = 'none'; });
+      var defaultPane = document.getElementById('ms-pane-meditations');
+      if (defaultPane) defaultPane.style.display = 'block';
+      if (APP_SESSION.token) setTimeout(msLoadAll, 50);
+    }
+  };
+})();
+
+// Close modals on backdrop click
+document.addEventListener('click', function(e) {
+  if (e.target.id === 'ms-player-modal') msMeditationClose();
+  if (e.target.id === 'ms-article-modal') msArticleClose();
+});
+
+// ══════════════════════════════════════════════════════════════════
 // TUNNEL D'ABONNEMENT — PAIEMENT · PREMIER LOGIN · TUTORIEL
 // ══════════════════════════════════════════════════════════════════
 
@@ -25797,6 +26324,372 @@ document.addEventListener('DOMContentLoaded', function() {
       loadNotificationsFromAPI();
     }
   }, 120000);
+});
+</script>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+// FOCUS MINDSET — Interface Admin
+// ══════════════════════════════════════════════════════════════════
+
+var msaState = {
+  tab: 'med',
+  editId: null,
+  editType: null,  // 'meditation' | 'article' | 'workshop'
+  meditations: [],
+  articles: [],
+  workshops: []
+};
+
+var msaInputStyle = 'width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:9px 12px;font-size:13px;color:white;font-family:\'DM Sans\',sans-serif;outline:none;box-sizing:border-box;';
+var msaSelectStyle = msaInputStyle + 'appearance:none;';
+
+function msAdminInit() {
+  msaState.tab = 'med';
+  document.querySelectorAll('#msa-tabs .admin-tab').forEach(function(b){ b.classList.remove('active'); });
+  var t = document.getElementById('msa-tab-med');
+  if (t) t.classList.add('active');
+  document.querySelectorAll('[id^="msa-pane-"]').forEach(function(p){ p.style.display = 'none'; });
+  var p = document.getElementById('msa-pane-med');
+  if (p) p.style.display = 'block';
+  msaLoadAll();
+}
+
+function msAdminTab(tab, btn) {
+  msaState.tab = tab;
+  document.querySelectorAll('#msa-tabs .admin-tab').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('[id^="msa-pane-"]').forEach(function(p){ p.style.display = 'none'; });
+  var pane = document.getElementById('msa-pane-' + tab);
+  if (pane) pane.style.display = 'block';
+
+  var addBtn = document.getElementById('msa-add-btn');
+  if (addBtn) addBtn.style.display = tab === 'stats' ? 'none' : 'inline-flex';
+
+  if (tab === 'med') msaRenderMeditations();
+  else if (tab === 'art') msaRenderArticles();
+  else if (tab === 'wk') msaRenderWorkshops();
+  else if (tab === 'stats') msaRenderStats();
+}
+
+function msaLoadAll() {
+  Promise.all([
+    apiCall('GET', '/api/mindset/admin/meditations').catch(function(){ return []; }),
+    apiCall('GET', '/api/mindset/admin/articles').catch(function(){ return []; }),
+    apiCall('GET', '/api/mindset/admin/workshops').catch(function(){ return []; })
+  ]).then(function(res) {
+    msaState.meditations = res[0] || [];
+    msaState.articles    = res[1] || [];
+    msaState.workshops   = res[2] || [];
+    if (msaState.tab === 'med') msaRenderMeditations();
+    else if (msaState.tab === 'art') msaRenderArticles();
+    else if (msaState.tab === 'wk') msaRenderWorkshops();
+    else if (msaState.tab === 'stats') msaRenderStats();
+  });
+}
+
+function msaStatusBadge(status) {
+  var map = { publie: ['#6ecf9e','rgba(110,207,158,0.15)','Publié'], brouillon: ['rgba(255,255,255,0.4)','rgba(255,255,255,0.06)','Brouillon'], archive: ['rgba(255,255,255,0.25)','rgba(255,255,255,0.04)','Archivé'] };
+  var s = map[status] || ['rgba(255,255,255,0.3)','rgba(255,255,255,0.05)',status];
+  return '<span style="padding:2px 9px;border-radius:20px;background:' + s[1] + ';color:' + s[0] + ';font-size:10px;font-weight:700;">' + s[2] + '</span>';
+}
+
+function msaTierBadge(tier) {
+  if (!tier) return '<span style="padding:2px 9px;border-radius:20px;background:rgba(79,133,160,0.15);color:#4f85a0;font-size:10px;font-weight:700;">Stratège+</span>';
+  return '<span style="padding:2px 9px;border-radius:20px;background:rgba(180,140,220,0.15);color:#9a6fd8;font-size:10px;font-weight:700;">Visionnaire 🔒</span>';
+}
+
+function msaRow(emoji, title, meta, badges, id, type) {
+  return '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;flex-wrap:wrap;">' +
+    '<span style="font-size:24px;flex-shrink:0;">' + (emoji || '•') + '</span>' +
+    '<div style="flex:1;min-width:160px;">' +
+      '<div style="font-size:13px;font-weight:600;color:white;margin-bottom:4px;">' + msaEsc(title) + '</div>' +
+      '<div style="font-size:11px;color:rgba(255,255,255,0.35);">' + meta + '</div>' +
+    '</div>' +
+    '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">' + badges + '</div>' +
+    '<div style="display:flex;gap:6px;">' +
+      '<button onclick="msAdminOpenModal(\'' + id + '\')" style="padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);font-size:12px;cursor:pointer;font-family:\'DM Sans\',sans-serif;transition:all .2s;" onmouseover="this.style.color=\'white\'" onmouseout="this.style.color=\'rgba(255,255,255,0.5)\'">✏️ Éditer</button>' +
+      '<button onclick="msAdminDelete(\'' + type + '\',\'' + id + '\')" style="padding:6px 12px;border-radius:6px;border:1px solid rgba(255,80,80,0.2);background:transparent;color:rgba(255,80,80,0.5);font-size:12px;cursor:pointer;font-family:\'DM Sans\',sans-serif;transition:all .2s;" onmouseover="this.style.color=\'#ff5050\'" onmouseout="this.style.color=\'rgba(255,80,80,0.5)\'">🗑</button>' +
+    '</div>' +
+    '</div>';
+}
+
+function msaRenderMeditations() {
+  var list = document.getElementById('msa-med-list');
+  if (!list) return;
+  if (!msaState.meditations.length) {
+    list.innerHTML = '<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);">Aucune méditation · Cliquez sur "+ Ajouter"</div>';
+    return;
+  }
+  list.innerHTML = msaState.meditations.map(function(m) {
+    var meta = (m.duration_min || 0) + ' min · ' + (m.category || '') + ' · ▶ ' + (m.play_count || 0) + ' écoutes · ❤️ ' + (m.fav_count || 0);
+    return msaRow(m.cover_emoji, m.title, meta, msaStatusBadge(m.status) + ' ' + msaTierBadge(m.tier_required), m.id, 'meditation');
+  }).join('');
+}
+
+function msaRenderArticles() {
+  var list = document.getElementById('msa-art-list');
+  if (!list) return;
+  if (!msaState.articles.length) {
+    list.innerHTML = '<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);">Aucun article · Cliquez sur "+ Ajouter"</div>';
+    return;
+  }
+  list.innerHTML = msaState.articles.map(function(a) {
+    var meta = (a.read_time_min || 5) + ' min · ' + (a.author || '—') + ' · 👁 ' + (a.read_count || 0) + ' lectures · ❤️ ' + (a.fav_count || 0);
+    return msaRow(a.cover_emoji, a.title, meta, msaStatusBadge(a.status) + ' ' + msaTierBadge(a.tier_required), a.id, 'article');
+  }).join('');
+}
+
+function msaRenderWorkshops() {
+  var list = document.getElementById('msa-wk-list');
+  if (!list) return;
+  if (!msaState.workshops.length) {
+    list.innerHTML = '<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);">Aucun atelier · Cliquez sur "+ Ajouter"</div>';
+    return;
+  }
+  var wkStatus = { 'a-venir':'À venir', 'en-cours':'En cours', 'termine':'Terminé', 'annule':'Annulé' };
+  list.innerHTML = msaState.workshops.map(function(w) {
+    var meta = w.date + (w.time_start ? ' ' + w.time_start : '') + ' · ' + w.duration_min + ' min · ' + (w.facilitator || '—') + ' · 👥 ' + (w.attendee_count || 0) + (w.max_attendees ? '/' + w.max_attendees : '');
+    var statusBadge = '<span style="padding:2px 9px;border-radius:20px;background:rgba(235,193,76,0.12);color:var(--gold);font-size:10px;font-weight:700;">' + (wkStatus[w.status] || w.status) + '</span>';
+    return msaRow(w.cover_emoji, w.title, meta, statusBadge + ' ' + msaTierBadge(w.tier_required), w.id, 'workshop');
+  }).join('');
+}
+
+function msaRenderStats() {
+  var cont = document.getElementById('msa-stats-content');
+  if (!cont) return;
+  cont.innerHTML = '<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);">Chargement des statistiques…</div>';
+  apiCall('GET', '/api/mindset/admin/stats').then(function(s) {
+    var ov = s.overview || {};
+    cont.innerHTML =
+      '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:24px;">' +
+        msaStatCard('🧘', ov.totalMeditations || 0, 'Méditations publiées') +
+        msaStatCard('📖', ov.totalArticles || 0, 'Articles publiés') +
+        msaStatCard('🎭', ov.totalWorkshops || 0, 'Ateliers actifs') +
+        msaStatCard('▶', ov.totalPlays || 0, 'Écoutes total') +
+        msaStatCard('👁', ov.totalReads || 0, 'Lectures total') +
+        msaStatCard('📅', ov.totalRegist || 0, 'Inscriptions ateliers') +
+        msaStatCard('❤️', ov.totalFavs || 0, 'Favoris ajoutés') +
+        msaStatCard('👤', ov.uniqueUsers || 0, 'Utilisatrices actives') +
+      '</div>' +
+      msaTopSection('🏆 Top 5 Méditations', s.topMeditations || [], function(m){ return m.cover_emoji + ' ' + m.title + ' — <strong>' + m.play_count + ' écoutes</strong>' + (m.completed_count ? ', ' + m.completed_count + ' terminées' : ''); }) +
+      msaTopSection('📖 Top 5 Articles', s.topArticles || [], function(a){ return a.cover_emoji + ' ' + a.title + ' — <strong>' + a.read_count + ' lectures</strong>'; }) +
+      msaTopSection('🎭 Top 5 Ateliers', s.topWorkshops || [], function(w){ return w.cover_emoji + ' ' + w.title + ' (' + w.date + ') — <strong>' + w.attendee_count + ' inscrites</strong>'; }) +
+      msaTopSection('🌟 Membres les plus actives', s.activeMembers || [], function(u){ return '👤 ' + u.first_name + ' ' + u.last_name + ' (' + u.tier + ') — <strong>' + u.activity_count + ' interactions</strong>'; });
+  }).catch(function(e) {
+    cont.innerHTML = '<div style="color:rgba(255,80,80,0.7);padding:20px;">Erreur : ' + (e.message || e) + '</div>';
+  });
+}
+
+function msaStatCard(icon, val, label) {
+  return '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px;text-align:center;">' +
+    '<div style="font-size:22px;margin-bottom:6px;">' + icon + '</div>' +
+    '<div style="font-size:22px;font-weight:700;color:white;margin-bottom:3px;">' + val + '</div>' +
+    '<div style="font-size:11px;color:rgba(255,255,255,0.35);">' + label + '</div>' +
+    '</div>';
+}
+
+function msaTopSection(title, items, renderFn) {
+  if (!items || !items.length) return '';
+  return '<div style="margin-bottom:20px;">' +
+    '<div style="font-family:\'Playfair Display\',serif;font-size:14px;color:white;margin-bottom:10px;">' + title + '</div>' +
+    '<div style="display:flex;flex-direction:column;gap:6px;">' +
+    items.map(function(item, i) {
+      return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:8px;">' +
+        '<span style="font-size:12px;color:rgba(255,255,255,0.3);width:18px;text-align:center;">' + (i + 1) + '</span>' +
+        '<span style="flex:1;font-size:12px;color:rgba(255,255,255,0.7);">' + renderFn(item) + '</span>' +
+        '</div>';
+    }).join('') +
+    '</div></div>';
+}
+
+// ── Modale CRUD ───────────────────────────────────────────────────────────────
+
+function msAdminOpenModal(id) {
+  msaState.editId = id || null;
+  var type = msaState.tab === 'med' ? 'meditation' : (msaState.tab === 'art' ? 'article' : 'workshop');
+  msaState.editType = type;
+  var item = null;
+  if (id) {
+    if (type === 'meditation') item = msaState.meditations.find(function(x){ return x.id === id; });
+    else if (type === 'article') item = msaState.articles.find(function(x){ return x.id === id; });
+    else item = msaState.workshops.find(function(x){ return x.id === id; });
+  }
+
+  var icons = { meditation:'🧘', article:'📖', workshop:'🎭' };
+  var typeLabels = { meditation:'Méditation', article:'Article Mindset', workshop:'Atelier' };
+  document.getElementById('msa-modal-icon').textContent = icons[type] || '✨';
+  document.getElementById('msa-modal-title').textContent = (id ? 'Modifier' : 'Nouveau·lle') + ' ' + typeLabels[type];
+  document.getElementById('msa-modal-sub').textContent = 'Focus Mindset · ' + typeLabels[type];
+
+  var body = document.getElementById('msa-modal-body');
+  if (type === 'meditation') body.innerHTML = msaFormMeditation(item);
+  else if (type === 'article') body.innerHTML = msaFormArticle(item);
+  else body.innerHTML = msaFormWorkshop(item);
+
+  var modal = document.getElementById('msa-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function msAdminCloseModal() {
+  document.getElementById('msa-modal').style.display = 'none';
+  document.body.style.overflow = '';
+  msaState.editId = null;
+}
+
+function msaFormMeditation(m) {
+  var fld = function(lbl, inp){ return '<div style="margin-bottom:14px;"><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">' + lbl + '</div>' + inp + '</div>'; };
+  var inp = function(id, placeholder, val, type){ return '<input id="' + id + '" type="' + (type||'text') + '" placeholder="' + placeholder + '" value="' + msaEsc(val||'') + '" style="' + msaInputStyle + '" onfocus="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onblur="this.style.borderColor=\'rgba(255,255,255,0.1)\'">'; };
+  var sel = function(id, options, val){ return '<select id="' + id + '" style="' + msaSelectStyle + '" onfocus="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onblur="this.style.borderColor=\'rgba(255,255,255,0.1)\'">' + options.map(function(o){ return '<option value="' + o[0] + '"' + (val === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>'; };
+  return fld('Emoji de couverture', inp('msa-f-emoji','🧘', m ? m.cover_emoji : '')) +
+    fld('Titre *', inp('msa-f-title','Ex : Méditation du matin', m ? m.title : '')) +
+    fld('Description', '<textarea id="msa-f-desc" rows="3" placeholder="Description de la séance…" style="' + msaInputStyle + 'resize:vertical;" onfocus="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onblur="this.style.borderColor=\'rgba(255,255,255,0.1)\'">' + msaEsc(m ? m.description : '') + '</textarea>') +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">' +
+    fld('Durée (minutes)', inp('msa-f-dur', '20', m ? m.duration_min : '', 'number')) +
+    fld('Catégorie', sel('msa-f-cat', [['meditation','🧘 Méditation'],['visualisation','💫 Visualisation'],['respiration','🌬 Respiration'],['journal_guide','📓 Journal guidé'],['autre','✨ Autre']], m ? m.category : 'meditation')) +
+    '</div>' +
+    fld('URL audio (optionnel)', inp('msa-f-audio','https://…', m ? m.audio_url : '')) +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">' +
+    fld('Accès', sel('msa-f-tier', [['stratege','Stratège & Visionnaire'],['visionnaire','🔒 Visionnaire uniquement']], m ? (m.tier_required || 'stratege') : 'stratege')) +
+    fld('Statut', sel('msa-f-status', [['brouillon','Brouillon'],['publie','Publié'],['archive','Archivé']], m ? m.status : 'brouillon')) +
+    '</div>';
+}
+
+function msaFormArticle(a) {
+  var fld = function(lbl, inp){ return '<div style="margin-bottom:14px;"><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">' + lbl + '</div>' + inp + '</div>'; };
+  var inp = function(id, placeholder, val, type){ return '<input id="' + id + '" type="' + (type||'text') + '" placeholder="' + placeholder + '" value="' + msaEsc(val||'') + '" style="' + msaInputStyle + '" onfocus="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onblur="this.style.borderColor=\'rgba(255,255,255,0.1)\'">'; };
+  var sel = function(id, options, val){ return '<select id="' + id + '" style="' + msaSelectStyle + '" onfocus="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onblur="this.style.borderColor=\'rgba(255,255,255,0.1)\'">' + options.map(function(o){ return '<option value="' + o[0] + '"' + (val === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>'; };
+  return fld('Emoji de couverture', inp('msa-f-emoji','📖', a ? a.cover_emoji : '')) +
+    fld('Titre *', inp('msa-f-title','Ex : Briser ses croyances limitantes', a ? a.title : '')) +
+    fld('Extrait / chapeau', '<textarea id="msa-f-excerpt" rows="2" placeholder="Résumé court visible dans la liste…" style="' + msaInputStyle + 'resize:vertical;" onfocus="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onblur="this.style.borderColor=\'rgba(255,255,255,0.1)\'">' + msaEsc(a ? a.excerpt : '') + '</textarea>') +
+    fld('Contenu HTML', '<textarea id="msa-f-content" rows="8" placeholder="<h2>Titre</h2><p>Texte…</p>" style="' + msaInputStyle + 'resize:vertical;font-family:monospace;font-size:12px;" onfocus="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onblur="this.style.borderColor=\'rgba(255,255,255,0.1)\'">' + msaEsc(a ? a.content : '') + '</textarea>') +
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">' +
+    fld('Auteure', inp('msa-f-author','Ex : Audrey Martin', a ? a.author : '')) +
+    fld('Temps de lecture (min)', inp('msa-f-readtime','5', a ? a.read_time_min : 5, 'number')) +
+    fld('Catégorie', inp('msa-f-category','mindset, émotions…', a ? a.category : 'mindset')) +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">' +
+    fld('Accès', sel('msa-f-tier', [['stratege','Stratège & Visionnaire'],['visionnaire','🔒 Visionnaire uniquement']], a ? (a.tier_required || 'stratege') : 'stratege')) +
+    fld('Statut', sel('msa-f-status', [['brouillon','Brouillon'],['publie','Publié'],['archive','Archivé']], a ? a.status : 'brouillon')) +
+    '</div>';
+}
+
+function msaFormWorkshop(w) {
+  var fld = function(lbl, inp){ return '<div style="margin-bottom:14px;"><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">' + lbl + '</div>' + inp + '</div>'; };
+  var inp = function(id, placeholder, val, type){ return '<input id="' + id + '" type="' + (type||'text') + '" placeholder="' + placeholder + '" value="' + msaEsc(val||'') + '" style="' + msaInputStyle + '" onfocus="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onblur="this.style.borderColor=\'rgba(255,255,255,0.1)\'">'; };
+  var sel = function(id, options, val){ return '<select id="' + id + '" style="' + msaSelectStyle + '" onfocus="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onblur="this.style.borderColor=\'rgba(255,255,255,0.1)\'">' + options.map(function(o){ return '<option value="' + o[0] + '"' + (val === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>'; };
+  return fld('Emoji de couverture', inp('msa-f-emoji','🎭', w ? w.cover_emoji : '')) +
+    fld('Titre *', inp('msa-f-title','Ex : Atelier Gérer ses émotions', w ? w.title : '')) +
+    fld('Description', '<textarea id="msa-f-desc" rows="3" placeholder="Contenu et objectifs de l\'atelier…" style="' + msaInputStyle + 'resize:vertical;" onfocus="this.style.borderColor=\'rgba(252,186,51,0.4)\'" onblur="this.style.borderColor=\'rgba(255,255,255,0.1)\'">' + msaEsc(w ? w.description : '') + '</textarea>') +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">' +
+    fld('Intervenante', inp('msa-f-facilitator','Audrey Martin', w ? w.facilitator : '')) +
+    fld('Format', sel('msa-f-format', [['live','🎙 Live'],['replay','🎬 Replay'],['presentiel','📍 Présentiel']], w ? w.format : 'live')) +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">' +
+    fld('Date *', inp('msa-f-date','', w ? w.date : '', 'date')) +
+    fld('Heure de début', inp('msa-f-time','', w ? w.time_start : '', 'time')) +
+    fld('Durée (minutes)', inp('msa-f-dur','60', w ? w.duration_min : 60, 'number')) +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">' +
+    fld('Places max (0 = illimité)', inp('msa-f-max','0', w ? w.max_attendees : 0, 'number')) +
+    fld('URL Replay (si terminé)', inp('msa-f-replay','https://…', w ? w.replay_url : '')) +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">' +
+    fld('Accès', sel('msa-f-tier', [['stratege','Stratège & Visionnaire'],['visionnaire','🔒 Visionnaire uniquement']], w ? (w.tier_required || 'stratege') : 'stratege')) +
+    fld('Statut', sel('msa-f-status', [['a-venir','À venir'],['en-cours','En cours'],['termine','Terminé'],['annule','Annulé']], w ? w.status : 'a-venir')) +
+    '</div>';
+}
+
+function msaGet(id) {
+  var el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function msAdminSave() {
+  var type = msaState.editType;
+  var id = msaState.editId;
+  var tierVal = msaGet('msa-f-tier');
+  var tier_required = (tierVal === 'visionnaire') ? 'visionnaire' : null;
+
+  var body, url, method;
+  if (type === 'meditation') {
+    var title = msaGet('msa-f-title');
+    if (!title) return alert('Le titre est requis.');
+    body = {
+      title: title, description: msaGet('msa-f-desc'), cover_emoji: msaGet('msa-f-emoji') || '🧘',
+      duration_min: parseInt(msaGet('msa-f-dur')) || 0, category: msaGet('msa-f-cat'),
+      audio_url: msaGet('msa-f-audio'), tier_required: tier_required, status: msaGet('msa-f-status')
+    };
+    url = '/api/mindset/admin/meditations' + (id ? '/' + id : '');
+    method = id ? 'PUT' : 'POST';
+  } else if (type === 'article') {
+    var title = msaGet('msa-f-title');
+    if (!title) return alert('Le titre est requis.');
+    var contentEl = document.getElementById('msa-f-content');
+    body = {
+      title: title, excerpt: msaGet('msa-f-excerpt'), content: contentEl ? contentEl.value : '',
+      cover_emoji: msaGet('msa-f-emoji') || '📖', category: msaGet('msa-f-category') || 'mindset',
+      read_time_min: parseInt(msaGet('msa-f-readtime')) || 5, author: msaGet('msa-f-author'),
+      tier_required: tier_required, status: msaGet('msa-f-status')
+    };
+    url = '/api/mindset/admin/articles' + (id ? '/' + id : '');
+    method = id ? 'PUT' : 'POST';
+  } else {
+    var title = msaGet('msa-f-title'), date = msaGet('msa-f-date');
+    if (!title || !date) return alert('Titre et date sont requis.');
+    body = {
+      title: title, description: msaGet('msa-f-desc'), facilitator: msaGet('msa-f-facilitator'),
+      date: date, time_start: msaGet('msa-f-time'), duration_min: parseInt(msaGet('msa-f-dur')) || 60,
+      format: msaGet('msa-f-format'), replay_url: msaGet('msa-f-replay'),
+      cover_emoji: msaGet('msa-f-emoji') || '🎭', max_attendees: parseInt(msaGet('msa-f-max')) || 0,
+      tier_required: tier_required, status: msaGet('msa-f-status')
+    };
+    url = '/api/mindset/admin/workshops' + (id ? '/' + id : '');
+    method = id ? 'PUT' : 'POST';
+  }
+
+  var saveBtn = document.getElementById('msa-modal-save');
+  saveBtn.disabled = true; saveBtn.textContent = 'Enregistrement…';
+
+  apiCall(method, url, body).then(function(result) {
+    if (type === 'meditation') {
+      if (id) { var idx = msaState.meditations.findIndex(function(x){ return x.id === id; }); if (idx >= 0) msaState.meditations[idx] = result; }
+      else msaState.meditations.unshift(result);
+    } else if (type === 'article') {
+      if (id) { var idx = msaState.articles.findIndex(function(x){ return x.id === id; }); if (idx >= 0) msaState.articles[idx] = result; }
+      else msaState.articles.unshift(result);
+    } else {
+      if (id) { var idx = msaState.workshops.findIndex(function(x){ return x.id === id; }); if (idx >= 0) msaState.workshops[idx] = result; }
+      else msaState.workshops.unshift(result);
+    }
+    msAdminCloseModal();
+    if (type === 'meditation') msaRenderMeditations();
+    else if (type === 'article') msaRenderArticles();
+    else msaRenderWorkshops();
+  }).catch(function(e) {
+    alert('Erreur : ' + (e.message || e));
+    saveBtn.disabled = false; saveBtn.textContent = 'Enregistrer';
+  });
+}
+
+function msAdminDelete(type, id) {
+  if (!confirm('Supprimer définitivement ?')) return;
+  var url = '/api/mindset/admin/' + (type === 'meditation' ? 'meditations' : type === 'article' ? 'articles' : 'workshops') + '/' + id;
+  apiCall('DELETE', url).then(function() {
+    if (type === 'meditation') { msaState.meditations = msaState.meditations.filter(function(x){ return x.id !== id; }); msaRenderMeditations(); }
+    else if (type === 'article') { msaState.articles = msaState.articles.filter(function(x){ return x.id !== id; }); msaRenderArticles(); }
+    else { msaState.workshops = msaState.workshops.filter(function(x){ return x.id !== id; }); msaRenderWorkshops(); }
+  }).catch(function(e){ alert('Erreur : ' + (e.message || e)); });
+}
+
+function msaEsc(str) {
+  return (str || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Close on backdrop click
+document.addEventListener('click', function(e) {
+  if (e.target.id === 'msa-modal') msAdminCloseModal();
 });
 </script>
 
