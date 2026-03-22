@@ -26240,8 +26240,9 @@ function _cpRenderBlock(block) {
   if (t === 'embed') {
     var code = d.code || d.html || '';
     if (!code) return '';
-    // Sécurité : n'accepter que les iframes
-    if (code.trim().startsWith('<iframe')) {
+    // Accepter les iframes directes et les wrappers contenant une iframe (ex: Interacty)
+    var trimmed = code.trim();
+    if (trimmed.startsWith('<iframe') || (trimmed.startsWith('<div') && trimmed.indexOf('<iframe') !== -1)) {
       return '<div class="cp-block cp-block-embed">' + code + '</div>';
     }
     return '';
