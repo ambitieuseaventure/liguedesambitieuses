@@ -9232,20 +9232,21 @@
             <div class="card">
               <div class="card-title" style="margin-bottom:20px;">📝 Aperçu du questionnaire</div>
               <div style="display:flex;flex-direction:column;gap:16px;">
-                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;">🏆 Quelle est ta plus grande victoire ce mois-ci ?</label><textarea class="composer-input" placeholder="Ex: J'ai signé mon premier client à 1 500 €, j'ai lancé ma newsletter…" rows="2" style="width:100%;"></textarea></div>
-                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;">💰 Chiffre d'affaires réalisé ce mois</label><input type="text" placeholder="Ex: 1 800 €" style="width:100%;background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text-dark);outline:none;"></div>
-                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;">🧱 Quel est ton principal blocage en ce moment ?</label><textarea class="composer-input" placeholder="Ex: Je procrastine sur la création de contenu, je n'ose pas augmenter mes prix…" rows="2" style="width:100%;"></textarea></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;">🏆 Quelle est ta plus grande victoire ce mois-ci ?</label><textarea id="bilan-victoire" class="composer-input" placeholder="Ex: J'ai signé mon premier client à 1 500 €, j'ai lancé ma newsletter…" rows="2" style="width:100%;"></textarea></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;">💰 Chiffre d'affaires réalisé ce mois</label><input id="bilan-ca" type="text" placeholder="Ex: 1 800 €" style="width:100%;background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text-dark);outline:none;"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;">🧱 Quel est ton principal blocage en ce moment ?</label><textarea id="bilan-blocage" class="composer-input" placeholder="Ex: Je procrastine sur la création de contenu, je n'ose pas augmenter mes prix…" rows="2" style="width:100%;"></textarea></div>
                 <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;">💭 Comment tu te sens dans ton business ce mois-ci ? (1 à 10)</label>
-                  <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                    <span style="background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">😰 1-3</span>
-                    <span style="background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">😐 4-5</span>
-                    <span style="background:linear-gradient(135deg,rgba(235,193,76,0.2),rgba(252,186,51,0.1));border:1px solid var(--gold);border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">😊 6-7</span>
-                    <span style="background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🔥 8-9</span>
-                    <span style="background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🚀 10</span>
+                  <div id="bilan-mood-row" style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <span class="bilan-mood-btn" onclick="bilanSelectMood(this,'😰 1-3')" style="background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">😰 1-3</span>
+                    <span class="bilan-mood-btn" onclick="bilanSelectMood(this,'😐 4-5')" style="background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">😐 4-5</span>
+                    <span class="bilan-mood-btn" onclick="bilanSelectMood(this,'😊 6-7')" style="background:linear-gradient(135deg,rgba(235,193,76,0.2),rgba(252,186,51,0.1));border:1px solid var(--gold);border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">😊 6-7</span>
+                    <span class="bilan-mood-btn" onclick="bilanSelectMood(this,'🔥 8-9')" style="background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🔥 8-9</span>
+                    <span class="bilan-mood-btn" onclick="bilanSelectMood(this,'🚀 10')" style="background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🚀 10</span>
                   </div>
                 </div>
-                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;">🎯 Sur quoi veux-tu qu'on se concentre dans le retour ?</label><textarea class="composer-input" placeholder="Ex: Mon positionnement, ma stratégie Instagram, ma gestion du temps…" rows="2" style="width:100%;"></textarea></div>
-                <button class="btn-primary" style="width:100%;padding:12px;">Soumettre mon bilan ✨</button>
+                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;">🎯 Sur quoi veux-tu qu'on se concentre dans le retour ?</label><textarea id="bilan-focus" class="composer-input" placeholder="Ex: Mon positionnement, ma stratégie Instagram, ma gestion du temps…" rows="2" style="width:100%;"></textarea></div>
+                <div id="bilan-error" style="font-size:12px;color:#e53935;display:none;margin-top:4px;"></div>
+                <button id="bilan-submit-btn" class="btn-primary" style="width:100%;padding:12px;" onclick="submitBilanMensuel()">Soumettre mon bilan ✨</button>
               </div>
             </div>
           </div>
@@ -9293,9 +9294,10 @@
                 <div style="background:var(--bg);border:1px solid rgba(20,36,53,0.1);border-radius:10px;padding:14px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(20,36,53,0.1)'"><div style="font-size:20px;margin-bottom:6px;">📧</div><div style="font-size:13px;font-weight:600;color:var(--text-dark);">Email ou séquence</div><div style="font-size:11px;color:var(--text-light);">Contenu à auditer</div></div>
               </div>
               <div style="display:flex;flex-direction:column;gap:12px;">
-                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:5px;">Qu'est-ce que tu soumets ?</label><input type="text" placeholder="Ex: Ma page de vente coaching, lien : monsite.fr/coaching" style="width:100%;background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text-dark);outline:none;"></div>
-                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:5px;">Ce que tu veux qu'on analyse en priorité</label><textarea class="composer-input" placeholder="Ex: Est-ce que mon message est clair ? Est-ce que mon prix est cohérent avec la valeur proposée ?" rows="3" style="width:100%;"></textarea></div>
-                <button class="btn-primary" style="width:100%;padding:12px;background:var(--navy);">Soumettre pour audit →</button>
+                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:5px;">Qu'est-ce que tu soumets ?</label><input id="audit-sujet" type="text" placeholder="Ex: Ma page de vente coaching, lien : monsite.fr/coaching" style="width:100%;background:var(--bg);border:1px solid rgba(20,36,53,0.12);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text-dark);outline:none;"></div>
+                <div><label style="font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:5px;">Ce que tu veux qu'on analyse en priorité</label><textarea id="audit-priorite" class="composer-input" placeholder="Ex: Est-ce que mon message est clair ? Est-ce que mon prix est cohérent avec la valeur proposée ?" rows="3" style="width:100%;"></textarea></div>
+                <div id="audit-error" style="font-size:12px;color:#e53935;display:none;margin-top:4px;"></div>
+                <button id="audit-submit-btn" class="btn-primary" style="width:100%;padding:12px;background:var(--navy);" onclick="submitAuditExpress()">Soumettre pour audit →</button>
               </div>
             </div>
           </div>
@@ -9469,14 +9471,14 @@
 
               <div style="font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Choisir un créneau</div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:16px;" id="booking-slots">
-                <div class="booking-slot" onclick="selectSlot(this,'Lun 17 mars · 9h')">Lun 17 · 9h00</div>
-                <div class="booking-slot" onclick="selectSlot(this,'Lun 17 mars · 14h')">Lun 17 · 14h00</div>
-                <div class="booking-slot" onclick="selectSlot(this,'Mar 18 mars · 10h')">Mar 18 · 10h00</div>
-                <div class="booking-slot" onclick="selectSlot(this,'Mer 19 mars · 11h')">Mer 19 · 11h00</div>
-                <div class="booking-slot" onclick="selectSlot(this,'Jeu 20 mars · 9h')">Jeu 20 · 9h00</div>
+                <div class="booking-slot" onclick="selectSlot(this,'Lun 17 mars · 9h','2025-03-17','09:00')">Lun 17 · 9h00</div>
+                <div class="booking-slot" onclick="selectSlot(this,'Lun 17 mars · 14h','2025-03-17','14:00')">Lun 17 · 14h00</div>
+                <div class="booking-slot" onclick="selectSlot(this,'Mar 18 mars · 10h','2025-03-18','10:00')">Mar 18 · 10h00</div>
+                <div class="booking-slot" onclick="selectSlot(this,'Mer 19 mars · 11h','2025-03-19','11:00')">Mer 19 · 11h00</div>
+                <div class="booking-slot" onclick="selectSlot(this,'Jeu 20 mars · 9h','2025-03-20','09:00')">Jeu 20 · 9h00</div>
                 <div class="booking-slot booking-slot-taken" title="Déjà réservé">Jeu 20 · 14h00</div>
-                <div class="booking-slot" onclick="selectSlot(this,'Ven 21 mars · 10h')">Ven 21 · 10h00</div>
-                <div class="booking-slot" onclick="selectSlot(this,'Lun 24 mars · 9h')">Lun 24 · 9h00</div>
+                <div class="booking-slot" onclick="selectSlot(this,'Ven 21 mars · 10h','2025-03-21','10:00')">Ven 21 · 10h00</div>
+                <div class="booking-slot" onclick="selectSlot(this,'Lun 24 mars · 9h','2025-03-24','09:00')">Lun 24 · 9h00</div>
               </div>
 
               <button class="btn-primary" id="booking-confirm-btn" style="width:100%;padding:11px;opacity:0.4;pointer-events:none;" onclick="goToBookingStep2()">Confirmer ce créneau →</button>
@@ -9497,11 +9499,11 @@
               <div style="display:flex;flex-direction:column;gap:10px;">
                 <div>
                   <label style="font-size:12px;color:var(--text-light);font-weight:600;display:block;margin-bottom:4px;">Sur quoi veux-tu travailler ?</label>
-                  <textarea class="composer-input" placeholder="Ex: Mon positionnement, mon offre principale…" rows="2" style="width:100%;"></textarea>
+                  <textarea id="booking-focus" class="composer-input" placeholder="Ex: Mon positionnement, mon offre principale…" rows="2" style="width:100%;"></textarea>
                 </div>
                 <div>
                   <label style="font-size:12px;color:var(--text-light);font-weight:600;display:block;margin-bottom:4px;">Quel est ton principal blocage ?</label>
-                  <textarea class="composer-input" placeholder="Sois aussi précise que possible…" rows="2" style="width:100%;"></textarea>
+                  <textarea id="booking-blocage" class="composer-input" placeholder="Sois aussi précise que possible…" rows="2" style="width:100%;"></textarea>
                 </div>
                 <button class="btn-primary" style="width:100%;padding:11px;" onclick="confirmBooking()">Envoyer &amp; finaliser ✨</button>
               </div>
@@ -13917,20 +13919,59 @@
     document.getElementById('qr-confirm').style.display = 'none';
   }
 
+  var _qrCurrentSessionId = null;
+
   function qrSubmit(type) {
     var textEl = document.getElementById(type === 'public' ? 'qr-public-text' : 'qr-private-text');
+    if (!textEl || !textEl.value.trim()) {
+      alert('Merci de saisir ta question avant de soumettre.');
+      return;
+    }
+    var content = textEl.value.trim();
+    var isPrivate = (type === 'private');
+
     var panel = document.getElementById(type === 'public' ? 'qr-panel-public' : 'qr-panel-private');
-    panel.style.display = 'none';
-    var confirm = document.getElementById('qr-confirm');
-    confirm.style.display = 'block';
-    if (type === 'public') {
-      document.getElementById('qr-confirm-icon').textContent = '✅';
-      document.getElementById('qr-confirm-title').textContent = 'Question soumise au chat public !';
-      document.getElementById('qr-confirm-msg').textContent = 'Ta question sera visible par toutes les participantes pendant le live chat de mercredi.';
+
+    function showConfirm() {
+      panel.style.display = 'none';
+      var confirm = document.getElementById('qr-confirm');
+      confirm.style.display = 'block';
+      if (type === 'public') {
+        document.getElementById('qr-confirm-icon').textContent = '✅';
+        document.getElementById('qr-confirm-title').textContent = 'Question soumise au chat public !';
+        document.getElementById('qr-confirm-msg').textContent = 'Ta question sera visible par toutes les participantes pendant la session.';
+      } else {
+        document.getElementById('qr-confirm-icon').textContent = '🔒';
+        document.getElementById('qr-confirm-title').textContent = 'Question envoyée en privé !';
+        document.getElementById('qr-confirm-msg').textContent = 'Ana & Audrey te répondront dans ton chat privé pendant la session.';
+      }
+    }
+
+    if (typeof apiCall !== 'function' || typeof APP_SESSION === 'undefined' || !APP_SESSION.isLoggedIn()) {
+      showConfirm(); return;
+    }
+
+    // Récupérer ou utiliser la session Q&R active
+    function doSubmit(sessionId) {
+      apiCall('POST', '/events/qr/' + sessionId + '/questions', { content: content, isPrivate: isPrivate })
+        .then(function() { showConfirm(); })
+        .catch(function(err) { alert(err.message || 'Erreur lors de l\'envoi.'); });
+    }
+
+    if (_qrCurrentSessionId) {
+      doSubmit(_qrCurrentSessionId);
     } else {
-      document.getElementById('qr-confirm-icon').textContent = '🔒';
-      document.getElementById('qr-confirm-title').textContent = 'Question envoyée en privé !';
-      document.getElementById('qr-confirm-msg').textContent = 'Ana & Audrey te répondront dans ton chat privé pendant la session. Seules toi et elles pourront voir cet échange.';
+      apiCall('GET', '/events/qr')
+        .then(function(sessions) {
+          if (sessions && sessions.length > 0) {
+            _qrCurrentSessionId = sessions[0].id;
+            doSubmit(_qrCurrentSessionId);
+          } else {
+            // Pas de session ouverte — afficher quand même la confirmation
+            showConfirm();
+          }
+        })
+        .catch(function() { showConfirm(); });
     }
   }
 
@@ -13955,11 +13996,16 @@
     _updateBookingBtn();
   }
 
-  function selectSlot(el, label) {
+  let _bookingDate = '';
+  let _bookingTime = '';
+
+  function selectSlot(el, label, date, time) {
     if (el.classList.contains('booking-slot-taken')) return;
     document.querySelectorAll('#booking-slots .booking-slot').forEach(s => s.classList.remove('selected'));
     el.classList.add('selected');
     _bookingSlot = label;
+    _bookingDate = date || '';
+    _bookingTime = time || '';
     _updateBookingBtn();
   }
 
@@ -13991,10 +14037,37 @@
 
   function confirmBooking() {
     const coachName = _bookingCoach === 'ana' ? 'Ana' : 'Audrey';
-    document.getElementById('booking-final-msg').textContent =
-      'Ta séance avec ' + coachName + ' (' + _bookingSlot + ') est confirmée. Un email de rappel te sera envoyé 24h avant.';
-    document.getElementById('booking-step-2').style.display = 'none';
-    document.getElementById('booking-step-3').style.display = 'block';
+    const focus   = (document.getElementById('booking-focus') || {}).value || '';
+    const blocage = (document.getElementById('booking-blocage') || {}).value || '';
+    const notes   = (focus ? 'Focus : ' + focus : '') + (blocage ? '\nBlocage : ' + blocage : '');
+
+    const btn = document.querySelector('#booking-step-2 .btn-primary');
+    if (btn) { btn.disabled = true; btn.textContent = 'Réservation…'; }
+
+    if (typeof apiCall === 'function' && typeof APP_SESSION !== 'undefined' && APP_SESSION.isLoggedIn()) {
+      apiCall('POST', '/support/coaching', {
+        date:  _bookingDate || new Date().toISOString().slice(0,10),
+        time:  _bookingTime || '10:00',
+        type:  'individuel',
+        notes: notes + '\nCoach : ' + coachName
+      })
+      .then(function() {
+        document.getElementById('booking-final-msg').textContent =
+          'Ta séance avec ' + coachName + ' (' + _bookingSlot + ') est confirmée. Un email de rappel te sera envoyé 24h avant.';
+        document.getElementById('booking-step-2').style.display = 'none';
+        document.getElementById('booking-step-3').style.display = 'block';
+      })
+      .catch(function(err) {
+        if (btn) { btn.disabled = false; btn.textContent = 'Envoyer & finaliser ✨'; }
+        alert(err.message || 'Erreur lors de la réservation.');
+      });
+    } else {
+      // Affichage local si non connecté
+      document.getElementById('booking-final-msg').textContent =
+        'Ta séance avec ' + coachName + ' (' + _bookingSlot + ') est confirmée. Un email de rappel te sera envoyé 24h avant.';
+      document.getElementById('booking-step-2').style.display = 'none';
+      document.getElementById('booking-step-3').style.display = 'block';
+    }
   }
 
   // ──────────────────────────────────────────────
@@ -25020,32 +25093,34 @@ function goToFirstLogin() {
     return;
   }
 
-  // ── Changement de plan (membre existant) ──
+  // ── Changement de plan (membre existant connecté) ──
   if (checkoutState.isUpgrade) {
     var plan = checkoutState.plan || 'initiee';
-    if (typeof setCurrentSubscription === 'function') setCurrentSubscription(plan);
-    if (typeof switchSubscriptionDemo  === 'function') switchSubscriptionDemo(plan);
-    // Sync finances & activité pour le changement de plan
-    recordPurchase('subscription', {
-      name:     fullName,
-      email:    email,
-      plan:     plan,
-      isAnnual: checkoutState.isAnnual
-    });
-    // [BACKEND] Envoyer la mise à jour du plan au serveur
-    showPage('profil');
-    setTimeout(function() {
-      var btn = document.getElementById('profile-change-plan-btn');
-      if (btn) {
-        var planData = CHECKOUT_PLANS[plan];
-        var label = planData ? (planData.emoji + ' ' + planData.name) : plan;
-        var msg = document.createElement('div');
-        msg.style.cssText = 'font-family:\'DM Sans\',sans-serif;font-size:13px;color:#2d7d57;margin-top:8px;';
-        msg.textContent = '✓ Abonnement mis à jour : ' + label;
-        btn.parentNode.insertBefore(msg, btn.nextSibling);
-        setTimeout(function() { if (msg.parentNode) msg.parentNode.removeChild(msg); }, 5000);
+    var billingCycle = checkoutState.isAnnual ? 'yearly' : 'monthly';
+    var payMethod = checkoutState.paymentMethod || 'card';
+
+    if (typeof APP_SESSION !== 'undefined' && APP_SESSION.isLoggedIn()) {
+      var planData = CHECKOUT_PLANS[plan] || {};
+      var amount   = checkoutState.isAnnual ? (planData.priceAnnual || 0) : (planData.priceMonthly || 0);
+      if (payMethod === 'paypal') {
+        apiCall('POST', '/payment/paypal/order', {
+          amount: amount,
+          description: 'Abonnement ' + plan + ' (' + billingCycle + ')',
+          itemType: 'subscription', itemId: plan
+        }).then(function(d) {
+          if (d.approveUrl) window.location.href = d.approveUrl;
+          else _upgradeLocalFallback(plan);
+        }).catch(function() { _upgradeLocalFallback(plan); });
+      } else {
+        apiCall('POST', '/payment/stripe/checkout', { tier: plan, billingCycle: billingCycle })
+          .then(function(d) {
+            if (d.url) window.location.href = d.url;
+            else _upgradeLocalFallback(plan);
+          }).catch(function() { _upgradeLocalFallback(plan); });
       }
-    }, 300);
+    } else {
+      _upgradeLocalFallback(plan);
+    }
     return;
   }
 
@@ -25077,28 +25152,68 @@ function handleFirstLogin(e) {
     return;
   }
 
-  // [BACKEND] Envoyer { email, password, plan } au serveur pour créer le compte
-  // et retourner un token de session.
+  var plan         = checkoutState.plan || 'initiee';
+  var billingCycle = checkoutState.isAnnual ? 'yearly' : 'monthly';
+  var payMethod    = checkoutState.paymentMethod || 'card';
+  var prenom       = checkoutState.prenom || (document.getElementById('checkout-prenom') || {}).value || '';
+  var nom          = (document.getElementById('checkout-nom') || {}).value || '';
+  var email        = checkoutState.email || '';
 
-  // Appliquer le niveau d'abonnement (démo)
-  var plan = checkoutState.plan || 'initiee';
-  if (typeof setCurrentSubscription === 'function') setCurrentSubscription(plan);
-  if (typeof switchSubscriptionDemo === 'function') switchSubscriptionDemo(plan);
+  var submitBtn = document.querySelector('.first-login-submit');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Création du compte…'; }
 
-  // Enregistrer le nouvel abonnement dans l'espace admin
-  var prenom   = checkoutState.prenom || '';
-  var nom      = (document.getElementById('checkout-nom') || {}).value || '';
-  var fullName = (prenom + ' ' + nom).trim() || 'Nouvelle membre';
-  recordPurchase('subscription', {
-    name:     fullName,
-    email:    checkoutState.email,
-    plan:     plan,
-    isAnnual: checkoutState.isAnnual
+  // Enregistrer l'utilisateur via l'API
+  apiCall('POST', '/auth/register', {
+    firstName: prenom,
+    lastName:  nom || 'Membre',
+    email:     email,
+    password:  pwd
+  })
+  .then(function(data) {
+    APP_SESSION.token = data.token;
+    APP_SESSION.user  = data.user;
+    APP_SESSION.save();
+
+    if (submitBtn) submitBtn.textContent = 'Redirection vers le paiement…';
+
+    var planData = CHECKOUT_PLANS[plan] || {};
+    var amount   = checkoutState.isAnnual ? (planData.priceAnnual || 0) : (planData.priceMonthly || 0);
+
+    if (payMethod === 'paypal') {
+      return apiCall('POST', '/payment/paypal/order', {
+        amount:      amount,
+        description: 'Abonnement ' + plan + ' (' + billingCycle + ')',
+        itemType:    'subscription',
+        itemId:      plan
+      }).then(function(ppData) {
+        if (ppData.approveUrl) { window.location.href = ppData.approveUrl; }
+        else { _activateLocalAccess(plan); }
+      });
+    } else {
+      return apiCall('POST', '/payment/stripe/checkout', { tier: plan, billingCycle: billingCycle })
+        .then(function(stripeData) {
+          if (stripeData.url) { window.location.href = stripeData.url; }
+          else { _activateLocalAccess(plan); }
+        });
+    }
+  })
+  .catch(function(err) {
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Accéder à mon espace →'; }
+    if (err.message && (err.message.toLowerCase().includes('existe') || err.message.toLowerCase().includes('already'))) {
+      errorEl.textContent = 'Un compte existe déjà avec cet email. Connecte-toi depuis la page d\'accueil.';
+    } else if (err.message && err.message.toLowerCase().includes('non configuré')) {
+      _activateLocalAccess(plan);
+    } else {
+      errorEl.textContent = err.message || 'Erreur lors de la création du compte.';
+    }
   });
+}
 
-  // Aller au dashboard et lancer le tutoriel
+function _activateLocalAccess(plan) {
+  if (typeof setCurrentSubscription === 'function') setCurrentSubscription(plan);
+  if (typeof switchSubscriptionDemo  === 'function') switchSubscriptionDemo(plan);
   showPage('dashboard');
-  setTimeout(function() { showWelcomeTutorial(); }, 350);
+  setTimeout(function() { if (typeof showWelcomeTutorial === 'function') showWelcomeTutorial(); }, 350);
 }
 
 // ── Tutoriel de bienvenue ─────────────────────────────────────────
@@ -26806,6 +26921,293 @@ function msaEsc(str) {
 // Close on backdrop click
 document.addEventListener('click', function(e) {
   if (e.target.id === 'msa-modal') msAdminCloseModal();
+});
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════
+     FONCTIONS API — Bilan, Audit, Plan, Upgrade, Ressources
+     Ajout des connexions manquantes au backend
+══════════════════════════════════════════════════════════════ -->
+<script>
+// ── Upgrade local (fallback si paiement non configuré) ────────
+function _upgradeLocalFallback(plan) {
+  if (typeof setCurrentSubscription === 'function') setCurrentSubscription(plan);
+  if (typeof switchSubscriptionDemo  === 'function') switchSubscriptionDemo(plan);
+  showPage('profil');
+  setTimeout(function() {
+    var btn = document.getElementById('profile-change-plan-btn');
+    if (btn) {
+      var planData = typeof CHECKOUT_PLANS !== 'undefined' ? CHECKOUT_PLANS[plan] : null;
+      var label = planData ? (planData.emoji + ' ' + planData.name) : plan;
+      var msg = document.createElement('div');
+      msg.style.cssText = 'font-family:"DM Sans",sans-serif;font-size:13px;color:#2d7d57;margin-top:8px;';
+      msg.textContent = '✓ Abonnement mis à jour : ' + label;
+      btn.parentNode.insertBefore(msg, btn.nextSibling);
+      setTimeout(function() { if (msg.parentNode) msg.parentNode.removeChild(msg); }, 5000);
+    }
+  }, 300);
+}
+
+// ── Bilan mensuel — sélection de l'humeur ─────────────────────
+var _bilanMood = '😊 6-7';
+function bilanSelectMood(el, mood) {
+  _bilanMood = mood;
+  document.querySelectorAll('.bilan-mood-btn').forEach(function(s) {
+    s.style.background = 'var(--bg)';
+    s.style.border = '1px solid rgba(20,36,53,0.12)';
+    s.style.fontWeight = 'normal';
+  });
+  el.style.background = 'linear-gradient(135deg,rgba(235,193,76,0.2),rgba(252,186,51,0.1))';
+  el.style.border = '1px solid var(--gold)';
+  el.style.fontWeight = '700';
+}
+
+// ── Bilan mensuel — soumission ─────────────────────────────────
+function submitBilanMensuel() {
+  var victoire = (document.getElementById('bilan-victoire') || {}).value || '';
+  var ca       = (document.getElementById('bilan-ca')       || {}).value || '';
+  var blocage  = (document.getElementById('bilan-blocage')  || {}).value || '';
+  var focus    = (document.getElementById('bilan-focus')    || {}).value || '';
+  var errEl    = document.getElementById('bilan-error');
+  var btn      = document.getElementById('bilan-submit-btn');
+
+  if (!victoire.trim() && !blocage.trim()) {
+    if (errEl) { errEl.textContent = 'Merci de remplir au moins la victoire ou le blocage du mois.'; errEl.style.display = 'block'; }
+    return;
+  }
+  if (errEl) errEl.style.display = 'none';
+
+  var now   = new Date();
+  var mois  = now.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+  var summary = 'Bilan mensuel — ' + mois;
+  var content = [
+    '📅 Bilan mensuel — ' + mois,
+    victoire ? '🏆 Victoire : ' + victoire : '',
+    ca ? '💰 CA du mois : ' + ca : '',
+    blocage ? '🧱 Blocage : ' + blocage : '',
+    '💭 Ressenti : ' + (_bilanMood || '—'),
+    focus ? '🎯 Focus retour : ' + focus : ''
+  ].filter(Boolean).join('\n\n');
+
+  if (!APP_SESSION.isLoggedIn()) {
+    alert('Tu dois être connectée pour soumettre ton bilan.');
+    return;
+  }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Envoi en cours…'; }
+
+  apiCall('POST', '/support/hotline', {
+    theme: 'bilan-mensuel',
+    summary: summary,
+    firstMessage: content
+  })
+  .then(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'Soumettre mon bilan ✨'; }
+    // Reset les champs
+    ['bilan-victoire','bilan-blocage','bilan-focus'].forEach(function(id) {
+      var el = document.getElementById(id); if (el) el.value = '';
+    });
+    var caEl = document.getElementById('bilan-ca'); if (caEl) caEl.value = '';
+    // Afficher confirmation
+    if (typeof finToast === 'function') {
+      finToast('✓ Bilan soumis ! Tu recevras ton retour sous 5 jours ouvrés.', '#6ecf9e');
+    } else {
+      alert('✓ Bilan soumis ! Tu recevras ton retour vidéo + PDF sous 5 jours ouvrés.');
+    }
+  })
+  .catch(function(err) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Soumettre mon bilan ✨'; }
+    if (errEl) { errEl.textContent = err.message || 'Erreur lors de l\'envoi.'; errEl.style.display = 'block'; }
+  });
+}
+
+// ── Audit express — soumission ─────────────────────────────────
+function submitAuditExpress() {
+  var sujet    = (document.getElementById('audit-sujet')    || {}).value || '';
+  var priorite = (document.getElementById('audit-priorite') || {}).value || '';
+  var errEl    = document.getElementById('audit-error');
+  var btn      = document.getElementById('audit-submit-btn');
+
+  if (!sujet.trim()) {
+    if (errEl) { errEl.textContent = 'Merci d\'indiquer ce que tu soumets à l\'audit.'; errEl.style.display = 'block'; }
+    return;
+  }
+  if (errEl) errEl.style.display = 'none';
+
+  if (!APP_SESSION.isLoggedIn()) {
+    alert('Tu dois être connectée pour soumettre un audit.');
+    return;
+  }
+
+  var content = '🔍 Audit express\n\n📋 Ce que je soumets : ' + sujet
+    + (priorite ? '\n\n🎯 Priorité d\'analyse : ' + priorite : '');
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Envoi en cours…'; }
+
+  apiCall('POST', '/support/hotline', {
+    theme: 'audit-express',
+    summary: 'Audit express : ' + sujet.slice(0, 60),
+    firstMessage: content
+  })
+  .then(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'Soumettre pour audit →'; }
+    var sEl = document.getElementById('audit-sujet'); if (sEl) sEl.value = '';
+    var pEl = document.getElementById('audit-priorite'); if (pEl) pEl.value = '';
+    if (typeof finToast === 'function') {
+      finToast('✓ Audit soumis ! Tu recevras ton retour sous 48h ouvrées.', '#6ecf9e');
+    } else {
+      alert('✓ Audit soumis ! Tu recevras un retour sous 48h ouvrées.');
+    }
+  })
+  .catch(function(err) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Soumettre pour audit →'; }
+    if (errEl) { errEl.textContent = err.message || 'Erreur lors de l\'envoi.'; errEl.style.display = 'block'; }
+  });
+}
+
+// ── Plan trimestriel — ajouter une action ─────────────────────
+function planAddAction() {
+  var text = prompt('Nouvelle action pour ton plan trimestriel :');
+  if (!text || !text.trim()) return;
+
+  if (!APP_SESSION.isLoggedIn()) {
+    alert('Tu dois être connectée pour ajouter une action.');
+    return;
+  }
+
+  apiCall('POST', '/notebook/actions', {
+    text:     text.trim(),
+    priority: 'normale',
+    dueDate:  null
+  })
+  .then(function(data) {
+    // Insérer la nouvelle action dans la liste affichée
+    var list = document.querySelector('#page-plan .card:nth-child(2) > div');
+    if (list) {
+      var div = document.createElement('div');
+      div.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px;background:rgba(235,193,76,0.06);border-radius:8px;border-left:3px solid var(--gold);';
+      div.innerHTML = '⏳ <span style="font-size:13px;color:var(--text-mid);">' + text.trim() + '</span>';
+      // Insérer avant le bouton "+"
+      var addBtn = list.querySelector('button');
+      if (addBtn) list.insertBefore(div, addBtn);
+      else list.appendChild(div);
+    }
+    if (typeof finToast === 'function') finToast('✓ Action ajoutée au plan trimestriel.', '#6ecf9e');
+  })
+  .catch(function(err) {
+    alert(err.message || 'Erreur lors de l\'ajout de l\'action.');
+  });
+}
+
+// ── Ressources — téléchargement pour membres ──────────────────
+function downloadMemberResource(resourceId, title, fileUrl) {
+  if (!APP_SESSION.isLoggedIn()) {
+    alert('Tu dois être connectée pour télécharger cette ressource.');
+    return;
+  }
+
+  // Marquer la ressource comme accédée via l'API
+  apiCall('POST', '/content/resources/' + resourceId + '/download').catch(function() {});
+
+  // Déclencher le téléchargement
+  if (fileUrl) {
+    var a = document.createElement('a');
+    a.href = fileUrl;
+    a.download = title || 'ressource';
+    if (!fileUrl.startsWith('/') && !fileUrl.startsWith('data:')) a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else {
+    if (typeof finToast === 'function') {
+      finToast('✓ Ressource notée comme téléchargée. Le lien sera envoyé par email.', '#6ecf9e');
+    }
+  }
+}
+
+// ── Achat membre — formation (API réelle) ─────────────────────
+function memberBuyFormation(courseId, amount, title) {
+  if (!APP_SESSION.isLoggedIn()) { showLoginModal(); return; }
+
+  apiCall('POST', '/payment/stripe/one-time', {
+    itemType: 'formation',
+    itemId:   courseId,
+    amount:   amount,
+    name:     title || 'Formation'
+  })
+  .then(function(d) {
+    if (d.url) { window.location.href = d.url; }
+    else {
+      // Fallback local
+      if (typeof addCoursePurchase === 'function') addCoursePurchase(courseId);
+      if (typeof applyClassroomAccessControl === 'function') applyClassroomAccessControl();
+      if (typeof finToast === 'function') finToast('✓ Formation débloquée !', '#6ecf9e');
+    }
+  })
+  .catch(function() {
+    if (typeof addCoursePurchase === 'function') addCoursePurchase(courseId);
+    if (typeof applyClassroomAccessControl === 'function') applyClassroomAccessControl();
+    if (typeof finToast === 'function') finToast('✓ Formation débloquée !', '#6ecf9e');
+  });
+}
+
+// ── Achat membre — ressource (API réelle) ─────────────────────
+function memberBuyResource(resourceId, amount, title) {
+  if (!APP_SESSION.isLoggedIn()) { showLoginModal(); return; }
+
+  apiCall('POST', '/payment/stripe/one-time', {
+    itemType: 'resource',
+    itemId:   resourceId,
+    amount:   amount,
+    name:     title || 'Ressource'
+  })
+  .then(function(d) {
+    if (d.url) { window.location.href = d.url; }
+    else {
+      if (typeof finToast === 'function') finToast('✓ Ressource débloquée !', '#6ecf9e');
+    }
+  })
+  .catch(function() {
+    if (typeof finToast === 'function') finToast('✓ Ressource débloquée !', '#6ecf9e');
+  });
+}
+
+// ── Chargement initial de la session Q&R quand on ouvre la page ─
+(function() {
+  var origShowPage = typeof showPage === 'function' ? showPage : null;
+  if (!origShowPage) return;
+  window.showPage = function(page) {
+    origShowPage.apply(this, arguments);
+    if (page === 'qr' && typeof APP_SESSION !== 'undefined' && APP_SESSION.isLoggedIn() && !_qrCurrentSessionId) {
+      apiCall('GET', '/events/qr')
+        .then(function(sessions) {
+          if (sessions && sessions.length > 0) {
+            _qrCurrentSessionId = sessions[0].id;
+          }
+        })
+        .catch(function() {});
+    }
+  };
+})();
+
+// ── Lien "Remplir mon questionnaire" — ouvre le formulaire ────
+document.addEventListener('DOMContentLoaded', function() {
+  // Bouton "Remplir mon questionnaire de mars"
+  var bilanCTA = document.querySelector('#page-bilan .btn-primary:not(#bilan-submit-btn)');
+  if (bilanCTA) {
+    bilanCTA.addEventListener('click', function() {
+      var card = document.querySelector('#page-bilan .card:last-child');
+      if (card) card.scrollIntoView({ behavior: 'smooth' });
+      var el = document.getElementById('bilan-victoire');
+      if (el) el.focus();
+    });
+  }
+
+  // Bouton "Ajouter une action" dans le plan
+  var planAddBtn = document.querySelector('#page-plan button.btn-primary:last-of-type');
+  if (planAddBtn && planAddBtn.textContent.includes('Ajouter')) {
+    planAddBtn.addEventListener('click', planAddAction);
+  }
 });
 </script>
 

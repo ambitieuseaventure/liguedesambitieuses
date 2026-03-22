@@ -279,6 +279,20 @@ router.get('/resources', requireAuth, (req, res) => {
   })));
 });
 
+// Enregistrer un téléchargement (pour les statistiques)
+router.post('/resources/:id/download', requireAuth, (req, res) => {
+  db.prepare('UPDATE resources SET downloads = COALESCE(downloads, 0) + 1 WHERE id = ?')
+    .run(req.params.id);
+  // Enregistrer l'achat si pas encore fait
+  const existing = db.prepare('SELECT id FROM resource_purchases WHERE user_id = ? AND resource_id = ?')
+    .get(req.user.id, req.params.id);
+  if (!existing) {
+    db.prepare('INSERT INTO resource_purchases (id, user_id, resource_id, amount) VALUES (?, ?, ?, 0)')
+      .run(uuidv4(), req.user.id, req.params.id);
+  }
+  res.json({ message: 'Téléchargement enregistré' });
+});
+
 router.post('/resources/:id/notes', requireAuth, (req, res) => {
   const { retains, apply } = req.body;
   const existing = db.prepare('SELECT id FROM resource_notes WHERE user_id = ? AND resource_id = ?')
