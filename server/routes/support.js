@@ -209,9 +209,9 @@ router.post('/contact', async (req, res) => {
     db.prepare('INSERT INTO contact_messages (id, name, email, subject, message) VALUES (?, ?, ?, ?, ?)')
       .run(id, name, email, subject || '', message);
 
-    // Notification à l'admin
+    // Emails envoyés de façon non-bloquante (n'échouent pas si SMTP absent)
     const adminEmail = process.env.EMAIL_FROM || 'contact@liguedesambitieuses.fr';
-    await sendEmail({
+    sendEmail({
       to: adminEmail,
       subject: `[Contact] ${subject || 'Nouveau message'} — ${name}`,
       html: `
@@ -221,10 +221,9 @@ router.post('/contact', async (req, res) => {
         <hr>
         <p>${message.replace(/\n/g, '<br>')}</p>
       `
-    });
+    }).catch(err => console.error('Email admin failed:', err.message));
 
-    // Confirmation à l'expéditeur
-    await sendEmail({
+    sendEmail({
       to: email,
       subject: 'Ton message a bien été reçu — La Ligue des Ambitieuses',
       html: `
@@ -234,7 +233,7 @@ router.post('/contact', async (req, res) => {
         <p>À très vite !</p>
         <p>L'équipe de La Ligue des Ambitieuses</p>
       `
-    });
+    }).catch(err => console.error('Email confirmation failed:', err.message));
 
     res.json({ message: 'Message envoyé' });
   } catch (err) {
