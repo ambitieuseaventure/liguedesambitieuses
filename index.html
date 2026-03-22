@@ -24085,12 +24085,12 @@ function msRenderMeditations() {
     var cat  = msCatLabels[m.category] || m.category;
     var favIcon = m.is_favorite ? '❤️' : '🤍';
     var locked  = m.is_locked;
-    return '<div class="ms-med-card" onclick="' + (locked ? 'msShowLockMsg()' : 'msOpenMeditation(' + JSON.stringify(m.id) + ')') + '">' +
+    return '<div class="ms-med-card" onclick="' + (locked ? 'msShowLockMsg()' : 'msOpenMeditation(\'' + m.id + '\')') + '">' +
       '<div class="ms-med-thumb" style="background:' + grad + '">' +
       '<span style="position:relative;z-index:1;">' + (m.cover_emoji || '🧘') + '</span>' +
       (locked ? '<div class="ms-lock-badge">🔒<span style="font-size:11px;color:white;margin-left:6px;font-family:DM Sans,sans-serif;">Visionnaire</span></div>' : '') +
       '<div class="ms-med-dur">' + m.duration_min + ' min</div>' +
-      (!locked ? '<button class="ms-fav-btn" onclick="event.stopPropagation();msToggleFav(\'meditation\',' + JSON.stringify(m.id) + ',this)" title="' + (m.is_favorite ? 'Retirer des favoris' : 'Ajouter aux favoris') + '">' + favIcon + '</button>' : '') +
+      (!locked ? '<button class="ms-fav-btn" onclick="event.stopPropagation();msToggleFav(\'meditation\',\'' + m.id + '\',this)" title="' + (m.is_favorite ? 'Retirer des favoris' : 'Ajouter aux favoris') + '">' + favIcon + '</button>' : '') +
       '</div>' +
       '<div style="padding:14px 16px;">' +
       '<div style="font-size:10px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;">' + cat + '</div>' +
@@ -24111,12 +24111,12 @@ function msRenderArticles() {
   list.innerHTML = msState.articles.map(function(a) {
     var locked = a.is_locked;
     var favIcon = a.is_favorite ? '❤️' : '🤍';
-    return '<div class="ms-art-card" onclick="' + (locked ? 'msShowLockMsg()' : 'msOpenArticle(' + JSON.stringify(a.id) + ')') + '">' +
+    return '<div class="ms-art-card" onclick="' + (locked ? 'msShowLockMsg()' : 'msOpenArticle(\'' + a.id + '\')') + '">' +
       '<div style="font-size:36px;flex-shrink:0;' + (locked ? 'filter:grayscale(1);opacity:0.5;' : '') + '">' + (a.cover_emoji || '📖') + '</div>' +
       '<div style="flex:1;min-width:0;">' +
       '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">' +
       '<h4 style="font-size:14px;color:var(--text-dark);font-weight:600;margin:0 0 5px;line-height:1.4;">' + msEsc(a.title) + '</h4>' +
-      (locked ? '<span class="ms-badge-vis">🔒 Visionnaire</span>' : '<button onclick="event.stopPropagation();msToggleFav(\'article\',' + JSON.stringify(a.id) + ',this)" style="background:none;border:none;font-size:16px;cursor:pointer;padding:0;flex-shrink:0;">' + favIcon + '</button>') +
+      (locked ? '<span class="ms-badge-vis">🔒 Visionnaire</span>' : '<button onclick="event.stopPropagation();msToggleFav(\'article\',\'' + a.id + '\',this)" style="background:none;border:none;font-size:16px;cursor:pointer;padding:0;flex-shrink:0;">' + favIcon + '</button>') +
       '</div>' +
       '<p style="font-size:13px;color:var(--text-light);line-height:1.55;margin:0 0 10px;">' + msEsc(a.excerpt || '') + '</p>' +
       '<div style="display:flex;gap:12px;font-size:11px;color:var(--text-light);">' +
@@ -24163,7 +24163,7 @@ function msRenderWorkshops() {
       '</div>' +
       '</div>' +
       (!locked && w.status !== 'termine' ? '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;">' +
-        '<button onclick="msToggleWorkshopReg(' + JSON.stringify(w.id) + ',this)" style="padding:10px 18px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;transition:all .2s;background:' + (reg ? 'rgba(20,36,53,0.06)' : 'var(--navy-darkest)') + ';color:' + (reg ? 'var(--text-mid)' : 'white') + ';">' + (reg ? '✓ Inscrite' : 'S\'inscrire →') + '</button>' +
+        '<button onclick="msToggleWorkshopReg(\'' + w.id + '\',this)" style="padding:10px 18px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;font-family:DM Sans,sans-serif;transition:all .2s;background:' + (reg ? 'rgba(20,36,53,0.06)' : 'var(--navy-darkest)') + ';color:' + (reg ? 'var(--text-mid)' : 'white') + ';">' + (reg ? '✓ Inscrite' : 'S\'inscrire →') + '</button>' +
         (w.format === 'replay' && w.replay_url ? '<a href="' + msEsc(w.replay_url) + '" target="_blank" style="font-size:12px;color:var(--gold);text-decoration:none;">▶ Replay</a>' : '') +
         '</div>' : '') +
       '</div>' +
@@ -24190,11 +24190,11 @@ function msRenderFavorites() {
     html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:24px;">';
     html += (favs.meditations || []).map(function(m, i) {
       var grad = msGradients[i % msGradients.length];
-      return '<div class="ms-med-card" onclick="msOpenMeditation(' + JSON.stringify(m.id) + ')">' +
+      return '<div class="ms-med-card" onclick="msOpenMeditation(\'' + m.id + '\')">' +
         '<div class="ms-med-thumb" style="background:' + grad + '">' +
         '<span>' + (m.cover_emoji || '🧘') + '</span>' +
         '<div class="ms-med-dur">' + m.duration_min + ' min</div>' +
-        '<button class="ms-fav-btn" onclick="event.stopPropagation();msToggleFav(\'meditation\',' + JSON.stringify(m.id) + ',this)">❤️</button>' +
+        '<button class="ms-fav-btn" onclick="event.stopPropagation();msToggleFav(\'meditation\',\'' + m.id + '\',this)">❤️</button>' +
         '</div>' +
         '<div style="padding:12px 14px;"><h4 style="font-size:13px;font-weight:600;color:var(--text-dark);margin:0;">' + msEsc(m.title) + '</h4></div>' +
         '</div>';
@@ -24205,11 +24205,11 @@ function msRenderFavorites() {
     html += '<div style="font-family:Playfair Display,serif;font-size:15px;color:var(--text-dark);margin-bottom:12px;">📖 Articles favoris</div>';
     html += '<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">';
     html += (favs.articles || []).map(function(a) {
-      return '<div class="ms-art-card" onclick="msOpenArticle(' + JSON.stringify(a.id) + ')">' +
+      return '<div class="ms-art-card" onclick="msOpenArticle(\'' + a.id + '\')">' +
         '<div style="font-size:32px;flex-shrink:0;">' + (a.cover_emoji || '📖') + '</div>' +
         '<div style="flex:1;"><h4 style="font-size:14px;font-weight:600;color:var(--text-dark);margin:0 0 4px;">' + msEsc(a.title) + '</h4>' +
         '<div style="font-size:12px;color:var(--text-light);">⏱ ' + a.read_time_min + ' min</div></div>' +
-        '<button onclick="event.stopPropagation();msToggleFav(\'article\',' + JSON.stringify(a.id) + ',this)" style="background:none;border:none;font-size:16px;cursor:pointer;">❤️</button>' +
+        '<button onclick="event.stopPropagation();msToggleFav(\'article\',\'' + a.id + '\',this)" style="background:none;border:none;font-size:16px;cursor:pointer;">❤️</button>' +
         '</div>';
     }).join('');
     html += '</div>';
@@ -24265,12 +24265,12 @@ function msMeditationComplete() {
 function msMeditationToggleFav() {
   if (!msState.currentMeditation) return;
   var id = msState.currentMeditation.id;
-  msToggleFavCore('meditation', id, function(favorited) {
-    var m = msState.meditations.find(function(x){ return x.id === id; });
-    if (m) m.is_favorite = favorited;
-    msState.currentMeditation.is_favorite = favorited;
-    document.getElementById('ms-player-fav-btn').textContent = favorited ? '❤️ Retirer des favoris' : '🤍 Ajouter aux favoris';
-  });
+  var btn = document.getElementById('ms-player-fav-btn');
+  msToggleFav('meditation', id, null);
+  var m = msState.meditations.find(function(x){ return x.id === id; });
+  var favorited = m ? m.is_favorite : !msState.currentMeditation.is_favorite;
+  msState.currentMeditation.is_favorite = favorited;
+  if (btn) btn.textContent = favorited ? '❤️ Retirer des favoris' : '🤍 Ajouter aux favoris';
 }
 
 function msToggleFav(type, id, btn) {
