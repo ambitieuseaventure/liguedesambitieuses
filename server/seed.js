@@ -308,6 +308,64 @@ async function seed() {
     console.log(`  ✓ Événement : ${e.title}`);
   }
 
+  // ── Focus Mindset ─────────────────────────────────────────────
+  const meditations = [
+    { id: uuidv4(), title: 'Méditation du matin — Ancrer sa journée', description: 'Commence ta journée avec intention. Cette séance guidée t\'aide à poser un cadre mental clair et à activer ton énergie d\'entrepreneuse.', duration_min: 15, category: 'meditation', cover_emoji: '🌅', tier_required: null, status: 'publie', sort_order: 1 },
+    { id: uuidv4(), title: 'Lever le syndrome de l\'imposteur', description: 'Une séance guidée pour identifier tes croyances limitantes et les remplacer par une posture d\'entrepreneuse qui s\'assume pleinement.', duration_min: 20, category: 'meditation', cover_emoji: '🧘', tier_required: null, status: 'publie', sort_order: 2 },
+    { id: uuidv4(), title: 'Travailler sa valeur — Se sentir légitime à ses prix', description: 'Explore ta relation à la valeur et l\'argent. Reprogramme tes croyances sur ce que tu mérites de gagner.', duration_min: 25, category: 'visualisation', cover_emoji: '💎', tier_required: null, status: 'publie', sort_order: 3 },
+    { id: uuidv4(), title: 'Décider sans douter — Sortir de la procrastination', description: 'Un outil puissant pour retrouver ta capacité à décider vite et bien, sans te perdre dans les scénarios catastrophes.', duration_min: 18, category: 'meditation', cover_emoji: '⚡', tier_required: null, status: 'publie', sort_order: 4 },
+    { id: uuidv4(), title: 'Reprendre confiance après un refus', description: 'Transforme les refus et les échecs en carburant. Une séance de reconstruction émotionnelle.', duration_min: 22, category: 'meditation', cover_emoji: '🔥', tier_required: null, status: 'publie', sort_order: 5 },
+    { id: uuidv4(), title: 'Lâcher prise le soir — Déconnecter du business', description: 'Permets à ton cerveau de sortir du mode "travail". Une déconnexion douce et régénératrice.', duration_min: 12, category: 'respiration', cover_emoji: '🌙', tier_required: null, status: 'publie', sort_order: 6 },
+    { id: uuidv4(), title: 'Visualisation de succès — Programmer sa réussite', description: 'Une visualisation guidée pour te projeter dans ta version la plus accomplie. Réservée aux Visionnaires.', duration_min: 30, category: 'visualisation', cover_emoji: '💫', tier_required: 'visionnaire', status: 'publie', sort_order: 7 },
+    { id: uuidv4(), title: 'Journal guidé — Clarifier ses intentions', description: 'Un espace de réflexion structuré pour mettre de l\'ordre dans tes pensées et définir tes priorités avec précision.', duration_min: 20, category: 'journal_guide', cover_emoji: '📓', tier_required: 'visionnaire', status: 'publie', sort_order: 8 }
+  ];
+
+  for (const m of meditations) {
+    const existing = db.prepare('SELECT id FROM mindset_meditations WHERE title = ?').get(m.title);
+    if (existing) { console.log(`  ↷ Méditation déjà existante : ${m.title}`); continue; }
+    db.prepare(`
+      INSERT INTO mindset_meditations (id, title, description, duration_min, category, audio_url, cover_emoji, tier_required, status, sort_order)
+      VALUES (?, ?, ?, ?, ?, '', ?, ?, ?, ?)
+    `).run(m.id, m.title, m.description, m.duration_min, m.category, m.cover_emoji, m.tier_required, m.status, m.sort_order);
+    console.log(`  ✓ Méditation : ${m.title}`);
+  }
+
+  const articles = [
+    { id: uuidv4(), title: 'Briser ses croyances limitantes : le guide complet', excerpt: 'Nos pensées construisent notre réalité business. Découvre les 5 croyances qui freinent le plus les entrepreneuses et comment les transformer.', content: '<h2>Nos pensées construisent notre réalité business</h2><p>Le mindset n\'est pas un concept flou de développement personnel. C\'est la fondation de tout ce que tu construis.</p><h2>Les 5 croyances les plus répandues</h2><h3>1. "Je ne suis pas légitime"</h3><p>Le syndrome de l\'imposteur touche 70% des professionnelles. Agis malgré le doute — la légitimité se construit en faisant.</p><h3>2. "Ce n\'est pas le bon moment"</h3><p>Il n\'existe pas de moment parfait. Le moment parfait, c\'est maintenant.</p><blockquote>La confiance n\'est pas un prérequis. C\'est un résultat.</blockquote>', cover_emoji: '🧠', category: 'mindset', read_time_min: 8, author: 'Sophie Blanc', tier_required: null, status: 'publie' },
+    { id: uuidv4(), title: 'La posture de l\'entrepreneuse qui s\'assume', excerpt: 'Comment passer de "je fais de mon mieux" à "je suis une experte" — sans arrogance, avec authenticité.', content: '<h2>La posture, c\'est tout</h2><p>Ta posture précède ta réalité. Avant que le marché te reconnaisse, tu dois te reconnaître toi-même.</p><p>Cela commence par des gestes simples : parler de ton activité sans apologiser, fixer des limites avec ses clients, oser augmenter ses tarifs.</p><h2>3 exercices concrets</h2><p>1. Chaque matin, liste 3 preuves de ta compétence.<br>2. Entraîne-toi à présenter ton activité en 30 secondes, sans "juste" ni "un peu".<br>3. Note 1 décision que tu as reportée et prends-la aujourd\'hui.</p>', cover_emoji: '👑', category: 'mindset', read_time_min: 6, author: 'Audrey Martin', tier_required: null, status: 'publie' },
+    { id: uuidv4(), title: 'Gérer ses émotions en business : le guide des Visionnaires', excerpt: 'Tes émotions sont des données, pas des obstacles. Apprends à les décoder pour prendre de meilleures décisions.', content: '<h2>Les émotions comme boussole</h2><p>Une entrepreneuse Visionnaire ne supprime pas ses émotions. Elle les lit comme un tableau de bord.</p><p>La peur ? Information : quelque chose d\'important est en jeu. La colère ? Signal : une limite a été franchie. La tristesse ? Message : quelque chose de précieux a été perdu ou n\'est pas à sa juste place.</p><h2>Le protocole E.M.O.</h2><p><strong>Explorer</strong> : Quelle émotion est là ? Nomme-la précisément.<br><strong>Mesurer</strong> : Sur 10, quelle est son intensité ?<br><strong>Orienter</strong> : Que te dit-elle sur ce dont tu as besoin ?</p>', cover_emoji: '💙', category: 'émotions', read_time_min: 10, author: 'Audrey Martin', tier_required: 'visionnaire', status: 'publie' }
+  ];
+
+  for (const a of articles) {
+    const existing = db.prepare('SELECT id FROM mindset_articles WHERE title = ?').get(a.title);
+    if (existing) { console.log(`  ↷ Article mindset déjà existant : ${a.title}`); continue; }
+    const slug = a.title.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80)
+      + '-' + Date.now().toString(36);
+    db.prepare(`
+      INSERT INTO mindset_articles (id, title, slug, excerpt, content, cover_emoji, category, read_time_min, author, tier_required, status, published_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, unixepoch())
+    `).run(a.id, a.title, slug, a.excerpt, a.content, a.cover_emoji, a.category, a.read_time_min, a.author, a.tier_required, a.status);
+    console.log(`  ✓ Article mindset : ${a.title}`);
+  }
+
+  const workshops = [
+    { id: uuidv4(), title: 'Atelier : Gérer ses émotions en business', description: 'Un atelier interactif pour apprendre à travailler avec tes émotions plutôt que contre elles. Exercices pratiques et partages en groupe.', facilitator: 'Audrey Martin', date: '2026-03-28', time_start: '11:00', duration_min: 90, format: 'live', cover_emoji: '🎭', max_attendees: 20, tier_required: null, status: 'a-venir' },
+    { id: uuidv4(), title: 'Atelier : Construire une routine mindset de 10 min/jour', description: 'Parce que tu n\'as pas une heure. Audrey te guide pour créer une routine mindset courte, efficace et durable.', facilitator: 'Audrey Martin', date: '2026-04-11', time_start: '09:30', duration_min: 60, format: 'live', cover_emoji: '⏰', max_attendees: 30, tier_required: null, status: 'a-venir' },
+    { id: uuidv4(), title: 'Masterclass Visionnaire : Stratégie & posture de leader', description: 'Une session intensive pour les Visionnaires : construire une présence d\'autorité dans son secteur.', facilitator: 'Sophie Blanc', date: '2026-04-25', time_start: '14:00', duration_min: 120, format: 'live', cover_emoji: '🔮', max_attendees: 10, tier_required: 'visionnaire', status: 'a-venir' }
+  ];
+
+  for (const w of workshops) {
+    const existing = db.prepare('SELECT id FROM mindset_workshops WHERE title = ?').get(w.title);
+    if (existing) { console.log(`  ↷ Atelier mindset déjà existant : ${w.title}`); continue; }
+    db.prepare(`
+      INSERT INTO mindset_workshops (id, title, description, facilitator, date, time_start, duration_min, format, replay_url, cover_emoji, max_attendees, tier_required, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, '', ?, ?, ?, ?)
+    `).run(w.id, w.title, w.description, w.facilitator, w.date, w.time_start, w.duration_min, w.format, w.cover_emoji, w.max_attendees, w.tier_required, w.status);
+    console.log(`  ✓ Atelier mindset : ${w.title}`);
+  }
+
   console.log('\n✅ Seeding terminé !\n');
   console.log('Comptes de test :');
   console.log('  Admin       : admin@liguedesambitieuses.fr / Admin2024!');

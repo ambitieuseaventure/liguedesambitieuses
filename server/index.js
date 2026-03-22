@@ -73,6 +73,7 @@ const messagingRoutes = require('./routes/messaging');
 const supportRoutes  = require('./routes/support');
 const adminRoutes    = require('./routes/admin');
 const paymentRoutes  = require('./routes/payment');
+const mindsetRoutes  = require('./routes/mindset');
 
 // Middleware optionnel pour les routes qui en ont besoin
 const { optionalAuth, requireAuth } = require('./middleware/auth');
@@ -86,6 +87,7 @@ app.use('/api/messages',   messagingRoutes);
 app.use('/api/support',    supportRoutes);
 app.use('/api/admin',      (req, res, next) => { req.user = req.user || null; next(); }, adminRoutes);
 app.use('/api/payment',    paymentRoutes);
+app.use('/api/mindset',   mindsetRoutes);
 
 // Notifications (accessible pour les membres connectés)
 app.get('/api/notifications', requireAuth, (req, res) => {
