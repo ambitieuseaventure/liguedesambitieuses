@@ -22,7 +22,7 @@ app.use(helmet({
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "https:", "blob:"],
       connectSrc: ["'self'", "https://api.stripe.com"],
-      frameSrc: ["'self'", "https://js.stripe.com", "https://www.paypal.com", "https://www.youtube.com", "https://www.youtube-nocookie.com", "https://player.vimeo.com", "https://www.loom.com", "https://loom.com", "https://docs.google.com", "https://drive.google.com", "https://calendly.com", "https://typeform.com", "https://*.typeform.com", "https://airtable.com", "https://*.airtable.com"],
+      frameSrc: ["'self'", "https://js.stripe.com", "https://www.paypal.com", "https://www.youtube.com", "https://www.youtube-nocookie.com", "https://player.vimeo.com", "https://www.loom.com", "https://loom.com", "https://docs.google.com", "https://drive.google.com", "https://calendly.com", "https://typeform.com", "https://*.typeform.com", "https://airtable.com", "https://*.airtable.com", "https://p.interacty.me", "https://*.interacty.me"],
       objectSrc: ["'none'"]
     }
   },
