@@ -23961,6 +23961,30 @@ var msGradients = [
   'linear-gradient(135deg,rgba(252,186,51,0.12),rgba(20,36,53,0.06))'
 ];
 
+// ── Données de démo (toujours affichées, remplacées par l'API si dispo) ──────
+var MS_DEMO_MEDITATIONS = [
+  { id:'msm1', title:'Méditation du matin — Ancrer sa journée', description:'Commence ta journée avec intention. Cette séance guidée t\'aide à poser un cadre mental clair et à activer ton énergie d\'entrepreneuse.', duration_min:15, category:'meditation', cover_emoji:'🌅', tier_required:null, status:'publie', audio_url:'', is_favorite:false, play_count:47 },
+  { id:'msm2', title:'Lever le syndrome de l\'imposteur', description:'Une séance guidée pour identifier tes croyances limitantes et les remplacer par une posture d\'entrepreneuse qui s\'assume pleinement.', duration_min:20, category:'meditation', cover_emoji:'🧘', tier_required:null, status:'publie', audio_url:'', is_favorite:false, play_count:89 },
+  { id:'msm3', title:'Travailler sa valeur — Se sentir légitime à ses prix', description:'Explore ta relation à la valeur et l\'argent. Reprogramme tes croyances sur ce que tu mérites de gagner.', duration_min:25, category:'visualisation', cover_emoji:'💎', tier_required:null, status:'publie', audio_url:'', is_favorite:false, play_count:63 },
+  { id:'msm4', title:'Décider sans douter — Sortir de la procrastination', description:'Un outil puissant pour retrouver ta capacité à décider vite et bien, sans te perdre dans les scénarios catastrophes.', duration_min:18, category:'meditation', cover_emoji:'⚡', tier_required:null, status:'publie', audio_url:'', is_favorite:false, play_count:55 },
+  { id:'msm5', title:'Reprendre confiance après un refus', description:'Transforme les refus et les échecs en carburant. Une séance de reconstruction émotionnelle.', duration_min:22, category:'meditation', cover_emoji:'🔥', tier_required:null, status:'publie', audio_url:'', is_favorite:false, play_count:34 },
+  { id:'msm6', title:'Lâcher prise le soir — Déconnecter du business', description:'Permets à ton cerveau de sortir du mode "travail". Une déconnexion douce et régénératrice.', duration_min:12, category:'respiration', cover_emoji:'🌙', tier_required:null, status:'publie', audio_url:'', is_favorite:false, play_count:71 },
+  { id:'msm7', title:'Visualisation de succès — Programmer sa réussite', description:'Une visualisation guidée pour te projeter dans ta version la plus accomplie.', duration_min:30, category:'visualisation', cover_emoji:'💫', tier_required:'visionnaire', status:'publie', audio_url:'', is_favorite:false, play_count:28 },
+  { id:'msm8', title:'Journal guidé — Clarifier ses intentions', description:'Un espace de réflexion structuré pour mettre de l\'ordre dans tes pensées et définir tes priorités.', duration_min:20, category:'journal_guide', cover_emoji:'📓', tier_required:'visionnaire', status:'publie', audio_url:'', is_favorite:false, play_count:19 }
+];
+
+var MS_DEMO_ARTICLES = [
+  { id:'msa1', title:'Briser ses croyances limitantes : le guide complet', slug:'briser-croyances-limitantes', excerpt:'Nos pensées construisent notre réalité business. Découvre les 5 croyances qui freinent le plus les entrepreneuses et comment les transformer.', content:'<h2>Nos pensées construisent notre réalité business</h2><p>Le mindset n\'est pas un concept flou de développement personnel. C\'est la fondation de tout ce que tu construis.</p><h2>Les 5 croyances les plus répandues</h2><h3>1. "Je ne suis pas légitime"</h3><p>Le syndrome de l\'imposteur touche 70% des professionnelles. Agis malgré le doute — la légitimité se construit en faisant.</p><h3>2. "Ce n\'est pas le bon moment"</h3><p>Il n\'existe pas de moment parfait. Le moment parfait, c\'est maintenant, avec les ressources que tu as.</p><h3>3. "Je dois tout faire seule"</h3><p>Demander de l\'aide est une force, pas une faiblesse.</p><h3>4. "Si je réussis, les gens vont me juger"</h3><p>La peur du succès est réelle. Nomme-la et ne la laisse pas décider à ta place.</p><blockquote>La confiance n\'est pas un prérequis. C\'est un résultat. Elle se construit action après action.</blockquote>', cover_emoji:'🧠', read_time_min:8, author:'Sophie Blanc', tier_required:null, status:'publie', is_favorite:false, read_count:124 },
+  { id:'msa2', title:'La posture de l\'entrepreneuse qui s\'assume', slug:'posture-entrepreneuse', excerpt:'Comment passer de "je fais de mon mieux" à "je suis une experte" — sans arrogance, avec authenticité.', content:'<h2>La posture, c\'est tout</h2><p>Ta posture précède ta réalité. Avant que le marché te reconnaisse, tu dois te reconnaître toi-même.</p><p>Cela commence par des gestes simples : parler de ton activité sans apologiser, fixer des limites avec ses clients, oser augmenter ses tarifs.</p><h2>3 exercices concrets</h2><p>1. Chaque matin, liste 3 preuves de ta compétence.<br>2. Entraîne-toi à présenter ton activité en 30 secondes, sans "juste" ni "un peu".<br>3. Note 1 décision que tu as reportée et prends-la aujourd\'hui.</p>', cover_emoji:'👑', read_time_min:6, author:'Audrey Martin', tier_required:null, status:'publie', is_favorite:false, read_count:98 },
+  { id:'msa3', title:'Gérer ses émotions en business : le guide des Visionnaires', slug:'gerer-emotions-business', excerpt:'Tes émotions sont des données, pas des obstacles. Apprends à les décoder pour prendre de meilleures décisions.', content:'<h2>Les émotions comme boussole</h2><p>Une entrepreneuse Visionnaire ne supprime pas ses émotions. Elle les lit comme un tableau de bord.</p><p>La peur ? Information : quelque chose d\'important est en jeu. La colère ? Signal : une limite a été franchie.</p><h2>Le protocole E.M.O.</h2><p><strong>Explorer</strong> : Quelle émotion est là ? Nomme-la précisément.<br><strong>Mesurer</strong> : Sur 10, quelle est son intensité ?<br><strong>Orienter</strong> : Que te dit-elle sur ce dont tu as besoin ?</p>', cover_emoji:'💙', read_time_min:10, author:'Audrey Martin', tier_required:'visionnaire', status:'publie', is_favorite:false, read_count:45 }
+];
+
+var MS_DEMO_WORKSHOPS = [
+  { id:'msw1', title:'Atelier : Gérer ses émotions en business', description:'Un atelier interactif pour apprendre à travailler avec tes émotions plutôt que contre elles. Exercices pratiques et partages en groupe.', facilitator:'Audrey Martin', date:'2026-03-28', time_start:'11:00', duration_min:90, format:'live', cover_emoji:'🎭', max_attendees:20, tier_required:null, status:'a-venir', attendee_count:12, is_registered:false },
+  { id:'msw2', title:'Atelier : Construire une routine mindset de 10 min/jour', description:'Parce que tu n\'as pas une heure. Audrey te guide pour créer une routine mindset courte, efficace et durable.', facilitator:'Audrey Martin', date:'2026-04-11', time_start:'09:30', duration_min:60, format:'live', cover_emoji:'⏰', max_attendees:30, tier_required:null, status:'a-venir', attendee_count:8, is_registered:false },
+  { id:'msw3', title:'Masterclass Visionnaire : Stratégie & posture de leader', description:'Une session intensive pour les Visionnaires : construire une présence d\'autorité dans son secteur.', facilitator:'Sophie Blanc', date:'2026-04-25', time_start:'14:00', duration_min:120, format:'live', cover_emoji:'🔮', max_attendees:10, tier_required:'visionnaire', status:'a-venir', attendee_count:3, is_registered:false }
+];
+
 function msMeditationsTab(tab, btn) {
   msState.tab = tab;
   document.querySelectorAll('.ms-tab').forEach(function(b){ b.classList.remove('active'); });
@@ -23984,29 +24008,54 @@ function msMeditationsTab(tab, btn) {
 }
 
 function msLoadAll() {
-  if (!APP_SESSION.token) return;
-  Promise.all([
-    apiCall('GET', '/api/mindset/meditations').catch(function(){ return []; }),
-    apiCall('GET', '/api/mindset/articles').catch(function(){ return []; }),
-    apiCall('GET', '/api/mindset/workshops').catch(function(){ return []; }),
-    apiCall('GET', '/api/mindset/favorites').catch(function(){ return { meditations:[], articles:[], workshops:[] }; })
-  ]).then(function(results) {
-    msState.meditations = results[0] || [];
-    msState.articles    = results[1] || [];
-    msState.workshops   = results[2] || [];
-    msState.favorites   = results[3] || { meditations:[], articles:[], workshops:[] };
-    msState.loaded = true;
+  // 1. Charger immédiatement depuis les données locales (toujours disponible)
+  var userTier = (typeof getCurrentSubscription === 'function') ? getCurrentSubscription() : 'stratege';
+  if (APP_SESSION && APP_SESSION.user) userTier = APP_SESSION.user.tier || userTier;
 
-    // Afficher bouton favoris si des favoris existent
-    var hasFavs = (msState.favorites.meditations.length + msState.favorites.articles.length + msState.favorites.workshops.length) > 0;
-    var favBtn = document.getElementById('ms-fav-shortcut');
-    if (favBtn) favBtn.style.display = hasFavs ? 'block' : 'none';
-
-    if (msState.tab === 'meditations') msRenderMeditations();
-    else if (msState.tab === 'articles') msRenderArticles();
-    else if (msState.tab === 'ateliers') msRenderWorkshops();
-    else if (msState.tab === 'favoris') msRenderFavorites();
+  msState.meditations = MS_DEMO_MEDITATIONS.map(function(m) {
+    return Object.assign({}, m, { is_locked: m.tier_required === 'visionnaire' && userTier !== 'visionnaire' });
   });
+  msState.articles = MS_DEMO_ARTICLES.map(function(a) {
+    return Object.assign({}, a, { is_locked: a.tier_required === 'visionnaire' && userTier !== 'visionnaire' });
+  });
+  msState.workshops = MS_DEMO_WORKSHOPS.map(function(w) {
+    return Object.assign({}, w, { is_locked: w.tier_required === 'visionnaire' && userTier !== 'visionnaire' });
+  });
+  msState.loaded = true;
+
+  // Affichage immédiat
+  if (msState.tab === 'meditations') msRenderMeditations();
+  else if (msState.tab === 'articles') msRenderArticles();
+  else if (msState.tab === 'ateliers') msRenderWorkshops();
+  else if (msState.tab === 'favoris') msRenderFavorites();
+
+  // 2. Enrichir depuis l'API si l'utilisatrice est authentifiée (remplace les données locales)
+  if (APP_SESSION && APP_SESSION.token) {
+    Promise.all([
+      apiCall('GET', '/api/mindset/meditations').catch(function(){ return null; }),
+      apiCall('GET', '/api/mindset/articles').catch(function(){ return null; }),
+      apiCall('GET', '/api/mindset/workshops').catch(function(){ return null; }),
+      apiCall('GET', '/api/mindset/favorites').catch(function(){ return null; })
+    ]).then(function(results) {
+      var changed = false;
+      if (results[0] && results[0].length) { msState.meditations = results[0]; changed = true; }
+      if (results[1] && results[1].length) { msState.articles    = results[1]; changed = true; }
+      if (results[2] && results[2].length) { msState.workshops   = results[2]; changed = true; }
+      if (results[3]) {
+        msState.favorites = results[3];
+        var hasFavs = (results[3].meditations.length + results[3].articles.length + results[3].workshops.length) > 0;
+        var favBtn = document.getElementById('ms-fav-shortcut');
+        if (favBtn) favBtn.style.display = hasFavs ? 'block' : 'none';
+        changed = true;
+      }
+      if (changed) {
+        if (msState.tab === 'meditations') msRenderMeditations();
+        else if (msState.tab === 'articles') msRenderArticles();
+        else if (msState.tab === 'ateliers') msRenderWorkshops();
+        else if (msState.tab === 'favoris') msRenderFavorites();
+      }
+    });
+  }
 }
 
 function msRenderMeditations() {
@@ -24210,51 +24259,76 @@ function msMeditationToggleFav() {
 }
 
 function msToggleFav(type, id, btn) {
-  msToggleFavCore(type, id, function(favorited) {
-    if (btn) btn.textContent = favorited ? '❤️' : '🤍';
-    // Refresh state
-    if (type === 'meditation') {
-      var m = msState.meditations.find(function(x){ return x.id === id; });
-      if (m) m.is_favorite = favorited;
-    } else if (type === 'article') {
-      var a = msState.articles.find(function(x){ return x.id === id; });
-      if (a) a.is_favorite = favorited;
-    }
-    // Reload favorites tab data
-    apiCall('GET', '/api/mindset/favorites').then(function(favs) {
-      msState.favorites = favs;
-      var hasFavs = (favs.meditations.length + favs.articles.length + favs.workshops.length) > 0;
-      var favShortcut = document.getElementById('ms-fav-shortcut');
-      if (favShortcut) favShortcut.style.display = hasFavs ? 'block' : 'none';
-      if (msState.tab === 'favoris') msRenderFavorites();
-    }).catch(function(){});
-  });
+  // Toggle local state immédiatement
+  var item = null;
+  if (type === 'meditation') item = msState.meditations.find(function(x){ return x.id === id; });
+  else if (type === 'article') item = msState.articles.find(function(x){ return x.id === id; });
+  else if (type === 'workshop') item = msState.workshops.find(function(x){ return x.id === id; });
+
+  var newFav = item ? !item.is_favorite : true;
+  if (item) item.is_favorite = newFav;
+  if (btn) btn.textContent = newFav ? '❤️' : '🤍';
+
+  // Mettre à jour la liste favoris locale
+  msUpdateLocalFavorites(type, id, newFav, item);
+  var hasFavs = (msState.favorites.meditations.length + msState.favorites.articles.length + msState.favorites.workshops.length) > 0;
+  var favShortcut = document.getElementById('ms-fav-shortcut');
+  if (favShortcut) favShortcut.style.display = hasFavs ? 'block' : 'none';
+  if (msState.tab === 'favoris') msRenderFavorites();
+
+  // Synchroniser avec l'API si disponible
+  if (APP_SESSION && APP_SESSION.token) {
+    apiCall('POST', '/api/mindset/favorites/' + type + '/' + id)
+      .then(function(r) {
+        // Rafraîchir les favoris depuis l'API
+        apiCall('GET', '/api/mindset/favorites').then(function(favs){ msState.favorites = favs; }).catch(function(){});
+      })
+      .catch(function() {}); // Silencieux — la modif locale est déjà appliquée
+  }
 }
 
-function msToggleFavCore(type, id, cb) {
-  apiCall('POST', '/api/mindset/favorites/' + type + '/' + id)
-    .then(function(r) { if (cb) cb(r.favorited); })
-    .catch(function(e) { console.error('Fav error', e); });
+function msUpdateLocalFavorites(type, id, add, item) {
+  var key = type === 'meditation' ? 'meditations' : (type === 'article' ? 'articles' : 'workshops');
+  if (add) {
+    var already = msState.favorites[key].find(function(x){ return x.id === id; });
+    if (!already && item) msState.favorites[key].unshift(Object.assign({}, item, { item_type: type }));
+  } else {
+    msState.favorites[key] = msState.favorites[key].filter(function(x){ return x.id !== id; });
+  }
 }
 
 function msOpenArticle(id) {
   var a = msState.articles.find(function(x){ return x.id === id; });
-  if (!a) {
-    // Fetch full content
-    apiCall('GET', '/api/mindset/articles/' + id).then(function(full) {
-      msState.currentArticle = full;
-      msShowArticleModal(full);
-      var idx = msState.articles.findIndex(function(x){ return x.id === id; });
-      if (idx >= 0) msState.articles[idx].read_count = (msState.articles[idx].read_count || 0) + 1;
-    }).catch(function(e){ alert(e.message || 'Erreur'); });
+
+  // Afficher immédiatement avec les données locales si disponibles
+  if (a && a.content) {
+    msState.currentArticle = a;
+    msShowArticleModal(a);
+    a.read_count = (a.read_count || 0) + 1;
+    // Tracker via API si disponible
+    if (APP_SESSION && APP_SESSION.token) {
+      apiCall('GET', '/api/mindset/articles/' + id).then(function(full) {
+        msState.currentArticle = full;
+        a.is_favorite = full.is_favorite;
+        document.getElementById('ms-article-fav-btn').textContent = full.is_favorite ? '❤️ Dans vos favoris' : '🤍 Favori';
+      }).catch(function(){});
+    }
     return;
   }
-  apiCall('GET', '/api/mindset/articles/' + id).then(function(full) {
-    msState.currentArticle = full;
-    var idx = msState.articles.findIndex(function(x){ return x.id === id; });
-    if (idx >= 0) { msState.articles[idx].is_favorite = full.is_favorite; msState.articles[idx].read_count = (msState.articles[idx].read_count || 0) + 1; }
-    msShowArticleModal(full);
-  }).catch(function(e){ alert(e.message || 'Erreur'); });
+
+  // Sinon, essayer l'API
+  if (APP_SESSION && APP_SESSION.token) {
+    apiCall('GET', '/api/mindset/articles/' + id).then(function(full) {
+      msState.currentArticle = full;
+      if (a) { a.is_favorite = full.is_favorite; a.read_count = (a.read_count || 0) + 1; }
+      msShowArticleModal(full);
+    }).catch(function() {
+      if (a) { msState.currentArticle = a; msShowArticleModal(a); }
+    });
+  } else if (a) {
+    msState.currentArticle = a;
+    msShowArticleModal(a);
+  }
 }
 
 function msShowArticleModal(a) {
@@ -24262,7 +24336,7 @@ function msShowArticleModal(a) {
   document.getElementById('ms-article-title').textContent  = a.title;
   document.getElementById('ms-article-author').textContent = a.author ? '✍️ ' + a.author : '';
   document.getElementById('ms-article-read').textContent   = '⏱ ' + (a.read_time_min || 5) + ' min de lecture';
-  document.getElementById('ms-article-body').innerHTML     = a.content || '';
+  document.getElementById('ms-article-body').innerHTML     = a.content || '<p style="color:var(--text-light);font-style:italic;">Contenu à venir.</p>';
   var favBtn = document.getElementById('ms-article-fav-btn');
   favBtn.textContent = a.is_favorite ? '❤️ Dans vos favoris' : '🤍 Favori';
   var modal = document.getElementById('ms-article-modal');
@@ -24279,24 +24353,30 @@ function msArticleClose() {
 function msArticleToggleFav() {
   if (!msState.currentArticle) return;
   var id = msState.currentArticle.id;
-  msToggleFavCore('article', id, function(favorited) {
-    msState.currentArticle.is_favorite = favorited;
-    var a = msState.articles.find(function(x){ return x.id === id; });
-    if (a) a.is_favorite = favorited;
-    document.getElementById('ms-article-fav-btn').textContent = favorited ? '❤️ Dans vos favoris' : '🤍 Favori';
-    apiCall('GET', '/api/mindset/favorites').then(function(favs){ msState.favorites = favs; }).catch(function(){});
-  });
+  msToggleFav('article', id, document.getElementById('ms-article-fav-btn'));
+  msState.currentArticle.is_favorite = !!(msState.articles.find(function(x){ return x.id === id; }) || {}).is_favorite;
+  document.getElementById('ms-article-fav-btn').textContent = msState.currentArticle.is_favorite ? '❤️ Dans vos favoris' : '🤍 Favori';
 }
 
 function msToggleWorkshopReg(id, btn) {
-  apiCall('POST', '/api/mindset/workshops/' + id + '/register').then(function(r) {
-    var w = msState.workshops.find(function(x){ return x.id === id; });
-    if (w) {
-      w.is_registered = r.registered;
-      w.attendee_count = (w.attendee_count || 0) + (r.registered ? 1 : -1);
-    }
-    msRenderWorkshops();
-  }).catch(function(e){ alert(e.message || 'Erreur'); });
+  var w = msState.workshops.find(function(x){ return x.id === id; });
+  if (!w) return;
+
+  // Toggle local immédiatement
+  var newReg = !w.is_registered;
+  w.is_registered = newReg;
+  w.attendee_count = (w.attendee_count || 0) + (newReg ? 1 : -1);
+  msRenderWorkshops();
+
+  // Synchroniser avec l'API si disponible
+  if (APP_SESSION && APP_SESSION.token) {
+    apiCall('POST', '/api/mindset/workshops/' + id + '/register').catch(function() {
+      // Rollback si API fail
+      w.is_registered = !newReg;
+      w.attendee_count = (w.attendee_count || 0) + (newReg ? -1 : 1);
+      msRenderWorkshops();
+    });
+  }
 }
 
 function msShowLockMsg() {
@@ -24321,7 +24401,7 @@ function msEsc(str) {
       document.querySelectorAll('[id^="ms-pane-"]').forEach(function(p){ p.style.display = 'none'; });
       var defaultPane = document.getElementById('ms-pane-meditations');
       if (defaultPane) defaultPane.style.display = 'block';
-      if (APP_SESSION.token) setTimeout(msLoadAll, 50);
+      setTimeout(msLoadAll, 50);
     }
   };
 })();
@@ -26373,18 +26453,30 @@ function msAdminTab(tab, btn) {
 }
 
 function msaLoadAll() {
+  // Afficher d'abord les données locales (réponse instantanée)
+  if (!msaState.meditations.length) msaState.meditations = MS_DEMO_MEDITATIONS.map(function(m){ return Object.assign({}, m, { play_count: m.play_count||0, fav_count: 0 }); });
+  if (!msaState.articles.length)    msaState.articles    = MS_DEMO_ARTICLES.map(function(a){ return Object.assign({}, a, { read_count: a.read_count||0, fav_count: 0 }); });
+  if (!msaState.workshops.length)   msaState.workshops   = MS_DEMO_WORKSHOPS.map(function(w){ return Object.assign({}, w); });
+  if (msaState.tab === 'med') msaRenderMeditations();
+  else if (msaState.tab === 'art') msaRenderArticles();
+  else if (msaState.tab === 'wk') msaRenderWorkshops();
+
+  // Enrichir depuis l'API admin
   Promise.all([
-    apiCall('GET', '/api/mindset/admin/meditations').catch(function(){ return []; }),
-    apiCall('GET', '/api/mindset/admin/articles').catch(function(){ return []; }),
-    apiCall('GET', '/api/mindset/admin/workshops').catch(function(){ return []; })
+    apiCall('GET', '/api/mindset/admin/meditations').catch(function(){ return null; }),
+    apiCall('GET', '/api/mindset/admin/articles').catch(function(){ return null; }),
+    apiCall('GET', '/api/mindset/admin/workshops').catch(function(){ return null; })
   ]).then(function(res) {
-    msaState.meditations = res[0] || [];
-    msaState.articles    = res[1] || [];
-    msaState.workshops   = res[2] || [];
-    if (msaState.tab === 'med') msaRenderMeditations();
-    else if (msaState.tab === 'art') msaRenderArticles();
-    else if (msaState.tab === 'wk') msaRenderWorkshops();
-    else if (msaState.tab === 'stats') msaRenderStats();
+    var changed = false;
+    if (res[0] && res[0].length) { msaState.meditations = res[0]; changed = true; }
+    if (res[1] && res[1].length) { msaState.articles    = res[1]; changed = true; }
+    if (res[2] && res[2].length) { msaState.workshops   = res[2]; changed = true; }
+    if (changed) {
+      if (msaState.tab === 'med') msaRenderMeditations();
+      else if (msaState.tab === 'art') msaRenderArticles();
+      else if (msaState.tab === 'wk') msaRenderWorkshops();
+      else if (msaState.tab === 'stats') msaRenderStats();
+    }
   });
 }
 
@@ -26668,19 +26760,27 @@ function msAdminSave() {
     else if (type === 'article') msaRenderArticles();
     else msaRenderWorkshops();
   }).catch(function(e) {
-    alert('Erreur : ' + (e.message || e));
+    var msg = e.message || String(e);
+    if (msg.indexOf('<html') !== -1 || msg.indexOf('Unexpected token') !== -1) {
+      msg = 'Le serveur backend n\'est pas joignable. Veuillez redémarrer le serveur Node.js pour activer la gestion du contenu Mindset.';
+    }
+    alert('Erreur : ' + msg);
     saveBtn.disabled = false; saveBtn.textContent = 'Enregistrer';
   });
 }
 
 function msAdminDelete(type, id) {
-  if (!confirm('Supprimer définitivement ?')) return;
+  if (!confirm('Supprimer définitivement ? (Nécessite le serveur backend)')) return;
   var url = '/api/mindset/admin/' + (type === 'meditation' ? 'meditations' : type === 'article' ? 'articles' : 'workshops') + '/' + id;
   apiCall('DELETE', url).then(function() {
     if (type === 'meditation') { msaState.meditations = msaState.meditations.filter(function(x){ return x.id !== id; }); msaRenderMeditations(); }
     else if (type === 'article') { msaState.articles = msaState.articles.filter(function(x){ return x.id !== id; }); msaRenderArticles(); }
     else { msaState.workshops = msaState.workshops.filter(function(x){ return x.id !== id; }); msaRenderWorkshops(); }
-  }).catch(function(e){ alert('Erreur : ' + (e.message || e)); });
+  }).catch(function(e){
+    var msg = e.message || String(e);
+    if (msg.indexOf('<html') !== -1 || msg.indexOf('Unexpected token') !== -1) msg = 'Serveur backend non joignable.';
+    alert('Erreur : ' + msg);
+  });
 }
 
 function msaEsc(str) {
