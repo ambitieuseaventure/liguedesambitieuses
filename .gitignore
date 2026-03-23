@@ -1,0 +1,30 @@
+# Dépendances
+node_modules/
+
+# Environnement
+.env
+.env.local
+.env.production
+
+# Base de données (en développement)
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+# Uploads (fichiers utilisateurs, ne pas versionner)
+uploads/avatars/*
+uploads/files/*
+!uploads/avatars/.gitkeep
+!uploads/files/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
